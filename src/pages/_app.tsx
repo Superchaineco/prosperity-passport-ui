@@ -46,7 +46,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { SUBGRAPH_URL } from '@/features/superChain/constants'
 import { useDarkMode } from '@/hooks/useDarkMode'
 import { createAppKit } from '@reown/appkit/react'
-import { optimism, AppKitNetwork } from '@reown/appkit/networks'
+import { optimism, AppKitNetwork, celo } from '@reown/appkit/networks'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 import { createSIWE } from '@/services/siwe'
 import { WC_PROJECT_ID as projectId } from '@/config/constants'
@@ -62,7 +62,7 @@ if (!projectId) {
   throw new Error('Project ID is not defined')
 }
 
-export const chains: [AppKitNetwork, ...AppKitNetwork[]] = [optimism]
+export const chains: [AppKitNetwork, ...AppKitNetwork[]] = [celo]
 const siweConfig = createSIWE(chains)
 
 createAppKit({

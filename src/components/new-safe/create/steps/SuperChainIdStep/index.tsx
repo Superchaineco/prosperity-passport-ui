@@ -43,7 +43,7 @@ function SuperChainID({
     mode: 'all',
   })
   const { getReadOnlySuperChainSmartAccount } = useSuperChainAccount()
-  const suffix = '.superchain'
+  const suffix = '.prosperity'
 
   const {
     handleSubmit,
