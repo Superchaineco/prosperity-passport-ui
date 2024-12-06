@@ -81,8 +81,8 @@ createAppKit({
   themeMode: 'light',
   themeVariables: {
     '--w3m-z-index': 1300,
-    '--w3m-color-mix': '#fcff52',
-    '--w3m-accent': '#fcff52',
+    '--w3m-color-mix': '#476520',
+    '--w3m-accent': '#476520',
     '--w3m-border-radius-master': '0px',
   },
 })
