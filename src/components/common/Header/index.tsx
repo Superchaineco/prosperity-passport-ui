@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import css from './styles.module.css'
 import Link from 'next/link'
 import WalletConnect from '@/features/walletconnect/components'
-import SuperChainEco from '@/public/images/common/superchain-eco.svg'
+import ProsperityPassport from '@/public/images/common/prosperity-passport.svg'
 import Image from 'next/image'
 import ConnectWallet from '../ConnectWallet'
 import NotificationCenter from '@/components/notification-center/NotificationCenter'
@@ -37,9 +37,14 @@ const Header = ({ onMenuToggle }: HeaderProps): ReactElement => {
         </IconButton>
       </div>
 
-      <div className={classnames(css.element, css.hideMobile, css.logo)}>
+      <div
+        style={{
+          paddingLeft: '0 !important',
+        }}
+        className={classnames(css.element, css.hideMobile, css.logo)}
+      >
         <Link href={logoHref} passHref>
-          <SvgIcon component={SuperChainEco} inheritViewBox style={{ width: '200px', height: '100px' }} />
+          <SvgIcon component={ProsperityPassport} inheritViewBox style={{ width: '250px', height: '150px' }} />
         </Link>
       </div>
 
@@ -53,14 +58,14 @@ const Header = ({ onMenuToggle }: HeaderProps): ReactElement => {
       <div className={classnames(css.element, css.networkSelector)}>
         <span data-testid="chain-logo" className={classnames(css.element, css.inline)}>
           <Image
-            src="https://safe-transaction-assets.safe.global/chains/10/chain_logo.png"
-            alt="Optimism Logo"
+            src="https://safe-transaction-assets.safe.global/chains/42220/chain_logo.png"
+            alt="Celo Logo"
             width={24}
             height={24}
             loading="lazy"
           />
 
-          <span className={css.name}>Optimism</span>
+          <span className={css.name}>Celo</span>
         </span>
       </div>
       <div className={classnames(css.element, css.button)}>

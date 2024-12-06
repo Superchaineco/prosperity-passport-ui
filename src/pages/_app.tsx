@@ -52,10 +52,10 @@ import { createSIWE } from '@/services/siwe'
 import { WC_PROJECT_ID as projectId } from '@/config/constants'
 
 const metadata = {
-  name: 'Super Accounts',
+  name: 'Prosperity Passport',
   description:
-    'Earn rewards for your Superchain contributions with Superchain Accounts. Track badges, manage transactions, and view your Super Account. Get recognized for your participation.',
-  url: 'https://account.superchain.eco',
+    'Earn rewards for your Superchain contributions with Superchain Accounts. Track badges, manage transactions, and view your Prosperity Passport. Get recognized for your participation.',
+  url: 'https://passport.celopg.eco',
   icons: ['https://account.superchain.eco/images/superchain-logo.png'],
 }
 if (!projectId) {
@@ -79,9 +79,9 @@ createAppKit({
   themeMode: 'light',
   themeVariables: {
     '--w3m-z-index': 1300,
-    '--w3m-color-mix': '#FF0420',
-    '--w3m-accent': '#FF0420',
-    '--w3m-border-radius-master': '6px',
+    '--w3m-color-mix': '#fcff52',
+    '--w3m-accent': '#fcff52',
+    '--w3m-border-radius-master': '0px',
   },
 })
 
@@ -159,7 +159,7 @@ const WebCoreApp = ({
   return (
     <Provider store={reduxStore}>
       <Head>
-        <title key="default-title">Super Account</title>
+        <title key="default-title">Prosperity Passport</title>
         <MetaTags prefetchUrl={GATEWAY_URL} />
       </Head>
 

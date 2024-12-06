@@ -1,6 +1,6 @@
 import { Box, Card, CardActions, CardContent, IconButton, Stack, SvgIcon, Typography } from '@mui/material'
 import React, { useMemo, type SyntheticEvent } from 'react'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import Hearth from '@/public/images/common/hearth.svg'
 import HeartFilled from '@/public/images/common/hearth-filled.svg'
 import css from './styles.module.css'
@@ -8,6 +8,7 @@ import useSafeInfo from '@/hooks/useSafeInfo'
 import type { ResponseBadge } from '@/types/super-chain'
 import classNames from 'classnames'
 import Complete from '@/public/images/common/complete.svg'
+
 function Badge({
   data,
   switchFavorite,
@@ -113,7 +114,7 @@ function Badge({
                   ? data.points
                   : data.badgeTiers[0].points}
               </strong>{' '}
-              <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="medium" />
+              <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
             </>
           ) : (
             <>

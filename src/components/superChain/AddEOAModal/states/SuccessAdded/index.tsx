@@ -28,11 +28,11 @@ function SuccessAdded({ onClose, context }: { onClose: () => void; context: any 
         </Stack>
       </DialogContent>
       <Box display="flex" flexDirection="row" className={css.outsideActions}>
-        <Button fullWidth variant="contained" color="background" onClick={onRedirectLogInScreen}>
+        <Button fullWidth variant="contained" color="primary" onClick={onRedirectLogInScreen}>
           LogIn Screen
         </Button>
 
-        <Button onClick={onClose} fullWidth variant="contained" color="primary" type="submit">
+        <Button onClick={onClose} fullWidth variant="contained" color="secondary" type="submit">
           Continue
         </Button>
       </Box>

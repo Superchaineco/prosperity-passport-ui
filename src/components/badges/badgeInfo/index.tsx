@@ -8,7 +8,7 @@ import Share from '@/public/images/common/share.svg'
 import Close from '@/public/images/common/close.svg'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import type { Address } from 'viem'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 
 function BadgeInfo({
   currentBadge,
@@ -213,7 +213,7 @@ function BadgeInfo({
 
                   <Box justifyContent="center" alignItems="center" display="flex" gap={1}>
                     <strong>{tier.points}</strong>
-                    <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="medium" />
+                    <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
                   </Box>
                 </Box>
               }

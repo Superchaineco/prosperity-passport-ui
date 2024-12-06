@@ -16,7 +16,7 @@ const NotificationsPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Super Account – Settings – Notifications</title>
+        <title>Prosperity Passport – Settings – Notifications</title>
       </Head>
 
       <SettingsHeader />

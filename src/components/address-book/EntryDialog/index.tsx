@@ -154,7 +154,7 @@ function EntryDialog({
                 variant="contained"
                 disabled={!formState.isValid || loading}
                 disableElevation
-                color="secondary"
+                color="complementary"
               >
                 Save
               </Button>

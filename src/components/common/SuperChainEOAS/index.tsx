@@ -53,6 +53,7 @@ const SuperChainEOAS = () => {
                 Connected Wallets
               </Typography>
               <IconButton
+                color="secondary"
                 disabled={populatedOwnersLoading}
                 onClick={() =>
                   setAddEOAContext({

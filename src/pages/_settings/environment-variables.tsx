@@ -7,7 +7,7 @@ const EnvironmentVariablesPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Super Account – Settings – Environment variables</title>
+        <title>Prosperity Passport – Settings – Environment variables</title>
       </Head>
 
       <SettingsHeader />

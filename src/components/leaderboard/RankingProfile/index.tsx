@@ -1,6 +1,6 @@
 import NounsAvatar from '@/components/common/NounsAvatar'
 import { Box, Stack, SvgIcon, Typography } from '@mui/material'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import React from 'react'
 import { NounProps } from '@/components/new-safe/create/steps/AvatarStep'
 
@@ -65,7 +65,7 @@ function RankingProfile({ isMainProfile, position, points, name, level, badges, 
       </Stack>
       <Box display="flex" justifyContent="center" alignItems="center" gap="6px">
         <strong>{points}</strong>
-        <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="medium" />
+        <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
       </Box>
     </Box>
   )

@@ -1,4 +1,4 @@
-import { Box, Button, Grid, InputAdornment, MenuItem, Select, SvgIcon, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, InputAdornment, SvgIcon, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 
 import SearchIcon from '@/public/images/common/search.svg'
@@ -12,7 +12,6 @@ import LevelUpModal from '../modals/LevelUpModal'
 import { useRouter } from 'next/router'
 import { AppRoutes } from '@/config/routes'
 import LoadingModal from '@/components/common/LoadingModal'
-import Image from 'next/image'
 import FailedTxnModal from '@/components/common/ErrorModal'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
@@ -82,7 +81,7 @@ function BadgesActions({
           </Typography>
         </Grid>
         <Grid container spacing={2} item>
-          <Grid item xs={12} lg={7}>
+          <Grid item xs={12} lg={9}>
             <TextField
               placeholder="Search by name or network"
               variant="filled"
@@ -99,54 +98,8 @@ function BadgesActions({
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} lg={5}>
-            <Box display="flex" gap={2}>
-              <Select
-                fullWidth
-                onChange={(e) => setNetwork(e.target.value)}
-                defaultValue="all"
-                placeholder="Placeholder Text"
-              >
-                <MenuItem value="all">
-                  <strong>Select network</strong>
-                </MenuItem>
-                <MenuItem value="optimism">
-                  <Box display="flex" gap={1} alignItems="center">
-                    <Image
-                      src="https://safe-transaction-assets.safe.global/chains/10/chain_logo.png"
-                      alt="Optimism Logo"
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                    />
-                    <strong>Optimism</strong>
-                  </Box>
-                </MenuItem>
-                <MenuItem value="base">
-                  <Box display="flex" gap={1} alignItems="center">
-                    <Image
-                      src="https://safe-transaction-assets.safe.global/chains/8453/chain_logo.png"
-                      alt="Base Logo"
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                    />
-                    <strong>Base</strong>
-                  </Box>
-                </MenuItem>
-                <MenuItem value="mode">
-                  <Box display="flex" gap={1} alignItems="center">
-                    <Image
-                      src="https://account.superchain.eco/chains/34443/chain_logo.svg"
-                      alt="Mode Logo"
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                    />
-                    <strong>Mode</strong>
-                  </Box>
-                </MenuItem>
-              </Select>
+          <Grid item xs={12} lg={3}>
+            <Box display="flex" height="100%">
               <Button
                 fullWidth
                 disabled={!claimable || isPending}
@@ -155,7 +108,7 @@ function BadgesActions({
                 onClick={() => mutate()}
                 endIcon={<SvgIcon component={History} inheritViewBox color="primary" />}
               >
-                {isPending ? 'Loading' : claimable ? 'Claim Badges' : 'No claimable Badges'}
+                {isPending ? 'Loading' : claimable ? 'Update Badges' : 'No claimable Badges'}
               </Button>
             </Box>
           </Grid>

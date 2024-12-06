@@ -72,7 +72,7 @@ const fakeSafeApps: SafeAppData[] = [
     url: 'https://raffle.superchain.eco/',
     name: 'SuperChain Raffle',
     description:
-      'Claim free tickets in the weekly Superchain Raffle based on your Super Account level for a chance to win rewards.',
+      'Claim free tickets in the weekly Superchain Raffle based on your Prosperity Passport level for a chance to win rewards.',
     accessControl: {
       type: 'NO_RESTRICTIONS' as SafeAppAccessPolicyTypes,
       value: [],

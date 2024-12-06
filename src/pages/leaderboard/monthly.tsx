@@ -7,7 +7,7 @@ function Monthly() {
   return (
     <>
       <Head>
-        <title>Super Account – Leaderboard</title>
+        <title>Prosperity Passport – Leaderboard</title>
       </Head>
       <Box width="100%" height="100%">
         <LeaderboardHeader />

@@ -123,12 +123,12 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
                 display="flex"
                 flexWrap="wrap"
               >
-                {truncateName(superChainSmartAccount.data.superChainID.split('.superchain')[0], 12)}
-                <span style={{ color: 'var(--color-secondary-main)' }}>.superchain</span>
+                {truncateName(superChainSmartAccount.data.superChainID.split('.prosperity')[0], 12)}
+                <span style={{ color: 'var(--color-secondary-main)' }}>.prosperity</span>
               </Typography>
               <Box>
                 <Typography fontSize={14} fontWeight={500} color="var(--color-text-secondary)">
-                  SC points:{' '}
+                  Prosperity Points:{' '}
                   <span
                     style={{
                       color: 'var(--color-text-primary)',

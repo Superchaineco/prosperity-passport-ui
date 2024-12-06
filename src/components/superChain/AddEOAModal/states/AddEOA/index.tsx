@@ -94,7 +94,7 @@ function AddEOA({
               {addressHasSuperChainAccount && (
                 <Alert severity="error" icon={false}>
                   <Typography variant="body1" color="secondary" textAlign="center">
-                    This address is already connected to another Super Account. Try another address.
+                    This address is already connected to another Prosperity Passport. Try another address.
                   </Typography>
                 </Alert>
               )}
@@ -110,7 +110,7 @@ function AddEOA({
           <Button
             fullWidth
             variant="contained"
-            color="secondary"
+            color="complementary"
             disabled={!isValid || isChecking || addressHasSuperChainAccount}
             type="submit"
           >

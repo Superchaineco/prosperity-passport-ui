@@ -1,5 +1,4 @@
 import { Box, Skeleton, SvgIcon, Tooltip, Typography } from '@mui/material'
-import PerkRaffle from '@/public/images/superchain/perk-raffle.svg'
 import PerkSponsored from '@/public/images/superchain/perk-gas.svg'
 import React, { useMemo } from 'react'
 import css from './styles.module.css'
@@ -33,7 +32,7 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
         </>
       ) : (
         <>
-          <Box
+          {/* <Box
             display="flex"
             width="100%"
             flexDirection="row"
@@ -56,7 +55,7 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
             >
               Claim {perks.raffle?.value ?? 0} tickets per week
             </Typography>
-          </Box>
+          </Box> */}
 
           <Box
             display="flex"
@@ -68,7 +67,7 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
           >
             <Tooltip title={<Typography align="center">Sponsored Transactions</Typography>}>
               <Box display="flex" justifyContent="center" alignItems="center">
-                <SvgIcon component={PerkSponsored} inheritViewBox className={css.perk} />
+                <SvgIcon color="secondary" component={PerkSponsored} inheritViewBox className={css.perk} />
               </Box>
             </Tooltip>
             <Typography

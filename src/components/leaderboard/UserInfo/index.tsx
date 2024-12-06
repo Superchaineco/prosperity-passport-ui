@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import css from './styles.module.css'
 import type { UserResponse } from '@/types/super-chain'
 import Close from '@/public/images/common/close.svg'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import NounsAvatar from '@/components/common/NounsAvatar'
 import ExplorerButton from '@/components/common/ExplorerButton'
 import { getBlockExplorerLink } from '@/utils/chains'
@@ -70,13 +70,13 @@ function UserInfo({
       upsertAddressBookEntry({
         chainId,
         address: context?.superchainsmartaccount[0]!,
-        name: context?.superchainsmartaccount[1].split('.superchain')[0]!,
+        name: context?.superchainsmartaccount[1].split('.prosperity')[0]!,
       }),
     )
     dispatch(
       upsertContact({
         address: context.superchainsmartaccount[0],
-        name: context?.superchainsmartaccount[1].split('.superchain')[0]!,
+        name: context?.superchainsmartaccount[1].split('.prosperity')[0]!,
         chainId,
         superChainAccount: context?.superchainsmartaccount
           ? {
@@ -124,7 +124,7 @@ function UserInfo({
             <Typography display="flex" alignItems="center" fontWeight={600} fontSize={20}>
               potatohead
               <Typography component="span" fontSize="inherit" fontWeight="inherit" color="secondary.main">
-                .superchain
+                .prosperity
               </Typography>
             </Typography>
           </Skeleton>
@@ -175,9 +175,9 @@ function UserInfo({
           </Box>
           <Stack direction="row" gap={1}>
             <Typography display="flex" alignItems="center" fontWeight={600} fontSize={20}>
-              {context?.superchainsmartaccount[1].split('.superchain')[0]}
+              {context?.superchainsmartaccount[1].split('.prosperity')[0]}
               <Typography component="span" fontSize="inherit" fontWeight="inherit" color="secondary.main">
-                .superchain
+                .prosperity
               </Typography>
             </Typography>
             <Stack direction="row" fontSize="20px">
@@ -211,7 +211,7 @@ function UserInfo({
             bgcolor="#ECF0F7"
           >
             <strong>{context?.superchainsmartaccount[2]}</strong>
-            <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="medium" />
+            <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
           </Box>
           <Box
             display="flex"

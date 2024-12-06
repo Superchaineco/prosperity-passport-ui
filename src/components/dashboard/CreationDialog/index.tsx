@@ -45,18 +45,18 @@ const CreationDialog = () => {
     <Dialog className={css.creationModal} open={open}>
       <DialogContent sx={{ padding: 0 }}>
         <Typography variant="h3" fontWeight="700" mb={1}>
-          Welcome to Super Account!
+          Welcome to Prosperity Passport!
         </Typography>
         <Typography variant="body2">
-          With this Super Account, you will be able to explore and contribute to the Superchain through the following
-          features:
+          With this Prosperity Passport, you will be able to explore and contribute to the Superchain through the
+          following features:
         </Typography>
 
         <Grid container mt={2} mb={4} spacing={3}>
           <HintItem
             Icon={AccountIcon}
             title="Account"
-            description="Connect your Superchain Wallets to your Super Account to track your progress."
+            description="Connect your Superchain Wallets to your Prosperity Passport to track your progress."
           />
           <HintItem
             Icon={BadgesIcon}
@@ -71,7 +71,7 @@ const CreationDialog = () => {
           <HintItem
             Icon={TransactionIcon}
             title="Transactions"
-            description="Benefit from Super Account perks, which include several weekly free transactions based on your account level."
+            description="Benefit from Prosperity Passport perks, which include several weekly free transactions based on your account level."
           />
           <HintItem
             Icon={ContactsIcon}
@@ -81,7 +81,7 @@ const CreationDialog = () => {
           <HintItem
             Icon={AppsIcon}
             title="Apps"
-            description="Use native Super Account apps to benefit from special perks or engage with any app through Wallet connect."
+            description="Use native Prosperity Passport apps to benefit from special perks or engage with any app through Wallet connect."
           />
         </Grid>
       </DialogContent>

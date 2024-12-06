@@ -122,7 +122,7 @@ const CreateSafe = () => {
 
   const CreateSafeSteps: TxStepperProps<NewSafeFormData>['steps'] = [
     {
-      title: 'Select a name and ID for your Super Account',
+      title: 'Select a name and ID for your Prosperity Passport',
       subtitle: '',
       render: (data, onSubmit, onBack, setStep) => (
         <SuperChainID
@@ -136,8 +136,8 @@ const CreateSafe = () => {
       ),
     },
     {
-      title: 'Customize your Super Account Avatar',
-      subtitle: 'This avatar will be the face of your Super Account',
+      title: 'Customize your Prosperity Passport Avatar',
+      subtitle: 'This avatar will be the face of your Prosperity Passport',
       render: (data, onSubmit, onBack, setStep) => (
         <Avatar setStep={setStep} onBack={onBack} seed={seed} setSeed={setSeed} onSubmit={onSubmit} data={data} />
       ),
@@ -145,7 +145,7 @@ const CreateSafe = () => {
     {
       title: 'Review',
       subtitle:
-        "You're about to create a new Super Account and will have to confirm the transaction with your connected wallet.",
+        "You're about to create a new Prosperity Passport and will have to confirm the transaction with your connected wallet.",
       render: (data, onSubmit, onBack, setStep) => (
         <ReviewStep data={data} onSubmit={onSubmit} onBack={onBack} setStep={setStep} />
       ),
@@ -189,7 +189,7 @@ const CreateSafe = () => {
       <Grid container columnSpacing={3} justifyContent="center" mt={[2, null, 7]}>
         <Grid item xs={activeStep < 2 ? 12 : 8}>
           <Typography variant="h2" pb={2}>
-            Create new Super Account
+            Create new Prosperity Passport
           </Typography>
         </Grid>
         <Grid item xs={12} md={8} order={[1, null, 0]}>

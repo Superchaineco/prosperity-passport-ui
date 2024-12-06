@@ -13,6 +13,7 @@ declare module '@mui/material/styles' {
   export interface Palette {
     border: Palette['primary']
     logo: Palette['primary']
+    complementary: Palette['primary']
     backdrop: Palette['primary']
     static: Palette['primary']
   }
@@ -50,6 +51,7 @@ declare module '@mui/material/Button' {
 
   export interface ButtonPropsColorOverrides {
     background: true
+    complementary: true
   }
   export interface ButtonPropsVariantOverrides {
     danger: true
@@ -95,6 +97,17 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
             style: {
               padding: '12px 48px',
             },
+          },
+          {
+            props: { color: 'complementary' },
+            style: ({ theme }) => ({
+              backgroundColor: theme.palette.complementary.main,
+              color: theme.palette.text.primary,
+              border: `1px solid black`,
+              '&:hover': {
+                backgroundColor: theme.palette.complementary.light,
+              },
+            }),
           },
           {
             props: { variant: 'danger' },
@@ -387,6 +400,15 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
           }),
         },
       },
+      MuiFormLabel: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            '&:focus &.Mui-focused': {
+              color: ' black !important',
+            },
+          }),
+        },
+      },
       MuiOutlinedInput: {
         styleOverrides: {
           notchedOutline: ({ theme }) => ({
@@ -472,6 +494,7 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
         styleOverrides: {
           root: ({ theme }) => ({
             fontWeight: 700,
+            color: theme.palette.text.primary,
             '&:hover': {
               color: theme.palette.primary.light,
             },
@@ -482,6 +505,13 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
         styleOverrides: {
           root: ({ theme }) => ({
             backgroundColor: theme.palette.border.light,
+          }),
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            color: theme.palette.static.main,
           }),
         },
       },

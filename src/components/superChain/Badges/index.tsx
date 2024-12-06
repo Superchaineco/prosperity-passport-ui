@@ -1,7 +1,7 @@
 import { BadgeResponse } from '@/types/super-chain'
 import { Box, Skeleton, SvgIcon, Tooltip, Typography } from '@mui/material'
 import React from 'react'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 
 function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: boolean }) {
   return (
@@ -36,7 +36,7 @@ function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: b
                   </Typography>
                   <Box justifyContent="center" alignItems="center" display="flex" gap={1}>
                     <strong>{badge.badge.badgeTiers[parseInt(badge.tier) - 1].points}</strong>
-                    <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="medium" />
+                    <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
                   </Box>
                 </Box>
               }

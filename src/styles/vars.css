@@ -7,9 +7,11 @@
   --color-primary-dark: #3c3c3c;
   --color-primary-main: #121312;
   --color-primary-light: #5f6266;
-  --color-secondary-dark: #e8041d;
-  --color-secondary-main: #ff0420;
-  --color-secondary-light: #ff576a;
+  --color-secondary-dark: #3a531a;
+  --color-secondary-main: #476520;
+  --color-secondary-light: #476520;
+  --color-complementary-main: #fcff52;
+  --color-complementary-light: #fcff52e1;
   --color-secondary-background: #ecf0f7;
   --color-border-main: #a1a3a7;
   --color-border-light: #dcdee0;

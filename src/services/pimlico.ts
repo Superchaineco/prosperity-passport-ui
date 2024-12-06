@@ -1,5 +1,5 @@
 import { BACKEND_BASE_URI } from '@/config/constants'
-import { CHAIN_ID, JSON_RPC_PROVIDER } from '@/features/superChain/constants'
+import { JSON_RPC_PROVIDER } from '@/features/superChain/constants'
 import { createSmartAccountClient } from 'permissionless'
 import { toSafeSmartAccount } from 'permissionless/accounts'
 import { createPimlicoClient } from 'permissionless/clients/pimlico'

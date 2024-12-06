@@ -31,7 +31,8 @@ const ConnectWalletButton = ({
       size={small ? 'small' : 'medium'}
       disableElevation
       fullWidth
-      sx={{ fontSize: small ? ['12px', '13px'] : '' }}
+      color="complementary"
+      sx={{ fontWeight: 600, border: '1px solid black' }}
     >
       {text || 'Connect'}
     </Button>

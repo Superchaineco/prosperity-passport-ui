@@ -60,10 +60,10 @@ const WelcomeLogin = () => {
           </Typography>
 
           <Typography mb={2} textAlign="center">
-            Log in to an existing Super Account or Sign Up to create your Super Account.
+            Log In or Sign Up to create a new Prosperity Passport or open an existing one
           </Typography>
           <Stack direction="row" gap={2}>
-            <Button onClick={handleConnect} variant="contained" disableElevation size="medium">
+            <Button onClick={handleConnect} variant="contained" color="complementary" disableElevation size="medium">
               Connect Wallet
             </Button>
           </Stack>
@@ -75,7 +75,9 @@ const WelcomeLogin = () => {
           <Tooltip
             placement="bottom"
             title={
-              <Typography align="center">Accept an invitation to add an extra Wallet to your Super Account.</Typography>
+              <Typography align="center">
+                Accept an invitation to add an extra Wallet to your Prosperity Passport.
+              </Typography>
             }
           >
             <Button

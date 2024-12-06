@@ -44,7 +44,7 @@ const SafeApps: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Super Account – Safe Apps</title>
+        <title>Prosperity Passport – Safe Apps</title>
       </Head>
 
       <SafeAppsSDKLink />

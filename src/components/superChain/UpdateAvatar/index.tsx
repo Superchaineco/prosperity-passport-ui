@@ -156,7 +156,7 @@ const UpdateAvatarModal = () => {
             </div>
 
             <Paper data-testid="modal-header" className={css.header}>
-              <TxLayoutHeader icon={undefined} subtitle="Customize your Super Account Avatar" hideNonce={true} />
+              <TxLayoutHeader icon={undefined} subtitle="Customize your Prosperity Passport Avatar" hideNonce={true} />
             </Paper>
             <div className={css.step}>
               <TxCard>
@@ -243,9 +243,11 @@ const UpdateAvatarModal = () => {
                 <Divider className={commonCss.nestedDivider} />
 
                 <CardActions style={{ margin: 0 }}>
-                  <Button onClick={handleSubmit} disabled={!isChanged} variant="contained" color="secondary">
-                    <Typography color="white">Save</Typography>
-                    <SvgIcon sx={{ marginLeft: 1 }} inheritViewBox component={Save} />
+                  <Button onClick={handleSubmit} disabled={!isChanged} variant="contained" color="complementary">
+                    <Typography fontWeight="bold" color="inherit">
+                      Save
+                    </Typography>
+                    <SvgIcon color="inherit" sx={{ marginLeft: 1 }} inheritViewBox component={Save} />
                   </Button>
                 </CardActions>
               </TxCard>

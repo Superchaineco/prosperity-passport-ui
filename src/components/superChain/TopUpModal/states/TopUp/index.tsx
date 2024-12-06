@@ -130,21 +130,21 @@ function TopUp({
         <Grid item xs={12}>
           <Box display="flex" gap={2} className={classNames(css.container, css.optimismBadge)}>
             <Image
-              src="https://safe-transaction-assets.safe.global/chains/10/chain_logo.png"
-              alt="Optimism Logo"
+              src="https://safe-transaction-assets.safe.global/chains/42220/chain_logo.png"
+              alt="Celo logo"
               width={24}
               height={24}
               loading="lazy"
             />
             <p>
-              <strong>Optimism network</strong>— only send Optimism assets to this Account.
+              <strong>Celo network</strong>— only send Celo assets to this Account.
             </p>
           </Box>
         </Grid>
         <Grid item>
           <Box className={classNames(css.container, css.description)}>
-            This is the address of your Super Account. Deposit funds by topping up or copying the address below. Only
-            send OETH and tokens (e.g. ERC20, ERC721) to this address.
+            This is the address of your Prosperity Passport. Deposit funds by topping up or copying the address below.
+            Only send ETH and tokens (e.g. ERC20, ERC721) to this address.
           </Box>
         </Grid>
         <Grid item>
@@ -176,7 +176,7 @@ function TopUp({
               <MenuItem value="OP">
                 <Box pr={1} display="flex" gap={1}>
                   <SvgIcon component={OP} />
-                  OP
+                  CELO
                 </Box>
               </MenuItem>
             </Select>
@@ -231,12 +231,12 @@ function TopUp({
               </div>
               <Box>
                 <p>{superChainSmartAccount.data.superChainID}</p>
-                <Box display="flex" lineHeight={1.2} gap={1}>
+                <Box display="flex" width="100%" lineHeight={1.2} gap={1}>
                   <p>
-                    <strong>oeth:</strong>
+                    <strong>ceth:</strong>
                     {isMobile
                       ? shortenAddress(superChainSmartAccount.data.smartAccount, 4)
-                      : shortenAddress(superChainSmartAccount.data.smartAccount, 8)}
+                      : superChainSmartAccount.data.smartAccount}
                   </p>
                   <CopyButton text={superChainSmartAccount.data.smartAccount} />
                   <Box color="border.main">

@@ -8,7 +8,7 @@ const SecurityLoginPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Super Account – Settings – Security & Login</title>
+        <title>Prosperity Passport – Settings – Security & Login</title>
       </Head>
 
       <SettingsHeader />

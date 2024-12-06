@@ -1,5 +1,5 @@
 import { Box, Grid, Skeleton, SvgIcon, Typography } from '@mui/material'
-import Badge from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 
 function BadgesHeader({
   level,
@@ -44,7 +44,7 @@ function BadgesHeader({
                 <Typography variant="h4" fontWeight={600} fontSize={44}>
                   {points}
                 </Typography>
-                <SvgIcon component={Badge} inheritViewBox fontSize="large" />
+                <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="large" />
               </>
             )}
           </Grid>
@@ -61,7 +61,7 @@ function BadgesHeader({
                 <Typography variant="h4" fontWeight={600} fontSize={44}>
                   {pointsToNextLevel}
                 </Typography>
-                <SvgIcon component={Badge} inheritViewBox fontSize="large" />
+                <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="large" />
               </>
             )}
           </Box>

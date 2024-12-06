@@ -34,7 +34,7 @@ function FailedTxnModal({
         <Button fullWidth onClick={onClose} variant="contained">
           Return to dashboard
         </Button>
-        <Button onClick={handleRetry} fullWidth color="secondary" variant="contained">
+        <Button onClick={handleRetry} fullWidth color="complementary" variant="contained">
           Retry
         </Button>
       </Stack>

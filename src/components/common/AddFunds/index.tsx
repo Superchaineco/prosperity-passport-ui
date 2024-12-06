@@ -53,7 +53,7 @@ const AddFundsCTA = () => {
           </Box> */}
 
           {/* <BuyCryptoButton /> */}
-          <Button onClick={() => setIsTopUpOpen(true)} variant="contained" color="primary" size="large">
+          <Button color="complementary" onClick={() => setIsTopUpOpen(true)} variant="contained" size="large">
             Add funds
           </Button>
         </Grid>

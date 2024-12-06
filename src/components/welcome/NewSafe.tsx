@@ -47,11 +47,11 @@ const NewSafe = () => {
               letterSpacing={-1.5}
               color="static.secondary"
             >
-              Feel the power of the Superchain
+              Feel the power of the Prosperity Passport
             </Typography>
 
             <Typography mb={1} color="static.secondary">
-              Navigate the Superchain ecosystem with your Super Account.
+              Connect to the Celo ecosystem with your Smart Account.
             </Typography>
 
             <ul className={css.bulletList}>

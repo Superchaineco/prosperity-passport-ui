@@ -163,12 +163,12 @@ const SafeHeader = (): ReactElement => {
             </span>
             <div className={css.superChainData}>
               <p className={css.superChainId}>
-                {truncateName(superChainSmartAccount.data.superChainID.split('.superchain')[0], 12)}
-                <span>.superchain</span>
+                {truncateName(superChainSmartAccount.data.superChainID.split('.prosperity')[0], 12)}
+                <span>.prosperity</span>
               </p>
               <Box>
                 <p className={css.superChainData_points}>
-                  SC points: <span>{Number(superChainSmartAccount.data.points)}</span>
+                  Prosperity Points: <span>{Number(superChainSmartAccount.data.points)}</span>
                 </p>
                 <p className={css.superChainData_points}>
                   Points to level up:{' '}
