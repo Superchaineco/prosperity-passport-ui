@@ -15,8 +15,8 @@ import {
   http,
   zeroAddress,
 } from 'viem'
-import { sepolia, optimism } from 'viem/chains'
-import { CHAIN_ID, JSON_RPC_PROVIDER } from '@/features/superChain/constants'
+import { celo } from 'viem/chains'
+import { JSON_RPC_PROVIDER } from '@/features/superChain/constants'
 
 export enum ModalState {
   TopUp,
@@ -36,11 +36,11 @@ const TopUpModal = ({ open, onClose }: { open: boolean; onClose: () => void }): 
   const handleTopUp = async (value: bigint, token: Token) => {
     if (!wallet) return
     const walletClient = createWalletClient({
-      chain: CHAIN_ID === sepolia.id.toString() ? sepolia : optimism,
+      chain: celo,
       transport: custom(wallet?.provider),
     })
     const publicClient = createPublicClient({
-      chain: CHAIN_ID === sepolia.id.toString() ? sepolia : optimism,
+      chain: celo,
       transport: http(JSON_RPC_PROVIDER),
     })
     try {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { type Address, createWalletClient, custom, EIP1193Provider } from 'viem'
-import { optimism } from 'viem/chains'
+import { celo } from 'viem/chains'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
 import { getSmartAccountClient } from '@/services/pimlico'
@@ -25,7 +25,7 @@ function usePimlico() {
 
       const walletClient = createWalletClient({
         account: wallet.address as Address,
-        chain: optimism,
+        chain: celo,
         transport: custom(eip1193provider as EIP1193Provider),
       })
 

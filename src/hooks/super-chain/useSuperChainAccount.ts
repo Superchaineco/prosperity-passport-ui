@@ -7,7 +7,7 @@ import {
 import { Contract, JsonRpcProvider } from 'ethers'
 import { type Address, createPublicClient, createWalletClient, custom, getContract, http } from 'viem'
 import usePimlico from '../usePimlico'
-import { sepolia, optimism } from 'viem/chains'
+import { celo } from 'viem/chains'
 import useWallet from '../wallets/useWallet'
 
 function useSuperChainAccount() {
@@ -39,7 +39,7 @@ function useSuperChainAccount() {
   const getWriteableSuperChainSmartAccount = () => {
     if (!wallet) return
     const walletClient = createWalletClient({
-      chain: CHAIN_ID === sepolia.id.toString() ? sepolia : optimism,
+      chain: celo,
       transport: custom(wallet.provider),
       account: wallet.address as Address,
     })
@@ -54,7 +54,7 @@ function useSuperChainAccount() {
     return SuperChainAccountContractWriteable
   }
   const publicClient = createPublicClient({
-    chain: CHAIN_ID === sepolia.id.toString() ? sepolia : optimism,
+    chain: celo,
     transport: http(),
   })
   return {

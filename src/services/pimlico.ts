@@ -5,7 +5,7 @@ import { toSafeSmartAccount } from 'permissionless/accounts'
 import { createPimlicoClient } from 'permissionless/clients/pimlico'
 import { type Address, createPublicClient, http, WalletClient, Transport, Account, Chain } from 'viem'
 import { entryPoint07Address } from 'viem/account-abstraction'
-import { sepolia, optimism } from 'viem/chains'
+import { celo } from 'viem/chains'
 
 const pimlicoTransport = () => {
   return http(`${BACKEND_BASE_URI}/user-op-reverse-proxy`, {
@@ -18,7 +18,7 @@ const pimlicoTransport = () => {
 
 export const publicClient = createPublicClient({
   transport: http(JSON_RPC_PROVIDER),
-  chain: optimism,
+  chain: celo,
 })
 
 export const paymasterClient = () =>
@@ -55,7 +55,7 @@ export async function getSmartAccountClient(
   })
   const smartAccountClient = createSmartAccountClient({
     account: safeAccount,
-    chain: CHAIN_ID === sepolia.id.toString() ? sepolia : optimism,
+    chain: celo,
     bundlerTransport: pimlicoTransport(),
     paymaster: paymasterClient(),
     userOperation: {
