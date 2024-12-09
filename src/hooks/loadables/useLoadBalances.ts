@@ -26,8 +26,8 @@ const useTokenListSetting = (): boolean | undefined => {
 
 const tokensLogoToInject = [
   {
-    address: '0x4200000000000000000000000000000000000042',
-    logoUri: '/tokens/0x4200000000000000000000000000000000000042.png',
+    address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+    logoUri: '/tokens/0x471EcE3750Da237f93B8E339c536989b8978a438.png',
   },
 ]
 
@@ -52,11 +52,17 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
       let balances = await getBalances(chainId, safeAddress, currency, {
         trusted: isTrustedTokenList,
       })
+      balances.fiatTotal = (Number(balances.fiatTotal) - Number(balances.items.find((token) => token.tokenInfo.type === 'NATIVE_TOKEN')?.fiatBalance) || 0).toString()
 
-      balances.items = balances.items.map((balance) => {
-        const logo = tokensLogoToInject.find((token) => token.address === balance.tokenInfo.address)
-        return logo ? { ...balance, tokenInfo: { ...balance.tokenInfo, logoUri: logo.logoUri } } : balance
-      })
+      balances.items = balances.items
+        .filter((balance) => balance.tokenInfo.type !== 'NATIVE_TOKEN')
+        .map((balance) => {
+          const logo = tokensLogoToInject.find((token) => token.address === balance.tokenInfo.address)
+          return logo
+            ? { ...balance, tokenInfo: { ...balance.tokenInfo, logoUri: logo.logoUri } }
+            : balance
+        })
+
       return balances
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

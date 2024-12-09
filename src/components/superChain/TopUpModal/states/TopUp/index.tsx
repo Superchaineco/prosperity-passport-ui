@@ -7,8 +7,7 @@ import NounsAvatar from '@/components/common/NounsAvatar'
 import CopyButton from '@/components/common/CopyButton'
 import ExplorerButton from '@/components/common/ExplorerButton'
 import Image from 'next/image'
-import OETH from '@/public/images/currencies/ethereum.svg'
-import Celo from '@/public/images/currencies/optimism.svg'
+import Celo from '@/public/images/currencies/celo.svg'
 import lightPalette from '@/components/theme/lightPalette'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
@@ -52,8 +51,7 @@ export type Token = {
 }
 
 const tokens: Record<string, Token> = {
-  ETH: { values: [0.02, 0.05, 0.1], decimals: 18, address: '0x0000000000000000000000000000000000000000', icon: OETH },
-  Celo: { values: [10, 20, 50], decimals: 18, address: '0x4200000000000000000000000000000000000042', icon: Celo },
+  CELO: { values: [10, 20, 50], decimals: 18, address: '0x471EcE3750Da237f93B8E339c536989b8978a438', icon: Celo },
 }
 
 function TopUp({
@@ -76,7 +74,7 @@ function TopUp({
       : undefined
   const [selectedValue, setSelectedValue] = useState<number | null>(null)
   const [customValue, setCustomValue] = useState<string>('')
-  const [selectedToken, setSelectedToken] = useState<keyof typeof tokens>('ETH')
+  const [selectedToken, setSelectedToken] = useState<keyof typeof tokens>('CELO')
   const [tokenBalance, setTokenBalance] = useState<number>(0)
   const nounSeed = useMemo(() => {
     return {
@@ -144,7 +142,7 @@ function TopUp({
         <Grid item>
           <Box className={classNames(css.container, css.description)}>
             This is the address of your Prosperity Passport. Deposit funds by topping up or copying the address below.
-            Only send ETH and tokens (e.g. ERC20, ERC721) to this address.
+            Only send CELO and tokens (e.g. ERC20, ERC721) to this address.
           </Box>
         </Grid>
         <Grid item>
@@ -167,15 +165,9 @@ function TopUp({
               }}
               value={selectedToken}
             >
-              <MenuItem value="ETH">
+              <MenuItem value="CELO">
                 <Box pr={1} display="flex" gap={1}>
-                  <SvgIcon component={OETH} />
-                  ETH
-                </Box>
-              </MenuItem>
-              <MenuItem value="Celo">
-                <Box pr={1} display="flex" gap={1}>
-                  <SvgIcon component={Celo} />
+                  <SvgIcon inheritViewBox component={Celo} />
                   CELO
                 </Box>
               </MenuItem>
