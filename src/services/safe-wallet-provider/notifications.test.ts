@@ -20,7 +20,7 @@ describe('showNotification', () => {
     Object.assign(global.Notification, {
       permission: 'granted',
     })
-      ; (document.hasFocus as jest.Mock).mockReturnValue(false)
+    ;(document.hasFocus as jest.Mock).mockReturnValue(false)
 
     const title = 'Test Notification'
     const options = { body: 'Test Body' }
@@ -37,7 +37,7 @@ describe('showNotification', () => {
     Object.assign(global.Notification, {
       permission: 'denied',
     })
-      ; (document.hasFocus as jest.Mock).mockReturnValue(false)
+    ;(document.hasFocus as jest.Mock).mockReturnValue(false)
 
     showNotification('Test Notification')
 
@@ -48,7 +48,7 @@ describe('showNotification', () => {
     Object.assign(global.Notification, {
       permission: 'granted',
     })
-      ; (document.hasFocus as jest.Mock).mockReturnValue(true)
+    ;(document.hasFocus as jest.Mock).mockReturnValue(true)
 
     showNotification('Test Notification')
 
@@ -60,7 +60,7 @@ describe('showNotification', () => {
       permission: 'granted',
       close: jest.fn(),
     })
-      ; (document.hasFocus as jest.Mock).mockReturnValue(false)
+    ;(document.hasFocus as jest.Mock).mockReturnValue(false)
 
     showNotification('Test Notification')
 
@@ -81,7 +81,7 @@ describe('showNotification', () => {
     Object.assign(global.Notification, {
       permission: 'granted',
     })
-      ; (document.hasFocus as jest.Mock).mockReturnValue(false)
+    ;(document.hasFocus as jest.Mock).mockReturnValue(false)
 
     showNotification('Test Notification')
 

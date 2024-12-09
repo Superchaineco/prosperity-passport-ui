@@ -293,8 +293,8 @@ const SafePrivacyPolicy = () => (
     </ol>
     <ol start={8}>
       <li>
-        When we collect relevant&nbsp;data&nbsp;from the Blockchain to display context information in the Superchain
-        Account we process:
+        When we collect relevant&nbsp;data&nbsp;from the Blockchain to display context information in the Prosperity
+        Passport Account we process:
         <ol>
           <li>your public Wallet address, </li>
           <li>account balance,</li>
