@@ -4,7 +4,7 @@ import lightPalette from '@/components/theme/lightPalette'
 import darkPalette from '@/components/theme/darkPalette'
 
 const descriptionText =
-  'Earn rewards for your Superchain contributions with Superchain Accounts. Track badges, manage transactions, and view your Prosperity Passport. Get recognized for your participation.'
+  'Earn rewards for your Prosperity Passport contributions with Prosperity Passport Accounts. Track badges, manage transactions, and view your Prosperity Passport. Get recognized for your participation.'
 const titleText = 'Prosperity Passport'
 
 const MetaTags = ({ prefetchUrl }: { prefetchUrl: string }) => (
@@ -13,14 +13,14 @@ const MetaTags = ({ prefetchUrl }: { prefetchUrl: string }) => (
     {!IS_PRODUCTION && <meta name="robots" content="noindex" />}
 
     {/* Social sharing */}
-    <meta name="og:image" content="https://account.superchain.eco/images/social-share.png" />
+    <meta name="og:image" content="https://passport.celopg.eco/images/social-share.png" />
     <meta name="og:description" content={descriptionText} />
     <meta name="og:title" content={titleText} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@SuperchainEco" />
     <meta name="twitter:title" content={titleText} />
     <meta name="twitter:description" content={descriptionText} />
-    <meta name="twitter:image" content="https://account.superchain.eco/images/social-share.png" />
+    <meta name="twitter:image" content="https://passport.celopg.eco/images/social-share.png" />
 
     {/* CSP */}
     <meta httpEquiv="Content-Security-Policy" content={ContentSecurityPolicy} />

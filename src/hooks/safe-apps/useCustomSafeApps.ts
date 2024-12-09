@@ -72,7 +72,7 @@ const fakeSafeApps: SafeAppData[] = [
     url: 'https://raffle.superchain.eco/',
     name: 'SuperChain Raffle',
     description:
-      'Claim free tickets in the weekly Superchain Raffle based on your Prosperity Passport level for a chance to win rewards.',
+      'Claim free tickets in the weekly Prosperity Passport Raffle based on your Prosperity Passport level for a chance to win rewards.',
     accessControl: {
       type: 'NO_RESTRICTIONS' as SafeAppAccessPolicyTypes,
       value: [],
@@ -82,7 +82,7 @@ const fakeSafeApps: SafeAppData[] = [
     socialProfiles: [],
     developerWebsite: '',
     chainIds: ['10'],
-    iconUrl: 'https://account.superchain.eco/images/apps/raffle.jpg',
+    iconUrl: 'https://passport.celopg.eco/images/apps/raffle.jpg',
   },
   {
     id: 48,
@@ -118,7 +118,7 @@ const fakeSafeApps: SafeAppData[] = [
     id: 152,
     url: 'https://velodrome.finance',
     name: 'Velodrome Finance',
-    iconUrl: 'https://account.superchain.eco/images/apps/velodrome.jpg',
+    iconUrl: 'https://passport.celopg.eco/images/apps/velodrome.jpg',
     description:
       'Velodrome Finance is a next-generation AMM that combines the best of Curve, Convex and Uniswap, designed to serve as the central liquidity hub on Celo network. Velodrome NFTs vote on token emissio',
     chainIds: ['10'],

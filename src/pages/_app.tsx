@@ -54,9 +54,9 @@ import { WC_PROJECT_ID as projectId } from '@/config/constants'
 const metadata = {
   name: 'Prosperity Passport',
   description:
-    'Earn rewards for your Superchain contributions with Superchain Accounts. Track badges, manage transactions, and view your Prosperity Passport. Get recognized for your participation.',
+    'Earn rewards for your Prosperity Passport contributions with Prosperity Passport Accounts. Track badges, manage transactions, and view your Prosperity Passport. Get recognized for your participation.',
   url: 'https://passport.celopg.eco',
-  icons: ['https://account.superchain.eco/images/superchain-logo.png'],
+  icons: ['https://passport.celopg.eco/images/pp-logo.png.png'],
 }
 if (!projectId) {
   throw new Error('Project ID is not defined')

@@ -48,25 +48,25 @@ const CreationDialog = () => {
           Welcome to Prosperity Passport!
         </Typography>
         <Typography variant="body2">
-          With this Prosperity Passport, you will be able to explore and contribute to the Superchain through the
-          following features:
+          With this Prosperity Passport, you will be able to explore and contribute to the Prosperity Passport through
+          the following features:
         </Typography>
 
         <Grid container mt={2} mb={4} spacing={3}>
           <HintItem
             Icon={AccountIcon}
             title="Account"
-            description="Connect your Superchain Wallets to your Prosperity Passport to track your progress."
+            description="Connect your Prosperity Passport Wallets to your Prosperity Passport to track your progress."
           />
           <HintItem
             Icon={BadgesIcon}
             title="Badges"
-            description="Earn Superchain progress badges based on the accomplishment of all your connected wallets."
+            description="Earn Prosperity Passport progress badges based on the accomplishment of all your connected wallets."
           />
           <HintItem
             Icon={LeaderBoardIcon}
             title="Leaderboard"
-            description="Earn Superchain Points to climb the Leaderboard and become the top Super Contributor."
+            description="Earn Prosperity Passport Points to climb the Leaderboard and become the top Super Contributor."
           />
           <HintItem
             Icon={TransactionIcon}

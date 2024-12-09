@@ -19,7 +19,7 @@ type NotificationData = MessagePayload['data'] & {
 }
 
 export function firebaseMessagingSw() {
-  const ICON_PATH = '/images/superchain-logo.png'
+  const ICON_PATH = '/images/pp-logo.png.png'
 
   const app = initializeFirebaseApp()
 
