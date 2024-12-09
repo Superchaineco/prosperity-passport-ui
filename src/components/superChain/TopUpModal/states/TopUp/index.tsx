@@ -8,7 +8,7 @@ import CopyButton from '@/components/common/CopyButton'
 import ExplorerButton from '@/components/common/ExplorerButton'
 import Image from 'next/image'
 import OETH from '@/public/images/currencies/ethereum.svg'
-import OP from '@/public/images/currencies/optimism.svg'
+import Celo from '@/public/images/currencies/optimism.svg'
 import lightPalette from '@/components/theme/lightPalette'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
@@ -53,7 +53,7 @@ export type Token = {
 
 const tokens: Record<string, Token> = {
   ETH: { values: [0.02, 0.05, 0.1], decimals: 18, address: '0x0000000000000000000000000000000000000000', icon: OETH },
-  OP: { values: [10, 20, 50], decimals: 18, address: '0x4200000000000000000000000000000000000042', icon: OP },
+  Celo: { values: [10, 20, 50], decimals: 18, address: '0x4200000000000000000000000000000000000042', icon: Celo },
 }
 
 function TopUp({
@@ -173,9 +173,9 @@ function TopUp({
                   ETH
                 </Box>
               </MenuItem>
-              <MenuItem value="OP">
+              <MenuItem value="Celo">
                 <Box pr={1} display="flex" gap={1}>
-                  <SvgIcon component={OP} />
+                  <SvgIcon component={Celo} />
                   CELO
                 </Box>
               </MenuItem>

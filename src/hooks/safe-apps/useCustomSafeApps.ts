@@ -120,7 +120,7 @@ const fakeSafeApps: SafeAppData[] = [
     name: 'Velodrome Finance',
     iconUrl: 'https://account.superchain.eco/images/apps/velodrome.jpg',
     description:
-      'Velodrome Finance is a next-generation AMM that combines the best of Curve, Convex and Uniswap, designed to serve as the central liquidity hub on Optimism network. Velodrome NFTs vote on token emissio',
+      'Velodrome Finance is a next-generation AMM that combines the best of Curve, Convex and Uniswap, designed to serve as the central liquidity hub on Celo network. Velodrome NFTs vote on token emissio',
     chainIds: ['10'],
     provider: undefined,
     accessControl: {

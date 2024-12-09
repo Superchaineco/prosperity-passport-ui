@@ -120,7 +120,7 @@ export const SafeSetupOverview = ({
           </Box>
         }
       />
-      <ReviewRow name="Account ID" value={<Typography>{id}.superchain</Typography>} />
+      <ReviewRow name="Account ID" value={<Typography>{id}.prosperity</Typography>} />
       {name && <ReviewRow name="Wallet Name" value={<Typography>{name}</Typography>} />}
       <ReviewRow
         name="Avatar"

@@ -46,13 +46,13 @@ function WrongNetworkModal() {
         </Typography>
         <Stack alignItems="center" spacing={1}>
           <Typography textAlign="center" id="modal-modal-description" fontSize={16}>
-            You are connected to the wrong network. Switch over to the OP Mainnet in order to continue.
+            You are connected to the wrong network. Switch over to the Celo Mainnet in order to continue.
           </Typography>
         </Stack>
       </Box>
 
       <Button className={css.outsideButton} fullWidth onClick={handleChainSwitch} color="secondary" variant="contained">
-        Switch to Optimism
+        Switch to Celo
       </Button>
     </Dialog>
   )

@@ -43,7 +43,7 @@ function RankingProfile({ isMainProfile, position, points, name, level, badges, 
             <NounsAvatar seed={noun} />
           </Box>
           <Typography fontSize={14}>
-            <strong>{name.split('.superchain')[0]}</strong>.superchain
+            <strong>{name.split('.prosperity')[0]}</strong>.prosperity
           </Typography>
           <Box display={{ xs: 'none', sm: 'block' }} bgcolor="GrayText" padding="3px 12px" borderRadius="100px">
             <Typography fontSize={12} fontWeight={500} color="white">

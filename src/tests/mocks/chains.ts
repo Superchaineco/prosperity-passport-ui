@@ -410,7 +410,7 @@ const CONFIG_SERVICE_CHAINS: ChainInfo[] = [
   {
     transactionService: 'https://safe-transaction.optimism.gnosis.io',
     chainId: '10',
-    chainName: 'Optimism',
+    chainName: 'Celo',
     chainLogoUri: '',
     shortName: 'oeth',
     l2: true,

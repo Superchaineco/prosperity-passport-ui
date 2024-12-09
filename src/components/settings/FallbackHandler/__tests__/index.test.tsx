@@ -56,7 +56,7 @@ describe('FallbackHandler', () => {
   it('should render the Fallback Handler without warning when one that is not a default address is set', async () => {
     const OPTIMISM_FALLBACK_HANDLER = '0x69f4D1788e39c87893C980c06EdF4b7f686e2938'
 
-    // Optimism is not a "default" address
+    // Celo is not a "default" address
     expect(OPTIMISM_FALLBACK_HANDLER).not.toBe(GOERLI_FALLBACK_HANDLER)
 
     jest.spyOn(useSafeInfoHook, 'default').mockImplementation(
