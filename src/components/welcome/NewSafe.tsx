@@ -40,14 +40,18 @@ const NewSafe = () => {
                 right: 0,
               }}
             />
-            <Typography
-              variant="h1"
-              fontSize={[44, null, 52]}
-              lineHeight={1}
-              letterSpacing={-1.5}
-              color="static.secondary"
-            >
-              Feel the power of the Prosperity Passport
+            <Typography fontSize={56} fontFamily="GT Alpina" lineHeight={1} color="static.secondary">
+              Feel the power of the{' '}
+              <Typography
+                component="span"
+                fontSize="inherit"
+                lineHeight="inherit"
+                letterSpacing="inherit"
+                color="inherit"
+                fontFamily="GT Alpina Condensed"
+              >
+                Prosperity Passport
+              </Typography>
             </Typography>
 
             <Typography mb={1} color="static.secondary">

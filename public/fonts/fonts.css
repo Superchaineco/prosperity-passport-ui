@@ -11,3 +11,17 @@
   font-weight: bold;
   src: url('/fonts/DMSans700.woff2') format('woff2');
 }
+
+@font-face {
+  font-family: 'GT Alpina';
+  font-weight: normal;
+  font-style: normal;
+  src: url('/fonts/GT-Alpina-Condensed-Light-Trial.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'GT Alpina Condensed';
+  font-weight: normal;
+  font-style: italic;
+  src: url('/fonts/GT-Alpina-Condensed-Light-Italic-Trial.otf') format('opentype');
+}
