@@ -32,7 +32,11 @@ export const getBlockExplorerLink = (
   address: string,
 ): { href: string; title: string } | undefined => {
   if (chain.blockExplorerUriTemplate) {
-    const template = { address: "https://celoscan.io/address/{{address}}", txHash: "https://celoscan.io/tx/{{txHash}}", api: "https://explorer.celo.org/mainnet/api?module={{module}}&action={{action}}&address={{address}}&apiKey={{apiKey}}" }
+    const template = {
+      address: 'https://celoscan.io/address/{{address}}',
+      txHash: 'https://celoscan.io/tx/{{txHash}}',
+      api: 'https://explorer.celo.org/mainnet/api?module={{module}}&action={{action}}&address={{address}}&apiKey={{apiKey}}',
+    }
     return getExplorerLink(address, template)
   }
 }
