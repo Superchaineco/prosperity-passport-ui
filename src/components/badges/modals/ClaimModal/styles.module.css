@@ -27,10 +27,10 @@
   transform: translateX(-50%);
   padding: 8px 40px 8px 40px;
   width: 240px;
-  background: radial-gradient(46.04% 263.1% at 50% 50%, #ff0420 0%, #b50317 100%)
+  background: radial-gradient(46.04% 263.1% at 50% 50%, #fcff52 0%, #b3b53a 100%)
     /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
   cursor: pointer;
-  color: white;
+  color: black;
   border: 0;
   border-radius: 6px;
   text-align: center;
