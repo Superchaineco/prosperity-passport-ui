@@ -6,6 +6,7 @@ import css from './styles.module.css'
 import type { ClaimData } from '../../actions'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
+import Badges from '@/components/superChain/Badges'
 function ClaimModal({
   open,
   onClose,
@@ -44,9 +45,7 @@ function ClaimModal({
           </Typography>
         </Box>
         <Box display="flex" gap="24px" flexWrap="wrap" maxWidth="360px">
-          {data?.badgeImages.map((badge, index) => {
-            return <img key={index} src={badge} alt="Badge" />
-          })}
+          <Badges badges={data?.badges!} isLoading={false} />
         </Box>
         <Box
           className={css.pointsBox}

@@ -15,9 +15,10 @@ import LoadingModal from '@/components/common/LoadingModal'
 import FailedTxnModal from '@/components/common/ErrorModal'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
+import type { BadgeResponse, ResponseBadge } from '@/types/super-chain'
 
 export type ClaimData = {
-  badgeImages: string[]
+  badges: BadgeResponse[]
   totalPoints: number
   isLevelUp: boolean
 }
@@ -45,7 +46,15 @@ function BadgesActions({
     onSuccess: (data) => {
       queryClient.refetchQueries({ queryKey: ['superChainAccount', safeAddress] })
       queryClient.refetchQueries({ queryKey: ['badges', safeAddress] })
-      setClaimData(data)
+      // This is really ugly
+      setClaimData({
+        ...data,
+        badges: data.badges.map((badge: ResponseBadge) => ({
+          tier: badge.tier,
+          points: badge.points,
+          badge: { ...badge },
+        })) as BadgeResponse[],
+      })
       setIsClaimModalOpen(true)
     },
   })
