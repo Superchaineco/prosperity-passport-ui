@@ -68,7 +68,7 @@ function AddEOA({
             <Stack spacing={1}>
               <FormControl fullWidth>
                 <TextField
-                  placeholder="oeth:"
+                  placeholder="ceth:"
                   fullWidth
                   label="Address"
                   {...register('address', {

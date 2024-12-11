@@ -10,10 +10,10 @@ const WalletBalance = ({ balance }: { balance: string | bigint | undefined }) =>
   }
 
   if (typeof balance === 'string') {
-    return <>{balance.split('.')[0] + '.' + balance.split('.')[1].slice(0, 4)} OETH</>
+    return <>{balance.split('.')[0] + '.' + balance.split('.')[1].slice(0, 4)} CETH</>
   }
 
-  return <>{formatVisualAmount(balance, 2)} OETH</>
+  return <>{formatVisualAmount(balance, 2)} CETH</>
 }
 
 export default WalletBalance

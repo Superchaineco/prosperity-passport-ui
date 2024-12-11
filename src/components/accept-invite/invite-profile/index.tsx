@@ -37,7 +37,7 @@ function InviteProfile({
         </Box>
         <Box className={css['profile-info']}>
           <Typography className={css['profile-name']}>{population.superChainId}</Typography>
-          <Typography className={css['profile-address']}>oeth:{shortenAddress(population.safe, 4)}</Typography>
+          <Typography className={css['profile-address']}>ceth:{shortenAddress(population.safe, 4)}</Typography>
         </Box>
         <Box className={css['actions-container']}>
           <CopyAddressButton address={zeroAddress} />

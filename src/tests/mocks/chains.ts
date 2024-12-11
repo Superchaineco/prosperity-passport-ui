@@ -412,7 +412,7 @@ const CONFIG_SERVICE_CHAINS: ChainInfo[] = [
     chainId: '10',
     chainName: 'Celo',
     chainLogoUri: '',
-    shortName: 'oeth',
+    shortName: 'ceth',
     l2: true,
     isTestnet: false,
     description: '',
@@ -426,7 +426,7 @@ const CONFIG_SERVICE_CHAINS: ChainInfo[] = [
     },
     nativeCurrency: {
       name: 'Ether',
-      symbol: 'OETH',
+      symbol: 'CETH',
       decimals: 18,
       logoUri: 'https://safe-transaction-assets.gnosis-safe.io/chains/10/currency_logo.png',
     },
