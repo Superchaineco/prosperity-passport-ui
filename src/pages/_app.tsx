@@ -56,7 +56,7 @@ const metadata = {
   description:
     'Earn rewards for your Prosperity Passport contributions with Prosperity Passport Accounts. Track badges, manage transactions, and view your Prosperity Passport. Get recognized for your participation.',
   url: 'https://passport.celopg.eco',
-  icons: ['https://passport.celopg.eco/images/pp-logo.png.png'],
+  icons: ['https://passport.celopg.eco/images/pp-logo.png'],
 }
 if (!projectId) {
   throw new Error('Project ID is not defined')
