@@ -13,14 +13,14 @@ const MetaTags = ({ prefetchUrl }: { prefetchUrl: string }) => (
     {!IS_PRODUCTION && <meta name="robots" content="noindex" />}
 
     {/* Social sharing */}
-    <meta name="og:image" content="https://passport.celopg.eco/images/social-share.png" />
+    <meta name="og:image" content="https://account.celopg.eco/images/social-share.png" />
     <meta name="og:description" content={descriptionText} />
     <meta name="og:title" content={titleText} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@SuperchainEco" />
     <meta name="twitter:title" content={titleText} />
     <meta name="twitter:description" content={descriptionText} />
-    <meta name="twitter:image" content="https://passport.celopg.eco/images/social-share.png" />
+    <meta name="twitter:image" content="https://account.celopg.eco/images/social-share.png" />
 
     {/* CSP */}
     <meta httpEquiv="Content-Security-Policy" content={ContentSecurityPolicy} />
