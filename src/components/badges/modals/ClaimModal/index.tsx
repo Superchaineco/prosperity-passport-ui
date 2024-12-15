@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, SvgIcon, Typography } from '@mui/material'
 import React from 'react'
 import Shiny from '@/public/images/common/shiny-animation.svg'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import css from './styles.module.css'
 import type { ClaimData } from '../../actions'
 import { useAppSelector } from '@/store'
@@ -56,7 +56,7 @@ function ClaimModal({
           padding="8px 14px 8px 16px"
         >
           <strong>{data?.totalPoints}</strong>
-          <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="medium" />
+          <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
         </Box>
         {!data?.isLevelUp && (
           <Typography color="GrayText" fontSize={16}>
