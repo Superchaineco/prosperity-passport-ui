@@ -55,8 +55,8 @@ const metadata = {
   name: 'Prosperity Account',
   description:
     'Earn rewards for your Prosperity Account contributions with Prosperity Account Accounts. Track badges, manage transactions, and view your Prosperity Account. Get recognized for your participation.',
-  url: 'https://passport.celopg.eco',
-  icons: ['https://passport.celopg.eco/images/pp-logo.png'],
+  url: 'https://account.celopg.eco',
+  icons: ['https://account.celopg.eco/images/pp-logo.png'],
 }
 if (!projectId) {
   throw new Error('Project ID is not defined')
