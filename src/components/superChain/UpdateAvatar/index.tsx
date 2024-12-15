@@ -156,7 +156,7 @@ const UpdateAvatarModal = () => {
             </div>
 
             <Paper data-testid="modal-header" className={css.header}>
-              <TxLayoutHeader icon={undefined} subtitle="Customize your Prosperity Passport Avatar" hideNonce={true} />
+              <TxLayoutHeader icon={undefined} subtitle="Customize your Prosperity Account Avatar" hideNonce={true} />
             </Paper>
             <div className={css.step}>
               <TxCard>

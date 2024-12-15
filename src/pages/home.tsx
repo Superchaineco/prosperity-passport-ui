@@ -7,7 +7,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Account</title>
+        <title>Prosperity Account – Account</title>
       </Head>
 
       <main>

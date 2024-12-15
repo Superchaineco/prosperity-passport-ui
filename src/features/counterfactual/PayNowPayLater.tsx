@@ -15,14 +15,14 @@ const PayNowPayLater = () => {
             <CheckRoundedIcon fontSize="small" color="inherit" />
           </ListItemIcon>
           <Typography variant="body2">
-            There will be a one-time network fee to activate your Prosperity Passport account.
+            There will be a one-time network fee to activate your Prosperity Account account.
           </Typography>
         </ListItem>
         <ListItem disableGutters>
           <ListItemIcon className={css.listItem}>
             <CheckRoundedIcon fontSize="small" color="inherit" />
           </ListItemIcon>
-          <Typography variant="body2">Prosperity Passport Eco doesn&apost profit from the fees.</Typography>
+          <Typography variant="body2">Prosperity Account Eco doesn&apost profit from the fees.</Typography>
         </ListItem>
       </List>
     </>

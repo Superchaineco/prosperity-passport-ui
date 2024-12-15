@@ -192,7 +192,7 @@ describe('Share Safe App Page', () => {
       expect(fetchSafeAppFromManifestSpy).toHaveBeenCalledWith(TX_BUILDER, '5')
       expect(getSafeAppsSpy).toHaveBeenCalledWith('5', { url: TX_BUILDER })
 
-      expect(screen.getByText('Create new Prosperity Passport')).toBeInTheDocument()
+      expect(screen.getByText('Create new Prosperity Account')).toBeInTheDocument()
     })
   })
 

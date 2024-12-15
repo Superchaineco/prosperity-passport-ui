@@ -77,7 +77,7 @@ const AppActions = ({ wallet, onConnectWallet, chain, appUrl, app }: Props): Rea
       button = (
         <Link href={createSafeHrefWithRedirect} passHref legacyBehavior>
           <Button variant="contained" sx={{ width: CTA_BUTTON_WIDTH }}>
-            Create new Prosperity Passport
+            Create new Prosperity Account
           </Button>
         </Link>
       )

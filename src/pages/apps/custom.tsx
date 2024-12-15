@@ -29,7 +29,7 @@ const CustomSafeApps: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Custom Safe Apps</title>
+        <title>Prosperity Account – Custom Safe Apps</title>
       </Head>
 
       <SafeAppsSDKLink />

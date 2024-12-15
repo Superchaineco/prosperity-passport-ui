@@ -61,7 +61,7 @@ export function InvitesCard({
   return (
     <Card className={css.card}>
       <CardHeader
-        title="Prosperity Passport invites"
+        title="Prosperity Account invites"
         subheader={false}
         titleTypographyProps={{ variant: 'h4' }}
         subheaderTypographyProps={{ variant: 'body2' }}

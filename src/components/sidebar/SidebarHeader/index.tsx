@@ -100,7 +100,7 @@ const SafeHeader = (): ReactElement => {
               <ExplorerButton {...blockExplorerLink} className={css.iconButton} icon={LinkIconBold} />
             </Track>
             <Tooltip
-              title={<Typography align="center">Remaining weekly gas covered by Prosperity Passport Eco</Typography>}
+              title={<Typography align="center">Remaining weekly gas covered by Prosperity Account Eco</Typography>}
             >
               <Box
                 sx={{
@@ -234,7 +234,7 @@ const SafeHeader = (): ReactElement => {
           <Tooltip
             title={
               <Typography align="center">
-                Remaining weekly relayed transactions by Prosperity Passport Eco <br />
+                Remaining weekly relayed transactions by Prosperity Account Eco <br />
                 <strong>
                   {Number(superChainSmartAccount.data.weeklyRelayedTransactions.relayedTransactions)} /{' '}
                   {Number(superChainSmartAccount.data.weeklyRelayedTransactions.maxRelayedTransactions)}

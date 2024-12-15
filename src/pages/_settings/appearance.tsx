@@ -32,7 +32,7 @@ const Appearance: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Settings – Appearance</title>
+        <title>Prosperity Account – Settings – Appearance</title>
       </Head>
 
       <SettingsHeader />

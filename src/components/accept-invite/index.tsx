@@ -37,7 +37,7 @@ const AcceptInvite = () => {
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="space-between">
               <Typography variant="h2" fontSize={24} fontWeight={600}>
-                Prosperity Passport
+                Prosperity Account
               </Typography>
               <Button className={css.signUpButton} variant="contained" color="secondary">
                 Sign Up
@@ -56,7 +56,7 @@ const AcceptInvite = () => {
           <Grid item xs={12}>
             <Alert severity="warning" sx={{ mt: 3 }}>
               <AlertTitle sx={{ fontWeight: 700 }}>Note</AlertTitle>
-              you cannot disconnect once you have accepted an invite to a Prosperity Passport.
+              you cannot disconnect once you have accepted an invite to a Prosperity Account.
             </Alert>
           </Grid>
         </Grid>

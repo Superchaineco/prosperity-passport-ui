@@ -50,7 +50,7 @@ const NewSafe = () => {
                 color="inherit"
                 fontFamily="GT Alpina Condensed"
               >
-                Prosperity Passport
+                Prosperity Account
               </Typography>
             </Typography>
 

@@ -11,7 +11,7 @@ const ShareSafeApp = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Safe Apps</title>
+        <title>Prosperity Account – Safe Apps</title>
       </Head>
 
       <main>

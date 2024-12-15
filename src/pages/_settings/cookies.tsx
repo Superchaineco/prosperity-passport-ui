@@ -7,7 +7,7 @@ const Cookies: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Settings – Cookies</title>
+        <title>Prosperity Account – Settings – Cookies</title>
       </Head>
 
       <SettingsHeader />

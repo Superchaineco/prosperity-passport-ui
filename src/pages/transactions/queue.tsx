@@ -15,7 +15,7 @@ const Queue: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Transaction queue</title>
+        <title>Prosperity Account – Transaction queue</title>
       </Head>
 
       <BatchExecuteHoverProvider>

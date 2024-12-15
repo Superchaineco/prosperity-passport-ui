@@ -8,7 +8,7 @@ function Weekly() {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Leaderboard</title>
+        <title>Prosperity Account – Leaderboard</title>
       </Head>
       <Box width="100%" height="100%">
         <LeaderboardHeader />

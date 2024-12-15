@@ -58,7 +58,7 @@ function AcceptInvite({
 
         <Alert severity="warning">
           <AlertTitle sx={{ fontWeight: 700 }}>Note</AlertTitle>
-          you cannot disconnect once you have accepted an invite to a Prosperity Passport.
+          you cannot disconnect once you have accepted an invite to a Prosperity Account.
         </Alert>
       </Box>
       <Stack spacing={1} className={css.outsideButtonContainer} direction="row">

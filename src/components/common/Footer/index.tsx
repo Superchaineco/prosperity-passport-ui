@@ -65,7 +65,7 @@ const Footer = (): ReactElement | null => {
             </li>
           </>
         ) : (
-          <li>Prosperity Passport is an unofficial distribution of Safe Wallet</li>
+          <li>Prosperity Account is an unofficial distribution of Safe Wallet</li>
         )}
 
         <li>

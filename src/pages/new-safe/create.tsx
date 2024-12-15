@@ -7,7 +7,7 @@ const Open: NextPage = () => {
   return (
     <main>
       <Head>
-        <title>Prosperity Passport – Create Safe Account</title>
+        <title>Prosperity Account – Create Safe Account</title>
       </Head>
 
       <CreateSafe />

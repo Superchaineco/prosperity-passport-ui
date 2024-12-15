@@ -134,7 +134,7 @@ export const AddCustomAppModal = ({ open, onClose, onSave, safeAppsList }: Props
                             })}
                           />
                         }
-                        label="This Safe App is not part of Prosperity Passport and I agree to use it at my own risk."
+                        label="This Safe App is not part of Prosperity Account and I agree to use it at my own risk."
                         sx={{ mt: 2 }}
                       />
 

@@ -15,7 +15,7 @@ function RecoveryWidget(): ReactElement {
   return (
     <WidgetContainer>
       <Typography component="h2" variant="subtitle1" className={css.label}>
-        New in Prosperity Passport
+        New in Prosperity Account
       </Typography>
 
       <WidgetBody>

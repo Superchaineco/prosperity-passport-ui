@@ -26,7 +26,7 @@ const Messages: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Messages</title>
+        <title>Prosperity Account – Messages</title>
       </Head>
 
       <TxHeader>

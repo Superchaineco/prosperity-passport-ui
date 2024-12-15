@@ -9,7 +9,7 @@ const SafeAppsPermissionsPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Passport – Settings – Safe Apps</title>
+        <title>Prosperity Account – Settings – Safe Apps</title>
       </Head>
 
       <SettingsHeader />

@@ -125,7 +125,7 @@ export const CreateSafeStatus = ({ data, setProgressColor, setStep }: StepRender
           <Box className={layoutCss.row}>
             <Track {...OVERVIEW_EVENTS.OPEN_SAFE} label={OPEN_SAFE_LABELS.after_create}>
               <Button data-testid="start-using-safe-btn" color="secondary" variant="contained" onClick={onFinish}>
-                Start using Prosperity Passport
+                Start using Prosperity Account
               </Button>
             </Track>
           </Box>
