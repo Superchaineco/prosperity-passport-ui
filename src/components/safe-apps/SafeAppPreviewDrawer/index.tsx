@@ -92,7 +92,7 @@ const SafeAppPreviewDrawer = ({ isOpen, safeApp, isBookmarked, onClose, onBookma
           <Button
             fullWidth
             variant="contained"
-            color="primary"
+            color="complementary"
             component="a"
             href={safeApp?.url}
             sx={{ mt: 3 }}

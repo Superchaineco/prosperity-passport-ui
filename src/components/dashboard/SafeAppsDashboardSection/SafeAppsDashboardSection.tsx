@@ -35,17 +35,17 @@ const SafeAppsDashboardSection = () => {
             isBookmarked={false}
             onClickSafeApp={() => openPreviewDrawer(customSafeApps[0])}
             openPreviewDrawer={openPreviewDrawer}
-            perks={
-              superChainSmartAccount.data.level ? (
-                <Typography>
-                  Claim{' '}
-                  {`${Number(superChainSmartAccount.data.level)} ${
-                    Number(superChainSmartAccount.data.level) > 1 ? 'tickets' : 'ticket'
-                  }`}{' '}
-                  per week
-                </Typography>
-              ) : null
-            }
+            // perks={
+            //   superChainSmartAccount.data.level ? (
+            //     <Typography>
+            //       Claim{' '}
+            //       {`${Number(superChainSmartAccount.data.level)} ${
+            //         Number(superChainSmartAccount.data.level) > 1 ? 'tickets' : 'ticket'
+            //       }`}{' '}
+            //       per week
+            //     </Typography>
+            //   ) : null
+            // }
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} xl={4}>
