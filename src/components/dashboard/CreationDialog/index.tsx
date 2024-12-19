@@ -66,7 +66,7 @@ const CreationDialog = () => {
           <HintItem
             Icon={LeaderBoardIcon}
             title="Leaderboard"
-            description="Earn Prosperity Account Points to climb the Leaderboard and become the top Super Contributor."
+            description="Earn Prosperity Account Points to climb the Leaderboard and become the top Celo Contributor."
           />
           <HintItem
             Icon={TransactionIcon}

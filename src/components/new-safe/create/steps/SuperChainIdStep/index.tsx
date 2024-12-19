@@ -87,7 +87,7 @@ function SuperChainID({
             <Grid item xs>
               <NameInput
                 name={SetNameStepFields.id}
-                label={errors?.[SetNameStepFields.name]?.message || 'SuperChain ID'}
+                label={errors?.[SetNameStepFields.name]?.message || 'Prosperity ID'}
                 placeholder="name"
                 required
                 InputLabelProps={{ shrink: true }}

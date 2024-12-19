@@ -234,7 +234,8 @@ const SafeHeader = (): ReactElement => {
           <Tooltip
             title={
               <Typography align="center">
-                Remaining weekly relayed transactions by Prosperity Account Eco <br />
+                Remaining weekly relayed transactions by Prosperity Account
+                <br />
                 <strong>
                   {Number(superChainSmartAccount.data.weeklyRelayedTransactions.relayedTransactions)} /{' '}
                   {Number(superChainSmartAccount.data.weeklyRelayedTransactions.maxRelayedTransactions)}
