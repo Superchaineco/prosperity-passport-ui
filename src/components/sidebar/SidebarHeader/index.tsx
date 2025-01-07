@@ -99,7 +99,7 @@ const SafeHeader = (): ReactElement => {
             <Track {...OVERVIEW_EVENTS.OPEN_EXPLORER}>
               <ExplorerButton {...blockExplorerLink} className={css.iconButton} icon={LinkIconBold} />
             </Track>
-            <Tooltip
+            {/* <Tooltip
               title={<Typography align="center">Remaining weekly gas covered by Prosperity Account Eco</Typography>}
             >
               <Box
@@ -137,7 +137,7 @@ const SafeHeader = (): ReactElement => {
                   </Typography>
                 </Box>
               </Box>
-            </Tooltip>
+            </Tooltip> */}
 
             {/* <CounterfactualStatusButton /> */}
 
@@ -231,7 +231,7 @@ const SafeHeader = (): ReactElement => {
           <Track {...OVERVIEW_EVENTS.OPEN_EXPLORER}>
             <ExplorerButton {...blockExplorerLink} className={css.iconButton} icon={LinkIconBold} />
           </Track>
-          <Tooltip
+          {/* <Tooltip
             title={
               <Typography align="center">
                 Remaining weekly relayed transactions by Prosperity Account
@@ -284,7 +284,7 @@ const SafeHeader = (): ReactElement => {
                 </Typography>
               </Box>
             </Box>
-          </Tooltip>
+          </Tooltip> */}
 
           {/* <CounterfactualStatusButton /> */}
 
