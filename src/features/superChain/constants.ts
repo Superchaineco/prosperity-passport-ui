@@ -24,7 +24,8 @@ const environmentConfig = {
     SUPER_CHAIN_ACCOUNT_GUARD_ADDRESS: '0xED12D87487B372cf4447C8147a89aA01C133Dc52',
     ERC4337_MODULE_ADDRESS: '0x75cf11467937ce3F2f357CE24ffc3DBF8fD5c226',
     JSON_RPC_PROVIDER: process.env.NEXT_PUBLIC_JSON_RPC_PROVIDER,
-    SUBGRAPH_URL: 'https://api.studio.thegraph.com/query/72352/prosperity-passport/version/latest',
+    SUBGRAPH_URL:
+      'https://gateway.thegraph.com/api/e2382481a319ad3d1d0d65473d606d24/subgraphs/id/3dQGijWxqpFfXUenK9TjLc9wijNeDDSjGtw3ztWMQb2n',
     CHAIN_ID: '42220',
   },
 }[ENV]
