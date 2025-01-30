@@ -101,7 +101,7 @@ const fakeSafeApps: SafeAppData[] = [
     id: 109,
     url: 'https://app.glodollar.org/',
     name: 'GloDollar',
-    iconUrl: 'https://account.celopg.eco/images/apps/glodollar.png',
+    iconUrl: 'https://account.celopg.eco/images/apps/glodollar.jpg',
     description: 'Fund what matters—at zero cost to you',
     chainIds: ['42220'],
     tags: ['ReFi', 'DeFi'],
