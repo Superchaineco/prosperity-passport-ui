@@ -1,9 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import type {
-  SafeAppAccessPolicyTypes,
-  SafeAppData,
-  SafeAppSocialPlatforms,
-} from '@safe-global/safe-gateway-typescript-sdk'
+import type { SafeAppAccessPolicyTypes, SafeAppData } from '@safe-global/safe-gateway-typescript-sdk'
 import local from '@/services/local-storage/local'
 import { fetchSafeAppFromManifest } from '@/services/safe-apps/manifest'
 import useChainId from '@/hooks/useChainId'
@@ -103,27 +99,18 @@ const fakeSafeApps: SafeAppData[] = [
   },
   {
     id: 109,
-    url: 'https://giveth.io',
-    name: 'Giveth',
-    iconUrl: 'https://safe-transaction-assets.safe.global/safe_apps/109/icon.png',
-    description: 'Get rewarded for giving to for-good projects with zero added fees.',
+    url: 'https://app.glodollar.org/',
+    name: 'GloDollar',
+    iconUrl: 'https://account.celopg.eco/images/apps/glodollar.png',
+    description: 'Fund what matters—at zero cost to you',
     chainIds: ['42220'],
-    tags: ['Donation', 'Infrastructure'],
+    tags: ['ReFi', 'DeFi'],
     accessControl: {
       type: 'NO_RESTRICTIONS' as SafeAppAccessPolicyTypes,
       value: [],
     },
     features: [],
-    developerWebsite: 'https://giveth.io',
-    socialProfiles: [
-      {
-        platform: 'GITHUB' as SafeAppSocialPlatforms,
-        url: 'https://github.com/Giveth/',
-      },
-      {
-        platform: 'TWITTER' as SafeAppSocialPlatforms,
-        url: 'https://twitter.com/giveth',
-      },
-    ],
+    developerWebsite: 'https://glodollar.org',
+    socialProfiles: [],
   },
 ]
