@@ -7,7 +7,7 @@ function useCurrentWalletHasSuperChainSmartAccount() {
   const wallet = useWallet()
   const { getReadOnlySuperChainSmartAccount } = useSuperChainAccount()
   const { data, isLoading, refetch, isRefetching } = useQuery({
-    queryKey: ['checkSuperAccount'],
+    queryKey: ['checkSuperAccount', wallet?.address],
     queryFn: async () => {
       if (!wallet?.address) return
       const SuperChainAccountContractReadOnly = getReadOnlySuperChainSmartAccount()
@@ -17,7 +17,6 @@ function useCurrentWalletHasSuperChainSmartAccount() {
         superChainSmartAccount: smartAccount,
       }
     },
-    enabled: !!wallet?.address,
   })
 
   return { ...data, isLoading, refetch, isRefetching }
