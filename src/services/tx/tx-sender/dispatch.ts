@@ -4,7 +4,7 @@ import { didRevert } from '@/utils/ethers-utils'
 import type { MultiSendCallOnlyEthersContract } from '@safe-global/protocol-kit'
 import { type SpendingLimitTxParams } from '@/components/tx-flow/flows/TokenTransfer/ReviewSpendingLimitTx'
 import { getSpendingLimitContract } from '@/services/contracts/spendingLimitContracts'
-import { ethers, type ContractTransactionResponse, type Overrides, type TransactionResponse } from 'ethers'
+import { type ContractTransactionResponse, type Overrides, type TransactionResponse } from 'ethers'
 import type { RequestId } from '@safe-global/safe-apps-sdk'
 import proposeTx from '../proposeTransaction'
 import { txDispatch, TxEvent } from '../txEvents'
@@ -24,7 +24,10 @@ import { BACKEND_BASE_URI, LATEST_SAFE_VERSION } from '@/config/constants'
 import { createExistingTx } from './create'
 import type { ConnectedWallet } from '@/hooks/wallets/useOnboard'
 import axios from 'axios'
-import { generatePreValidatedSignature, isSafeMultisigTransactionResponse } from '@safe-global/protocol-kit/dist/src/utils'
+import {
+  generatePreValidatedSignature,
+  isSafeMultisigTransactionResponse,
+} from '@safe-global/protocol-kit/dist/src/utils'
 
 /**
  * Propose a transaction
@@ -233,12 +236,11 @@ export const dispatchTxExecution = async (
   safeAddress: string,
   safe?: SafeInfo,
 ): Promise<string> => {
-  if (!safe) throw new Error("Invalid action")
+  if (!safe) throw new Error('Invalid action')
   const sdkUnchecked = await getUncheckedSafeSDK(_wallet, chainId)
   const readOnlySafeContract = await getReadOnlyCurrentGnosisSafeContract(safe)
   const eventParams = { txId }
   const wallet = await assertWalletChain(_wallet, chainId)
-
 
   const signerNonce = txOptions.nonce ?? (await getUserNonce(wallet.address))
 
@@ -246,34 +248,38 @@ export const dispatchTxExecution = async (
   try {
     const provider = createWeb3(wallet.provider)
     const signer = await provider.getSigner()
-    const transaction = isSafeMultisigTransactionResponse(safeTx) ? await sdkUnchecked.toSafeTransactionType(safeTx) : safeTx
+    const transaction = isSafeMultisigTransactionResponse(safeTx)
+      ? await sdkUnchecked.toSafeTransactionType(safeTx)
+      : safeTx
     const signedSafeTransaction = await sdkUnchecked.copyTransaction(transaction)
     const txHash = await sdkUnchecked.getTransactionHash(signedSafeTransaction)
-    const ownersWhoApprovedTx = await sdkUnchecked.getOwnersWhoApprovedTx(txHash);
+    const ownersWhoApprovedTx = await sdkUnchecked.getOwnersWhoApprovedTx(txHash)
     for (const owner of ownersWhoApprovedTx) {
-      signedSafeTransaction.addSignature(generatePreValidatedSignature(owner));
+      signedSafeTransaction.addSignature(generatePreValidatedSignature(owner))
     }
-    const owners = await sdkUnchecked.getOwners();
-    const signerAddress = await signer.getAddress();
-    const threshold = await sdkUnchecked.getThreshold();
-    if (threshold > signedSafeTransaction.signatures.size &&
-      signerAddress &&
-      owners.includes(signerAddress)) {
-      signedSafeTransaction.addSignature(generatePreValidatedSignature(signerAddress));
+    const owners = await sdkUnchecked.getOwners()
+    const signerAddress = await signer.getAddress()
+    const threshold = await sdkUnchecked.getThreshold()
+    if (threshold > signedSafeTransaction.signatures.size && signerAddress && owners.includes(signerAddress)) {
+      signedSafeTransaction.addSignature(generatePreValidatedSignature(signerAddress))
     }
     if (threshold > signedSafeTransaction.signatures.size) {
-      const signaturesMissing = threshold - signedSafeTransaction.signatures.size;
-      throw new Error(`There ${signaturesMissing > 1 ? 'are' : 'is'} ${signaturesMissing} signature${signaturesMissing > 1 ? 's' : ''} missing`);
+      const signaturesMissing = threshold - signedSafeTransaction.signatures.size
+      throw new Error(
+        `There ${signaturesMissing > 1 ? 'are' : 'is'} ${signaturesMissing} signature${
+          signaturesMissing > 1 ? 's' : ''
+        } missing`,
+      )
     }
-    const value = BigInt(signedSafeTransaction.data.value);
+    const value = BigInt(signedSafeTransaction.data.value)
     if (value !== 0n) {
-      const balance = await sdkUnchecked.getBalance();
+      const balance = await sdkUnchecked.getBalance()
       if (value > balance) {
-        throw new Error('Not enough Ether funds');
+        throw new Error('Not enough Ether funds')
       }
     }
     if (txOptions.gas && txOptions.gasLimit) {
-      throw new Error('Cannot specify gas and gasLimit together in transaction options');
+      throw new Error('Cannot specify gas and gasLimit together in transaction options')
     }
     const encodedTransaction = await sdkUnchecked.getEncodedTransaction(signedSafeTransaction)
     const callData = encodedTransaction + '5afe003433613232343763663835306565386462343564646561393238643435'
@@ -284,12 +290,11 @@ export const dispatchTxExecution = async (
       data: callData,
       value: 0n,
       from: wallet.address,
-      ...txOptions
+      ...txOptions,
     })
 
-
     // result = await sdkUnchecked.executeTransaction(safeTx, txOptions)
-    if (!result) throw new Error("Transaction could not be executed")
+    if (!result) throw new Error('Transaction could not be executed')
     txDispatch(TxEvent.EXECUTING, eventParams)
   } catch (error) {
     txDispatch(TxEvent.FAILED, { ...eventParams, error: asError(error) })
