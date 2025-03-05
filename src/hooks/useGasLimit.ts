@@ -27,7 +27,7 @@ const getEncodedSafeTx = (
 ): string | undefined => {
   const EXEC_TX_METHOD = 'execTransaction'
 
-  return safeSDK
+  const encodedSafeTx = safeSDK
     .getContractManager()
     .safeContract?.encode(EXEC_TX_METHOD, [
       safeTx.data.to,
@@ -41,6 +41,8 @@ const getEncodedSafeTx = (
       safeTx.data.refundReceiver,
       encodeSignatures(safeTx, from, needsSignature),
     ])
+  const encodedDataWithOnChainIdentifier = encodedSafeTx + '5afe003433613232343763663835306565386462343564646561393238643435'
+  return encodedDataWithOnChainIdentifier
 }
 
 const GasMultipliers = {
