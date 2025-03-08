@@ -27,7 +27,7 @@ import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
 import commonCss from '@/components/tx-flow/common/styles.module.css'
 import Save from '@/public/images/common/save.svg'
 import useSuperChainAccount from '@/hooks/super-chain/useSuperChainAccount'
-import { Address, EIP1193Provider, createWalletClient, custom, encodeFunctionData } from 'viem'
+import { Address, createWalletClient, custom, encodeFunctionData } from 'viem'
 import { TxModalContext } from '@/components/tx-flow'
 import LoadingModal from '@/components/common/LoadingModal'
 import FailedTxnModal from '@/components/common/ErrorModal'
@@ -35,12 +35,7 @@ import SuccessTxnModal from '@/components/common/SuccessTxnModal'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import { useQueryClient } from '@tanstack/react-query'
 import { SUPER_CHAIN_MODULE_ABI } from '@/features/superChain/constants'
-import { JSON_RPC_PROVIDER } from '@/features/superChain/constants'
 import useWallet from '@/hooks/wallets/useWallet'
-import { optimism } from 'viem/chains'
-import { BACKEND_BASE_URI } from '@/config/constants'
-import { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
-import { Safe4337Pack } from '@safe-global/relay-kit/dist/src/packs/safe-4337/Safe4337Pack'
 const TRAIT_LIMITS = {
   head: { min: 0, max: ImageData.images.heads.length - 1 },
   body: { min: 0, max: ImageData.images.bodies.length - 1 },
@@ -61,7 +56,7 @@ const UpdateAvatarModal = () => {
   const { safe } = useSafeInfo()
   const { address } = safe
   const queryClient = useQueryClient()
-  const { getSponsoredWriteableSuperChainSmartAccount } = useSuperChainAccount()
+  const { getSponsoredCallableSuperChainSmartAccount } = useSuperChainAccount()
   const [seed, setSeed] = useState<NounProps>({
     background: Math.floor(Math.random() * ImageData.bgcolors.length),
     body: Math.floor(Math.random() * ImageData.images.bodies.length),
@@ -123,56 +118,22 @@ const UpdateAvatarModal = () => {
 
   const wallet = useWallet()
   const handleSubmit = async () => {
-    const superChainSmartAccountSponsored = getSponsoredWriteableSuperChainSmartAccount()
+    const superChainSmartAccountSponsored = getSponsoredCallableSuperChainSmartAccount()
     setModalState(ModalState.Loading)
     try {
       if (!wallet) return
-      const walletClient = createWalletClient({
-        account: wallet.address as Address,
-        chain: optimism,
-        transport: custom(wallet.provider),
-      })
-      console.debug('wallet', wallet)
-      const safe4337Pack = await Safe4337Pack.init({
-        provider: wallet.provider as EIP1193Provider,
-        signer: wallet.address,
-        bundlerUrl: `${BACKEND_BASE_URI}/user-op-reverse-proxy`,
-        paymasterOptions: {
-          isSponsored: true,
-          paymasterUrl: `${BACKEND_BASE_URI}/user-op-reverse-proxy`,
-        },
-        options: {
-          safeAddress: data.smartAccount as Address,
-        },
-        onchainAnalytics: {
-          platform: 'Web',
-          project: 'SuperAccounts',
-        },
-        safeModulesVersion: '0.3.0',
-        // ...
-      })
-      console.debug('safe4337Pack', safe4337Pack)
-      const dummyTransaction = encodeFunctionData({
+
+      const txData = encodeFunctionData({
         abi: SUPER_CHAIN_MODULE_ABI,
         functionName: 'UpdateNounAvatar',
         args: [data.smartAccount as Address, seed],
       })
 
-      console.debug('dummyTransaction', dummyTransaction)
-      const identifiedSafeOperation = await safe4337Pack.createTransaction({
-        transactions: [dummyTransaction as unknown as MetaTransactionData],
-      })
-      console.debug('identifiedSafeOperation', identifiedSafeOperation)
-      const signedSafeOperation = await safe4337Pack.signSafeOperation(identifiedSafeOperation)
-      const userOperationHash = await safe4337Pack.executeTransaction({
-        executable: signedSafeOperation,
-      })
-      console.debug('userOperationHash', userOperationHash)
-
-      // const transaction = await superChainSmartAccountSponsored?.write.UpdateNounAvatar([
-      //   data.smartAccount as Address,
-      //   seed,
-      // ])
+      const userOperationHash = await superChainSmartAccountSponsored.callContract(
+        wallet,
+        data.smartAccount as Address,
+        txData,
+      )
 
       setTransactionHash(userOperationHash)
       setModalState(ModalState.Success)

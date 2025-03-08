@@ -3,12 +3,14 @@ import React, { type SyntheticEvent } from 'react'
 import css from './styles.module.css'
 import CopyAddressButton from '@/components/common/CopyAddressButton'
 import ExplorerButton from '@/components/common/ExplorerButton'
-import { zeroAddress } from 'viem'
+import { Address, encodeFunctionData, zeroAddress } from 'viem'
 import { REMOVE_POPULATE_INITIAL_STATE } from '@/components/common/SuperChainEOAS'
 import BeautyCancel from '@/public/images/common/beauty-cancel.svg'
 import useSuperChainAccount from '@/hooks/super-chain/useSuperChainAccount'
 import useSafeAddress from '@/hooks/useSafeAddress'
 import { OperationVariables, WatchQueryOptions } from '@apollo/client'
+import useWallet from '@/hooks/wallets/useWallet'
+import { SUPER_CHAIN_MODULE_ABI } from '@/features/superChain/constants'
 
 function RemovePopulateModal({
   updateQuery,
@@ -22,16 +24,26 @@ function RemovePopulateModal({
   onClose: () => void
 }) {
   const stopPropagation = (e: SyntheticEvent) => e.stopPropagation()
-  const { getSponsoredWriteableSuperChainSmartAccount } = useSuperChainAccount()
+  const { getSponsoredCallableSuperChainSmartAccount } = useSuperChainAccount()
   const SmartAccountAddres = useSafeAddress()
-
+  const wallet = useWallet()
   const handleRemovePopulate = async () => {
-    const superChainSmartAccountContract = getSponsoredWriteableSuperChainSmartAccount()
-    await superChainSmartAccountContract?.write.removePopulateRequest([SmartAccountAddres, context.address])
+    if (!wallet) return
+    const superChainSmartAccountContract = getSponsoredCallableSuperChainSmartAccount()
+
+    const txData = encodeFunctionData({
+      abi: SUPER_CHAIN_MODULE_ABI,
+      functionName: 'removePopulateRequest',
+      args: [SmartAccountAddres as Address, context.address],
+    })
+
+    const hash = await superChainSmartAccountContract.callContract(wallet, SmartAccountAddres as Address, txData)
+    console.log('Invite deleted:', hash)
+
     updateQuery((data) => ({
       ownerPopulateds: [
-        ...data.ownerPopulateds.filter(
-          (owner: { address: string }) => owner.address.toLowerCase() !== context.address.toLowerCase(),
+        ...data.ownerPopulateds.filter((owner: { address: string }) =>
+          owner.address ? owner.address.toLowerCase() !== context.address.toLowerCase() : false,
         ),
       ],
     }))

@@ -6,9 +6,11 @@ import AddEOA from './states/AddEOA'
 import LoadingModal from '@/components/common/LoadingModal'
 import SuccessAdded from './states/SuccessAdded'
 import FailedTxnModal from '@/components/common/ErrorModal'
-import { Address } from 'viem'
+import { Address, encodeFunctionData } from 'viem'
 import { getSession } from '@/services/siwe'
 import { OperationVariables, WatchQueryOptions } from '@apollo/client'
+import { SUPER_CHAIN_MODULE_ABI } from '@/features/superChain/constants'
+import useWallet from '@/hooks/wallets/useWallet'
 
 export enum ModalState {
   AddEOA,
@@ -31,18 +33,26 @@ const AddEOAModal = ({
   context: typeof ADD_EOA_INITIAL_STATE
   onClose: () => void
 }): ReactElement => {
-  const { getSponsoredWriteableSuperChainSmartAccount } = useSuperChainAccount()
+  const { getSponsoredCallableSuperChainSmartAccount } = useSuperChainAccount()
   const SmartAccountAddres = useSafeAddress()
   const [currentNewEOAAddress, setCurrentNewEOAAddress] = useState<Address | null>(null)
   const [modalState, setModalState] = useState<ModalState>(ModalState.AddEOA)
-
+  const wallet = useWallet()
   const onSubmit = async (data: NewEOAEntry) => {
-    const session = getSession()
-    const superChainSmartAccountSponsored = getSponsoredWriteableSuperChainSmartAccount()
+    if (!wallet) return
+    const superChainSmartAccountSponsored = getSponsoredCallableSuperChainSmartAccount()
     try {
       setCurrentNewEOAAddress(data.address)
       setModalState(ModalState.Loading)
-      await superChainSmartAccountSponsored?.write.populateAddOwner([SmartAccountAddres as Address, data.address])
+
+      const txData = encodeFunctionData({
+        abi: SUPER_CHAIN_MODULE_ABI,
+        functionName: 'populateAddOwner',
+        args: [SmartAccountAddres as Address, data.address],
+      })
+
+      const hash = await superChainSmartAccountSponsored.callContract(wallet, SmartAccountAddres as Address, txData)
+      console.log('Invite sent:', hash)
       updateQuery((data) => ({
         ownerPopulateds: [...data.ownerPopulateds, { address: data.address }],
       }))

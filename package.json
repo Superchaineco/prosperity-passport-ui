@@ -67,7 +67,7 @@
     "@reown/walletkit": "^1.1.1",
     "@safe-global/api-kit": "^2.3.0",
     "@safe-global/protocol-kit": "^3.0.2",
-    "@safe-global/relay-kit": "^3.4.5",
+    "@safe-global/relay-kit": "^4.0.0-alpha.3",
     "@safe-global/safe-apps-sdk": "9.1.0",
     "@safe-global/safe-deployments": "^1.34.0",
     "@safe-global/safe-gateway-typescript-sdk": "3.19.0",
