@@ -6,6 +6,7 @@ import { createPimlicoClient } from 'permissionless/clients/pimlico'
 import { type Address, createPublicClient, http, WalletClient, Transport, Account, Chain } from 'viem'
 import { entryPoint07Address } from 'viem/account-abstraction'
 import { celo } from 'viem/chains'
+import { prepareUserOperation as viemPrepareUserOperation } from "viem/account-abstraction"
 
 const pimlicoTransport = () => {
   return http(`${BACKEND_BASE_URI}/user-op-reverse-proxy`, {
@@ -39,6 +40,7 @@ export const pimlicoBundlerClient = () =>
     },
   })
 
+
 export async function getSmartAccountClient(
   client: WalletClient<Transport, Chain | undefined, Account>,
   safeAddress: Address,
@@ -61,8 +63,7 @@ export async function getSmartAccountClient(
     userOperation: {
       estimateFeesPerGas: async () => (await paymasterClient().getUserOperationGasPrice()).fast,
     },
-    // middleware: {
-    //   sponsorUserOperation: async (args: any) => {
+
     //     return paymasterClient().sponsorUserOperation({
     //       ...args,
     //       sponsorshipPolicyId: 'sp_burly_overlord',
