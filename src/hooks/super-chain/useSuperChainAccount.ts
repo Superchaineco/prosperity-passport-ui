@@ -26,12 +26,9 @@ function useSuperChainAccount() {
     return SuperChainAccountContractReadOnly
   }
 
-
   const getSponsoredCallableSuperChainSmartAccount = () => {
-
     return {
       callContract: async (wallet: ConnectedWallet, safeAddres: string, txData: `0x${string}`) => {
-
         const safe4337Pack = await Safe4337Pack.init({
           provider: wallet.provider as Eip1193Provider,
           signer: wallet.address,
@@ -52,7 +49,6 @@ function useSuperChainAccount() {
         })
         console.debug('safe4337Pack', safe4337Pack)
 
-
         const safeTransactionData: MetaTransactionData = {
           to: SUPER_CHAIN_ACCOUNT_MODULE_ADDRESS,
           value: '0',
@@ -69,13 +65,10 @@ function useSuperChainAccount() {
         })
         console.debug('userOperationHash', userOperationHash)
 
-
-
         return userOperationHash
-      }
+      },
     }
   }
-
 
   const getWriteableSuperChainSmartAccount = () => {
     if (!wallet) return

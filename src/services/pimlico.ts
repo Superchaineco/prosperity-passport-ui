@@ -40,7 +40,6 @@ export const pimlicoBundlerClient = () =>
     },
   })
 
-
 export async function getSmartAccountClient(
   client: WalletClient<Transport, Chain | undefined, Account>,
   safeAddress: Address,
