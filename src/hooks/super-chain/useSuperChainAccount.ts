@@ -13,8 +13,7 @@ import { BACKEND_BASE_URI } from '@/config/constants'
 import { ConnectedWallet } from '../wallets/useOnboard'
 import { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
 
-
-let fetchPatched = false;
+let fetchPatched = false
 
 function useSuperChainAccount() {
   const { smartAccountClient } = usePimlico()
@@ -32,18 +31,17 @@ function useSuperChainAccount() {
   const getSponsoredCallableSuperChainSmartAccount = () => {
     return {
       callContract: async (wallet: ConnectedWallet, safeAddres: string, txData: `0x${string}`) => {
-
         if (!fetchPatched) {
-          const originalFetch = window.fetch;
+          const originalFetch = window.fetch
 
           window.fetch = (url, options = {}) => {
             return originalFetch(url, {
               ...options,
-              credentials: "include",
-            });
-          };
+              credentials: 'include',
+            })
+          }
 
-          fetchPatched = true;
+          fetchPatched = true
         }
 
         const safe4337Pack = await Safe4337Pack.init({
@@ -65,8 +63,6 @@ function useSuperChainAccount() {
           // ...
         })
         console.debug('safe4337Pack', safe4337Pack)
-
-
 
         const safeTransactionData: MetaTransactionData = {
           to: SUPER_CHAIN_ACCOUNT_MODULE_ADDRESS,
