@@ -15,7 +15,7 @@ import LoadingModal from '@/components/common/LoadingModal'
 import FailedTxnModal from '@/components/common/ErrorModal'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
-import { ResponseBadge } from '@/types/super-chain'
+import { BadgeResponse, ResponseBadge } from '@/types/super-chain'
 
 export type ClaimData = {
   badges: BadgeResponse[]
