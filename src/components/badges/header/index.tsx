@@ -1,85 +1,65 @@
-import { Box, Grid, Skeleton, SvgIcon, Typography } from '@mui/material'
-import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
+import { Box, Grid, LinearProgress, SvgIcon, Typography, Card, CardContent } from '@mui/material'
+import Badge from '@/public/images/common/superChain.svg'
+import NavTabs from '@/components/common/NavTabs'
+import { AppRoutes } from '@/config/routes'
 
-function BadgesHeader({
-  level,
-  points,
-  pointsToNextLevel,
-  completeBadges,
-  totalBadges,
-  isLoading,
-}: {
-  level?: number
-  points?: number
-  completeBadges: number
-  pointsToNextLevel?: number
-  totalBadges?: number
-  isLoading: boolean
-}) {
+export const badgesNavItems = [
+  {
+    label: 'All-Time',
+    href: AppRoutes.leaderboard.index,
+  },
+  {
+    label: 'Season 7',
+    href: AppRoutes.leaderboard.index,
+  },
+]
+
+function BadgesHeader({ level, points, pointsToNextLevel, completeBadges, totalBadges, isLoading }) {
+  const progress = (points / (points + pointsToNextLevel)) * 100
+
   return (
-    <Grid item pb={2} xs={12}>
-      <Grid container display="flex" justifyContent="space-between">
-        <Grid xs={6} lg={3} display="flex" flexDirection="column" gap={1}>
-          <Typography variant="h3" fontSize={16} fontWeight={600} color="primary.light">
-            Current level
-          </Typography>
+    <>
+      <Typography variant="h4" fontWeight={700} gutterBottom>
+        Badges
+      </Typography>
+      <NavTabs tabs={badgesNavItems} />
 
-          {isLoading ? (
-            <Skeleton variant="text" width={44} height={44} />
-          ) : (
-            <Typography variant="h4" fontWeight={600} color="secondary" fontSize={44}>
-              {level}
-            </Typography>
-          )}
+      <Grid container spacing={2} mt={2}>
+        {/* Badges Count */}
+        <Grid item xs={12} md={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" color="text.secondary">
+                Badges
+              </Typography>
+              <Typography variant="h4" fontWeight={600}>
+                {completeBadges}/{totalBadges}
+              </Typography>
+            </CardContent>
+          </Card>
         </Grid>
-        <Grid xs={6} lg={3} display="flex" flexDirection="column" gap={1}>
-          <Typography variant="h3" fontSize={16} fontWeight={600} color="primary.light">
-            Your SC Points
-          </Typography>
-          <Grid xs={6} lg={3} display="flex" justifyContent="flex-start" alignItems="center" gap={1}>
-            {isLoading ? (
-              <Skeleton variant="text" width={88} height={44} />
-            ) : (
-              <>
-                <Typography variant="h4" fontWeight={600} fontSize={44}>
-                  {points}
+
+        {/* Level Display */}
+        <Grid item xs={12} md={8}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1}>
+                <SvgIcon component={Badge} inheritViewBox fontSize="large" color="error" />
+                <Typography variant="h6" color="text.secondary">
+                  Level {level}
                 </Typography>
-                <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="large" />
-              </>
-            )}
-          </Grid>
-        </Grid>
-        <Grid xs={6} lg={3} display="flex" flexDirection="column" gap={1}>
-          <Typography variant="h3" fontSize={16} fontWeight={600} color="primary.light">
-            SC Points to next level
-          </Typography>
-          <Box display="flex" justifyContent="flex-start" alignItems="center" gap={1}>
-            {isLoading ? (
-              <Skeleton variant="text" width={88} height={44} />
-            ) : (
-              <>
-                <Typography variant="h4" fontWeight={600} fontSize={44}>
-                  {pointsToNextLevel}
+              </Box>
+              <Box mt={2}>
+                <LinearProgress variant="determinate" value={progress} sx={{ height: 10, borderRadius: 5 }} />
+                <Typography variant="body2" align="center" mt={1}>
+                  {points} / {points + pointsToNextLevel} Superchain Points to level {level + 1}
                 </Typography>
-                <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="large" />
-              </>
-            )}
-          </Box>
-        </Grid>
-        <Grid xs={6} lg={3} display="flex" flexDirection="column" gap={1}>
-          <Typography variant="h3" fontSize={16} fontWeight={600} color="primary.light">
-            Total badges
-          </Typography>
-          {isLoading ? (
-            <Skeleton variant="text" width={44} height={44} />
-          ) : (
-            <Typography variant="h4" fontWeight={600} fontSize={44}>
-              {completeBadges}/{totalBadges}
-            </Typography>
-          )}
+              </Box>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   )
 }
 
