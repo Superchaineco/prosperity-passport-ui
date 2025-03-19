@@ -13,15 +13,15 @@
 }
 
 @font-face {
-  font-family: 'GT Alpina';
-  font-weight: normal;
-  font-style: normal;
-  src: url('/fonts/GT-Alpina-Condensed-Light-Trial.otf') format('opentype');
+  font-family: 'Sora';
+  font-display: ;
+  font-weight: 400;
+  src: url('/fonts/Sora-Regular.ttf') format('ttf');
 }
 
 @font-face {
-  font-family: 'GT Alpina Condensed';
-  font-weight: normal;
-  font-style: italic;
-  src: url('/fonts/GT-Alpina-Condensed-Light-Italic-Trial.otf') format('opentype');
+  font-family: 'Sora';
+  font-display: swap;
+  font-weight: bold;
+  src: url('/fonts/Sora-Bold.ttf') format('ttf');
 }

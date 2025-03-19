@@ -1,4 +1,15 @@
-import { Box, Card, CardActions, CardContent, IconButton, Stack, SvgIcon, Typography } from '@mui/material'
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  IconButton,
+  Stack,
+  SvgIcon,
+  Typography,
+} from '@mui/material'
 import React, { useMemo, type SyntheticEvent } from 'react'
 import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import Hearth from '@/public/images/common/hearth.svg'
@@ -8,7 +19,7 @@ import useSafeInfo from '@/hooks/useSafeInfo'
 import type { ResponseBadge } from '@/types/super-chain'
 import classNames from 'classnames'
 import Complete from '@/public/images/common/complete.svg'
-
+import Image from 'next/image'
 function Badge({
   data,
   switchFavorite,
@@ -41,12 +52,149 @@ function Badge({
   const renderNextTier = data.claimableTier === Number(data.tier)
 
   return (
-    <Card
-      onClick={handlePickBadge}
-      className={classNames(css.badgeContainer, data.badgeTiers.length === Number(data.tier) && css.badgeComplete)}
-    >
+    <Card onClick={handlePickBadge} className={classNames(css.badgeContainer)}>
+      <CardMedia
+        sx={{
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '112px',
+          overflow: 'hidden',
+        }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundImage: `url('/static/badges/LifeTerm/OpUser/Badge.svg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(68px)',
+            opacity: 1,
+            zIndex: 0,
+          }}
+        />
+        <Box
+          sx={{
+            position: 'relative',
+            zIndex: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+            width: '100%',
+          }}
+        >
+          <Box sx={{ position: 'relative' }}>
+            {Number(data.tier) > 0 &&
+              [...Array(Number(data.tier))].map((_, index) => {
+                const totalBadges = Number(data.tier) + 1
+                const centerIndex = (totalBadges - 1) / 2
+                const spacing = 24
+
+                return (
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Box sx={{ position: 'relative' }}>
+                      {Array.from({ length: totalBadges }).map((_, i) => {
+                        const offset = (i - centerIndex) * spacing
+
+                        const isMainBadge = i === 0
+
+                        return (
+                          <Image
+                            key={i}
+                            src={
+                              isMainBadge
+                                ? '/static/badges/LifeTerm/OpUser/Badge.svg'
+                                : '/static/badges/LifeTerm/OpUser/Stack.svg'
+                            }
+                            alt={isMainBadge ? data.metadata.platform : `Tier ${i}`}
+                            width={72}
+                            height={72}
+                            style={{
+                              position: 'absolute',
+                              left: '50%',
+                              transform: `translate(-50%, -50%) translateX(${offset}px)`,
+                              zIndex: isMainBadge ? 999 : totalBadges - i,
+                            }}
+                          />
+                        )
+                      })}
+                    </Box>
+                  </Box>
+                )
+              })}
+          </Box>
+        </Box>
+      </CardMedia>
       <CardContent>
-        <Stack padding={0} justifyContent="center" alignItems="center" spacing={1} position="relative">
+        <Box display="flex" flexDirection="column" gap="12px" padding="24px">
+          <Typography fontSize="18px" fontWeight={600} textAlign="start" fontFamily="Sora">
+            {data.metadata.name}
+          </Typography>
+          <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
+            {data.badgeTiers.map((_, index) => (
+              <Box
+                key={index}
+                sx={{
+                  flex: 1,
+                  height: '6px',
+                  backgroundColor: index < Number(data.tier) ? '#39D551' : '#EBECF1',
+                  borderRadius: '100px',
+                }}
+              />
+            ))}
+          </Box>
+          <Typography color="text.secondary">{data.metadata.description}</Typography>
+          <Box
+            width="100%"
+            border={1}
+            borderRadius="100px"
+            borderColor="text.secondary"
+            sx={{ borderStyle: 'dashed' }}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            paddingLeft="12px"
+            fontSize="16px"
+          >
+            <Typography fontSize="12px">Rewards next tier</Typography>
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              border={1}
+              borderRadius="100px"
+              borderColor="text.secondary"
+              paddingX="8px"
+            >
+              <Typography fontSize="12px" fontWeight={500}>
+                50
+              </Typography>
+              <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+            </Box>
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
+  )
+}
+
+export default Badge
+
+{
+  /* <Stack padding={0} justifyContent="center" alignItems="center" spacing={1} position="relative">
           <IconButton disabled={safeLoading} onClick={(e) => handleSwitchFavorite(e)} className={css.hearth}>
             <SvgIcon component={isFavorite ? HeartFilled : Hearth} color="secondary" inheritViewBox fontSize="small" />
           </IconButton>
@@ -101,30 +249,5 @@ function Badge({
               )}
             </Box>
           )}
-        </Stack>
-      </CardContent>
-      <CardActions>
-        <Box width="100%" display="flex" gap={1} pt={3} justifyContent="center" alignItems="center">
-          {data.badgeTiers.length !== Number(data.tier) ? (
-            <>
-              <strong>
-                {renderNextTier
-                  ? data.badgeTiers[data.claimableTier || 0].points
-                  : !!Number(data.tier)
-                  ? data.points
-                  : data.badgeTiers[0].points}
-              </strong>{' '}
-              <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
-            </>
-          ) : (
-            <>
-              <strong>Complete</strong> <SvgIcon component={Complete} inheritViewBox fontSize="medium" />
-            </>
-          )}
-        </Box>
-      </CardActions>
-    </Card>
-  )
+        </Stack> */
 }
-
-export default Badge
