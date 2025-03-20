@@ -55,7 +55,12 @@ function Badges() {
         }
         isLoading={isLoading || isSuperChainLoading}
       />
-      <BadgesActions setNetwork={setSelectedNetwork} setFilter={setSearchTerm} claimable={isClaimable ?? false} />
+      <BadgesActions
+        setNetwork={setSelectedNetwork}
+        setFilter={setSearchTerm}
+        claimable={isClaimable ?? false}
+        network={selectedNetwork}
+      />
       <BadgesContent badges={filteredBadges} isLoading={isLoading} error={error} />
     </Grid>
   )

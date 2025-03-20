@@ -10,8 +10,7 @@ import type { Address } from 'viem'
 import SuperChainPoints from '@/public/images/common/superChain.svg'
 import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
+import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 
 function BadgeInfo({
   currentBadge,
@@ -203,7 +202,7 @@ function BadgeInfo({
             <Typography fontSize="18px" fontWeight={600} textAlign="start" fontFamily="Sora">
               {currentBadge?.metadata.name}
             </Typography>
-            <NetworkChip network={currentBadge.metadata.platform}></NetworkChip>
+            <NetworkChip network={currentBadge.metadata.chain}></NetworkChip>
 
             <Box display="flex" justifyContent="center" alignItems="center" gap={1}></Box>
             <Typography color="#75757A">{currentBadge?.metadata.description}</Typography>
@@ -211,7 +210,7 @@ function BadgeInfo({
               width="100%"
               border={1}
               borderRadius="100px"
-              borderColor="text.secondary"
+              borderColor="#E1E2EA"
               sx={{ borderStyle: 'dashed' }}
               display="flex"
               justifyContent="space-between"
@@ -219,12 +218,14 @@ function BadgeInfo({
               paddingLeft="12px"
               fontSize="16px"
             >
-              <Typography fontSize="12px">Rewards next tier</Typography>
+              <Typography color="#4B4B4E" fontWeight={500} fontSize="12px">
+                Rewards next tier
+              </Typography>
               <Box
                 sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
                 border={1}
                 borderRadius="100px"
-                borderColor="text.secondary"
+                borderColor="#E1E2EA"
                 paddingX="8px"
               >
                 <Typography fontSize="12px" fontWeight={500}>
@@ -238,21 +239,25 @@ function BadgeInfo({
               width="100%"
               border={1}
               borderRadius="12px"
-              borderColor="text.secondary"
+              borderColor="#E1E2EA"
               sx={{ borderStyle: 'dashed', backgroundColor: 'transparent' }}
               padding="12px"
             >
               {transactions.map((tx, index) => (
                 <Box key={index}>
                   <Box display="flex" justifyContent="space-between" alignItems="center" paddingY="4px">
-                    <Typography fontSize="14px">{tx.label}</Typography>
+                    <Typography color="#4B4B4E" fontSize="12px">
+                      {tx.label}
+                    </Typography>
                     <SvgIcon
+                      inheritViewBox
                       component={tx.completed ? CheckCircleIcon : null}
                       sx={{
                         color: tx.completed ? '#A3E635' : 'grey',
-                        fontSize: '18px',
-                        border: tx.completed ? 'none' : '1px dotted',
-                        borderColor: 'text.secondary',
+                        fontSize: '16px',
+                        width: '16px',
+                        height: '16px',
+                        border: tx.completed ? 'none' : '1px dashed #E1E2EA',
                         borderRadius: '50%',
                       }}
                     />
@@ -270,6 +275,8 @@ const networks = {
   Optimism: 'https://safe-transaction-assets.safe.global/chains/10/chain_logo.png',
   Base: 'https://safe-transaction-assets.safe.global/chains/8453/chain_logo.png',
   Mode: 'https://account.superchain.eco/chains/34443/chain_logo.svg',
+  Ethereum: 'https://safe-transaction-assets.safe.global/chains/1/chain_logo.png',
+  Lisk: 'https://account.superchain.eco/chains/1135/chain_logo.svg',
 } as const
 
 interface NetworkChipProps {

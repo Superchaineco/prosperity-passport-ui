@@ -14,14 +14,14 @@
 
 @font-face {
   font-family: 'Sora';
-  font-display: ;
+  font-display: swap;
   font-weight: 400;
-  src: url('/fonts/Sora-Regular.ttf') format('ttf');
+  src: url('/fonts/Sora-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Sora';
   font-display: swap;
   font-weight: bold;
-  src: url('/fonts/Sora-Bold.ttf') format('ttf');
+  src: url('/fonts/Sora-Bold.ttf') format('truetype');
 }

@@ -49,15 +49,17 @@ function Badge({
   const renderNextTier = data.claimableTier === Number(data.tier)
 
   return (
-    <Card onClick={handlePickBadge} className={classNames(css.badgeContainer)}>
-      <CardMedia
+    <Box onClick={handlePickBadge} className={classNames(css.badgeContainer)}>
+      <Box
         sx={{
           position: 'relative',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '112px',
+          minHeight: '112px',
           overflow: 'hidden',
+          borderTopLeftRadius: '12px',
+          borderTopRightRadius: '12px',
         }}
       >
         <Box
@@ -86,7 +88,7 @@ function Badge({
             width: '100%',
           }}
         >
-          <Box sx={{ position: 'relative' }}>
+          <Box height="100%" width="100%">
             {Number(data.tier) > 0 &&
               [...Array(Number(data.tier))].map((_, index) => {
                 const totalBadges = Number(data.tier)
@@ -136,10 +138,22 @@ function Badge({
               })}
           </Box>
         </Box>
-      </CardMedia>
-      <CardContent>
-        <Box display="flex" flexDirection="column" gap="12px" padding="24px">
-          <Typography fontSize="18px" fontWeight={600} textAlign="start" fontFamily="Sora">
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', paddingBottom: '0px', width: '100%', height: '100%' }}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="12px"
+          padding="24px"
+          sx={{ flexGrow: 1, width: '100%', boxSizing: 'border-box' }}
+        >
+          <Typography
+            fontSize="18px"
+            fontWeight={600}
+            textAlign="start"
+            fontFamily="Sora"
+            sx={{ wordBreak: 'break-word' }}
+          >
             {data.metadata.name}
           </Typography>
           <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
@@ -155,36 +169,46 @@ function Badge({
               />
             ))}
           </Box>
-          <Typography color="text.secondary">{data.metadata.description}</Typography>
+          <Typography color="text.secondary" sx={{ wordBreak: 'break-word' }}>
+            {data.metadata.description}
+          </Typography>
+        </Box>
+        <Box
+          width="100%"
+          border={1}
+          borderRadius="100px"
+          borderColor="#E1E2EA"
+          sx={{
+            borderStyle: 'dashed',
+            marginTop: 'auto',
+            marginBottom: '24px',
+            marginX: '24px',
+            maxWidth: 'calc(100% - 48px)',
+          }}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          paddingLeft="12px"
+          fontSize="16px"
+        >
+          <Typography fontWeight={500} color="#4B4B4E" fontSize="12px">
+            Rewards next tier
+          </Typography>
           <Box
-            width="100%"
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
             border={1}
             borderRadius="100px"
-            borderColor="text.secondary"
-            sx={{ borderStyle: 'dashed' }}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            paddingLeft="12px"
-            fontSize="16px"
+            borderColor="#E1E2EA"
+            paddingX="8px"
           >
-            <Typography fontSize="12px">Rewards next tier</Typography>
-            <Box
-              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-              border={1}
-              borderRadius="100px"
-              borderColor="text.secondary"
-              paddingX="8px"
-            >
-              <Typography fontSize="12px" fontWeight={500}>
-                50
-              </Typography>
-              <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
-            </Box>
+            <Typography fontSize="12px" fontWeight={500}>
+              50
+            </Typography>
+            <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
           </Box>
         </Box>
-      </CardContent>
-    </Card>
+      </Box>
+    </Box>
   )
 }
 
