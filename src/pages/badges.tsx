@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <title>Prosperity Account - Badges</title>
       </Head>
 
-      <main>
+      <main style={{ backgroundColor: 'white' }}>
         <Badges />
       </main>
     </>

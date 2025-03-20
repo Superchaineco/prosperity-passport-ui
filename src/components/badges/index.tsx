@@ -42,7 +42,7 @@ function Badges() {
   }, [data?.currentBadges, searchTerm, selectedNetwork])
 
   return (
-    <Grid spacing={2} container>
+    <Grid p={1} spacing={2} container>
       <BadgesHeader
         level={Number(superChainAccount.level)}
         points={Number(superChainAccount.points)}
