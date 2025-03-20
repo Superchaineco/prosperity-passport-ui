@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, SvgIcon, Tooltip, Typography } from '@mui/material'
+import { Box, Card, CardContent, CardMedia, IconButton, Stack, SvgIcon, Tooltip, Typography } from '@mui/material'
 import React, { useMemo } from 'react'
 import css from './styles.module.css'
 import type { ResponseBadge } from '@/types/super-chain'
@@ -8,7 +8,8 @@ import Share from '@/public/images/common/share.svg'
 import Close from '@/public/images/common/close.svg'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import type { Address } from 'viem'
-import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
+import SuperChainPoints from '@/public/images/common/superChain.svg'
+import classNames from 'classnames'
 
 function BadgeInfo({
   currentBadge,
@@ -54,7 +55,7 @@ function BadgeInfo({
         justifyContent="center"
         alignItems="center"
       >
-        {!!Number(currentBadge.tier) ? (
+        {/* {!!Number(currentBadge.tier) ? (
           <img
             src={currentBadge.badgeTiers[currentBadge.claimableTier! - 1].metadata['3DImage']}
             className={!unClaimed ? css.unclaimed : undefined}
@@ -66,15 +67,115 @@ function BadgeInfo({
             className={!unClaimed ? css.unclaimed : undefined}
             alt={currentBadge.metadata.platform}
           />
-        )}
+        )} */}
+
+        <Card className={classNames(css.badgeContainer)}>
+          <CardMedia
+            sx={{
+              position: 'relative',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '112px',
+              overflow: 'hidden',
+            }}
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundImage: `url('/static/badges/LifeTerm/OpUser/Badge.svg')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                filter: 'blur(68px)',
+                opacity: 1,
+                zIndex: 0,
+              }}
+            />
+            <Box
+              sx={{
+                position: 'relative',
+                zIndex: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                width: '100%',
+              }}
+            >
+              <Box sx={{ position: 'relative' }}>
+                {Number(1) > 0 &&
+                  [...Array(Number(1))].map((_, index) => {
+                    const totalBadges = Number(1) + 1
+                    const centerIndex = (totalBadges - 1) / 2
+                    const spacing = 24
+
+                    return (
+                      <Box
+                        sx={{
+                          position: 'relative',
+                          width: '100%',
+                          height: '100%',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Box sx={{ position: 'relative' }}></Box>
+                      </Box>
+                    )
+                  })}
+              </Box>
+            </Box>
+          </CardMedia>
+          <CardContent>
+            <Box display="flex" flexDirection="column" gap="12px" padding="24px">
+              <Typography fontSize="18px" fontWeight={600} textAlign="start" fontFamily="Sora">
+                {currentBadge?.metadata.name}
+              </Typography>
+              <Typography fontSize={14} fontWeight={500}>
+                <strong color="text.secondary">Network: </strong>
+                {currentBadge.metadata.platform}
+              </Typography>
+              <Box display="flex" justifyContent="center" alignItems="center" gap={1}></Box>
+              <Typography color="text.secondary">{currentBadge?.metadata.description}</Typography>
+              <Box
+                width="100%"
+                border={1}
+                borderRadius="100px"
+                borderColor="text.secondary"
+                sx={{ borderStyle: 'dashed' }}
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                paddingLeft="12px"
+                fontSize="16px"
+              >
+                <Typography fontSize="12px">Rewards next tier</Typography>
+                <Box
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                  border={1}
+                  borderRadius="100px"
+                  borderColor="text.secondary"
+                  paddingX="8px"
+                >
+                  <Typography fontSize="12px" fontWeight={500}>
+                    50
+                  </Typography>
+                  <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+                </Box>
+              </Box>
+            </Box>
+          </CardContent>
+        </Card>
         <Box display="flex" gap={1} position="absolute" top="10%" right="0">
-          <IconButton className={css.actionBtn}>
-            <SvgIcon component={Share} color="inherit" inheritViewBox fontSize="small" />
-          </IconButton>
           <IconButton onClick={handleSwitchFavorite} className={css.actionBtn}>
             <SvgIcon
               component={currentBadge?.isFavorite ? HeartFilled : Hearth}
-              color="inherit"
+              style={{ color: 'red' }}
               inheritViewBox
               fontSize="small"
             />
@@ -92,47 +193,7 @@ function BadgeInfo({
           {currentBadge?.metadata.description}
         </Typography>
       </Box>
-      {!maxTierReached && (
-        <Box
-          border={2}
-          borderRadius={1}
-          display="flex"
-          justifyContent="center"
-          width="100%"
-          alignItems="center"
-          padding="12px"
-          flexDirection="column"
-          borderColor="secondary.main"
-        >
-          {!!Number(currentBadge.tier) ? (
-            <>
-              <Typography fontSize={14} fontWeight={600} color="secondary.main">
-                Unlock Next Tier:
-              </Typography>
-              <Typography fontSize={12} fontWeight={400}>
-                {currentBadge.metadata.description.replace(
-                  '{{variable}}',
-                  renderNextTier
-                    ? currentBadge.badgeTiers[currentBadge.claimableTier!].metadata.minValue.toString()
-                    : currentBadge.badgeTiers[currentBadge.claimableTier! - 1].metadata.minValue.toString(),
-                )}
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography fontSize={12} fontWeight={600} color="secondary.main">
-                Unlock First Tier:
-              </Typography>
-              <Typography fontSize={12} fontWeight={400}>
-                {currentBadge.metadata.condition.replace(
-                  '{{variable}}',
-                  currentBadge.badgeTiers[0].metadata.minValue.toString(),
-                )}
-              </Typography>
-            </>
-          )}
-        </Box>
-      )}
+
       <Box
         border={2}
         borderRadius={1}
@@ -144,10 +205,6 @@ function BadgeInfo({
         width="100%"
         borderColor="border.light"
       >
-        <Typography fontSize={14} fontWeight={500}>
-          <strong color="text.secondary">Network: </strong>
-          {currentBadge.metadata.platform}
-        </Typography>
         <Typography fontSize={14} fontWeight={500}>
           <strong color="text.secondary">Current Tier:</strong> {currentBadge.tier ? currentBadge.tier : 0}
         </Typography>

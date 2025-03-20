@@ -40,7 +40,6 @@ function Badges() {
     }
     return filtered
   }, [data?.currentBadges, searchTerm, selectedNetwork])
-
   return (
     <Grid p={1} spacing={2} container>
       <BadgesHeader

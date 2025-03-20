@@ -268,7 +268,7 @@ function BadgesActions({
                   minHeight: '36px',
                   backgroundColor: 'black',
                   color: 'white',
-                  maxWidth: { xs: '100%', lg: '200px' },
+                  maxWidth: { xs: '100%', lg: '250px' },
                   '&:hover': {
                     backgroundColor: '#333',
                   },
