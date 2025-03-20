@@ -278,7 +278,7 @@ function BadgesActions({
                   },
                 }}
               >
-                {isPending ? 'Loading' : claimable ? 'Update Badges' : 'No claimable Badges'}
+                {isPending ? 'Loading' : 'Claim Badges'}
               </Button>
             </Box>
           </Grid>

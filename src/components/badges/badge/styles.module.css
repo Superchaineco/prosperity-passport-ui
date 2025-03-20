@@ -7,6 +7,12 @@
   cursor: pointer;
 }
 
+.badgeContainerInfo {
+
+  width: clamp(200px, 100%, 250px);
+  cursor: pointer;
+}
+
 .badgeContainer > div {
   padding: 0;
 }

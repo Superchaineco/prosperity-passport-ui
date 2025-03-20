@@ -11,14 +11,11 @@ import {
   Typography,
 } from '@mui/material'
 import React, { useMemo, type SyntheticEvent } from 'react'
-import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
-import Hearth from '@/public/images/common/hearth.svg'
-import HeartFilled from '@/public/images/common/hearth-filled.svg'
+import SuperChainPoints from '@/public/images/common/superChain.svg'
 import css from './styles.module.css'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import type { ResponseBadge } from '@/types/super-chain'
 import classNames from 'classnames'
-import Complete from '@/public/images/common/complete.svg'
 import Image from 'next/image'
 function Badge({
   data,
@@ -92,7 +89,7 @@ function Badge({
           <Box sx={{ position: 'relative' }}>
             {Number(data.tier) > 0 &&
               [...Array(Number(data.tier))].map((_, index) => {
-                const totalBadges = Number(data.tier) + 1
+                const totalBadges = Number(data.tier)
                 const centerIndex = (totalBadges - 1) / 2
                 const spacing = 24
 
