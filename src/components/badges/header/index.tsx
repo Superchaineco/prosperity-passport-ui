@@ -37,7 +37,7 @@ function BadgesHeader({ level, points, pointsToNextLevel, completeBadges, totalB
         <NavTabs tabs={badgesNavItems} />
         <Divider sx={{ mb: 2, width: '100%' }} />
         <Grid container spacing={2} mt={2}>
-          <Grid item xs={12} md={1.6} sm={5} display="flex">
+          <Grid item xs={12} md={5} sm={5} display="flex">
             <Card
               sx={{
                 flex: 1,
@@ -72,7 +72,7 @@ function BadgesHeader({ level, points, pointsToNextLevel, completeBadges, totalB
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={10.4} sm={7}>
+          <Grid item xs={12} md={7} sm={7}>
             <Card
               sx={{
                 flex: 1,

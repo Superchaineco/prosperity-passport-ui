@@ -8,6 +8,12 @@
   cursor: pointer;
 }
 
+@media (max-width: 600px) {
+  .badgeContainer {
+    width: 100%;
+  }
+}
+
 .badgeContainerInfo {
   width: clamp(200px, 100%, 250px);
   cursor: pointer;

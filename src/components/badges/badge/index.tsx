@@ -49,7 +49,7 @@ function Badge({
   const renderNextTier = data.claimableTier === Number(data.tier)
 
   return (
-    <Box onClick={handlePickBadge} className={classNames(css.badgeContainer)}>
+    <Box sx={{ maxWidth: '100%' }} onClick={handlePickBadge} className={classNames(css.badgeContainer)}>
       <Box
         sx={{
           position: 'relative',
