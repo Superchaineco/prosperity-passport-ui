@@ -10,7 +10,9 @@ import type { Address } from 'viem'
 import SuperChainPoints from '@/public/images/common/superChain.svg'
 import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
-import CheckCircleIcon from '@/public/images/common/check-circle.svg'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
+import NetworkChip from '../networkChip'
 
 function BadgeInfo({
   currentBadge,
@@ -246,21 +248,20 @@ function BadgeInfo({
               {transactions.map((tx, index) => (
                 <Box key={index}>
                   <Box display="flex" justifyContent="space-between" alignItems="center" paddingY="4px">
-                    <Typography color="#4B4B4E" fontSize="12px">
-                      {tx.label}
-                    </Typography>
-                    <SvgIcon
-                      inheritViewBox
-                      component={tx.completed ? CheckCircleIcon : null}
-                      sx={{
-                        color: tx.completed ? '#A3E635' : 'grey',
-                        fontSize: '16px',
-                        width: '16px',
-                        height: '16px',
-                        border: tx.completed ? 'none' : '1px dashed #E1E2EA',
-                        borderRadius: '50%',
-                      }}
-                    />
+                    <Typography fontSize="14px">{tx.label}</Typography>
+                    {tx.completed ? (
+                      <SvgIcon component={CheckCircleIcon} sx={{ color: '#A3E635', fontSize: '18px' }} />
+                    ) : (
+                      <Box
+                        sx={{
+                          width: '18px',
+                          height: '18px',
+                          border: '1px dotted',
+                          borderColor: 'text.secondary',
+                          borderRadius: '50%',
+                        }}
+                      />
+                    )}
                   </Box>
                 </Box>
               ))}
@@ -269,42 +270,6 @@ function BadgeInfo({
         </CardContent>
       </Card>
     </Stack>
-  )
-}
-const networks = {
-  Optimism: 'https://safe-transaction-assets.safe.global/chains/10/chain_logo.png',
-  Base: 'https://safe-transaction-assets.safe.global/chains/8453/chain_logo.png',
-  Mode: 'https://account.superchain.eco/chains/34443/chain_logo.svg',
-  Ethereum: 'https://safe-transaction-assets.safe.global/chains/1/chain_logo.png',
-  Lisk: 'https://account.superchain.eco/chains/1135/chain_logo.svg',
-} as const
-
-interface NetworkChipProps {
-  network: string
-}
-const NetworkChip: React.FC<NetworkChipProps> = ({ network }) => {
-  const networkLogo = networks[network as keyof typeof networks]
-
-  return (
-    <Chip
-      label={
-        <Box display="flex" gap={1} alignItems="center">
-          <Image src={networkLogo} alt={`${network} Logo`} width={24} height={24} loading="lazy" />
-          <strong>{network}</strong>
-        </Box>
-      }
-      sx={{
-        borderRadius: '18px',
-        color: 'black',
-        border: '1px solid #E1E2EA',
-        backgroundColor: 'transparent',
-        height: '32px',
-        fontWeight: 600,
-        minWidth: 'auto',
-        alignSelf: 'flex-start',
-        maxWidth: 'fit-content',
-      }}
-    />
   )
 }
 

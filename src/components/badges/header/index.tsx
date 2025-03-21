@@ -25,7 +25,21 @@ const GradientProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }))
 
-function BadgesHeader({ level, points, pointsToNextLevel, completeBadges, totalBadges, isLoading }) {
+function BadgesHeader({
+  level,
+  points,
+  pointsToNextLevel,
+  completeBadges,
+  totalBadges,
+  isLoading,
+}: {
+  level: number
+  points: number
+  completeBadges: number
+  pointsToNextLevel: number
+  totalBadges: number
+  isLoading: boolean
+}) {
   const progress = (points / (points + pointsToNextLevel)) * 100
 
   return (
