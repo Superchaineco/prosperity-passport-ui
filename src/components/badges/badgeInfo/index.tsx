@@ -10,8 +10,7 @@ import type { Address } from 'viem'
 import SuperChainPoints from '@/public/images/common/superChain.svg'
 import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'
+import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 import NetworkChip from '../networkChip'
 
 function BadgeInfo({

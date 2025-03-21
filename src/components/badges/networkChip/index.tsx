@@ -6,8 +6,9 @@ import Image from 'next/image'
 const networks = {
   Optimism: 'https://safe-transaction-assets.safe.global/chains/10/chain_logo.png',
   Base: 'https://safe-transaction-assets.safe.global/chains/8453/chain_logo.png',
-  Mode: 'https://account.superchain.eco/chains/34443/chain_logo.svg',
+  Mode: '/chains/34443/chain_logo.svg',
   Ethereum: 'https://safe-transaction-assets.safe.global/chains/1/chain_logo.png',
+  Lisk: '/chains/1135/chain_logo.svg',
 } as const
 
 interface NetworkChipProps {
