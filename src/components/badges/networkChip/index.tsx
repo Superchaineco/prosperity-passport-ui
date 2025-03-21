@@ -13,11 +13,22 @@ const networks = {
 
 interface NetworkChipProps {
   network: string
+  style: 'badge' | 'info'
 }
-const NetworkChip: React.FC<NetworkChipProps> = ({ network }) => {
+const NetworkChip: React.FC<NetworkChipProps> = ({ network, style }) => {
   const networkLogo = networks[network as keyof typeof networks]
+  const isBadge = style === 'badge'
 
-  return (
+  return isBadge ? (
+    <Image
+      src={networkLogo}
+      alt={`${network} Logo`}
+      width={24}
+      height={24}
+      loading="lazy"
+      style={{ position: 'absolute', right: '10px', top: '10px' }}
+    />
+  ) : (
     <Chip
       label={
         <Box display="flex" gap={1} alignItems="center">

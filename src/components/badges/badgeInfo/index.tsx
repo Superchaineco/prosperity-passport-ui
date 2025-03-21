@@ -12,6 +12,7 @@ import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
 import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 import NetworkChip from '../networkChip'
+import SeasonChip from '../seasonChip'
 
 function BadgeInfo({
   currentBadge,
@@ -65,31 +66,7 @@ function BadgeInfo({
         alignItems="center"
       >
         <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" p="10px 30px">
-          <Chip
-            label={
-              <Box display="flex" alignItems="center" gap={0.5}>
-                <Typography fontWeight={600} sx={{ color: '#6B5DE7', margin: '-5px' }}>
-                  S7
-                </Typography>
-                <Image
-                  src="/images/badges/stars_custom.svg"
-                  alt="Star Icon"
-                  width={14}
-                  height={14}
-                  style={{ margin: '2px' }}
-                />
-              </Box>
-            }
-            sx={{
-              borderRadius: '18px',
-              border: '1px solid #6B5DE7',
-              backgroundColor: '#F4F0FF',
-              padding: '6px 10px',
-              height: '32px',
-              maxWidth: '60px',
-              fontWeight: 600,
-            }}
-          />
+          <SeasonChip season="S7" style="info" />
 
           {/* Íconos alineados a la derecha */}
           <Box display="flex" alignItems="center" gap={1}>

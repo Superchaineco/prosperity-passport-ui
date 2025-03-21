@@ -50,7 +50,7 @@ function BadgesActions({
   const router = useRouter()
   const [isClaimModalOpen, setIsClaimModalOpen] = useState(false)
   const [claimData, setClaimData] = useState<ClaimData | null>(null)
-  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(true)
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
   const queryClient = useQueryClient()
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async () => {

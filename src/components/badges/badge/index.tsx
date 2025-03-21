@@ -1,15 +1,4 @@
-import {
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  IconButton,
-  Stack,
-  SvgIcon,
-  Typography,
-} from '@mui/material'
+import { Box, SvgIcon, Typography } from '@mui/material'
 import React, { useMemo, type SyntheticEvent } from 'react'
 import SuperChainPoints from '@/public/images/common/superChain.svg'
 import css from './styles.module.css'
@@ -17,6 +6,8 @@ import useSafeInfo from '@/hooks/useSafeInfo'
 import type { ResponseBadge } from '@/types/super-chain'
 import classNames from 'classnames'
 import Image from 'next/image'
+import SeasonChip from '../seasonChip'
+import NetworkChip from '../networkChip'
 function Badge({
   data,
   switchFavorite,
@@ -77,6 +68,8 @@ function Badge({
             zIndex: 0,
           }}
         />
+        <SeasonChip season="S7" style="badge" />
+        <NetworkChip network={data.metadata.chain} style="badge" />
         <Box
           sx={{
             position: 'relative',
