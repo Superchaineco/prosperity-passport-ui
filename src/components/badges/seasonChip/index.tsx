@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 function SeasonChip({ season, style }: { season: string; style: 'info' | 'badge' }) {
   const isBadge = style === 'badge'
-
+  if (!season) return <></>
   return (
     <Chip
       label={

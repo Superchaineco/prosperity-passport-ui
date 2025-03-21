@@ -65,7 +65,7 @@ function BadgesContent({
 
   return (
     <Grid container item spacing={1}>
-      {favoriteBadges.length > 0 && (
+      {/* {favoriteBadges.length > 0 && (
         <>
           <Grid item xs={12}>
             <Typography variant="h3" fontSize={12} fontWeight={600} color="primary.light">
@@ -95,16 +95,16 @@ function BadgesContent({
             </Stack>
           </Grid>
         </>
-      )}
-      <Grid item xs={12}>
+      )} */}
+      {/* <Grid item xs={12}>
         <Typography variant="h3" fontSize={12} fontWeight={600} color="primary.light">
           All badges
         </Typography>
-      </Grid>
-      <Grid xs={12} item>
+      </Grid> */}
+      <Grid xs={12} item sx={{ mt: '10px' }}>
         <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
           {badges
-            .filter((badge) => !favoriteBadges.includes(badge.badgeId))
+            // .filter((badge) => !favoriteBadges.includes(badge.badgeId))
             .map((badge) => (
               <Badge
                 data={badge}
@@ -118,7 +118,7 @@ function BadgesContent({
                   )
                 }
                 setCurrentBadge={setCurrentBadge}
-                isFavorite={false}
+                isFavorite={favoriteBadges.includes(badge.badgeId)}
               />
             ))}
         </Stack>

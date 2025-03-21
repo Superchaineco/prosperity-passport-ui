@@ -180,7 +180,7 @@ function BadgeInfo({
             <Typography fontSize="18px" fontWeight={600} textAlign="start" fontFamily="Sora">
               {currentBadge?.metadata.name}
             </Typography>
-            <NetworkChip network={currentBadge.metadata.chain}></NetworkChip>
+            <NetworkChip network={currentBadge.metadata.chain} style="info"></NetworkChip>
 
             <Box display="flex" justifyContent="center" alignItems="center" gap={1}></Box>
             <Typography color="#75757A">{currentBadge?.metadata.description}</Typography>

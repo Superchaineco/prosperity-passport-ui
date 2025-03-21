@@ -27,6 +27,8 @@ import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
 import { ResponseBadge } from '@/types/super-chain'
 import AutorenewIcon from '@mui/icons-material/Autorenew'
+import { Network } from 'ethers'
+import NetworkChip from '../networkChip'
 
 export type ClaimData = {
   badges: BadgeResponse[]
@@ -229,6 +231,24 @@ function BadgesActions({
                       loading="lazy"
                     />
                     <strong>Mode</strong>
+                  </Box>
+                </MenuItem>
+                <MenuItem value="ethereum">
+                  <Box display="flex" gap={1} alignItems="center">
+                    <Image
+                      src="https://safe-transaction-assets.safe.global/chains/1/chain_logo.png"
+                      alt="Mode Logo"
+                      width={24}
+                      height={24}
+                      loading="lazy"
+                    />
+                    <strong>Ethereum</strong>
+                  </Box>
+                </MenuItem>
+                <MenuItem value="lisk">
+                  <Box display="flex" gap={1} alignItems="center">
+                    <Image src="/chains/1135/chain_logo.svg" alt="Mode Logo" width={24} height={24} loading="lazy" />
+                    <strong>Lisk</strong>
                   </Box>
                 </MenuItem>
               </Select>

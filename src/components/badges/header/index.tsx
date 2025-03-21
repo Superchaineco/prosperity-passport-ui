@@ -59,7 +59,7 @@ function BadgesHeader({
               <Typography variant="h6" color="text.secondary" gutterBottom>
                 Badges
               </Typography>
-              <Chip
+              {/* <Chip
                 label="Lifetime"
                 sx={{
                   backgroundColor: '#F4F4F5',
@@ -67,7 +67,7 @@ function BadgesHeader({
                   borderRadius: '20px',
                   border: '1px solid #D0D0D0',
                 }}
-              />
+              /> */}
             </Box>
 
             <Typography variant="h1" sx={{ fontSize: '40px', mt: 2 }} fontWeight={600}>

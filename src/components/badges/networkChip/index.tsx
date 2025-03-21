@@ -14,8 +14,9 @@ const networks = {
 interface NetworkChipProps {
   network: string
   style: 'badge' | 'info'
+  isFavorite: boolean
 }
-const NetworkChip: React.FC<NetworkChipProps> = ({ network, style }) => {
+const NetworkChip: React.FC<NetworkChipProps> = ({ network, style, isFavorite }) => {
   const networkLogo = networks[network as keyof typeof networks]
   const isBadge = style === 'badge'
 
@@ -26,7 +27,7 @@ const NetworkChip: React.FC<NetworkChipProps> = ({ network, style }) => {
       width={24}
       height={24}
       loading="lazy"
-      style={{ position: 'absolute', right: '10px', top: '10px' }}
+      style={{ position: 'absolute', right: isFavorite ? '40px' : '10px', top: '10px' }}
     />
   ) : (
     <Chip

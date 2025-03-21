@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import Image from 'next/image'
 import SeasonChip from '../seasonChip'
 import NetworkChip from '../networkChip'
+import HeartFilled from '@/public/images/common/hearth-filled.svg'
 function Badge({
   data,
   switchFavorite,
@@ -69,7 +70,18 @@ function Badge({
           }}
         />
         <SeasonChip season="S7" style="badge" />
-        <NetworkChip network={data.metadata.chain} style="badge" />
+        <NetworkChip network={data.metadata.chain} style="badge" isFavorite={isFavorite} />
+        {isFavorite ? (
+          <SvgIcon
+            component={HeartFilled}
+            sx={{ color: 'red', fontSize: '20px' }}
+            inheritViewBox
+            style={{ position: 'absolute', top: '12px', right: '10px' }}
+          />
+        ) : (
+          <></>
+        )}
+
         <Box
           sx={{
             position: 'relative',
