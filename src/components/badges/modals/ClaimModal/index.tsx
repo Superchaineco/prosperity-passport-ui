@@ -6,7 +6,13 @@ import css from './styles.module.css'
 import type { ClaimData } from '../../actions'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
-import Badges from '@/components/superChain/Badges'
+import CheckCircleIcon from '@/public/images/common/check-circle.svg'
+import { GradientProgress } from '../..'
+
+const claimData = {
+  claimedBadges: ['5 transactions made on OP Mainnet'],
+}
+
 function ClaimModal({
   open,
   onClose,
@@ -19,6 +25,10 @@ function ClaimModal({
   onLevelUp: () => void
 }) {
   const { data: superChainAccount } = useAppSelector(selectSuperChainAccount)
+  const progress =
+    (Number(superChainAccount.points) /
+      (Number(superChainAccount.points) + Number(superChainAccount.pointsToNextLevel))) *
+    100
 
   return (
     <Dialog
@@ -36,45 +46,93 @@ function ClaimModal({
         justifyContent="center"
         alignItems="center"
       >
-        <Box gap="12px" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+        <Box gap="12px" display="flex" flexDirection="column" justifyContent="center" alignItems="center" width="100%">
           <Typography id="modal-modal-title" fontSize={24} fontWeight={600} component="h2">
             Claim success
           </Typography>
-          <Typography color="GrayText" id="modal-modal-description" fontSize={16}>
-            You have received the following rewards
+          <Box
+            width="100%"
+            border={1}
+            borderRadius="12px"
+            borderColor="#E1E2EA"
+            sx={{ borderStyle: 'dashed', backgroundColor: 'transparent' }}
+            padding="12px"
+          >
+            {claimData.claimedBadges.map((tx, index) => (
+              <Box key={index}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" paddingY="4px">
+                  <Typography color="#4B4B4E" fontSize="14px">
+                    {tx}
+                  </Typography>
+                  <SvgIcon
+                    inheritViewBox
+                    component={CheckCircleIcon}
+                    sx={{
+                      color: '#A3E635',
+                      fontSize: '16px',
+                      width: '16px',
+                      height: '16px',
+                      borderRadius: '50%',
+                    }}
+                  />
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        <Box display="flex" justifyContent="space-between" alignItems="center" paddingLeft="12px" fontSize="16px">
+          <Typography color="#75757A" fontWeight={500} fontSize="18px" pr={1}>
+            You have recieved:
           </Typography>
+          <Box
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+            border={1}
+            borderRadius="100px"
+            borderColor="#E1E2EA"
+            paddingX="8px"
+          >
+            <Typography fontSize="16px" fontWeight={600} p="4px 2px">
+              {data?.totalPoints ?? 10 /*TODO Remove this*/}
+            </Typography>
+            <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+          </Box>
         </Box>
-        <Box display="flex" gap="24px" flexWrap="wrap" maxWidth="360px">
-          <Badges badges={data?.badges!} isLoading={false} />
+        <Box flex={1} width="100%">
+          <GradientProgress variant="determinate" value={progress} />
+          {!data?.isLevelUp && (
+            <>
+              <Typography variant="body2" align="center" mt={1} color="#75757A">
+                {Number(superChainAccount.points)} /{' '}
+                {Number(superChainAccount.points) + Number(superChainAccount.pointsToNextLevel)} Superchain Points to
+                level {Number(superChainAccount.level) + 1}
+              </Typography>
+              <Button
+                onClick={onClose}
+                variant="contained"
+                sx={{ width: '100%', mt: '30px', borderRadius: '30px', height: '60px' }}
+              >
+                Continue
+              </Button>
+            </>
+          )}
+          {data?.isLevelUp && (
+            <>
+              <Typography variant="body2" align="center" mt={1} color="#75757A">
+                You have enough Superchain Points to level-up!
+              </Typography>
+              <button
+                onClick={onLevelUp}
+                className={css.levelUpButton}
+                style={{ width: '100%', marginTop: '30px', borderRadius: '30px', height: '60px' }}
+              >
+                Level-up
+                <Shiny className={css.shine} />
+              </button>
+            </>
+          )}
         </Box>
-        <Box
-          className={css.pointsBox}
-          display="flex"
-          gap="6px"
-          justifyContent="center"
-          alignItems="center"
-          padding="8px 14px 8px 16px"
-        >
-          <strong>{data?.totalPoints}</strong>
-          <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
-        </Box>
-        {!data?.isLevelUp && (
-          <Typography color="GrayText" fontSize={16}>
-            You still need
-            <strong> {Number(superChainAccount.pointsToNextLevel)} SC Point to level-up </strong>
-          </Typography>
-        )}
       </Box>
-      {data?.isLevelUp ? (
-        <button onClick={onLevelUp} className={css.levelUpButton}>
-          Level-up
-          <Shiny className={css.shine} />
-        </button>
-      ) : (
-        <Button onClick={onClose} variant="contained" className={css.outsideButton}>
-          Continue
-        </Button>
-      )}
     </Dialog>
   )
 }

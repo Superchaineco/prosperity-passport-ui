@@ -5,6 +5,8 @@ import StarAnimation from '../StarsAnimation'
 import Perks from '@/components/superChain/Perks'
 import { useQuery } from '@tanstack/react-query'
 import badgesService from '@/features/superChain/services/badges.service'
+import Image from 'next/image'
+
 function LevelUpModal({ open, onClose, level }: { open: boolean; onClose: () => void; level: number }) {
   const { data, isLoading } = useQuery({
     queryKey: ['levelUpModal', level],
@@ -29,19 +31,41 @@ function LevelUpModal({ open, onClose, level }: { open: boolean; onClose: () => 
         >
           <Box gap="12px" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <Typography id="modal-modal-title" fontSize={24} fontWeight={600} component="h2">
-              You’ve reached level {level}!
+              You’ve reached level
             </Typography>
+            <Box display="flex" flexDirection="column" alignItems="center" sx={{ p: '20px' }}>
+              <Image src="/images/badges/star.svg" alt="Badge" width={50} height={50} />
+
+              <Typography
+                variant="h3"
+                fontWeight={700}
+                color="white"
+                sx={{
+                  position: 'absolute',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: 'transparent',
+                  pt: '50px',
+                }}
+              >
+                {level}
+              </Typography>
+            </Box>
             <Typography color="GrayText" id="modal-modal-description" fontSize={16}>
               You have unlocked the following perks:
             </Typography>
           </Box>
 
           <Perks data={data} isLoading={isLoading} />
+          <Button
+            onClick={onClose}
+            variant="contained"
+            sx={{ width: '100%', mt: '30px', borderRadius: '30px', height: '60px' }}
+          >
+            Return to Dashboard
+          </Button>
         </Box>
-        <Button onClick={onClose} variant="contained" className={css.outsideButton}>
-          Return to Dashboard
-        </Button>
-        <StarAnimation />
+
+        {/* <StarAnimation /> */}
       </Dialog>
     </>
   )

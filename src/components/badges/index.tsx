@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Grid, LinearProgress, styled } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import BadgesHeader from './header'
 import BadgesActions from './actions'
@@ -9,6 +9,17 @@ import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
 import badgesService from '@/features/superChain/services/badges.service'
 import useSafeInfo from '@/hooks/useSafeInfo'
+
+export const GradientProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 10,
+  borderRadius: 5,
+  backgroundColor: 'transparent',
+  border: '1px solid #D0D0D0',
+  '& .MuiLinearProgress-bar': {
+    background: 'linear-gradient(90deg, #8B0000 0%, #FF0000 100%)',
+    borderRadius: 5,
+  },
+}))
 
 function Badges() {
   const { data: superChainAccount, loading: isSuperChainLoading } = useAppSelector(selectSuperChainAccount)

@@ -1,7 +1,8 @@
-import { Box, LinearProgress, SvgIcon, Typography, Card, CardContent, Divider, styled, Chip } from '@mui/material'
+import { Box, Typography, Card, CardContent, Divider, Chip } from '@mui/material'
 import Image from 'next/image'
 import NavTabs from '@/components/common/NavTabs'
 import { AppRoutes } from '@/config/routes'
+import { GradientProgress } from '..'
 
 export const badgesNavItems = [
   {
@@ -13,17 +14,6 @@ export const badgesNavItems = [
     href: AppRoutes.badges,
   },
 ]
-
-const GradientProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  borderRadius: 5,
-  backgroundColor: 'transparent',
-  border: '1px solid #D0D0D0',
-  '& .MuiLinearProgress-bar': {
-    background: 'linear-gradient(90deg, #8B0000 0%, #FF0000 100%)',
-    borderRadius: 5,
-  },
-}))
 
 function BadgesHeader({
   level,
