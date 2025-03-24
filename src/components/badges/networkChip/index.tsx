@@ -10,8 +10,9 @@ interface NetworkChipProps {
   isFavorite: boolean
 }
 const NetworkChip: React.FC<NetworkChipProps> = ({ network, style, isFavorite }) => {
-  const networkLogo = networks.find((x) => x.value === network)?.icon ?? ''
+  const networkLogo = networks.find((x) => x.value === network.toLocaleLowerCase())?.icon ?? ''
   const isBadge = style === 'badge'
+  console.log(network)
 
   return isBadge ? (
     <Image

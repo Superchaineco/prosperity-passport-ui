@@ -1,4 +1,4 @@
-import { Box, SvgIcon, Typography } from '@mui/material'
+import { Box, Stack, SvgIcon, Typography } from '@mui/material'
 import React, { useMemo, type SyntheticEvent } from 'react'
 import SuperChainPoints from '@/public/images/common/superChain.svg'
 import css from './styles.module.css'
@@ -9,6 +9,8 @@ import Image from 'next/image'
 import SeasonChip from '../seasonChip'
 import NetworkChip from '../networkChip'
 import HeartFilled from '@/public/images/common/hearth-filled.svg'
+import CheckCircleIcon from '@/public/images/common/check-circle.svg'
+
 function Badge({
   data,
   switchFavorite,
@@ -20,16 +22,10 @@ function Badge({
   setCurrentBadge: (badge: ResponseBadge & { isFavorite: boolean }) => void
   isFavorite: boolean
 }) {
-  const { safeAddress, safeLoading } = useSafeInfo()
   const handleSwitchFavorite = async (event: SyntheticEvent) => {
     event.stopPropagation()
     switchFavorite()
   }
-  const unClaimed = useMemo(() => {
-    if (data?.claimableTier === null || data?.tier === null || data.claimableTier === 0 || Number(data.tier) === 0)
-      return false
-    return Number(data?.tier) === data?.claimableTier
-  }, [data])
 
   const handlePickBadge = () => {
     const badge: ResponseBadge = {
@@ -38,8 +34,9 @@ function Badge({
     setCurrentBadge({ ...badge, isFavorite })
   }
 
-  const renderNextTier = data.claimableTier === Number(data.tier)
+  const isCompleted = Number(data.tier) === data.badgeTiers.length
 
+  console.debug(data)
   return (
     <Box sx={{ maxWidth: '100%' }} onClick={handlePickBadge} className={classNames(css.badgeContainer)}>
       <Box
@@ -94,7 +91,7 @@ function Badge({
           }}
         >
           <Box height="100%" width="100%">
-            {Number(data.tier) > 0 &&
+            {Number(data.tier) > 0 ? (
               [...Array(Number(data.tier))].map((_, index) => {
                 const totalBadges = Number(data.tier)
                 const centerIndex = (totalBadges - 1) / 2
@@ -140,7 +137,34 @@ function Badge({
                     </Box>
                   </Box>
                 )
-              })}
+              })
+            ) : (
+              <Box
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Box sx={{ position: 'relative' }}>
+                  <Image
+                    src="/static/badges/All-Time/OP-Mainnet-User/Badge.svg"
+                    width={72}
+                    height={72}
+                    style={{
+                      position: 'absolute',
+                      left: '50%',
+                      transform: `translate(-50%, -50%)`,
+                      zIndex: 999,
+                    }}
+                    alt={data.metadata.platform}
+                  />
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
       </Box>
@@ -178,40 +202,95 @@ function Badge({
             {data.metadata.description}
           </Typography>
         </Box>
-        <Box
-          width="100%"
-          border={1}
-          borderRadius="100px"
-          borderColor="#E1E2EA"
-          sx={{
-            borderStyle: 'dashed',
-            marginTop: 'auto',
-            marginBottom: '24px',
-            marginX: '24px',
-            maxWidth: 'calc(100% - 48px)',
-          }}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          paddingLeft="12px"
-          fontSize="16px"
-        >
-          <Typography fontWeight={500} color="#4B4B4E" fontSize="12px">
-            Rewards next tier
-          </Typography>
+        {isCompleted ? (
           <Box
-            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+            width="100%"
+            border={1}
+            borderRadius="100px"
+            borderColor="#39D551"
+            bgcolor="#EBFBEE"
+            sx={{
+              borderStyle: 'solid',
+              marginTop: 'auto',
+              marginBottom: '24px',
+              marginX: '24px',
+              maxWidth: 'calc(100% - 48px)',
+            }}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            paddingLeft="12px"
+            fontSize="16px"
+          >
+            <Stack direction="row" alignItems="center" gap={1}>
+              <SvgIcon
+                inheritViewBox
+                component={CheckCircleIcon}
+                sx={{
+                  color: '#A3E635',
+                  fontSize: '16px',
+                  width: '16px',
+                  height: '16px',
+                  border: 'none',
+                  borderRadius: '50%',
+                }}
+              />
+              <Typography fontWeight={500} fontSize="12px">
+                Completed
+              </Typography>
+            </Stack>
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              border={1}
+              borderRadius="100px"
+              borderColor="#39D551"
+              borderBottom="none"
+              borderRight="none"
+              borderTop="none"
+              paddingX="8px"
+            >
+              <Typography fontSize="12px" fontWeight={500}>
+                {data.badgeTiers[data.claimableTier ? data.claimableTier - 1 : 0].metadata.points}
+              </Typography>
+              <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+            </Box>
+          </Box>
+        ) : (
+          <Box
+            width="100%"
             border={1}
             borderRadius="100px"
             borderColor="#E1E2EA"
-            paddingX="8px"
+            sx={{
+              borderStyle: 'dashed',
+              marginTop: 'auto',
+              marginBottom: '24px',
+              marginX: '24px',
+              maxWidth: 'calc(100% - 48px)',
+            }}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            paddingLeft="12px"
+            fontSize="16px"
           >
-            <Typography fontSize="12px" fontWeight={500}>
-              50
+            <Typography fontWeight={500} color="#4B4B4E" fontSize="12px">
+              Rewards next tier
             </Typography>
-            <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              border={1}
+              borderRadius="100px"
+              borderColor="#E1E2EA"
+              paddingX="8px"
+            >
+              <Typography fontSize="12px" fontWeight={500}>
+                {data.badgeTiers[data.claimableTier ? data.claimableTier - 1 : 0].metadata.points}
+              </Typography>
+              <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+            </Box>
           </Box>
-        </Box>
+        )}
       </Box>
     </Box>
   )

@@ -12,7 +12,7 @@ import useSafeInfo from '@/hooks/useSafeInfo'
 
 export const networks = [
   {
-    label: 'OP Mainnet',
+    label: 'OP ',
     value: 'optimism',
     icon: 'https://safe-transaction-assets.safe.global/chains/10/chain_logo.png',
   },

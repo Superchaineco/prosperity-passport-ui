@@ -45,15 +45,7 @@ function BadgeInfo({
 
   if (!currentBadge) return null
 
-  const renderNextTier = currentBadge.claimableTier === Number(currentBadge.tier)
-  const maxTierReached = Number(currentBadge.tier) === currentBadge.badgeTiers.length
-
-  const transactions = [
-    { label: '10 transactions on Base', completed: true },
-    { label: '25 transactions on Base', completed: true },
-    { label: '500 transactions on Base', completed: false },
-    { label: '10,000 transactions on Base', completed: false },
-  ]
+  const isCompleted = Number(currentBadge.tier) === currentBadge.badgeTiers.length
 
   return (
     <Stack justifyContent="flex-start" alignItems="center" spacing={2} className={css.drawer}>
@@ -125,7 +117,7 @@ function BadgeInfo({
             }}
           >
             <Box sx={{ position: 'relative' }}>
-              {Number(currentBadge.tier) > 0 &&
+              {Number(currentBadge.tier) > 0 ? (
                 [...Array(Number(currentBadge.tier))].map((_, index) => {
                   const totalBadges = Number(currentBadge.tier)
                   const centerIndex = (totalBadges - 1) / 2
@@ -171,7 +163,34 @@ function BadgeInfo({
                       </Box>
                     </Box>
                   )
-                })}
+                })
+              ) : (
+                <Box
+                  sx={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box sx={{ position: 'relative' }}>
+                    <Image
+                      src="/static/badges/All-Time/OP-Mainnet-User/Badge.svg"
+                      width={72}
+                      height={72}
+                      style={{
+                        position: 'absolute',
+                        left: '50%',
+                        transform: `translate(-50%, -50%)`,
+                        zIndex: 999,
+                      }}
+                      alt={currentBadge.metadata.platform}
+                    />
+                  </Box>
+                </Box>
+              )}
             </Box>
           </Box>
         </CardMedia>
@@ -188,26 +207,42 @@ function BadgeInfo({
               width="100%"
               border={1}
               borderRadius="100px"
-              borderColor="#E1E2EA"
-              sx={{ borderStyle: 'dashed' }}
+              borderColor={isCompleted ? '#39D551' : '#E1E2EA'}
+              sx={{ borderStyle: isCompleted ? 'solid' : 'dashed' }}
+              bgcolor={isCompleted ? '#EBFBEE' : 'transparent'}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
               paddingLeft="12px"
               fontSize="16px"
             >
-              <Typography color="#4B4B4E" fontWeight={500} fontSize="12px">
-                Rewards next tier
-              </Typography>
+              <Stack direction="row" alignItems="center" gap={1}>
+                {isCompleted && (
+                  <SvgIcon
+                    inheritViewBox
+                    component={CheckCircleIcon}
+                    sx={{ color: '#A3E635', fontSize: '16px', width: '16px', height: '16px', border: 'none' }}
+                  />
+                )}
+                <Typography color="#4B4B4E" fontWeight={500} fontSize="12px">
+                  {isCompleted ? 'Completed' : 'Rewards next tier'}
+                </Typography>
+              </Stack>
               <Box
                 sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
                 border={1}
                 borderRadius="100px"
-                borderColor="#E1E2EA"
+                borderColor={isCompleted ? '#39D551' : '#E1E2EA'}
+                borderBottom="none"
+                borderRight="none"
+                borderTop="none"
                 paddingX="8px"
               >
                 <Typography fontSize="12px" fontWeight={500}>
-                  50
+                  {
+                    currentBadge.badgeTiers[currentBadge.claimableTier ? currentBadge.claimableTier - 1 : 0].metadata
+                      .points
+                  }
                 </Typography>
                 <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
               </Box>
@@ -217,27 +252,31 @@ function BadgeInfo({
               width="100%"
               border={1}
               borderRadius="12px"
-              borderColor="#E1E2EA"
-              sx={{ borderStyle: 'dashed', backgroundColor: 'transparent' }}
+              borderColor={isCompleted ? '#39D551' : '#E1E2EA'}
+              sx={{
+                borderStyle: isCompleted ? 'solid' : 'dashed',
+                backgroundColor: isCompleted ? '#EBFBEE' : 'transparent',
+              }}
               padding="12px"
             >
-              {transactions.map((tx, index) => (
+              {currentBadge.badgeTiers.map((tier, index) => (
                 <Box key={index}>
                   <Box display="flex" justifyContent="space-between" alignItems="center" paddingY="4px">
-                    <Typography fontSize="14px">{tx.label}</Typography>
-                    {tx.completed ? (
-                      <SvgIcon component={CheckCircleIcon} sx={{ color: '#A3E635', fontSize: '18px' }} />
-                    ) : (
-                      <Box
-                        sx={{
-                          width: '18px',
-                          height: '18px',
-                          border: '1px dotted',
-                          borderColor: 'text.secondary',
-                          borderRadius: '50%',
-                        }}
-                      />
-                    )}
+                    <Typography color="#4B4B4E" fontSize="12px">
+                      {currentBadge.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString())}
+                    </Typography>
+                    <SvgIcon
+                      inheritViewBox
+                      component={tier.tier <= currentBadge.tier ? CheckCircleIcon : null}
+                      sx={{
+                        color: tier.tier <= currentBadge.tier ? '#A3E635' : 'grey',
+                        fontSize: '16px',
+                        width: '16px',
+                        height: '16px',
+                        border: tier.tier <= currentBadge.tier ? 'none' : '1px dashed #E1E2EA',
+                        borderRadius: '50%',
+                      }}
+                    />
                   </Box>
                 </Box>
               ))}
