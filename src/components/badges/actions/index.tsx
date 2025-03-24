@@ -34,9 +34,25 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import { networks } from '..'
 
 export type ClaimData = {
-  badges: BadgeResponse[]
   totalPoints: number
   isLevelUp: boolean
+  badgeUpdates: {
+    badgeId: string
+    level: number
+    points: number
+    previousLevel: number
+  }[]
+  updatedBadges: {
+    badgeId: string
+    metadata: {
+      condition: string
+    }
+    badgeTiers: {
+      metadata: {
+        minValue: string
+      }
+    }[]
+  }[]
 }
 function BadgesActions({
   claimable,

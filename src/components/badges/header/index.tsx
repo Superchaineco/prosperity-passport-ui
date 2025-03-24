@@ -32,7 +32,7 @@ function BadgesHeader({
   season?: { code: number; name: string }
   isLoading: boolean
 }) {
-  const progress = (points / (points + pointsToNextLevel)) * 100
+  const progress = (points / pointsToNextLevel) * 100
 
   return (
     <Box p={1} sx={{ width: '100%' }}>
@@ -142,7 +142,7 @@ function BadgesHeader({
                 <Box flex={1}>
                   <GradientProgress variant="determinate" value={progress} />
                   <Typography variant="body2" align="center" mt={1} color="text.secondary">
-                    {points} / {points + pointsToNextLevel} Superchain Points to level {level + 1}
+                    {points} / {pointsToNextLevel} Superchain Points to level {level + 1}
                   </Typography>
                 </Box>
               </Box>
