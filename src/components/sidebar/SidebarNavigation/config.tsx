@@ -28,7 +28,7 @@ export const navItems: NavItem[] = [
   {
     label: 'Badges',
     icon: <SvgIcon component={BadgesIcon} inheritViewBox />,
-    href: AppRoutes.badges,
+    href: AppRoutes.badges.allTime,
   },
   {
     label: 'Leaderboard',

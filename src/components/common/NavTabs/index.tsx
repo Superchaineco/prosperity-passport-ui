@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import NextLink, { type LinkProps as NextLinkProps } from 'next/link'
-import { Tab, Tabs, Typography, type TabProps } from '@mui/material'
+import { Box, Tab, Tabs, Typography, type TabProps } from '@mui/material'
 import { useRouter } from 'next/router'
 import type { NavItem } from '@/components/sidebar/SidebarNavigation/config'
 import css from './styles.module.css'
@@ -51,6 +51,19 @@ const NavTabs = ({ tabs }: { tabs: NavItem[] }) => {
               className={css.label}
             >
               {tab.label}
+              {tab.label === 'Season 7' && (
+                <Box
+                  component="span"
+                  sx={{
+                    width: 8,
+                    height: 8,
+                    ml: 1,
+                    backgroundColor: '#22C55E', // lime-500
+                    borderRadius: '50%',
+                    display: 'inline-block',
+                  }}
+                />
+              )}
             </Typography>
           }
         />

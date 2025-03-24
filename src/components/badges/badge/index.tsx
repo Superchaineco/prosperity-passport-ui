@@ -69,8 +69,8 @@ function Badge({
             zIndex: 0,
           }}
         />
-        <SeasonChip season="S7" style="badge" />
-        <NetworkChip network={data.metadata.chain} style="badge" isFavorite={isFavorite} />
+        <SeasonChip season={data.metadata.season} style="badge" />
+        <NetworkChip network={data.metadata.chain.toLowerCase()} style="badge" isFavorite={isFavorite} />
         {isFavorite ? (
           <SvgIcon
             component={HeartFilled}

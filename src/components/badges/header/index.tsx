@@ -7,11 +7,11 @@ import { GradientProgress } from '..'
 export const badgesNavItems = [
   {
     label: 'All-Time',
-    href: AppRoutes.badges,
+    href: AppRoutes.badges.allTime,
   },
   {
     label: 'Season 7',
-    href: AppRoutes.badges,
+    href: AppRoutes.badges.season7,
   },
 ]
 
@@ -21,6 +21,7 @@ function BadgesHeader({
   pointsToNextLevel,
   completeBadges,
   totalBadges,
+  season,
   isLoading,
 }: {
   level: number
@@ -28,6 +29,7 @@ function BadgesHeader({
   completeBadges: number
   pointsToNextLevel: number
   totalBadges: number
+  season?: { code: string; name: string }
   isLoading: boolean
 }) {
   const progress = (points / (points + pointsToNextLevel)) * 100
@@ -50,8 +52,8 @@ function BadgesHeader({
             flexDirection: 'column',
             justifyContent: 'center',
             border: '1px solid',
-            borderColor: (theme) => theme.palette.grey[500],
-            backgroundColor: (theme) => theme.palette.grey[50],
+            borderColor: (theme) => (!season ? theme.palette.grey[500] : '#6B5DE7'),
+            backgroundColor: (theme) => (!season ? theme.palette.grey[50] : '#F4F0FF'),
           }}
         >
           <CardContent>
@@ -59,15 +61,38 @@ function BadgesHeader({
               <Typography variant="h6" color="text.secondary" gutterBottom>
                 Badges
               </Typography>
-              {/* <Chip
-                label="Lifetime"
-                sx={{
-                  backgroundColor: '#F4F4F5',
-                  fontWeight: 600,
-                  borderRadius: '20px',
-                  border: '1px solid #D0D0D0',
-                }}
-              /> */}
+
+              {season && (
+                <Chip
+                  label={
+                    <Box display="flex" alignItems="center" gap={0.5}>
+                      <Typography
+                        fontWeight={600}
+                        fontSize={13}
+                        sx={{
+                          color: '#6B5DE7',
+                          margin: '-5px',
+                        }}
+                      >
+                        {season.name}
+                      </Typography>
+                      <Image
+                        src="/images/badges/stars_custom.svg"
+                        alt="Star Icon"
+                        width={14}
+                        height={14}
+                        style={{ margin: '2px' }}
+                      />
+                    </Box>
+                  }
+                  sx={{
+                    backgroundColor: '#F4F0FF',
+                    fontWeight: 600,
+                    borderRadius: '20px',
+                    border: '1px solid #6B5DE7',
+                  }}
+                />
+              )}
             </Box>
 
             <Typography variant="h1" sx={{ fontSize: '40px', mt: 2 }} fontWeight={600}>

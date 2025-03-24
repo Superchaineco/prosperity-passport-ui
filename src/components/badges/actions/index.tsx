@@ -1,11 +1,13 @@
 import {
   Box,
   Button,
+  Checkbox,
   Divider,
   Grid,
   InputAdornment,
   MenuItem,
   Select,
+  SelectChangeEvent,
   SvgIcon,
   TextField,
   Typography,
@@ -27,8 +29,9 @@ import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
 import { ResponseBadge } from '@/types/super-chain'
 import AutorenewIcon from '@mui/icons-material/Autorenew'
-import { Network } from 'ethers'
-import NetworkChip from '../networkChip'
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import { networks } from '..'
 
 export type ClaimData = {
   badges: BadgeResponse[]
@@ -38,13 +41,13 @@ export type ClaimData = {
 function BadgesActions({
   claimable,
   setFilter,
-  setNetwork,
-  network,
+  setNetworks,
+  selectedNetworks,
 }: {
   claimable: boolean
   setFilter: (filter: string) => void
-  setNetwork: (network: string) => void
-  network: string
+  setNetworks: (networks: string[]) => void
+  selectedNetworks: string[]
 }) {
   const { safeAddress, safeLoaded } = useSafeInfo()
   const { data: superChainAccount } = useAppSelector(selectSuperChainAccount)
@@ -98,6 +101,11 @@ function BadgesActions({
   const handleLevelUp = () => {
     setIsClaimModalOpen(false)
     setIsLevelUpModalOpen(true)
+  }
+
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
+    const value = event.target.value
+    setNetworks(typeof value === 'string' ? value.split(',') : value)
   }
 
   return (
@@ -158,13 +166,25 @@ function BadgesActions({
           <Grid item xs={12} lg={3}>
             <Box display="flex" gap={2}>
               <Select
+                multiple
                 fullWidth
-                onChange={(e) => setNetwork(e.target.value)}
-                defaultValue="all"
-                value={network}
+                value={selectedNetworks}
+                onChange={handleChange}
                 displayEmpty
+                renderValue={(selected) => (
+                  <Box sx={{ fontWeight: 600, color: 'black' }}>
+                    {selected.length > 0 ? `${selected.length} selected` : 'Select networks'}
+                  </Box>
+                )}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      borderRadius: '16px', // 🎯 Aquí se aplica el border radius al menú desplegable
+                    },
+                  },
+                }}
                 sx={{
-                  borderRadius: '20px',
+                  borderRadius: '25px',
                   backgroundColor: '#F4F4F5',
                   minHeight: '34px',
                   border: '1px solid transparent',
@@ -175,7 +195,6 @@ function BadgesActions({
                     padding: '6px 12px',
                     minHeight: '34px',
                     display: 'flex',
-
                     alignItems: 'center',
                   },
                   '&:hover': {
@@ -186,77 +205,43 @@ function BadgesActions({
                     border: '1px solid black',
                   },
                   '&:before, &:after': {
-                    border: 'none !important', // Forza la eliminación de cualquier línea residual
+                    border: 'none !important',
                     display: 'none !important',
                   },
                   '& .MuiOutlinedInput-notchedOutline': {
-                    border: 'none !important', // Asegura que el borde del `outlined` desaparezca
+                    border: 'none !important',
                   },
                 }}
               >
-                <MenuItem value="all">
-                  <strong>Select network</strong>
-                </MenuItem>
-                <MenuItem value="optimism">
-                  <Box display="flex" gap={1} alignItems="center">
-                    <Image
-                      src="https://safe-transaction-assets.safe.global/chains/10/chain_logo.png"
-                      alt="Optimism Logo"
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                    />
-                    <strong>Optimism</strong>
-                  </Box>
-                </MenuItem>
-                <MenuItem value="base">
-                  <Box display="flex" gap={1} alignItems="center">
-                    <Image
-                      src="https://safe-transaction-assets.safe.global/chains/8453/chain_logo.png"
-                      alt="Base Logo"
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                    />
-                    <strong>Base</strong>
-                  </Box>
-                </MenuItem>
-                <MenuItem value="mode">
-                  <Box display="flex" gap={1} alignItems="center">
-                    <Image
-                      src="https://account.superchain.eco/chains/34443/chain_logo.svg"
-                      alt="Mode Logo"
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                    />
-                    <strong>Mode</strong>
-                  </Box>
-                </MenuItem>
-                <MenuItem value="ethereum">
-                  <Box display="flex" gap={1} alignItems="center">
-                    <Image
-                      src="https://safe-transaction-assets.safe.global/chains/1/chain_logo.png"
-                      alt="Mode Logo"
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                    />
-                    <strong>Ethereum</strong>
-                  </Box>
-                </MenuItem>
-                <MenuItem value="lisk">
-                  <Box display="flex" gap={1} alignItems="center">
-                    <Image src="/chains/1135/chain_logo.svg" alt="Mode Logo" width={24} height={24} loading="lazy" />
-                    <strong>Lisk</strong>
-                  </Box>
-                </MenuItem>
+                {networks.map((net, idx) => (
+                  <MenuItem key={net.value} value={net.value} divider>
+                    <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
+                      <Box display="flex" gap={1} alignItems="center">
+                        <Image src={net.icon} alt={`${net.label} Logo`} width={20} height={20} />
+                        <Typography fontSize={14}>{net.label}</Typography>
+                      </Box>
+
+                      <Checkbox
+                        checked={selectedNetworks.includes(net.value)}
+                        icon={<CheckBoxOutlineBlankIcon sx={{ fontSize: 18 }} />}
+                        checkedIcon={<CheckBoxIcon sx={{ fontSize: 18 }} />}
+                        sx={{
+                          padding: 0,
+                          color: '#999',
+                          '&.Mui-checked': {
+                            color: '#111',
+                          },
+                        }}
+                      />
+                    </Box>
+                  </MenuItem>
+                ))}
               </Select>
               <Box
                 component="button"
                 onClick={() => {
                   setFilter('')
-                  setNetwork('all')
+                  setNetworks([])
                 }}
                 sx={{
                   borderRadius: '20px',

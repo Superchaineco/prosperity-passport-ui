@@ -2,14 +2,7 @@ import { Box } from '@mui/material'
 import React, { useMemo } from 'react'
 import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
-
-const networks = {
-  Optimism: 'https://safe-transaction-assets.safe.global/chains/10/chain_logo.png',
-  Base: 'https://safe-transaction-assets.safe.global/chains/8453/chain_logo.png',
-  Mode: '/chains/34443/chain_logo.svg',
-  Ethereum: 'https://safe-transaction-assets.safe.global/chains/1/chain_logo.png',
-  Lisk: '/chains/1135/chain_logo.svg',
-} as const
+import { networks } from '..'
 
 interface NetworkChipProps {
   network: string
@@ -17,7 +10,7 @@ interface NetworkChipProps {
   isFavorite: boolean
 }
 const NetworkChip: React.FC<NetworkChipProps> = ({ network, style, isFavorite }) => {
-  const networkLogo = networks[network as keyof typeof networks]
+  const networkLogo = networks.find((x) => x.value === network)?.icon ?? ''
   const isBadge = style === 'badge'
 
   return isBadge ? (
