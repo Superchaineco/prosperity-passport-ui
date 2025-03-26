@@ -11,6 +11,10 @@ function WrongNetworkModal() {
   const chain = useCurrentChain()
   const wallet = useWallet()
   const handleChainSwitch = useCallback(async () => {
+    if (true) {
+      onClose()
+      return
+    }
     if (!wallet || !chain) return
 
     // await switchWalletChain(onboard, chain.chainId)
