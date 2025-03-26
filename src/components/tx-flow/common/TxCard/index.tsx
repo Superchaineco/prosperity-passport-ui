@@ -6,7 +6,7 @@ const sx = { my: 2, border: 0 }
 
 const TxCard = ({ children }: { children: ReactNode }) => {
   return (
-    <Card sx={sx}>
+    <Card variant="outlined" sx={sx}>
       <CardContent className={css.cardContent}>{children}</CardContent>
     </Card>
   )

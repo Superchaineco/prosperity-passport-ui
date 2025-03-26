@@ -159,7 +159,7 @@ const UpdateAvatarModal = () => {
       <Container className={css.container}>
         <Grid container gap={3} justifyContent="center">
           {/* Main content */}
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={10}>
             <div className={css.titleWrapper}>
               <Typography data-testid="modal-title" variant="h3" component="div" fontWeight="700" className={css.title}>
                 My Avatar
@@ -171,17 +171,34 @@ const UpdateAvatarModal = () => {
             </Paper>
             <div className={css.step}>
               <TxCard>
-                <Grid container justifyContent="center" alignItems="center" spacing={2} columns={20} direction="row">
-                  <Grid xs={12} item>
-                    <NounsAvatar seed={seed} />
+                <Grid container justifyContent="center" alignItems="center" spacing={2}>
+                  <Grid item xs={12} md={6}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%',
+                        height: '100%',
+                        minHeight: '300px',
+                        borderRadius: '12px',
+                      }}
+                    >
+                      <NounsAvatar seed={seed} />
+                    </Box>
                   </Grid>
-                  <Grid xs={8} item>
+                  <Grid item xs={12} md={6}>
                     <Box
                       sx={{
                         width: '100%',
-                        maxWidth: 360,
                         bgcolor: 'background.paper',
                         margin: 'auto',
+                        height: '100%',
+                        minHeight: '300px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                       }}
                     >
                       <List className={css.list} aria-label="Nouns categories">
@@ -190,6 +207,7 @@ const UpdateAvatarModal = () => {
                             <IconButton
                               onClick={() => handleChangeBodyPart(text.toLowerCase() as keyof NounProps, -1)}
                               edge="start"
+                              size="small"
                             >
                               <SvgIcon
                                 style={{
@@ -209,6 +227,12 @@ const UpdateAvatarModal = () => {
                                   gap={1}
                                   justifyContent="center"
                                   alignItems="center"
+                                  sx={{
+                                    flexWrap: 'wrap',
+                                    '@media (max-width: 599.95px)': {
+                                      flexDirection: 'column',
+                                    },
+                                  }}
                                 >
                                   <Typography fontWeight="bold" color="GrayText">
                                     {text}
@@ -233,6 +257,7 @@ const UpdateAvatarModal = () => {
                             <IconButton
                               onClick={() => handleChangeBodyPart(text.toLowerCase() as keyof NounProps, 1)}
                               edge="end"
+                              size="small"
                             >
                               <SvgIcon
                                 style={{
@@ -253,12 +278,21 @@ const UpdateAvatarModal = () => {
 
                 <Divider className={commonCss.nestedDivider} />
 
-                <CardActions style={{ margin: 0 }}>
-                  <Button onClick={handleSubmit} disabled={!isChanged} variant="contained" color="complementary">
-                    <Typography fontWeight="bold" color="inherit">
-                      Save
-                    </Typography>
-                    <SvgIcon color="inherit" sx={{ marginLeft: 1 }} inheritViewBox component={Save} />
+                <CardActions style={{ margin: 0, padding: '16px' }}>
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={!isChanged}
+                    variant="contained"
+                    color="secondary"
+                    fullWidth
+                    sx={{
+                      '@media (min-width: 600px)': {
+                        width: 'auto',
+                      },
+                    }}
+                  >
+                    <Typography color="white">Save</Typography>
+                    <SvgIcon sx={{ marginLeft: 1 }} inheritViewBox component={Save} />
                   </Button>
                 </CardActions>
               </TxCard>
