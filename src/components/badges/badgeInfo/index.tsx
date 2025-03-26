@@ -93,16 +93,17 @@ function BadgeInfo({
           <Box
             sx={{
               position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundImage: `url('/static/badges/LifeTerm/OpUser/Badge.svg')`,
+              top: -20,
+              left: -20,
+              right: -20,
+              bottom: -20,
+              backgroundImage: `url(${currentBadge.metadata.image})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               filter: 'blur(68px)',
-              opacity: 1,
               zIndex: 0,
+              mixBlendMode: 'multiply',
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
             }}
           />
           <Box
