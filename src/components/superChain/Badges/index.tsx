@@ -46,7 +46,7 @@ function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: b
                   height: 60,
                   width: 60,
                 }}
-                src={badge.badge.badgeTiers[parseInt(badge.tier) - 1].metadata['2DImage']}
+                src={badge.badge.metadata.image}
               />
             </Tooltip>
           )
