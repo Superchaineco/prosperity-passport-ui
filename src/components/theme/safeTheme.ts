@@ -246,6 +246,26 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
         defaultProps: {
           fullWidth: true,
         },
+        styleOverrides: {
+          paper: ({ theme }) => ({
+            borderRadius: '12px',
+          }),
+          root: ({ theme }) => ({}),
+        },
+      },
+      MuiDialogTitle: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            borderBottom: `1px solid ${theme.palette.border.light} !important`,
+          }),
+        },
+      },
+      MuiDialogActions: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            borderTop: 'none !important',
+          }),
+        },
       },
       MuiDialogContent: {
         styleOverrides: {

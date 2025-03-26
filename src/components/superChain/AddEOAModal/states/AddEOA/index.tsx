@@ -67,10 +67,14 @@ function AddEOA({
           ) : (
             <Stack spacing={1}>
               <FormControl fullWidth>
+                <label htmlFor="address" style={{ marginBottom: '8px' }}>
+                  <Typography variant="body1" color="GrayText" textAlign="start" fontWeight={600}>
+                    Address
+                  </Typography>
+                </label>
                 <TextField
                   placeholder="ceth:"
                   fullWidth
-                  label="Address"
                   {...register('address', {
                     required: 'Address is required',
                     pattern: {
