@@ -21,7 +21,7 @@ const lightPalette = {
   },
   border: {
     main: '#A1A3A7',
-    light: '#A0A5AD',
+    light: '#E1E2EA',
     background: '#F4F4F4',
   },
   error: {

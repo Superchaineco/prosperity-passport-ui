@@ -135,7 +135,11 @@ function EnhancedTable({ rows, headCells, mobileVariant }: EnhancedTableProps) {
 
   return (
     <Box sx={{ width: '100%', height: '100%' }}>
-      <TableContainer data-testid="table-container" component={Paper} sx={{ width: '100%', mb: 2, height: '100%' }}>
+      <TableContainer
+        data-testid="table-container"
+        component={EnhancedTableContainer}
+        sx={{ width: '100%', mb: 2, height: '100%' }}
+      >
         <Table aria-labelledby="tableTitle" className={mobileVariant ? css.mobileColumn : undefined}>
           <EnhancedTableHead headCells={headCells} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
           <TableBody>
@@ -185,6 +189,14 @@ function EnhancedTable({ rows, headCells, mobileVariant }: EnhancedTableProps) {
         />
       )}
     </Box>
+  )
+}
+
+const EnhancedTableContainer = ({ children }: { children: ReactNode }) => {
+  return (
+    <Paper variant="outlined" sx={{ height: '100%' }}>
+      {children}
+    </Paper>
   )
 }
 

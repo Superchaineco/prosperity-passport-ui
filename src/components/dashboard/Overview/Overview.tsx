@@ -65,7 +65,7 @@ const Overview = (): ReactElement => {
                 <Typography color="primary.light" fontWeight="bold" mb={1}>
                   Total asset value
                 </Typography>
-                <Typography component="div" variant="h1" fontSize={44} lineHeight="40px">
+                <Typography component="div" variant="h1" fontSize={44} lineHeight="40px" fontFamily="Sora">
                   {safe.deployed ? (
                     fiatTotal
                   ) : (
