@@ -2242,8 +2242,6 @@ export type BadgeLevelMetadata = {
   badgeId: number
   level: number
   minValue: number
-  '2DImage': string
-  '3DImage': string
   points: number
 }
 export type BadgeMetadata = {
@@ -2253,7 +2251,7 @@ export type BadgeMetadata = {
   chain: string
   condition: string
   chains: string[]
-  season: number
+  season: string
   image: string
   'stack-image': string
 }

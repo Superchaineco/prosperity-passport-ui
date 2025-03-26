@@ -55,10 +55,10 @@ function Badge({
         <Box
           sx={{
             position: 'absolute',
-            top: -20,
-            left: -20,
-            right: -20,
-            bottom: -20,
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
             backgroundImage: `url(${data.metadata.image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -68,45 +68,18 @@ function Badge({
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
           }}
         />
-        <Box className={css.topBar}>
-          <Box className={css.topBarLeft}>
-            <SeasonChip season={data.metadata.season} style="badge" />
-          </Box>
-          <Box className={css.topBarRight}>
-            <Box display="flex" flexWrap="wrap" gap={1} alignItems="center">
-              {data.metadata.chains.map((chain, index) => (
-                <NetworkChip
-                  key={`${data.badgeId}-${chain}-${index}`}
-                  network={chain}
-                  style="badge"
-                  isFavorite={isFavorite}
-                  offSet={data.metadata.chains.length > 1 ? index + 1 : undefined}
-                />
-              ))}
-            </Box>
-
-            <IconButton
-              onClick={handleSwitchFavorite}
-              className={css.heartIcon}
-              size="small"
-              sx={{
-                padding: 0,
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-              }}
-            >
-              <SvgIcon
-                component={isFavorite ? HeartFilled : Hearth}
-                sx={{
-                  color: isFavorite ? 'red' : '#E1E2EA',
-                  fontSize: '20px',
-                }}
-                inheritViewBox
-              />
-            </IconButton>
-          </Box>
-        </Box>
+        <SeasonChip season={data.metadata.season} style="badge" />
+        <NetworkChip network={data.metadata.chains[0].toLowerCase()} style="badge" isFavorite={isFavorite} />
+        {isFavorite ? (
+          <SvgIcon
+            component={HeartFilled}
+            sx={{ color: 'red', fontSize: '20px' }}
+            inheritViewBox
+            style={{ position: 'absolute', top: '12px', right: '10px' }}
+          />
+        ) : (
+          <></>
+        )}
 
         <Box
           sx={{
@@ -146,11 +119,7 @@ function Badge({
                         return (
                           <Image
                             key={i}
-                            src={
-                              isMainBadge
-                                ? '/static/badges/LifeTerm/OpUser/Badge.svg'
-                                : '/static/badges/LifeTerm/OpUser/Stack.svg'
-                            }
+                            src={isMainBadge ? data.metadata.image : data.metadata['stack-image']}
                             alt={isMainBadge ? data.metadata.platform : `Tier ${i}`}
                             width={72}
                             height={72}
@@ -180,7 +149,7 @@ function Badge({
               >
                 <Box sx={{ position: 'relative' }}>
                   <Image
-                    src="/static/badges/All-Time/OP-Mainnet-User/Badge.svg"
+                    src={data.metadata.image}
                     width={72}
                     height={72}
                     style={{
@@ -230,6 +199,19 @@ function Badge({
           >
             {data.metadata.name}
           </Typography>
+          {/* <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
+            {data.badgeTiers.map((_, index) => (
+              <Box
+                key={index}
+                sx={{
+                  flex: 1,
+                  height: '6px',
+                  backgroundColor: index < Number(data.tier) ? '#39D551' : '#EBECF1',
+                  borderRadius: '100px',
+                }}
+              />
+            ))}
+          </Box> */}
           <Typography color="text.secondary" sx={{ wordBreak: 'break-word' }}>
             {data.metadata.description}
           </Typography>

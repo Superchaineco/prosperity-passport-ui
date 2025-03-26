@@ -93,10 +93,10 @@ function BadgeInfo({
           <Box
             sx={{
               position: 'absolute',
-              top: -20,
-              left: -20,
-              right: -20,
-              bottom: -20,
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
               backgroundImage: `url(${currentBadge.metadata.image})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
@@ -144,11 +144,7 @@ function BadgeInfo({
                           return (
                             <Image
                               key={i}
-                              src={
-                                isMainBadge
-                                  ? '/static/badges/LifeTerm/OpUser/Badge.svg'
-                                  : '/static/badges/LifeTerm/OpUser/Stack.svg'
-                              }
+                              src={isMainBadge ? currentBadge.metadata.image : currentBadge.metadata['stack-image']}
                               alt={isMainBadge ? currentBadge.metadata.platform : `Tier ${i}`}
                               width={72}
                               height={72}
@@ -178,7 +174,7 @@ function BadgeInfo({
                 >
                   <Box sx={{ position: 'relative' }}>
                     <Image
-                      src="/static/badges/All-Time/OP-Mainnet-User/Badge.svg"
+                      src={currentBadge.metadata.image}
                       width={72}
                       height={72}
                       style={{
@@ -200,16 +196,11 @@ function BadgeInfo({
             <Typography fontSize="18px" fontWeight={600} textAlign="start" fontFamily="Sora">
               {currentBadge?.metadata.name}
             </Typography>
-            <Box display="flex" flexWrap="wrap" gap={1} alignItems="center">
-              {currentBadge.metadata.chains.map((chain, index) => (
-                <NetworkChip
-                  key={`${currentBadge.badgeId}-${chain}-${index}`}
-                  network={chain}
-                  style="info"
-                  isFavorite={currentBadge.isFavorite}
-                />
+            <Stack direction="row" alignItems="center" gap={1}>
+              {currentBadge.metadata.chains.map((chain) => (
+                <NetworkChip network={chain} style="info" isFavorite={currentBadge.isFavorite} />
               ))}
-            </Box>
+            </Stack>
 
             <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
               <Typography color="#75757A">{currentBadge?.metadata.description}</Typography>
