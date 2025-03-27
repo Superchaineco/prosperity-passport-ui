@@ -11,9 +11,7 @@ import { Button, Grid, Skeleton, Typography } from '@mui/material'
 import { WidgetBody, WidgetContainer } from '../styled'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import { useVisibleBalances } from '@/hooks/useVisibleBalances'
-
 import ArrowIconSE from '@/public/images/common/arrow-se.svg'
-import { selectCurrentSuperChainAccount } from '@/store/superChainAccountSlice'
 
 const SkeletonOverview = (
   <>
@@ -38,7 +36,6 @@ const Overview = (): ReactElement => {
   const { safe, safeLoading, safeLoaded } = useSafeInfo()
   const { balances, loading: balancesLoading } = useVisibleBalances()
   const { setTxFlow } = useContext(TxModalContext)
-  const data = useAppSelector(selectCurrentSuperChainAccount)
 
   const fiatTotal = useMemo(
     () => (balances.fiatTotal ? formatCurrency(balances.fiatTotal, currency) : ''),

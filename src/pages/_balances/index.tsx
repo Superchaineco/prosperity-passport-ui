@@ -1,17 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-
 import AssetsTable from '@/components/balances/AssetsTable'
 import useBalances from '@/hooks/useBalances'
 import { useState } from 'react'
-
 import PagePlaceholder from '@/components/common/PagePlaceholder'
 import NoAssetsIcon from '@/public/images/balances/no-assets.svg'
 import { Typography } from '@mui/material'
 import css from './styles.module.css'
-// import HiddenTokenButton from '@/components/balances/HiddenTokenButton'
-// import CurrencySelect from '@/components/balances/CurrencySelect'
-// import TokenListSelect from '@/components/balances/TokenListSelect'
 
 const Balances: NextPage = () => {
   const { error } = useBalances()
@@ -23,12 +18,6 @@ const Balances: NextPage = () => {
       <Head>
         <title>Prosperity Account – Assets</title>
       </Head>
-
-      {/* <AssetsHeader>
-        <HiddenTokenButton showHiddenAssets={showHiddenAssets} toggleShowHiddenAssets={toggleShowHiddenAssets} />
-        <TokenListSelect />
-        <CurrencySelect />
-      </AssetsHeader> */}
 
       <div className={css.container}>
         <Typography component="h2" fontWeight={600} fontSize={16} marginBottom={1}>

@@ -284,8 +284,8 @@ function BadgesActions({
                     backgroundColor: '#333',
                   },
                   '&.Mui-disabled': {
-                    backgroundColor: '#A0A0A0',
-                    color: '#E0E0E0',
+                    backgroundColor: '#EBECF1',
+                    color: '#A0A0A6',
                   },
                 }}
               >

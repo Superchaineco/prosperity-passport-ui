@@ -134,15 +134,19 @@ function EnhancedTable({ rows, headCells, mobileVariant }: EnhancedTableProps) {
   const pagedRows = orderedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   return (
-    <Box sx={{ width: '100%', height: '100%' }}>
+    <Box sx={{ width: '100%', height: '100%', backgroundColor: '#FCFCFD' }}>
       <TableContainer
         data-testid="table-container"
         component={EnhancedTableContainer}
-        sx={{ width: '100%', mb: 2, height: '100%' }}
+        sx={{ width: '100%', mb: 2, height: '100%', backgroundColor: '#FCFCFD' }}
       >
-        <Table aria-labelledby="tableTitle" className={mobileVariant ? css.mobileColumn : undefined}>
+        <Table
+          aria-labelledby="tableTitle"
+          className={mobileVariant ? css.mobileColumn : undefined}
+          sx={{ backgroundColor: '#FCFCFD' }}
+        >
           <EnhancedTableHead headCells={headCells} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-          <TableBody>
+          <TableBody sx={{ backgroundColor: '#FCFCFD' }}>
             {pagedRows.length > 0 ? (
               pagedRows.map((row, index) => (
                 <TableRow
@@ -194,7 +198,7 @@ function EnhancedTable({ rows, headCells, mobileVariant }: EnhancedTableProps) {
 
 const EnhancedTableContainer = ({ children }: { children: ReactNode }) => {
   return (
-    <Paper variant="outlined" sx={{ height: '100%' }}>
+    <Paper variant="outlined" sx={{ height: '100%', backgroundColor: '#FCFCFD' }}>
       {children}
     </Paper>
   )

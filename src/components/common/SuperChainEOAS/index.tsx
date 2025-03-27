@@ -1,8 +1,5 @@
 import { Box, Divider, Grid, IconButton, Paper, SvgIcon, Typography } from '@mui/material'
 import css from './styles.module.css'
-// import HiddenTokenButton from '@/components/balances/HiddenTokenButton'
-// import CurrencySelect from '@/components/balances/CurrencySelect'
-// import TokenListSelect from '@/components/balances/TokenListSelect'
 import MoreIcon from '@/public/images/common/more.svg'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import EthHashInfo from '../EthHashInfo'
@@ -39,7 +36,14 @@ const SuperChainEOAS = () => {
         }}
       >
         <Grid container gap={2} height="100%" alignItems="center" justifyContent="center" flexDirection="column">
-          <Box height="100%" width="100%" border={1} borderColor="border.light" borderRadius="12px">
+          <Box
+            height="100%"
+            width="100%"
+            border={1}
+            borderColor="border.light"
+            borderRadius="12px"
+            sx={{ backgroundColor: '#FCFCFD' }}
+          >
             <Box
               padding="16px"
               paddingY="12px"

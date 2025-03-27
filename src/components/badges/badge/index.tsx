@@ -169,13 +169,29 @@ function Badge({
           </Box>
         </Box>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', paddingBottom: '0px', width: '100%', height: '100%' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          paddingBottom: '0px',
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#FCFCFD',
+          '&:hover': {
+            backgroundColor: '#F6F6F8',
+          },
+        }}
+      >
         <Box
           display="flex"
           flexDirection="column"
           gap="12px"
           padding="24px"
-          sx={{ flexGrow: 1, width: '100%', boxSizing: 'border-box' }}
+          sx={{
+            flexGrow: 1,
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
         >
           <Typography
             fontSize="18px"
@@ -186,19 +202,6 @@ function Badge({
           >
             {data.metadata.name}
           </Typography>
-          <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
-            {data.badgeTiers.map((_, index) => (
-              <Box
-                key={index}
-                sx={{
-                  flex: 1,
-                  height: '6px',
-                  backgroundColor: index < Number(data.tier) ? '#39D551' : '#EBECF1',
-                  borderRadius: '100px',
-                }}
-              />
-            ))}
-          </Box>
           <Typography color="text.secondary" sx={{ wordBreak: 'break-word' }}>
             {data.metadata.description}
           </Typography>

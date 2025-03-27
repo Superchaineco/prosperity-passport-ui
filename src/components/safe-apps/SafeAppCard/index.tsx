@@ -93,6 +93,7 @@ const SafeAppCardGridView = ({
     <SafeAppCardContainer safeAppUrl={safeAppUrl} onClickSafeApp={onClickSafeApp} className={css.safeAppCardCointainer}>
       {/* Safe App Header */}
       <CardHeader
+        sx={{ backgroundColor: '#FCFCFD' }}
         className={css.safeAppHeader}
         avatar={
           <div className={css.safeAppIconContainer}>
@@ -112,7 +113,7 @@ const SafeAppCardGridView = ({
         }
       />
 
-      <CardContent className={css.safeAppContent}>
+      <CardContent className={css.safeAppContent} sx={{ backgroundColor: '#FCFCFD' }}>
         <Box display="flex" flexDirection="column">
           {/* Safe App Tags */}
           <SafeAppTags tags={safeApp.tags} />

@@ -58,7 +58,7 @@ function BadgeInfo({
         alignItems="center"
       >
         <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" p="10px 30px">
-          <SeasonChip season={7} style="info" />
+          <SeasonChip season={currentBadge.metadata.season} style="info" />
 
           {/* Íconos alineados a la derecha */}
           <Box display="flex" alignItems="center" gap={1}>
@@ -78,7 +78,7 @@ function BadgeInfo({
           </Box>
         </Box>
       </Box>
-      <Card sx={{ border: 'none', borderRadius: 0 }}>
+      <Card sx={{ border: 'none', borderRadius: 0, width: '100%' }}>
         <CardMedia
           sx={{
             position: 'relative',

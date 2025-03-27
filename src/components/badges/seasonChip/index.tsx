@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 function SeasonChip({ season, style }: { season: number; style: 'info' | 'badge' }) {
   const isBadge = style === 'badge'
-  if (!season) return <></>
+
   return (
     <Chip
       label={
@@ -40,7 +40,8 @@ function SeasonChip({ season, style }: { season: number; style: 'info' | 'badge'
         maxWidth: '60px',
         fontWeight: 600,
         transform: isBadge ? 'scale(0.8)' : 'scale(1)',
-        transformOrigin: 'top left', // Mantiene la posición en `badge`
+        transformOrigin: 'top left',
+        visibility: !season ? 'hidden' : 'visible',
       }}
     />
   )
