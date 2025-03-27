@@ -1,4 +1,4 @@
-import { Box, IconButton, Skeleton, Stack, SvgIcon, Tooltip, Typography } from '@mui/material'
+import { Box, Divider, IconButton, Skeleton, Stack, SvgIcon, Tooltip, Typography } from '@mui/material'
 import React, { useMemo } from 'react'
 import css from './styles.module.css'
 import type { UserResponse } from '@/types/super-chain'
@@ -19,6 +19,8 @@ import { upsertContact } from '@/store/contactsSlice'
 import useChainId from '@/hooks/useChainId'
 import useAddressBook from '@/hooks/useAddressBook'
 import useContacts from '@/hooks/useContacts'
+import { getNounData } from '@nouns/assets'
+import { Chip } from '@/components/common/Chip'
 
 function UserInfo({
   context,
@@ -64,6 +66,11 @@ function UserInfo({
     }
   }, [context])
 
+  const background = useMemo(() => {
+    if (!context || isLoading) return '#FFFFFF'
+    return '#' + getNounData(nounSeed!).background
+  }, [context])
+
   const handleAddContact = async () => {
     if (!context?.superchainsmartaccount) return
     dispatch(
@@ -90,7 +97,7 @@ function UserInfo({
   const isContact = context && mergedEntries[context?.superchainsmartaccount[0]] !== undefined
 
   return (
-    <Stack padding="24px" justifyContent="flex-start" alignItems="center" spacing={2} className={css.drawer}>
+    <Stack padding="0px" justifyContent="flex-start" spacing={2} className={css.drawer}>
       {isLoading || !context ? (
         <>
           <Box display="flex" justifyContent="center" width="100%" position="relative" marginTop="24px !important">
@@ -100,26 +107,13 @@ function UserInfo({
                 <SvgIcon component={Close} color="inherit" inheritViewBox fontSize="small" />
               </IconButton>
             </Box>
-            <Box
-              borderRadius="6px"
-              display="flex"
-              width="120px"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              border={2}
-              borderColor="secondary.main"
-            >
-              <Skeleton variant="rectangular" width={120} height={120} />
-              <Box width="100%" padding="12px" display="flex" justifyContent="center" bgcolor="secondary.main">
-                <Skeleton variant="text">
-                  <Typography textAlign="center" color="white">
-                    Level: <strong>4</strong>
-                  </Typography>
-                </Skeleton>
-              </Box>
+
+            <Skeleton variant="rectangular" width={120} height={120} />
+            <Box width="100%" padding="12px" display="flex" justifyContent="center">
+              <Skeleton variant="text"></Skeleton>
             </Box>
           </Box>
+
           <Skeleton variant="text">
             <Typography display="flex" alignItems="center" fontWeight={600} fontSize={20}>
               potatohead
@@ -147,86 +141,113 @@ function UserInfo({
         </>
       ) : (
         <>
-          <Box display="flex" justifyContent="center" width="100%" position="relative" marginTop="24px !important">
-            <Box display="flex" gap={1} position="absolute" color="grayText" top="-5%" right="-5%">
-              <ExplorerButton {...blockExplorerLink} color="inherit" />
+          <Stack direction="column" gap={1}>
+            <Box display="flex" gap={1} color="grayText">
               <IconButton onClick={() => handleClose()}>
                 <SvgIcon component={Close} color="inherit" inheritViewBox fontSize="small" />
               </IconButton>
             </Box>
             <Box
-              borderRadius="6px"
               display="flex"
-              width="120px"
+              width="100%"
               flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              border={2}
-              borderColor="secondary.main"
+              sx={{ backgroundColor: { background }, verticalAlign: 'bottom' }}
             >
-              <NounsAvatar seed={nounSeed!} className={css.avatar} />
-
-              <Box width="100%" padding="12px" bgcolor="secondary.main">
-                <Typography textAlign="center" color="white">
-                  Level: <strong>{parseInt(context?.superchainsmartaccount[3])}</strong>
-                </Typography>
+              <Box sx={{ maxWidth: '200px', alignSelf: 'center', m: '0px', p: '0px' }}>
+                <NounsAvatar seed={nounSeed!} className={css.avatar} />
               </Box>
-            </Box>
-          </Box>
-          <Stack direction="row" gap={1}>
-            <Typography display="flex" alignItems="center" fontWeight={600} fontSize={20}>
-              {context?.superchainsmartaccount[1].split('.prosperity')[0]}
-              <Typography component="span" fontSize="inherit" fontWeight="inherit" color="secondary.main">
-                .prosperity
-              </Typography>
-            </Typography>
-            <Stack direction="row" fontSize="20px">
-              <CopyAddressButton address={context.superchainsmartaccount[0]}>
-                <IconButton aria-label="Copy address" size="small">
-                  <SvgIcon data-testid="copy-btn-icon" component={CopyIcon} inheritViewBox fontSize="inherit" />
-                </IconButton>
-              </CopyAddressButton>
               {isContact ? (
                 <Tooltip title="Added">
-                  <IconButton size="small">
+                  <IconButton size="small" sx={{ position: 'absolute', borderRadius: '50px' }}>
                     <SvgIcon inheritViewBox component={CompletedIcon} fontSize="inherit" />
                   </IconButton>
                 </Tooltip>
               ) : (
                 <Tooltip title="Add contact">
-                  <IconButton size="small" onClick={handleAddContact}>
-                    <SvgIcon inheritViewBox component={AddContactIcon} fontSize="inherit" />
+                  <IconButton
+                    size="medium"
+                    onClick={handleAddContact}
+                    sx={{
+                      position: 'absolute',
+                      top: '250px',
+                      left: '280px',
+                      borderRadius: '50px',
+                      backgroundColor: 'black',
+                      color: 'white',
+                    }}
+                  >
+                    <SvgIcon inheritViewBox component={AddContactIcon} fontSize="inherit" sx={{ fill: '#white' }} />
                   </IconButton>
                 </Tooltip>
               )}
+            </Box>
+          </Stack>
+          <Stack sx={{ alignSelf: 'left', width: '100%', padding: '10px 20px' }}>
+            <Stack direction="row" gap={1} sx={{ padding: '10px 0px' }}>
+              <Typography display="flex" alignItems="left" fontWeight={600} fontSize={20}>
+                {context?.superchainsmartaccount[1].split('.superchain')[0]}
+                <Typography component="span" fontSize="inherit">
+                  .superchain
+                </Typography>
+              </Typography>
+              <Stack direction="row" fontSize="20px">
+                <CopyAddressButton address={context.superchainsmartaccount[0]}>
+                  <IconButton aria-label="Copy address" size="small">
+                    <SvgIcon data-testid="copy-btn-icon" component={CopyIcon} inheritViewBox fontSize="inherit" />
+                  </IconButton>
+                </CopyAddressButton>
+                <ExplorerButton {...blockExplorerLink} color="inherit" />
+              </Stack>
+            </Stack>
+            <Stack direction="row" gap={1} sx={{ alignSelf: 'left', width: '100%' }}>
+              <Chip
+                sx={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid #E1E2EA',
+                  color: 'black',
+                  fontSize: '15px',
+                  p: '7px',
+                  height: '30px',
+                }}
+                label={
+                  <Box display="flex" alignItems="center" gap={0.5}>
+                    <Typography>{context?.superchainsmartaccount[2]}</Typography>
+                    <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="medium" width={20} height={20} />
+                  </Box>
+                }
+              ></Chip>
+              <Chip
+                sx={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid #E1E2EA',
+                  color: 'black',
+                  fontSize: '15px',
+                  p: '7px',
+                  height: '30px',
+                }}
+                label={<Box textAlign="center">Level: {parseInt(context?.superchainsmartaccount[3])}</Box>}
+              ></Chip>
+
+              <Chip
+                sx={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid #E1E2EA',
+                  color: 'black',
+                  fontSize: '15px',
+                  p: '7px',
+                  height: '30px',
+                }}
+                label={
+                  <Box textAlign="center">
+                    Badges: {context?.badges.reduce((acc, badge) => acc + parseInt(badge.tier), 0)}
+                  </Box>
+                }
+              ></Chip>
             </Stack>
           </Stack>
-          <Box
-            display="flex"
-            gap={1}
-            justifyContent="center"
-            alignItems="center"
-            padding="8px 14px"
-            borderRadius="6px"
-            bgcolor="#ECF0F7"
-          >
-            <strong>{context?.superchainsmartaccount[2]}</strong>
-            <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="medium" />
-          </Box>
-          <Box
-            display="flex"
-            paddingTop={2}
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="column"
-            gap="20px"
-          >
-            <Typography fontWeight={600} fontSize={20}>
-              Badges ({context?.badges.reduce((acc, badge) => acc + parseInt(badge.tier), 0)})
-            </Typography>
-            <Box display="flex" flexWrap="wrap" justifyContent="center" gap="12px">
-              <Badges badges={context.badges} />
-            </Box>
+          <Divider sx={{ width: '100%' }}></Divider>
+          <Box display="flex" flexWrap="wrap" justifyContent="center" gap="12px" sx={{ pt: '10px' }}>
+            <Badges badges={context.badges} />
           </Box>
         </>
       )}

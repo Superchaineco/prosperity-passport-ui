@@ -44,7 +44,13 @@ function LeaderboardLayout() {
       <Box width="100%" height="100%">
         <LeaderboardHeader />
         <Leaderboard handleUserSelect={handleUserSelect} />
-        <Drawer variant="temporary" anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
+        <Drawer
+          variant="temporary"
+          anchor="right"
+          open={isDrawerOpen}
+          onClose={handleDrawerClose}
+          sx={{ padding: '0' }}
+        >
           <UserInfo context={data} isLoading={isLoading} handleClose={handleDrawerClose} />
         </Drawer>
       </Box>
