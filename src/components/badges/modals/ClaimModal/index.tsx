@@ -72,26 +72,28 @@ function ClaimModal({
             sx={{ borderStyle: 'dashed', backgroundColor: 'transparent' }}
             padding="12px"
           >
-            {claimData.claimedBadges?.map((tx, index) => (
-              <Box key={index}>
-                <Box display="flex" justifyContent="space-between" alignItems="center" paddingY="4px">
-                  <Typography color="#4B4B4E" fontSize="14px">
-                    {tx}
-                  </Typography>
-                  <SvgIcon
-                    inheritViewBox
-                    component={CheckCircleIcon}
-                    sx={{
-                      color: '#A3E635',
-                      fontSize: '16px',
-                      width: '16px',
-                      height: '16px',
-                      borderRadius: '50%',
-                    }}
-                  />
+            <Box sx={{ maxHeight: '200px', overflowY: 'auto' }}>
+              {claimData.claimedBadges?.slice(0, 6).map((tx, index) => (
+                <Box key={index}>
+                  <Box display="flex" justifyContent="space-between" alignItems="center" paddingY="6px">
+                    <Typography color="#4B4B4E" fontSize="12px" fontWeight={500}>
+                      {tx}
+                    </Typography>
+                    <SvgIcon
+                      inheritViewBox
+                      component={CheckCircleIcon}
+                      sx={{
+                        color: '#39D551',
+                        fontSize: '16px',
+                        width: '16px',
+                        height: '16px',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </Box>
                 </Box>
-              </Box>
-            ))}
+              ))}
+            </Box>
           </Box>
         </Box>
 
@@ -124,7 +126,7 @@ function ClaimModal({
               <Button
                 onClick={onClose}
                 variant="contained"
-                sx={{ width: '100%', mt: '30px', borderRadius: '30px', height: '60px' }}
+                sx={{ width: '100%', mt: '30px', borderRadius: '30px', height: '48px' }}
               >
                 Continue
               </Button>
@@ -135,11 +137,7 @@ function ClaimModal({
               <Typography variant="body2" align="center" mt={1} color="#75757A">
                 You have enough Superchain Points to level-up!
               </Typography>
-              <button
-                onClick={onLevelUp}
-                className={css.levelUpButton}
-                style={{ width: '100%', marginTop: '30px', borderRadius: '30px', height: '60px' }}
-              >
+              <button onClick={onLevelUp} className={css.levelUpButton}>
                 Level-up
                 <Shiny className={css.shine} />
               </button>

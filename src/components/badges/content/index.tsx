@@ -1,4 +1,4 @@
-import { Drawer, Grid, Skeleton, Stack, Typography } from '@mui/material'
+import { Drawer, Grid, Skeleton, Stack, Typography, Box } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import Badge from '../badge'
 import type { ResponseBadge } from '@/types/super-chain'
@@ -66,26 +66,37 @@ function BadgesContent({
   return (
     <Grid container item spacing={1}>
       <Grid xs={12} item sx={{ mt: '10px' }}>
-        <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
-          {badges
-            // .filter((badge) => !favoriteBadges.includes(badge.badgeId))
-            .map((badge) => (
-              <Badge
-                data={badge}
-                key={badge.badgeId}
-                switchFavorite={() =>
-                  badgesService.switchFavoriteBadge(
-                    badge.badgeId,
-                    safeAddress as Address,
-                    true,
-                    setFavoriteBadgesLocalStorage,
-                  )
-                }
-                setCurrentBadge={setCurrentBadge}
-                isFavorite={favoriteBadges.includes(badge.badgeId)}
-              />
-            ))}
-        </Stack>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '16px',
+            width: '100%',
+            '& > *': {
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+            },
+          }}
+        >
+          {badges.map((badge) => (
+            <Badge
+              data={badge}
+              key={badge.badgeId}
+              switchFavorite={() =>
+                badgesService.switchFavoriteBadge(
+                  badge.badgeId,
+                  safeAddress as Address,
+                  true,
+                  setFavoriteBadgesLocalStorage,
+                )
+              }
+              setCurrentBadge={setCurrentBadge}
+              isFavorite={favoriteBadges.includes(badge.badgeId)}
+            />
+          ))}
+        </Box>
       </Grid>
       <Drawer variant="temporary" anchor="right" onClose={() => setCurrentBadge(null)} open={!!currentBadge}>
         <BadgeInfo

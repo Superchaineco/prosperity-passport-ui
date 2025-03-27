@@ -8,6 +8,7 @@
   cursor: pointer;
   background-color: #fcfcfd;
   transition: background-color 0.3s ease-in-out;
+  width: 100%;
 }
 
 .badgeContainer:hover {

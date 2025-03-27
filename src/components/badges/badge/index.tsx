@@ -199,7 +199,7 @@ function Badge({
           >
             {data.metadata.name}
           </Typography>
-          {/* <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
+          <Box display="flex" justifyContent="center" alignItems="center" gap="6px">
             {data.badgeTiers.map((_, index) => (
               <Box
                 key={index}
@@ -211,7 +211,7 @@ function Badge({
                 }}
               />
             ))}
-          </Box> */}
+          </Box>
           <Typography color="text.secondary" sx={{ wordBreak: 'break-word' }}>
             {data.metadata.description}
           </Typography>

@@ -148,8 +148,8 @@ function BadgesActions({
                 '& .MuiFilledInput-root': {
                   borderRadius: '20px',
                   backgroundColor: '#F4F4F5',
-                  padding: '6px 12px',
-                  minHeight: '36px',
+                  paddingX: '12px',
+                  height: '34px',
                   '&:hover': {
                     backgroundColor: '#E0E0E0',
                   },
@@ -203,14 +203,14 @@ function BadgesActions({
                 sx={{
                   borderRadius: '25px',
                   backgroundColor: '#F4F4F5',
-                  minHeight: '34px',
+                  height: '34px',
                   border: '1px solid transparent',
                   boxShadow: 'none',
                   maxWidth: { xs: '100%', lg: '200px' },
                   lineHeight: '2em',
                   '& .MuiSelect-select': {
-                    padding: '6px 12px',
-                    minHeight: '34px',
+                    paddingX: '12px',
+                    height: '34px',
                     display: 'flex',
                     alignItems: 'center',
                   },
@@ -263,8 +263,8 @@ function BadgesActions({
                 sx={{
                   borderRadius: '20px',
                   minWidth: '100px',
-                  minHeight: '36px',
-                  padding: '6px 16px',
+                  height: '34px',
+                  padding: '12px',
                   backgroundColor: 'transparent',
                   color: 'black',
                   fontWeight: 600,
@@ -290,13 +290,15 @@ function BadgesActions({
                 disabled={!claimable || isPending}
                 variant="contained"
                 onClick={() => mutate()}
-                endIcon={<SvgIcon component={AutorenewIcon} inheritViewBox color="inherit" />}
+                endIcon={<SvgIcon component={AutorenewIcon} width={16} height={16} inheritViewBox color="inherit" />}
                 sx={{
+                  height: '34px',
                   borderRadius: '20px',
-                  minHeight: '36px',
+                  fontSize: '16px',
                   backgroundColor: 'black',
+                  paddingX: '16px',
                   color: 'white',
-                  maxWidth: { xs: '100%', lg: '250px' },
+                  maxWidth: { xs: '100%', lg: 'fit-content' },
                   '&:hover': {
                     backgroundColor: '#333',
                   },

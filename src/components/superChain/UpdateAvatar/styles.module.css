@@ -196,7 +196,11 @@
   }
 
   .list-item :global(.MuiIconButton-root) {
-    padding: var(--space-1);
+    min-width: 34px;
+    min-height: 34px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
   }
 
   .list-item :global(.MuiListItemText-root) {
@@ -222,6 +226,14 @@
   border: 1px solid var(--color-text-primary);
   border-radius: 100px;
   width: 100%;
+}
+
+.list-item :global(.MuiIconButton-root) {
+  min-width: 34px;
+  min-height: 34px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
 }
 
 .list-item span {

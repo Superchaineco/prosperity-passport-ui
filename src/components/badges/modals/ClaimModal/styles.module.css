@@ -22,8 +22,10 @@
 }
 
 .levelUpButton {
- 
   left: 50%;
+  width: 100%;
+  border-radius: 100px;
+  height: 48px;
   transform: translateX(-50%);
   padding: 8px 40px 8px 40px;
   width: 240px;
@@ -32,11 +34,11 @@
   cursor: pointer;
   color: black;
   border: 0;
-  border-radius: 6px;
   text-align: center;
   font-weight: bold;
   position: relative;
   overflow: hidden;
+  margin-top: 24px;
 }
 
 .shine {
