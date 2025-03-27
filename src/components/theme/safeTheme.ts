@@ -239,6 +239,7 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
             boxSizing: 'border-box',
             border: '2px solid transparent',
             boxShadow: 'none',
+            backgroundColor: '#fcfcfd',
           }),
         },
       },

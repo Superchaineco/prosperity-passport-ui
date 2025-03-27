@@ -6,6 +6,12 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  background-color: #fcfcfd;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.badgeContainer:hover {
+  background-color: #f6f6f8;
 }
 
 @media (max-width: 600px) {
