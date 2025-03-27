@@ -48,7 +48,7 @@ export const GradientProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }))
 
-function Badges({ season }: { season?: { code: string; name: string } }) {
+function Badges({ season }: { season?: { code: number; name: string } }) {
   const { data: superChainAccount, loading: isSuperChainLoading } = useAppSelector(selectSuperChainAccount)
   const { safeAddress, safeLoaded } = useSafeInfo()
   const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined)

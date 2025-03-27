@@ -29,7 +29,7 @@ function BadgesHeader({
   completeBadges: number
   pointsToNextLevel: number
   totalBadges: number
-  season?: { code: string; name: string }
+  season?: { code: number; name: string }
   isLoading: boolean
 }) {
   const progress = (points / (points + pointsToNextLevel)) * 100

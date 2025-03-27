@@ -11,7 +11,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Badges season={{ code: 'S7', name: 'Season 7' }} />
+        <Badges season={{ code: 7, name: 'Season 7' }} />
       </main>
     </>
   )

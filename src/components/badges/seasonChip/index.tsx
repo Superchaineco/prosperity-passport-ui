@@ -3,7 +3,7 @@ import React from 'react'
 import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
 
-function SeasonChip({ season, style }: { season: string; style: 'info' | 'badge' }) {
+function SeasonChip({ season, style }: { season: number; style: 'info' | 'badge' }) {
   const isBadge = style === 'badge'
   if (!season) return <></>
   return (
@@ -17,7 +17,7 @@ function SeasonChip({ season, style }: { season: string; style: 'info' | 'badge'
               margin: '-5px',
             }}
           >
-            {season}
+            S{season}
           </Typography>
           <Image
             src="/images/badges/stars_custom.svg"

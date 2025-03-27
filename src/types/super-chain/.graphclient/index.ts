@@ -2253,7 +2253,9 @@ export type BadgeMetadata = {
   chain: string
   condition: string
   chains: string[]
-  season: string
+  season: number
+  image: string
+  'stack-image': string
 }
 
 export type GetUserBadgesQuery = {

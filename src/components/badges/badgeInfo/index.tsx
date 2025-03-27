@@ -58,7 +58,7 @@ function BadgeInfo({
         alignItems="center"
       >
         <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" p="10px 30px">
-          <SeasonChip season="S7" style="info" />
+          <SeasonChip season={7} style="info" />
 
           {/* Íconos alineados a la derecha */}
           <Box display="flex" alignItems="center" gap={1}>
