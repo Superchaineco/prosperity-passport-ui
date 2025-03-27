@@ -1,9 +1,9 @@
 import { Box, Skeleton, SvgIcon, Tooltip, Typography } from '@mui/material'
-import PerkSponsored from '@/public/images/superchain/perk-gas.svg'
 import React, { useMemo } from 'react'
-import css from './styles.module.css'
+import PerkRaffle from '@/public/images/superchain/perk-raffle.svg'
+import PerkSponsored from '@/public/images/superchain/perk-gas.svg'
 import type { Perks } from '@/features/superChain/services/badges.service'
-import LockOpenIcon from '@mui/icons-material/LockOpen'
+import css from './styles.module.css'
 
 function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolean }) {
   const perks = useMemo(() => {
@@ -24,37 +24,68 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
   }, [data])
 
   return (
-    <Box
-      display="flex"
-      width="100%"
-      flexDirection="column"
-      gap="12px"
-      flexWrap="wrap"
-      sx={{
-        border: '1px solid gray',
-        borderRadius: '20px',
-        padding: '8px',
-        mt: '20px',
-      }}
-    >
+    <Box display="flex" width="100%" paddingTop="24px" flexDirection="column" gap="24px" flexWrap="wrap">
       {isLoading ? (
         <>
-          <Skeleton variant="rounded" width="100%" height={30} />
-          <Skeleton variant="rounded" width="100%" height={30} />
+          <Skeleton variant="rounded" width="100%" height={40} />
+
+          <Skeleton variant="rounded" width="100%" height={40} />
+
+          <Skeleton variant="rounded" width="100%" height={40} />
         </>
       ) : (
         <>
-          {[
-            { label: `Claim ${perks.raffle?.value ?? 0} tickets per week` },
-            { label: `${perks.sponsoredTxns?.value ?? 0} Sponsored Transactions per week` },
-          ].map((item, index) => (
-            <Box key={index} display="flex" alignItems="center" gap={1} paddingY="1px">
-              <SvgIcon component={LockOpenIcon} sx={{ color: '#EF4444', fontSize: '16px' }} />
-              <Typography fontSize="14px" color="text.secondary">
-                {item.label}
-              </Typography>
-            </Box>
-          ))}
+          <Box
+            display="flex"
+            width="100%"
+            flexDirection="row"
+            justifyContent="flex-start"
+            gap="12px"
+            alignItems="center"
+          >
+            <Tooltip title={<Typography align="center">SuperChain Raffle</Typography>}>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <SvgIcon component={PerkRaffle} inheritViewBox className={css.perk} />
+              </Box>
+            </Tooltip>
+
+            <Typography
+              fontSize={16}
+              border={1}
+              borderColor="secondary.main"
+              borderRadius="100px"
+              padding="12px"
+              width="100%"
+            >
+              Claim {perks.raffle?.value ?? 0} tickets per week
+            </Typography>
+          </Box>
+
+          <Box
+            display="flex"
+            width="100%"
+            flexDirection="row"
+            justifyContent="flex-start"
+            gap="12px"
+            alignItems="center"
+          >
+            <Tooltip title={<Typography align="center">Sponsored Transactions</Typography>}>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <SvgIcon component={PerkSponsored} inheritViewBox className={css.perk} />
+              </Box>
+            </Tooltip>
+
+            <Typography
+              fontSize={16}
+              border={1}
+              borderColor="secondary.main"
+              borderRadius="100px"
+              padding="12px"
+              width="100%"
+            >
+              {perks.sponsoredTxns?.value ?? 0} Sponsored Transactions per week
+            </Typography>
+          </Box>
         </>
       )}
     </Box>

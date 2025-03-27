@@ -68,7 +68,7 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
             position="relative"
             height={120}
             border="2px solid var(--color-secondary-main)"
-            borderRadius="6px 0px 6px 6px"
+            borderRadius="12px 0px 12px 12px"
             overflow="hidden"
           >
             <NounsAvatar seed={nounSeed} />
@@ -82,7 +82,7 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
                 alignItems="center"
                 height="34px"
                 bgcolor="var(--color-secondary-main)"
-                borderRadius="0px 6px 6px 0px"
+                borderRadius="0px 100px 100px 0px"
                 padding="12px"
                 width="76px"
               >
@@ -98,7 +98,7 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
                 alignItems="center"
                 height="34px"
                 bgcolor="gray"
-                borderRadius="6px 6px 6px 6px"
+                borderRadius="100px"
                 padding="12px"
                 minWidth="76px"
               >

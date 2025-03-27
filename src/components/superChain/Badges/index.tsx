@@ -1,7 +1,8 @@
 import { BadgeResponse } from '@/types/super-chain'
 import { Box, Skeleton, SvgIcon, Tooltip, Typography } from '@mui/material'
 import React from 'react'
-import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
+import SuperChainPoints from '@/public/images/common/superChain.svg'
+import Image from 'next/image'
 
 function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: boolean }) {
   return (
@@ -41,13 +42,17 @@ function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: b
                 </Box>
               }
             >
-              <img
-                style={{
-                  height: 60,
-                  width: 60,
-                }}
-                src={badge.badge.metadata.image}
-              />
+              <Box display="flex" flexDirection="column" alignItems="center">
+                <Image height={60} width={60} alt={badge.badge.metadata.name} src={badge.badge.metadata.image} />
+                <Box display="flex" gap="4px" mt={1}>
+                  {[...Array(parseInt(badge.tier))].map((_, i) => (
+                    <Box key={i} width={6} height={6} borderRadius="100px" bgcolor="#39D551" />
+                  ))}
+                  {[...Array(badge.badge.badgeTiers.length - parseInt(badge.tier))].map((_, i) => (
+                    <Box key={i} width={6} height={6} borderRadius="100px" bgcolor="#EBECF1" />
+                  ))}
+                </Box>
+              </Box>
             </Tooltip>
           )
         })
