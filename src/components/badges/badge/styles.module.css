@@ -1,6 +1,5 @@
 .badgeContainer {
   border-radius: 12px;
-  width: clamp(200px, 100%, 250px);
   border: 1px solid #e1e2ea;
   overflow: hidden;
   display: flex;

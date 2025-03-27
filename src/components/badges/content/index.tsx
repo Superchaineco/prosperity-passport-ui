@@ -1,4 +1,4 @@
-import { Drawer, Grid, Skeleton, Stack, Typography, Box } from '@mui/material'
+import { Box, Drawer, Grid, Skeleton, Stack, Typography } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import Badge from '../badge'
 import type { ResponseBadge } from '@/types/super-chain'
@@ -69,7 +69,8 @@ function BadgesContent({
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+
+            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
             gap: '16px',
             width: '100%',
             '& > *': {
