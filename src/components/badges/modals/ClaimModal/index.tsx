@@ -26,9 +26,28 @@ function ClaimModal({
 }) {
   const { data: superChainAccount } = useAppSelector(selectSuperChainAccount)
   const progress =
-    (Number(superChainAccount.points) /
-      (Number(superChainAccount.points) + Number(superChainAccount.pointsToNextLevel))) *
-    100
+    ((Number(superChainAccount.points) + (data?.totalPoints ?? 0)) / Number(superChainAccount.pointsToNextLevel)) * 100
+
+  const claimData = {
+    claimedBadges: data?.badgeUpdates.flatMap((badge: any) => {
+      const previousLevel = Number(badge.previousLevel || 0)
+      const currentLevel = Number(badge.level || 0)
+      const levelDifference = currentLevel - previousLevel
+
+      return Array(levelDifference)
+        .fill(null)
+        .map((_, index) => {
+          const badgeTierIndex = previousLevel + index
+          const updatedBadge = data.updatedBadges.find((updatedBadge: any) => badge.id === updatedBadge.id)
+          return (
+            updatedBadge?.metadata?.condition.replace(
+              '{{variable}}',
+              updatedBadge.badgeTiers[badgeTierIndex]?.metadata.minValue,
+            ) || ''
+          )
+        })
+    }),
+  }
 
   return (
     <Dialog
