@@ -21,7 +21,7 @@ function WrongNetworkModal() {
     try {
       await wallet?.provider.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: toQuantity(parseInt(chain.chainId)) }],
+        params: [{ chainId: toQuantity(parseInt(chain?.chainId || '')) }],
       })
       onClose()
     } catch (e) {
