@@ -29,9 +29,6 @@ function SeasonChip({ season, style }: { season: number; style: 'info' | 'badge'
         </Box>
       }
       sx={{
-        position: isBadge ? 'absolute' : 'static',
-        top: isBadge ? '10px' : '',
-        left: isBadge ? '10px' : '',
         borderRadius: '18px',
         border: '1px solid #6B5DE7',
         backgroundColor: '#F4F0FF',

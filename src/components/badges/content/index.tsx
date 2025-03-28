@@ -85,13 +85,8 @@ function BadgesContent({
             <Badge
               data={badge}
               key={badge.badgeId}
-              switchFavorite={() =>
-                badgesService.switchFavoriteBadge(
-                  badge.badgeId,
-                  safeAddress as Address,
-                  true,
-                  setFavoriteBadgesLocalStorage,
-                )
+              switchFavorite={({ id, account, isFavorite }: { id: number; account: Address; isFavorite: boolean }) =>
+                badgesService.switchFavoriteBadge(id, account, isFavorite, setFavoriteBadgesLocalStorage)
               }
               setCurrentBadge={setCurrentBadge}
               isFavorite={favoriteBadges.includes(badge.badgeId)}

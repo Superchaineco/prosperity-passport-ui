@@ -1,17 +1,19 @@
 .badgeContainer {
+  cursor: pointer;
   border-radius: 12px;
-  border: 1px solid #e1e2ea;
   overflow: hidden;
+  background-color: white;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  cursor: pointer;
-  background-color: #fcfcfd;
-  transition: background-color 0.3s ease-in-out;
   width: 100%;
+  will-change: transform, opacity;
+  order: 0;
 }
 
 .badgeContainer:hover {
-  background-color: #f6f6f8;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 600px) {
@@ -60,7 +62,6 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
 .badgeContainer:hover .chainIcon,
 .badgeContainer.favorited .chainIcon {
   transform: translateX(-8px);
@@ -89,7 +90,6 @@
   display: flex;
   align-items: center;
   gap: 1;
-  margin-top: 5px;
 }
 
 .topBarRight {
@@ -110,10 +110,10 @@
   right: 0;
   transform: none;
   background-color: #f6f6f8;
-  border: 1px dashed #CDCED5;
+  border: 1px dashed #e1e2ea;
   border-radius: 12px;
   padding: 12px;
-  /*box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);*/
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   opacity: 0;
   visibility: hidden;
   transition: all 0.2s ease-in-out;

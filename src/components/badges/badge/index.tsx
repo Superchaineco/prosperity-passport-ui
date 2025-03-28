@@ -1,7 +1,5 @@
-import { Box, IconButton, Stack, SvgIcon, Typography } from '@mui/material'
-import HeartFilled from '@/public/images/common/hearth-filled.svg'
-import Hearth from '@/public/images/common/hearth.svg'
-import React, { useMemo, type SyntheticEvent } from 'react'
+import { Box, Stack, SvgIcon, Typography, IconButton } from '@mui/material'
+import React, { type SyntheticEvent } from 'react'
 import SuperChainPoints from '@/public/images/common/superChain.svg'
 import css from './styles.module.css'
 import useSafeInfo from '@/hooks/useSafeInfo'
@@ -10,8 +8,11 @@ import classNames from 'classnames'
 import Image from 'next/image'
 import SeasonChip from '../seasonChip'
 import NetworkChip from '../networkChip'
+import HeartFilled from '@/public/images/common/hearth-filled.svg'
+import Hearth from '@/public/images/common/hearth.svg'
 import CheckCircleIcon from '@/public/images/common/check-circle.svg'
-
+import { Address } from 'viem'
+import useSafeInfo from '@/hooks/useSafeInfo'
 function Badge({
   data,
   switchFavorite,
@@ -19,13 +20,15 @@ function Badge({
   isFavorite,
 }: {
   data: ResponseBadge
-  switchFavorite: () => void
+  switchFavorite: ({ id, account, isFavorite }: { id: number; account: Address; isFavorite: boolean }) => void
   setCurrentBadge: (badge: ResponseBadge & { isFavorite: boolean }) => void
   isFavorite: boolean
 }) {
+  const { safe } = useSafeInfo()
+
   const handleSwitchFavorite = async (event: SyntheticEvent) => {
     event.stopPropagation()
-    switchFavorite()
+    switchFavorite({ id: data.badgeId, account: safe.address.value as Address, isFavorite: !isFavorite })
   }
 
   const handlePickBadge = () => {
@@ -39,7 +42,14 @@ function Badge({
 
   console.debug(data)
   return (
-    <Box sx={{ maxWidth: '100%' }} onClick={handlePickBadge} className={classNames(css.badgeContainer)}>
+    <Box
+      sx={{ maxWidth: '100%' }}
+      onClick={handlePickBadge}
+      className={classNames(css.badgeContainer, {
+        [css.favorited]: isFavorite,
+        [css.completed]: isCompleted,
+      })}
+    >
       <Box
         sx={{
           position: 'relative',
@@ -68,18 +78,39 @@ function Badge({
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
           }}
         />
-        {/* <SeasonChip season={data.metadata.season} style="badge" /> */}
-        <NetworkChip network={data.metadata.chains[0].toLowerCase()} style="badge" isFavorite={isFavorite} />
-        {isFavorite ? (
-          <SvgIcon
-            component={HeartFilled}
-            sx={{ color: 'red', fontSize: '20px' }}
-            inheritViewBox
-            style={{ position: 'absolute', top: '12px', right: '10px' }}
-          />
-        ) : (
-          <></>
-        )}
+        <Box className={css.topBar}>
+          <Box className={css.topBarLeft}>
+            <SeasonChip season={data.metadata.season} style="badge" />
+          </Box>
+          <Box className={css.topBarRight}>
+            <NetworkChip
+              network={data.metadata.chains[0].toLowerCase()}
+              style="badge"
+              isFavorite={isFavorite}
+              className={css.chainIcon}
+            />
+            <IconButton
+              onClick={handleSwitchFavorite}
+              className={css.heartIcon}
+              size="small"
+              sx={{
+                padding: 0,
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                },
+              }}
+            >
+              <SvgIcon
+                component={isFavorite ? HeartFilled : Hearth}
+                sx={{
+                  color: isFavorite ? 'red' : '#E1E2EA',
+                  fontSize: '20px',
+                }}
+                inheritViewBox
+              />
+            </IconButton>
+          </Box>
+        </Box>
 
         <Box
           sx={{
@@ -271,6 +302,7 @@ function Badge({
           </Box>
         ) : (
           <Box
+            className={css.rewardsContainer}
             width="100%"
             border={1}
             borderRadius="100px"
@@ -302,6 +334,27 @@ function Badge({
                 {data.badgeTiers[data.claimableTier ? data.claimableTier - 1 : 0].metadata.points}
               </Typography>
               <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+            </Box>
+            <Box className={css.tiersTooltip}>
+              {data.badgeTiers.map((tier, index) => (
+                <Box key={index} className={css.tierRow}>
+                  <Typography fontSize="12px" fontWeight={500} fontFamily="Sora">
+                    {data.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString())}
+                  </Typography>
+                  <SvgIcon
+                    inheritViewBox
+                    component={index + 1 <= Number(data.tier) ? CheckCircleIcon : null}
+                    sx={{
+                      color: index + 1 <= Number(data.tier) ? '#A3E635' : '#E1E2EA',
+                      fontSize: '16px',
+                      width: '16px',
+                      height: '16px',
+                      border: index + 1 <= Number(data.tier) ? 'none' : '1px dashed #E1E2EA',
+                      borderRadius: '50%',
+                    }}
+                  />
+                </Box>
+              ))}
             </Box>
           </Box>
         )}

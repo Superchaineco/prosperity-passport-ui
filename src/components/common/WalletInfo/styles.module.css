@@ -43,7 +43,7 @@
 .rowContainer {
   align-self: stretch;
   border: 1px solid var(--color-border-light);
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 .row {

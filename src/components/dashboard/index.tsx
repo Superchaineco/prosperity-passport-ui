@@ -1,4 +1,3 @@
-import FirstSteps from '@/components/dashboard/FirstSteps'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import { useEffect, type ReactElement } from 'react'
 import dynamic from 'next/dynamic'
