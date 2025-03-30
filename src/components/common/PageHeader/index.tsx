@@ -10,7 +10,7 @@ const PageHeader = ({
   action,
   noBorder,
 }: {
-  title: string
+  title: string | ReactElement
   action?: ReactElement
   noBorder?: boolean
 }): ReactElement => {

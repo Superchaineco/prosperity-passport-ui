@@ -1,5 +1,5 @@
-import { Skeleton, Stack, Typography } from '@mui/material'
-import React, { useCallback, useState } from 'react'
+import { Divider, Skeleton, Stack } from '@mui/material'
+import React from 'react'
 import RankingProfile from './RankingProfile/index'
 import { useLeaderboard } from '@/hooks/super-chain/useLeaderboard'
 import useSafeAddress from '@/hooks/useSafeAddress'
@@ -7,7 +7,7 @@ import type { Address } from 'viem'
 import { useUserRank } from '@/hooks/super-chain/useUserRank'
 import InfiniteScroll from '../common/InfiniteScroll'
 
-function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string) => void }) {
+function Leaderboard({ handleUserSelect }: { handleUserSelect: (address: string, rank: number) => void }) {
   const address = useSafeAddress()
   const [isFetching, setIsFetching] = useState(false)
   const [skip, setSkip] = useState(0)
@@ -57,15 +57,10 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string) => vo
       <main>
         <Stack spacing={2}>
           <Stack spacing={1}>
-            <Typography fontSize={12} fontWeight={600} color="gray">
-              YOUR RANKING
-            </Typography>
             <Skeleton variant="rounded" height={48} />
           </Stack>
+          <Divider sx={{ width: '100%' }}></Divider>
           <Stack spacing={1}>
-            <Typography fontSize={12} fontWeight={600} color="gray">
-              TOP USERS OF ALL-TIME
-            </Typography>
             {Array.from(new Array(5)).map((_, index) => (
               <Skeleton key={index} variant="rounded" height={48} />
             ))}
@@ -79,49 +74,50 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string) => vo
     <main>
       <Stack spacing={2}>
         <Stack spacing={1}>
-          <Typography fontSize={12} fontWeight={600} color="gray">
-            YOUR RANKING
-          </Typography>
-          <RankingProfile
-            isMainProfile
-            onClick={() => handleUserSelect(address)}
-            position={rank!}
-            points={data!.superChainSmartAccount.points}
-            name={data!.superChainSmartAccount.superChainId}
-            level={data!.superChainSmartAccount.level}
-            badges={data!.superChainSmartAccount.badges.reduce((acc, badge) => acc + parseInt(badge.tier), 0)}
-            noun={{
-              accessory: parseInt(data!.superChainSmartAccount.noun_accessory),
-              background: parseInt(data!.superChainSmartAccount.noun_background),
-              body: parseInt(data!.superChainSmartAccount.noun_body),
-              glasses: parseInt(data!.superChainSmartAccount.noun_glasses),
-              head: parseInt(data!.superChainSmartAccount.noun_head),
-            }}
-          />
+          {user && (
+            <>
+              <RankingProfile
+                isMainProfile
+                onClick={() => handleUserSelect(address, rank!)}
+                position={rank!}
+                points={user!.total_points}
+                name={user!.superChainId}
+                level={user!.level?.toString() || '0'}
+                badges={user!.total_badges}
+                noun={{
+                  accessory: user!.noun.accessory,
+                  background: user!.noun.background,
+                  body: user!.noun.body,
+                  glasses: user!.noun.glasses,
+                  head: user!.noun.head,
+                }}
+              />
+            </>
+          )}
         </Stack>
+        <Divider sx={{ width: '100%' }}></Divider>
         <Stack spacing={1} height="100%">
-          <Typography fontSize={12} fontWeight={600} color="gray">
-            TOP USERS OF ALL-TIME
-          </Typography>
-          {data?.superChainSmartAccounts.map((user, index) => (
-            <RankingProfile
-              key={index}
-              position={index + 1}
-              points={user.points}
-              onClick={() => handleUserSelect(user.safe)}
-              name={user.superChainId}
-              level={user.level}
-              isMainProfile={user.safe.toLowerCase() === address.toLowerCase()}
-              badges={user.badges.reduce((acc, badge) => acc + parseInt(badge.tier), 0)}
-              noun={{
-                accessory: parseInt(user.noun_accessory),
-                background: parseInt(user.noun_background),
-                body: parseInt(user.noun_body),
-                glasses: parseInt(user.noun_glasses),
-                head: parseInt(user.noun_head),
-              }}
-            />
-          ))}
+          {data.pages.map((page, pageIndex) =>
+            page.data.map((user, index) => (
+              <RankingProfile
+                key={`${pageIndex}-${index}`}
+                position={index + 1 + pageIndex * 20}
+                points={user.total_points}
+                onClick={() => handleUserSelect(user.superaccount, index + 1 + pageIndex * 20)}
+                name={user.superChainId}
+                level={user.level.toString()}
+                isMainProfile={user.superaccount.toLowerCase() === address.toLowerCase()}
+                badges={user.total_badges}
+                noun={{
+                  accessory: user.noun.accessory,
+                  background: user.noun.background,
+                  body: user.noun.body,
+                  glasses: user.noun.glasses,
+                  head: user.noun.head,
+                }}
+              />
+            )),
+          )}
 
           {hasMore &&
             (isFetching ? <Skeleton variant="rounded" height={48} /> : <InfiniteScroll onLoadMore={handleLoadMore} />)}

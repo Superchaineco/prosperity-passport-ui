@@ -12,7 +12,7 @@ import Badges from '@/components/superChain/Badges'
 import CopyAddressButton from '@/components/common/CopyAddressButton'
 import AddContactIcon from '@/public/images/common/add-contact.svg'
 import CopyIcon from '@/public/images/common/copy.svg'
-import CompletedIcon from '@/public/images/common/completed.svg'
+import ContactAdded from '@/public/images/common/contact-added.svg'
 import { useAppDispatch } from '@/store'
 import { upsertAddressBookEntry } from '@/store/addressBookSlice'
 import { upsertContact } from '@/store/contactsSlice'
@@ -21,13 +21,16 @@ import useAddressBook from '@/hooks/useAddressBook'
 import useContacts from '@/hooks/useContacts'
 import { getNounData } from '@nouns/assets'
 import { Chip } from '@/components/common/Chip'
+import SeasonChip from '@/components/badges/seasonChip'
 
 function UserInfo({
   context,
+  rank,
   isLoading,
   handleClose,
 }: {
   context?: UserResponse
+  rank: number
   isLoading: boolean
   handleClose: () => void
 }) {
@@ -100,89 +103,139 @@ function UserInfo({
     <Stack padding="0px" justifyContent="flex-start" spacing={2} className={css.drawer}>
       {isLoading || !context ? (
         <>
-          <Box display="flex" justifyContent="center" width="100%" position="relative" marginTop="24px !important">
-            <Box display="flex" gap={1} position="absolute" color="grayText" top="-5%" right="-5%">
-              <ExplorerButton {...blockExplorerLink} color="inherit" />
-              <IconButton onClick={() => handleClose()}>
-                <SvgIcon component={Close} color="inherit" inheritViewBox fontSize="small" />
-              </IconButton>
-            </Box>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" padding="12px" paddingBottom={0}>
+            <Stack direction="row" gap={1} padding="16px">
+              <Skeleton variant="rounded" width={60} height={30} />
+              <Skeleton variant="rounded" width={60} height={30} />
+            </Stack>
+            <Skeleton variant="circular" width={24} height={24} />
+          </Stack>
 
-            <Skeleton variant="rectangular" width={120} height={120} />
-            <Box width="100%" padding="12px" display="flex" justifyContent="center">
-              <Skeleton variant="text"></Skeleton>
-            </Box>
-          </Box>
-
-          <Skeleton variant="text">
-            <Typography display="flex" alignItems="center" fontWeight={600} fontSize={20}>
-              potatohead
-              <Typography component="span" fontSize="inherit" fontWeight="inherit" color="secondary.main">
-                .prosperity
-              </Typography>
-            </Typography>
-          </Skeleton>
-          <Skeleton variant="rounded" width={100} height={40} />
           <Box
             display="flex"
-            paddingTop={2}
-            alignItems="center"
-            justifyContent="center"
             flexDirection="column"
-            gap="20px"
+            width="100%"
+            sx={{
+              border: '1px solid #E1E2EA',
+              backgroundColor: '#FCFCFD',
+              paddingY: '20px',
+              alignItems: 'center',
+            }}
           >
-            <Skeleton variant="text" width={100} height={30} />
-            <Box display="flex" gap="12px">
-              {Array.from(new Array(3)).map((_, index) => (
-                <Skeleton key={index} variant="circular" width={60} height={60} />
-              ))}
-            </Box>
+            <Skeleton variant="circular" width={120} height={120} />
+            <Skeleton variant="rounded" width={32} height={32} sx={{ mt: 2 }} />
+          </Box>
+
+          <Stack sx={{ width: '100%', padding: '10px 28px' }}>
+            <Skeleton width={160} height={30} />
+            <Stack direction="row" spacing={2} mt={2}>
+              <Skeleton variant="rounded" width={80} height={32} />
+              <Skeleton variant="rounded" width={80} height={32} />
+              <Skeleton variant="rounded" width={80} height={32} />
+            </Stack>
+          </Stack>
+
+          <Divider sx={{ width: '100%', mt: 2 }} />
+          <Box display="flex" justifyContent="center" gap={2} padding={2}>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Skeleton key={i} variant="circular" width={60} height={60} />
+            ))}
           </Box>
         </>
       ) : (
         <>
-          <Stack direction="column" gap={1}>
-            <Box display="flex" gap={1} color="grayText">
-              <IconButton onClick={() => handleClose()}>
-                <SvgIcon component={Close} color="inherit" inheritViewBox fontSize="small" />
-              </IconButton>
-            </Box>
-            <Box
-              display="flex"
-              width="100%"
-              flexDirection="column"
-              sx={{ backgroundColor: { background }, verticalAlign: 'bottom' }}
-            >
-              <Box sx={{ maxWidth: '200px', alignSelf: 'center', m: '0px', p: '0px' }}>
-                <NounsAvatar seed={nounSeed!} className={css.avatar} />
-              </Box>
-              {isContact ? (
-                <Tooltip title="Added">
-                  <IconButton size="small" sx={{ position: 'absolute', borderRadius: '50px' }}>
-                    <SvgIcon inheritViewBox component={CompletedIcon} fontSize="inherit" />
-                  </IconButton>
-                </Tooltip>
-              ) : (
-                <Tooltip title="Add contact">
-                  <IconButton
-                    size="medium"
-                    onClick={handleAddContact}
-                    sx={{
-                      position: 'absolute',
-                      top: '250px',
-                      left: '280px',
-                      borderRadius: '50px',
-                      backgroundColor: 'black',
-                      color: 'white',
-                    }}
-                  >
-                    <SvgIcon inheritViewBox component={AddContactIcon} fontSize="inherit" sx={{ fill: '#white' }} />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </Box>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" padding="12px" paddingBottom={0}>
+            <Stack direction="row" gap={1} padding="16px">
+              <Chip
+                sx={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid #E1E2EA',
+                  color: 'black',
+                  fontSize: '15px',
+                  p: '6px',
+                  height: '30px',
+                }}
+                label={<Typography>Rank: {rank}</Typography>}
+              />
+              <SeasonChip season={parseInt(context?.superchainsmartaccount[3])} style="info" />
+            </Stack>
+
+            <IconButton onClick={handleClose}>
+              <SvgIcon component={Close} color="inherit" inheritViewBox fontSize="small" />
+            </IconButton>
           </Stack>
-          <Stack sx={{ alignSelf: 'left', width: '100%', padding: '10px 20px' }}>
+          <Box
+            display="flex"
+            width="100%"
+            flexDirection="column"
+            sx={{
+              border: '1px solid #E1E2EA',
+              backgroundColor: { background },
+              verticalAlign: 'bottom',
+              position: 'relative',
+            }}
+          >
+            <Box sx={{ maxWidth: '150px', alignSelf: 'center', m: '0px', p: '0px' }}>
+              <NounsAvatar seed={nounSeed!} className={css.avatar} />
+            </Box>
+            {isContact ? (
+              <Tooltip title="Added">
+                <IconButton
+                  size="medium"
+                  onClick={handleAddContact}
+                  sx={{
+                    position: 'absolute',
+                    top: '110px',
+                    left: '290px',
+                    height: '34px',
+                    width: '34px',
+                    borderRadius: '50px',
+                    backgroundColor: 'black',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#121312',
+                    },
+                  }}
+                >
+                  <SvgIcon
+                    inheritViewBox
+                    component={ContactAdded}
+                    fontSize="small"
+                    sx={{ stroke: 'white', fill: 'white' }}
+                  />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Add contact">
+                <IconButton
+                  size="medium"
+                  onClick={handleAddContact}
+                  sx={{
+                    position: 'absolute',
+                    top: '110px',
+                    left: '290px',
+                    height: '34px',
+                    width: '34px',
+                    borderRadius: '50px',
+                    backgroundColor: 'black',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#121312',
+                    },
+                  }}
+                >
+                  <SvgIcon
+                    inheritViewBox
+                    component={AddContactIcon}
+                    fontSize="small"
+                    sx={{ stroke: 'white', fill: 'white' }}
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Box>
+
+          <Stack sx={{ alignSelf: 'left', width: '100%', padding: '10px 28px' }}>
             <Stack direction="row" gap={1} sx={{ padding: '10px 0px' }}>
               <Typography display="flex" alignItems="left" fontWeight={600} fontSize={20}>
                 {context?.superchainsmartaccount[1].split('.superchain')[0]}

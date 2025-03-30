@@ -18,25 +18,44 @@ type _Props = {
 function RankingProfile({ isMainProfile, position, points, name, level, badges, noun, onClick }: _Props) {
   return (
     <Box
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
+      sx={{
+        cursor: onClick ? 'pointer' : 'default',
+        border: '1px solid',
+        borderColor: isMainProfile ? '#C1D1FF' : '#F6F6F8',
+        borderRadius: '1000px',
+        backgroundColor: isMainProfile ? '#EBF0FF' : '#FCFCFD',
+      }}
       onClick={onClick}
       display="flex"
       width="100%"
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
-      border={isMainProfile ? 2 : 0}
-      borderColor="secondary.main"
       borderRadius="6px"
       padding={{
         xs: '4px 8px',
         sm: '8px 24px',
       }}
-      bgcolor="white"
     >
       <Stack direction="row" alignItems="center" justifyContent="flex-start">
-        <Box height={28} width={28} display="flex" justifyContent="center" alignItems="center">
-          <Typography fontWeight={500}>{position}</Typography>
+        <Box
+          height={28}
+          width={28}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            borderRadius: '50px',
+            border: '1px solid',
+            borderColor: position == 1 ? '#FFEE05' : position == 2 ? '#D3D4D4' : position == 3 ? '#F2AA7D' : '#F6F6F8',
+            backgroundColor:
+              position == 1 ? '#F5B800' : position == 2 ? '#A2ACB4' : position == 3 ? '#DB8466' : 'white',
+            color: position <= 3 ? 'white' : 'black',
+          }}
+        >
+          <Typography fontWeight={500} fontSize={12}>
+            {position}
+          </Typography>
         </Box>
         <Stack paddingLeft={{ xs: 0, sm: 6 }} direction="row" alignItems="center" gap={{ xs: '6px', sm: '12px' }}>
           <Box width={32} height={32} borderRadius="6px">
@@ -45,19 +64,26 @@ function RankingProfile({ isMainProfile, position, points, name, level, badges, 
           <Typography fontSize={14}>
             <strong>{name.split('.prosperity')[0]}</strong>.prosperity
           </Typography>
-          <Box display={{ xs: 'none', sm: 'block' }} bgcolor="GrayText" padding="3px 12px" borderRadius="100px">
-            <Typography fontSize={12} fontWeight={500} color="white">
+          <Box
+            display={{ xs: 'none', sm: 'block' }}
+            bgcolor="white"
+            padding="3px 12px"
+            borderRadius="100px"
+            sx={{ border: '1px solid #F6F6F8' }}
+          >
+            <Typography fontSize={12} fontWeight={600} color="black">
               Level: {level}
             </Typography>
           </Box>
           <Box
             display={{ xs: 'none', sm: 'block' }}
-            bgcolor="GrayText"
             padding="3px 12px"
             borderRadius="100px"
-            color="white"
+            color="black"
+            bgcolor="white"
+            sx={{ border: '1px solid #F6F6F8' }}
           >
-            <Typography fontSize={12} fontWeight={500} color="white">
+            <Typography fontSize={12} fontWeight={600}>
               Badges: {badges}
             </Typography>
           </Box>

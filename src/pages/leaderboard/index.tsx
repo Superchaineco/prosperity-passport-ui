@@ -13,6 +13,7 @@ import { type Address, zeroAddress } from 'viem'
 
 function LeaderboardLayout() {
   const [selectedUser, setSelectedUser] = useState<string | Address>(zeroAddress)
+  const [selectedRank, setSelectedRank] = useState<number>(0)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const { data, isLoading } = useQuery<UserResponse>({
@@ -27,9 +28,10 @@ function LeaderboardLayout() {
     enabled: selectedUser !== zeroAddress,
   })
 
-  const handleUserSelect = (user: string | Address) => {
+  const handleUserSelect = (user: string | Address, rank: number) => {
     if (!isDrawerOpen) setIsDrawerOpen(true)
     setSelectedUser(user)
+    setSelectedRank(rank)
   }
 
   const handleDrawerClose = () => {
@@ -51,7 +53,7 @@ function LeaderboardLayout() {
           onClose={handleDrawerClose}
           sx={{ padding: '0' }}
         >
-          <UserInfo context={data} isLoading={isLoading} handleClose={handleDrawerClose} />
+          <UserInfo context={data} rank={selectedRank} isLoading={isLoading} handleClose={handleDrawerClose} />
         </Drawer>
       </Box>
     </>
