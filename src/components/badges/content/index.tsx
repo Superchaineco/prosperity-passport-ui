@@ -81,17 +81,36 @@ function BadgesContent({
             },
           }}
         >
-          {badges.map((badge) => (
-            <Badge
-              data={badge}
-              key={badge.badgeId}
-              switchFavorite={({ id, account, isFavorite }: { id: number; account: Address; isFavorite: boolean }) =>
-                badgesService.switchFavoriteBadge(id, account, isFavorite, setFavoriteBadgesLocalStorage)
+          {badges
+            .sort((a, b) => {
+              const aIsFavorite = favoriteBadges.includes(a.badgeId)
+              const bIsFavorite = favoriteBadges.includes(b.badgeId)
+              const aIsCompleted = Number(a.tier) === a.badgeTiers.length
+              const bIsCompleted = Number(b.tier) === b.badgeTiers.length
+
+              // Primero ordenar por favoritos
+              if (aIsFavorite !== bIsFavorite) {
+                return aIsFavorite ? -1 : 1
               }
-              setCurrentBadge={setCurrentBadge}
-              isFavorite={favoriteBadges.includes(badge.badgeId)}
-            />
-          ))}
+
+              // Luego por completadas
+              if (aIsCompleted !== bIsCompleted) {
+                return aIsCompleted ? 1 : -1
+              }
+
+              return 0
+            })
+            .map((badge) => (
+              <Badge
+                data={badge}
+                key={badge.badgeId}
+                switchFavorite={({ id, account, isFavorite }: { id: number; account: Address; isFavorite: boolean }) =>
+                  badgesService.switchFavoriteBadge(id, account, isFavorite, setFavoriteBadgesLocalStorage)
+                }
+                setCurrentBadge={setCurrentBadge}
+                isFavorite={favoriteBadges.includes(badge.badgeId)}
+              />
+            ))}
         </Box>
       </Grid>
       <Drawer variant="temporary" anchor="right" onClose={() => setCurrentBadge(null)} open={!!currentBadge}>
