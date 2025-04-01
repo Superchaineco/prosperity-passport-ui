@@ -22,10 +22,9 @@ function ClaimModal({
 }) {
   const { data: superChainAccount } = useAppSelector(selectSuperChainAccount)
   const progress =
-    Number(superChainAccount.points) + (data?.totalPoints ?? 0) > Number(superChainAccount.pointsToNextLevel)
+    Number(superChainAccount.points) > Number(superChainAccount.pointsToNextLevel)
       ? 100
-      : ((Number(superChainAccount.points) + (data?.totalPoints ?? 0)) / Number(superChainAccount.pointsToNextLevel)) *
-        100
+      : (Number(superChainAccount.points) / Number(superChainAccount.pointsToNextLevel)) * 100
 
   const claimData = {
     claimedBadges: data?.badgeUpdates.flatMap((badge: any) => {
@@ -121,9 +120,8 @@ function ClaimModal({
           {!data?.isLevelUp && (
             <>
               <Typography variant="body2" align="center" mt={1} color="#75757A">
-                {Number(superChainAccount.points) + Number(data?.totalPoints ?? 0)} /{' '}
-                {Number(superChainAccount.pointsToNextLevel)} Prosperity Points to level{' '}
-                {Number(superChainAccount.level) + 1}
+                {Number(superChainAccount.points)} / {Number(superChainAccount.pointsToNextLevel)} Prosperity Points to
+                level {Number(superChainAccount.level)}
               </Typography>
               <Button
                 onClick={onClose}
