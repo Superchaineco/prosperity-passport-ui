@@ -200,16 +200,16 @@ function BadgeInfo({
             <Typography fontSize="18px" fontWeight={600} textAlign="start" fontFamily="Sora">
               {currentBadge?.metadata.name}
             </Typography>
-            <Stack direction="row" alignItems="center" gap={1}>
-              {currentBadge.metadata.chains.map((chain) => (
+            <Box display="flex" flexWrap="wrap" gap={1} alignItems="center">
+              {currentBadge.metadata.chains.map((chain, index) => (
                 <NetworkChip
-                  key={currentBadge.badgeId}
+                  key={`${currentBadge.badgeId}-${chain}-${index}`}
                   network={chain}
                   style="info"
                   isFavorite={currentBadge.isFavorite}
                 />
               ))}
-            </Stack>
+            </Box>
 
             <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
               <Typography color="#75757A">{currentBadge?.metadata.description}</Typography>

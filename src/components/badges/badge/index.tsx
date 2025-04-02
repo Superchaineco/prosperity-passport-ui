@@ -67,18 +67,45 @@ function Badge({
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
           }}
         />
-        <SeasonChip season={data.metadata.season} style="badge" />
-        <NetworkChip network={data.metadata.chain.toLowerCase()} style="badge" isFavorite={isFavorite} />
-        {isFavorite ? (
-          <SvgIcon
-            component={HeartFilled}
-            sx={{ color: 'red', fontSize: '20px' }}
-            inheritViewBox
-            style={{ position: 'absolute', top: '12px', right: '10px' }}
-          />
-        ) : (
-          <></>
-        )}
+        <Box className={css.topBar}>
+          <Box className={css.topBarLeft}>
+            <SeasonChip season={data.metadata.season} style="badge" />
+          </Box>
+          <Box className={css.topBarRight}>
+            <Box display="flex" flexWrap="wrap" gap={1} alignItems="center">
+              {data.metadata.chains.map((chain, index) => (
+                <NetworkChip
+                  key={`${data.badgeId}-${chain}-${index}`}
+                  network={chain}
+                  style="badge"
+                  isFavorite={isFavorite}
+                  offSet={data.metadata.chains.length > 1 ? index + 1 : undefined}
+                />
+              ))}
+            </Box>
+
+            <IconButton
+              onClick={handleSwitchFavorite}
+              className={css.heartIcon}
+              size="small"
+              sx={{
+                padding: 0,
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                },
+              }}
+            >
+              <SvgIcon
+                component={isFavorite ? HeartFilled : Hearth}
+                sx={{
+                  color: isFavorite ? 'red' : '#E1E2EA',
+                  fontSize: '20px',
+                }}
+                inheritViewBox
+              />
+            </IconButton>
+          </Box>
+        </Box>
 
         <Box
           sx={{
