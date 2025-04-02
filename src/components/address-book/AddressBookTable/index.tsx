@@ -166,6 +166,7 @@ function AddressBookTable({ chain, setTxFlow }: AddressBookTableProps) {
                       size="small"
                       onClick={() => setTxFlow(<TokenTransferFlow recipient={address} />)}
                       disabled={!isOk}
+                      sx={{ padding: '8px 4px', fontWeight: 500 }}
                     >
                       Send
                     </Button>

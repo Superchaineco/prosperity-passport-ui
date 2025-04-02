@@ -6,7 +6,7 @@ import useTransactionStatus from '@/hooks/useTransactionStatus'
 const getStatusColor = (value: TransactionStatus, palette: Palette) => {
   switch (value) {
     case TransactionStatus.SUCCESS:
-      return palette.success.main
+      return ' #0FBD2F'
     case TransactionStatus.FAILED:
     case TransactionStatus.CANCELLED:
       return palette.error.main

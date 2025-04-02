@@ -108,3 +108,39 @@ body.beamerAnnouncementBarTopActive {
 #beamerLastPostTitle {
   left: 120px !important;
 }
+.MuiAccordion-root {
+  border-radius: 24px !important;
+  border: 1px solid #F6F6F8 !important;
+  background-color: #FCFCFD !important;
+}
+
+/* Cuando está expandido */
+.MuiAccordion-root.Mui-expanded {
+  border-color: #47D3FF !important;
+  background-color: #DBF6FF !important;
+}
+
+/* Summary cerrado */
+.MuiAccordionSummary-root {
+  background-color: #F6F6F8 !important;
+}
+
+/* Summary expandido */
+.MuiAccordionSummary-root.Mui-expanded {
+  background-color: #DBF6FF !important;
+}
+
+/* Detalles */
+.MuiAccordionDetails-root {
+  background-color: #FFFFFF !important;
+}
+
+.MuiPaper-rounded{
+  border-radius: 30px;
+  
+}
+/* Anula el hover de todas las filas de todas las tablas de MUI */
+.MuiTableRow-root:hover {
+  background-color: transparent !important;
+}
+

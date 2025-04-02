@@ -30,15 +30,15 @@ export const ExpandableTransactionItem = ({
   return (
     <Accordion
       disableGutters
+      elevation={0}
+      defaultExpanded={!!txDetails}
+      className={classNames(css.listItem, { [css.batched]: isBatched })}
       TransitionProps={{
         mountOnEnter: true,
         unmountOnExit: false,
       }}
-      elevation={0}
-      defaultExpanded={!!txDetails}
-      className={classNames(css.listItem, { [css.batched]: isBatched })}
-      data-testid={testId}
       onChange={(_, expanded) => {
+        // Opcional para analytics
         if (expanded) {
           trackEvent(TX_LIST_EVENTS.EXPAND_TRANSACTION)
         }

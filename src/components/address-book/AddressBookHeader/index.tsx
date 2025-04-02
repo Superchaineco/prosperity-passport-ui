@@ -1,4 +1,4 @@
-import { Button, SvgIcon, Grid, ButtonProps } from '@mui/material'
+import { Button, SvgIcon, Grid, ButtonProps, Box } from '@mui/material'
 import type { ReactElement, ElementType } from 'react'
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from '@/public/images/common/search.svg'
@@ -10,7 +10,7 @@ import PageHeader from '@/components/common/PageHeader'
 import { ModalType } from '../AddressBookTable'
 import { useAppSelector } from '@/store'
 import { type AddressBookState, selectAllAddressBooks } from '@/store/addressBookSlice'
-import AddCircleIcon from '@/public/images/common/add-outlined.svg'
+import AddIcon from '@mui/icons-material/Add'
 import mapProps from '@/utils/mad-props'
 
 interface HeaderButtonProps extends ButtonProps {
@@ -59,27 +59,80 @@ function AddressBookHeader({
       noBorder
       action={
         <Grid container pb={1} spacing={1}>
-          <Grid item xs={12} md={5} xl={5.5}>
-            <TextField
-              placeholder="Search"
-              variant="filled"
-              hiddenLabel
-              value={searchQuery}
-              onChange={(e) => {
-                onSearchQueryChange(e.target.value)
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SvgIcon component={SearchIcon} inheritViewBox color="border" />
-                  </InputAdornment>
-                ),
-                disableUnderline: true,
-              }}
-              fullWidth
-              size="medium"
-            />
+          <Grid item xs={12} mt={1} xl={5.5}>
+            <Box display="flex" alignItems="center" gap={2}>
+              <TextField
+                placeholder="Search"
+                variant="filled"
+                hiddenLabel
+                value={searchQuery}
+                onChange={(e) => onSearchQueryChange(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SvgIcon component={SearchIcon} inheritViewBox color="border" />
+                    </InputAdornment>
+                  ),
+                  disableUnderline: true,
+                }}
+                fullWidth
+                size="medium"
+                sx={{
+                  width: '500px',
+                  borderRadius: '20px',
+                  overflow: 'hidden',
+                  backgroundColor: '#F4F4F5',
+                  '& .MuiFilledInput-root': {
+                    borderRadius: '20px',
+                    backgroundColor: '#F4F4F5',
+                    paddingX: '12px',
+                    height: '34px',
+                    '&:hover': {
+                      backgroundColor: '#E0E0E0',
+                    },
+                    '&.Mui-focused': {
+                      backgroundColor: '#FFFFFF',
+                    },
+                    '& input': {
+                      padding: '4px 0',
+                      '&::placeholder': {
+                        color: 'black',
+                        fontWeight: 'bold',
+                        opacity: 1,
+                      },
+                    },
+                  },
+                }}
+              />
+
+              <Box
+                component="button"
+                onClick={() => {
+                  onSearchQueryChange('')
+                }}
+                sx={{
+                  borderRadius: '20px',
+                  minWidth: '100px',
+                  height: '34px',
+                  padding: '12px',
+                  backgroundColor: 'transparent',
+                  color: 'black',
+                  fontWeight: 600,
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  '&:hover': {
+                    backgroundColor: '#E0E0E0',
+                  },
+                }}
+              >
+                Clear All
+              </Box>
+            </Box>
           </Grid>
+
           <Grid
             item
             xs={12}
@@ -104,9 +157,26 @@ function AddressBookHeader({
             <Track {...ADDRESS_BOOK_EVENTS.CREATE_ENTRY}>
               <HeaderButton
                 onClick={handleOpenModal(ModalType.ENTRY)}
-                icon={AddCircleIcon}
+                icon={AddIcon}
                 size="medium"
                 variant="outlined"
+                sx={{
+                  height: '34px',
+                  borderRadius: '20px',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  backgroundColor: 'black',
+                  paddingX: '16px',
+                  color: 'white',
+                  maxWidth: { xs: '100%', lg: 'fit-content' },
+                  '&:hover': {
+                    backgroundColor: '#333',
+                  },
+                  '&.Mui-disabled': {
+                    backgroundColor: '#EBECF1',
+                    color: '#A0A0A6',
+                  },
+                }}
               >
                 Add contact
               </HeaderButton>
