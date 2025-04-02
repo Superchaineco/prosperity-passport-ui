@@ -11,7 +11,8 @@ const TxNavigation = () => {
     ? transactionNavItems
     : transactionNavItems.filter((item) => item.href !== AppRoutes.transactions.messages)
 
-  return <NavTabs tabs={navItems} />
+  /*<NavTabs tabs={navItems} />*/
+  return <></>
 }
 
 export default TxNavigation

@@ -36,7 +36,7 @@ const History: NextPage = () => {
         </Button>
       </TxHeader>
 
-      <main>
+      <main style={{ paddingTop: 0 }}>
         {showFilter && <TxFilterForm toggleFilter={toggleFilter} />}
 
         <Box mb={4}>
