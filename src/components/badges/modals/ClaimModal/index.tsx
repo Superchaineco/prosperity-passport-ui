@@ -29,22 +29,20 @@ function ClaimModal({
 
   const claimData = {
     claimedBadges: data?.badgeUpdates.flatMap((badge: any) => {
-      const previousLevel = Number(badge.previousLevel || 0)
-      const currentLevel = Number(badge.level || 0)
-      const levelDifference = currentLevel - previousLevel
+      const updatedBadge = data.updatedBadges.find((ub: any) => ub.badgeId === badge.badgeId)
+      if (!updatedBadge) return []
 
-      return Array(levelDifference)
-        .fill(null)
-        .map((_, index) => {
-          const badgeTierIndex = previousLevel + index
-          const updatedBadge = data.updatedBadges.find((updatedBadge: any) => badge.id === updatedBadge.id)
-          return (
-            updatedBadge?.metadata?.condition.replace(
-              '{{variable}}',
-              updatedBadge.badgeTiers[badgeTierIndex]?.metadata.minValue,
-            ) || ''
-          )
+      const previousLevel = Number(badge.previousLevel || 0)
+      const currentLevel = Number(badge.level)
+      const levels = Array.from({ length: currentLevel - previousLevel }, (_, i) => previousLevel + i + 1)
+
+      return levels
+        .map((level) => {
+          const badgeTier = updatedBadge.badgeTiers.find((tier: any) => Number(tier.metadata.level) === level)
+          if (!badgeTier) return ''
+          return updatedBadge.metadata.condition.replace('{{variable}}', badgeTier.metadata.minValue)
         })
+        .filter(Boolean)
     }),
   }
 
