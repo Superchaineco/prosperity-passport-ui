@@ -135,12 +135,13 @@ body.beamerAnnouncementBarTopActive {
   background-color: #FFFFFF !important;
 }
 
-.MuiPaper-rounded{
-  border-radius: 30px;
-  
-}
+
 /* Anula el hover de todas las filas de todas las tablas de MUI */
 .MuiTableRow-root:hover {
   background-color: transparent !important;
 }
 
+.MuiPaper-root{
+  border-radius: 12px;
+  
+}

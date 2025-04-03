@@ -75,7 +75,8 @@ function BadgeInfo({
           </Box>
         </Box>
       </Box>
-      <Card sx={{ border: 'none', borderRadius: 0, width: '100%' }}>
+      <Card sx={{ border: 'none', borderRadius: '0px', width: '100%' }}>
+        <br></br>
         <CardMedia
           sx={{
             position: 'relative',

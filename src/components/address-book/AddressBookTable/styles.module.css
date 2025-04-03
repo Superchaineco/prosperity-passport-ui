@@ -28,3 +28,7 @@
     opacity: 1;
   }
 }
+.MuiPaper-root{
+  border-radius: 30px;
+  
+}
