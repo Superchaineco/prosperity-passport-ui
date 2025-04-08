@@ -11,30 +11,9 @@ import badgesService from '@/features/superChain/services/badges.service'
 import useSafeInfo from '@/hooks/useSafeInfo'
 
 export const networks = [
-  {
-    label: 'OP ',
-    value: 'optimism',
-    icon: 'https://safe-transaction-assets.safe.global/chains/10/chain_logo.png',
-  },
-  { label: 'Base', value: 'base', icon: 'https://safe-transaction-assets.safe.global/chains/8453/chain_logo.png' },
-  { label: 'Mode', value: 'mode', icon: '/chains/34443/chain_logo.svg' },
+  { label: 'Celo', value: 'celo', icon: 'https://safe-transaction-assets.safe.global/chains/42220/chain_logo.png' },
+
   { label: 'Ethereum', value: 'ethereum', icon: 'https://safe-transaction-assets.safe.global/chains/1/chain_logo.png' },
-  { label: 'Lisk', value: 'lisk', icon: '/chains/1135/chain_logo.svg' },
-  {
-    label: 'Unichain',
-    value: 'unichain',
-    icon: 'https://safe-transaction-assets.safe.global/chains/130/chain_logo.png',
-  },
-  {
-    label: 'Ink',
-    value: 'ink',
-    icon: '/chains/57073/chain_logo.svg',
-  },
-  {
-    label: 'Soneium',
-    value: 'soneium',
-    icon: '/chains/1868/chain_logo.svg',
-  },
 ]
 
 export const GradientProgress = styled(LinearProgress)(({ theme }) => ({

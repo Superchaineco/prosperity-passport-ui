@@ -68,7 +68,7 @@ function Badge({
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
           }}
         />
-        <SeasonChip season={data.metadata.season} style="badge" />
+        {/* <SeasonChip season={data.metadata.season} style="badge" /> */}
         <NetworkChip network={data.metadata.chains[0].toLowerCase()} style="badge" isFavorite={isFavorite} />
         {isFavorite ? (
           <SvgIcon
