@@ -1,8 +1,7 @@
 import { Box, Stack, SvgIcon, Typography, IconButton } from '@mui/material'
 import React, { type SyntheticEvent } from 'react'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import css from './styles.module.css'
-import useSafeInfo from '@/hooks/useSafeInfo'
 import type { ResponseBadge } from '@/types/super-chain'
 import classNames from 'classnames'
 import Image from 'next/image'
@@ -297,7 +296,7 @@ function Badge({
               <Typography fontSize="12px" fontWeight={500}>
                 {data.badgeTiers[data.claimableTier ? data.claimableTier - 1 : 0].metadata.points}
               </Typography>
-              <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+              <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="inherit" />
             </Box>
           </Box>
         ) : (
@@ -333,7 +332,7 @@ function Badge({
               <Typography fontSize="12px" fontWeight={500}>
                 {data.badgeTiers[data.claimableTier ? data.claimableTier - 1 : 0].metadata.points}
               </Typography>
-              <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+              <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="inherit" />
             </Box>
             <Box className={css.tiersTooltip}>
               {data.badgeTiers.map((tier, index) => (

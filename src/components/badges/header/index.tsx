@@ -9,10 +9,6 @@ export const badgesNavItems = [
     label: 'All-Time',
     href: AppRoutes.badges.allTime,
   },
-  {
-    label: 'Season 7',
-    href: AppRoutes.badges.season7,
-  },
 ]
 
 function BadgesHeader({
@@ -142,7 +138,7 @@ function BadgesHeader({
                 <Box flex={1}>
                   <GradientProgress variant="determinate" value={progress} />
                   <Typography variant="body2" align="center" mt={1} color="text.secondary">
-                    {points} / {pointsToNextLevel} Superchain Points to level {level + 1}
+                    {points} / {pointsToNextLevel} Prosperity Points to level {level + 1}
                   </Typography>
                 </Box>
               </Box>

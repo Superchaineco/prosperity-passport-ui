@@ -1,7 +1,7 @@
 import { BadgeResponse } from '@/types/super-chain'
 import { Box, Skeleton, SvgIcon, Tooltip, Typography } from '@mui/material'
 import React from 'react'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import Image from 'next/image'
 
 function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: boolean }) {

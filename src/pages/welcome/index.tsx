@@ -21,7 +21,7 @@ const Welcome: NextPage = () => {
   return (
     <>
       <Head>
-        <title>SuperChain Smart Accounts – Welcome</title>
+        <title>Prosperity Smart Accounts – Welcome</title>
       </Head>
 
       <NewSafe />

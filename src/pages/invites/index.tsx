@@ -5,7 +5,7 @@ const Invites: NextPage = () => {
   return (
     <main>
       <Head>
-        <title>SuperChain Smart Accounts – Accept invite</title>
+        <title>Prosperity Smart Accounts – Accept invite</title>
       </Head>
       <AcceptInvite />
     </main>

@@ -7,7 +7,7 @@ import HeartFilled from '@/public/images/common/hearth-filled.svg'
 import Close from '@/public/images/common/close.svg'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import type { Address } from 'viem'
-import SuperChainPoints from '@/public/images/common/superChain.svg'
+import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
 import CheckCircleIcon from '@/public/images/common/check-circle.svg'
@@ -57,21 +57,18 @@ function BadgeInfo({
         justifyContent="center"
         alignItems="center"
       >
-        <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" p="10px 30px">
+        <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" p="10px 30px 0px 30px">
           {/* <SeasonChip season={currentBadge.metadata.season} style="info" /> */}
 
-          {/* Íconos alineados a la derecha */}
           <Box display="flex" alignItems="center" gap={1}>
-            {/* Botón de Favorito */}
             <IconButton onClick={handleSwitchFavorite} className={css.actionBtn}>
               <SvgIcon
                 component={currentBadge?.isFavorite ? HeartFilled : Hearth}
-                sx={{ color: 'red', fontSize: '20px' }}
+                sx={{ color: '#476520', fontSize: '20px' }}
                 inheritViewBox
               />
             </IconButton>
 
-            {/* Botón de Cerrar */}
             <IconButton onClick={() => setCurrentBadge(null)} className={css.actionBtn}>
               <SvgIcon component={Close} sx={{ color: 'inherit', fontSize: '20px' }} inheritViewBox />
             </IconButton>
@@ -247,7 +244,7 @@ function BadgeInfo({
                       .points
                   }
                 </Typography>
-                <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+                <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="inherit" />
               </Box>
             </Box>
 

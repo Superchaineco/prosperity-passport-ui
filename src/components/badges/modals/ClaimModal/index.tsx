@@ -124,7 +124,7 @@ function ClaimModal({
             <>
               <Typography variant="body2" align="center" mt={1} color="#75757A">
                 {Number(superChainAccount.points) + Number(data?.totalPoints ?? 0)} /{' '}
-                {Number(superChainAccount.pointsToNextLevel)} Superchain Points to level{' '}
+                {Number(superChainAccount.pointsToNextLevel)} Prosperity Points to level{' '}
                 {Number(superChainAccount.level) + 1}
               </Typography>
               <Button
@@ -139,7 +139,7 @@ function ClaimModal({
           {data?.isLevelUp && (
             <>
               <Typography variant="body2" align="center" mt={1} color="#75757A">
-                You have enough Superchain Points to level-up!
+                You have enough Prosperity Points to level-up!
               </Typography>
               <button onClick={onLevelUp} className={css.levelUpButton}>
                 Level-up
