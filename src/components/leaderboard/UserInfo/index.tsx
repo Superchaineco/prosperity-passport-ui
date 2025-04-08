@@ -265,7 +265,13 @@ function UserInfo({
                 label={
                   <Box display="flex" alignItems="center" gap={0.5}>
                     <Typography>{context?.superchainsmartaccount[2]}</Typography>
-                    <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="medium" width={20} height={20} />
+                    <SvgIcon
+                      component={ProsperityPassportPoints}
+                      inheritViewBox
+                      fontSize="medium"
+                      width={20}
+                      height={20}
+                    />
                   </Box>
                 }
               ></Chip>

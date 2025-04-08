@@ -1,5 +1,5 @@
 import { Divider, Skeleton, Stack } from '@mui/material'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import RankingProfile from './RankingProfile/index'
 import { useLeaderboard } from '@/hooks/super-chain/useLeaderboard'
 import useSafeAddress from '@/hooks/useSafeAddress'
