@@ -109,7 +109,7 @@ function ClaimModal({
             <Typography fontSize="16px" fontWeight={600} p="4px 2px">
               {data?.totalPoints ?? 0}
             </Typography>
-            <SvgIcon component={SuperChainPoints} inheritViewBox fontSize="inherit" />
+            <SvgIcon component={ProsperityPassportPoints} inheritViewBox fontSize="inherit" />
           </Box>
         </Box>
         <Box flex={1} width="100%">

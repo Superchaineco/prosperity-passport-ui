@@ -1,4 +1,6 @@
-import { Box, Stack, SvgIcon, Typography } from '@mui/material'
+import { Box, IconButton, Stack, SvgIcon, Typography } from '@mui/material'
+import HeartFilled from '@/public/images/common/hearth-filled.svg'
+import Hearth from '@/public/images/common/hearth.svg'
 import React, { useMemo, type SyntheticEvent } from 'react'
 import SuperChainPoints from '@/public/images/common/superChain.svg'
 import css from './styles.module.css'
@@ -8,7 +10,6 @@ import classNames from 'classnames'
 import Image from 'next/image'
 import SeasonChip from '../seasonChip'
 import NetworkChip from '../networkChip'
-import HeartFilled from '@/public/images/common/hearth-filled.svg'
 import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 
 function Badge({
