@@ -1,17 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  Grid,
-  InputAdornment,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  SvgIcon,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, Divider, Grid, InputAdornment, SelectChangeEvent, SvgIcon, TextField } from '@mui/material'
 import React, { useState } from 'react'
 
 import SearchIcon from '@/public/images/common/search.svg'
@@ -24,15 +11,11 @@ import LevelUpModal from '../modals/LevelUpModal'
 import { useRouter } from 'next/router'
 import { AppRoutes } from '@/config/routes'
 import LoadingModal from '@/components/common/LoadingModal'
-import Image from 'next/image'
 import FailedTxnModal from '@/components/common/ErrorModal'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
 import { ResponseBadge } from '@/types/super-chain'
 import AutorenewIcon from '@mui/icons-material/Autorenew'
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
-import { networks } from '..'
 
 export type ClaimData = {
   totalPoints: number
