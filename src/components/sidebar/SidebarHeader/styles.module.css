@@ -22,6 +22,8 @@
   background-color: var(--color-secondary-background);
   width: 32px;
   height: 32px;
+  border-radius: 6px;
+  background-color: #E5E0DB;
 }
 
 .iconButton:hover {
@@ -89,7 +91,7 @@
   align-items: center;
   height: 34px;
   background-color: var(--color-secondary-main);
-  border-radius: 0px 100px 100px 0px;
+  /* border-radius: 0px 100px 100px 0px; */
   padding: 12px;
   width: 76px;
   color: white;

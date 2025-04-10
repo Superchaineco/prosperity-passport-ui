@@ -68,9 +68,9 @@ function ClaimModal({
           </Typography>
           <Box
             width="100%"
-            border={1}
-            borderRadius="12px"
-            borderColor="#E1E2EA"
+            // border={1}
+            // borderRadius="12px"
+            // borderColor="#E1E2EA"
             sx={{ borderStyle: 'dashed', backgroundColor: 'transparent' }}
             padding="12px"
           >

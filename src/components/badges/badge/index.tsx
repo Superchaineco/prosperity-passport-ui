@@ -82,12 +82,12 @@ function Badge({
             <SeasonChip season={data.metadata.season} style="badge" />
           </Box>
           <Box className={css.topBarRight}>
-            <NetworkChip
+            {/* <NetworkChip
               network={data.metadata.chains[0].toLowerCase()}
               style="badge"
               isFavorite={isFavorite}
               className={css.chainIcon}
-            />
+            /> */}
             <IconButton
               onClick={handleSwitchFavorite}
               className={css.heartIcon}
@@ -306,7 +306,7 @@ function Badge({
             width="100%"
             border={1}
             borderRadius="100px"
-            borderColor="#E1E2EA"
+            borderColor="#E6E6E6"
             sx={{
               borderStyle: 'dashed',
               marginTop: 'auto',
@@ -327,7 +327,7 @@ function Badge({
               sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
               border={1}
               borderRadius="100px"
-              borderColor="#E1E2EA"
+              borderColor="#E6E6E6"
               paddingX="8px"
             >
               <Typography fontSize="12px" fontWeight={500}>

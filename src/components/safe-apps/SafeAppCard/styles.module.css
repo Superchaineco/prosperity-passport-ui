@@ -1,19 +1,19 @@
 .safeAppContainer {
   transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
 }
 
 .safeAppCardCointainer {
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid var(--color-border-light);
-  border-radius: 12px;
+  /* border: 1px solid var(--color-border-light);
+  border-radius: 12px; */
 }
 
 .safeAppContainer:hover {
   background-color: var(--color-background-light);
-  border: 1px solid var(--color-secondary-light);
+  /* border: 1px solid var(--color-secondary-light); */
 }
 
 .safeAppHeader {
@@ -66,7 +66,7 @@
 }
 
 .safeAppTagLabel {
-  border-radius: 4px;
+  /* border-radius: 4px; */
   height: 24px;
 }
 

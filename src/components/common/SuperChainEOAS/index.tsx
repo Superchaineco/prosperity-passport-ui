@@ -36,14 +36,7 @@ const SuperChainEOAS = () => {
         }}
       >
         <Grid container gap={2} height="100%" alignItems="center" justifyContent="center" flexDirection="column">
-          <Box
-            height="100%"
-            width="100%"
-            border={1}
-            borderColor="border.light"
-            borderRadius="12px"
-            sx={{ backgroundColor: '#FCFCFD' }}
-          >
+          <Box height="100%" width="100%" sx={{ backgroundColor: '#FCFCFD' }}>
             <Box
               padding="16px"
               paddingY="12px"

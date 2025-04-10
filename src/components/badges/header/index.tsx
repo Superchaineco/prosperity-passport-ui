@@ -35,7 +35,7 @@ function BadgesHeader({
       <Typography variant="h2" fontWeight={700} gutterBottom pb={4}>
         Badges
       </Typography>
-      <NavTabs tabs={badgesNavItems} />
+      {/* <NavTabs tabs={badgesNavItems} /> */}
       <Divider sx={{ mb: 2, width: '100%' }} />
 
       <Box display="flex" gap={2} flexDirection={{ xs: 'column', sm: 'row' }} alignItems="stretch" width="100%">
@@ -47,9 +47,9 @@ function BadgesHeader({
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            border: '1px solid',
-            borderColor: (theme) => (!season ? theme.palette.grey[500] : '#6B5DE7'),
-            backgroundColor: (theme) => (!season ? theme.palette.grey[50] : '#F4F0FF'),
+            // border: '1px solid',
+            // borderColor: (theme) => (!season ? theme.palette.grey[500] : '#6B5DE7'),
+            backgroundColor: '#FCFCFD',
           }}
         >
           <CardContent>
@@ -84,7 +84,7 @@ function BadgesHeader({
                   sx={{
                     backgroundColor: '#F4F0FF',
                     fontWeight: 600,
-                    borderRadius: '20px',
+                    borderRadius: '6px',
                     border: '1px solid #6B5DE7',
                   }}
                 />
@@ -105,9 +105,9 @@ function BadgesHeader({
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              border: '1px solid',
-              borderColor: (theme) => theme.palette.grey[500],
-              backgroundColor: (theme) => theme.palette.grey[50],
+              // border: '1px solid',
+              // borderColor: (theme) => theme.palette.grey[500],
+              backgroundColor: '#FCFCFD',
             }}
           >
             <CardContent>

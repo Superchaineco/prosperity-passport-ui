@@ -82,7 +82,7 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
                 alignItems="center"
                 height="34px"
                 bgcolor="var(--color-secondary-main)"
-                borderRadius="0px 100px 100px 0px"
+                // borderRadius="0px 100px 100px 0px"
                 padding="12px"
                 width="76px"
               >

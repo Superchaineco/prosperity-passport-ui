@@ -30,7 +30,7 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
       flexWrap="wrap"
       sx={{
         border: '1px solid gray',
-        borderRadius: '20px',
+        borderRadius: '6px',
         padding: '8px',
         mt: '20px',
       }}

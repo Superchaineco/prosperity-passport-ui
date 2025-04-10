@@ -79,14 +79,14 @@ function AddressBookHeader({
                 size="medium"
                 sx={{
                   width: '500px',
-                  borderRadius: '20px',
+                  borderRadius: '6px',
                   overflow: 'hidden',
-                  backgroundColor: '#F4F4F5',
+                  backgroundColor: '#FFFFFF',
                   '& .MuiFilledInput-root': {
-                    borderRadius: '20px',
-                    backgroundColor: '#F4F4F5',
+                    borderRadius: '6px',
+                    backgroundColor: '#FFFFFF',
                     paddingX: '12px',
-                    height: '34px',
+                    height: '54px',
                     '&:hover': {
                       backgroundColor: '#E0E0E0',
                     },
@@ -105,15 +105,15 @@ function AddressBookHeader({
                 }}
               />
 
-              <Box
+              {/* <Box
                 component="button"
                 onClick={() => {
                   onSearchQueryChange('')
                 }}
                 sx={{
-                  borderRadius: '20px',
+                  borderRadius: '6px',
                   minWidth: '100px',
-                  height: '34px',
+                  height: '54px',
                   padding: '12px',
                   backgroundColor: 'transparent',
                   color: 'black',
@@ -129,7 +129,7 @@ function AddressBookHeader({
                 }}
               >
                 Clear All
-              </Box>
+              </Box> */}
             </Box>
           </Grid>
 
@@ -161,8 +161,8 @@ function AddressBookHeader({
                 size="medium"
                 variant="outlined"
                 sx={{
-                  height: '34px',
-                  borderRadius: '20px',
+                  height: '54px',
+                  borderRadius: '6px',
                   fontSize: '14px',
                   fontWeight: 500,
                   backgroundColor: 'black',

@@ -142,12 +142,12 @@ function BadgesActions({
             <TextField
               placeholder="Search"
               sx={{
-                borderRadius: '20px',
+                borderRadius: '6px',
                 overflow: 'hidden',
-                backgroundColor: '#F4F4F5',
+                backgroundColor: '#FFFFFF',
                 '& .MuiFilledInput-root': {
-                  borderRadius: '20px',
-                  backgroundColor: '#F4F4F5',
+                  borderRadius: '6px',
+                  backgroundColor: '#FFFFFF',
                   paddingX: '12px',
                   height: '34px',
                   '&:hover': {
@@ -182,7 +182,7 @@ function BadgesActions({
           </Grid>
           <Grid item xs={12} lg={3}>
             <Box display="flex" gap={2}>
-              <Select
+              {/* <Select
                 multiple
                 fullWidth
                 value={selectedNetworks}
@@ -253,7 +253,7 @@ function BadgesActions({
                     </Box>
                   </MenuItem>
                 ))}
-              </Select>
+              </Select> */}
               <Box
                 component="button"
                 onClick={() => {
@@ -261,7 +261,7 @@ function BadgesActions({
                   setNetworks([])
                 }}
                 sx={{
-                  borderRadius: '20px',
+                  borderRadius: '6px',
                   minWidth: '100px',
                   height: '34px',
                   padding: '12px',
@@ -293,7 +293,7 @@ function BadgesActions({
                 endIcon={<SvgIcon component={AutorenewIcon} width={16} height={16} inheritViewBox color="inherit" />}
                 sx={{
                   height: '34px',
-                  borderRadius: '20px',
+                  borderRadius: '6px',
                   fontSize: '16px',
                   backgroundColor: 'black',
                   paddingX: '16px',

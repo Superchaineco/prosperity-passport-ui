@@ -138,9 +138,7 @@ function EnhancedTable({ rows, headCells, mobileVariant }: EnhancedTableProps) {
   const pagedRows = orderedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   return (
-    <Box
-      sx={{ width: '100%', height: '100%', backgroundColor: '#FCFCFD', borderColor: '#E1E2EA', borderRadius: '40px' }}
-    >
+    <Box sx={{ width: '100%', height: '100%', backgroundColor: '#FCFCFD' }}>
       <TableContainer
         data-testid="table-container"
         component={EnhancedTableContainer}
@@ -149,10 +147,10 @@ function EnhancedTable({ rows, headCells, mobileVariant }: EnhancedTableProps) {
         <Table
           aria-labelledby="tableTitle"
           className={mobileVariant ? css.mobileColumn : undefined}
-          sx={{ backgroundColor: '#FCFCFD', borderRadius: '40px' }}
+          sx={{ backgroundColor: '#FCFCFD' }}
         >
           <EnhancedTableHead headCells={headCells} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-          <TableBody sx={{ backgroundColor: '#FCFCFD', borderRadius: '40px' }}>
+          <TableBody sx={{ backgroundColor: '#FCFCFD' }}>
             {pagedRows.length > 0 ? (
               pagedRows.map((row, index) => (
                 <TableRow
@@ -161,9 +159,7 @@ function EnhancedTable({ rows, headCells, mobileVariant }: EnhancedTableProps) {
                   key={row.key ?? index}
                   selected={row.selected}
                   className={row.collapsed ? css.collapsedRow : undefined}
-                  sx={{
-                    borderRadius: '40px',
-                  }}
+                  sx={{}}
                 >
                   {Object.entries(row.cells).map(([key, cell]) => (
                     <TableCell
@@ -172,7 +168,6 @@ function EnhancedTable({ rows, headCells, mobileVariant }: EnhancedTableProps) {
                         sticky: cell.sticky,
                         [css.collapsedCell]: row.collapsed,
                       })}
-                      sx={{ borderRadius: '40px' }}
                     >
                       <Collapse key={index} in={!row.collapsed} enter={false}>
                         {cell.content}

@@ -26,9 +26,9 @@ const NetworkChip: React.FC<NetworkChipProps> = ({ network, style, isFavorite, c
         </Box>
       }
       sx={{
-        borderRadius: '18px',
+        // borderRadius: '18px',
         color: 'black',
-        border: '1px solid #E1E2EA',
+        // border: '1px solid #E1E2EA',
         backgroundColor: 'transparent',
         height: '32px',
         fontWeight: 600,

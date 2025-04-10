@@ -33,6 +33,7 @@
 
 .content main {
   padding: var(--space-3);
+  background-color: #FDF8F4;
 }
 
 .sidebarTogglePosition {
@@ -85,5 +86,6 @@
 @media (max-width: 599.95px) {
   .main main {
     padding: var(--space-2);
+    
   }
 }

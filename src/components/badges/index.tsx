@@ -22,7 +22,7 @@ export const GradientProgress = styled(LinearProgress)(({ theme }) => ({
   backgroundColor: 'transparent',
   border: '1px solid #D0D0D0',
   '& .MuiLinearProgress-bar': {
-    background: 'linear-gradient(90deg, #476520 0%, #7DB337 100%)',
+    background: 'linear-gradient(90deg, #324817 0%, #6C844D 100%)',
     borderRadius: 5,
   },
 }))

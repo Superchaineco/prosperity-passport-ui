@@ -25,13 +25,13 @@
 }
 
 .list :global .MuiListItemButton-root:hover {
-  border-radius: 100px;
-  background-color: var(--color-background-light);
+  border-radius: 6px;
+  background-color: #E5E0DB;
 }
 
 .list :global .Mui-selected {
-  border-radius: 100px;
-  background-color: var(--color-background-light);
+  border-radius: 6px;
+  background-color: #E5E0DB;
 }
 
 .listItemButton :global .beamer_icon.active {
