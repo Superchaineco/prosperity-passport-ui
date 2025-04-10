@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardMedia, IconButton, Stack, SvgIcon, Tooltip, Typography } from '@mui/material'
+import { Box, Card, CardContent, CardMedia, IconButton, Stack, SvgIcon, Typography } from '@mui/material'
 import React, { useMemo } from 'react'
 import css from './styles.module.css'
 import type { ResponseBadge } from '@/types/super-chain'
@@ -12,7 +12,6 @@ import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
 import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 import NetworkChip from '../networkChip'
-import SeasonChip from '../seasonChip'
 
 function BadgeInfo({
   currentBadge,

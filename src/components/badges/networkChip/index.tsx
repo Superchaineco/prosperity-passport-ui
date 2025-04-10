@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
 import { networks } from '..'
