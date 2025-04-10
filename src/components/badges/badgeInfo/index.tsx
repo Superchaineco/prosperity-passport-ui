@@ -123,6 +123,7 @@ function BadgeInfo({
 
                   return (
                     <Box
+                      key="index"
                       sx={{
                         position: 'relative',
                         width: '100%',
@@ -195,7 +196,7 @@ function BadgeInfo({
             </Typography>
             <Stack direction="row" alignItems="center" gap={1}>
               {currentBadge.metadata.chains.map((chain) => (
-                <NetworkChip network={chain} style="info" isFavorite={currentBadge.isFavorite} />
+                <NetworkChip network={chain} style="info" key="chain" isFavorite={currentBadge.isFavorite} />
               ))}
             </Stack>
 

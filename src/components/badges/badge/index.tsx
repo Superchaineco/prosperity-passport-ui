@@ -131,6 +131,7 @@ function Badge({
 
                 return (
                   <Box
+                    key="index"
                     sx={{
                       position: 'relative',
                       width: '100%',
