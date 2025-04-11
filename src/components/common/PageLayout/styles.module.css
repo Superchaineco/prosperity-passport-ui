@@ -33,7 +33,7 @@
 
 .content main {
   padding: var(--space-3);
-  background-color: #FDF8F4;
+  /* background-color: #FDF8F4; */
 }
 
 .sidebarTogglePosition {

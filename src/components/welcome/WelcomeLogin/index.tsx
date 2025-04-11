@@ -1,10 +1,9 @@
 import { AppRoutes } from '@/config/routes'
-import { Paper, Typography, Divider, Box, Button, Stack, Tooltip, SvgIcon } from '@mui/material'
+import { Paper, Typography, Divider, Box, Button, Stack, Tooltip } from '@mui/material'
 import css from './styles.module.css'
 import { useRouter } from 'next/router'
 import useWallet from '@/hooks/wallets/useWallet'
 import { useCallback, useEffect, useState } from 'react'
-import InfoIcon from '@/public/images/common/info.svg'
 import useCurrentWalletHasSuperChainSmartAccount from '@/hooks/super-chain/useCurrentWalletHasSuperChainSmartAccount'
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react'
 const WelcomeLogin = () => {
@@ -64,8 +63,14 @@ const WelcomeLogin = () => {
             Log In or Sign Up to create a new Prosperity Account or open an existing one
           </Typography>
           <Stack direction="row" gap={2}>
-            <Button onClick={handleConnect} variant="contained" color="complementary" disableElevation size="medium">
-              Connect Wallet
+            <Button
+              onClick={handleConnect}
+              variant="contained"
+              color="complementary"
+              disableElevation
+              sx={{ fontSize: '16px', height: '42px', width: '204px' }}
+            >
+              Get started
             </Button>
           </Stack>
           <Divider sx={{ mt: 2, mb: 2, width: '100%' }}>
@@ -82,11 +87,10 @@ const WelcomeLogin = () => {
             }
           >
             <Button
-              endIcon={<SvgIcon fontSize="inherit" component={InfoIcon} inheritViewBox />}
               onClick={handleAcceptInvite}
               variant="outlined"
               disableElevation
-              size="medium"
+              sx={{ height: '42px', fontSize: '16px', width: '204px', border: 'none', backgroundColor: '#E5E0DB' }}
             >
               Accept invite
             </Button>
