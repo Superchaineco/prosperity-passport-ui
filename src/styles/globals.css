@@ -122,7 +122,7 @@ body.beamerAnnouncementBarTopActive {
 
 
 .MuiAccordionSummary-root {
-  background-color: #F6F6F8 !important;
+  background-color: #FFF !important;
 }
 
 .MuiAccordionSummary-root.Mui-expanded {
@@ -135,8 +135,10 @@ body.beamerAnnouncementBarTopActive {
 }
 
 
+
 .MuiTableRow-root:hover {
   background-color: transparent !important;
+ 
 }
 
 /* .MuiPaper-root{

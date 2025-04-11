@@ -190,7 +190,7 @@ function AddressBookTable({ chain, setTxFlow }: AddressBookTableProps) {
         {filteredEntries.length > 0 ? (
           <EnhancedTable rows={rows} headCells={headCells} mobileVariant />
         ) : (
-          <Box borderRadius={1}>
+          <Box>
             <PagePlaceholder
               img={<NoEntriesIcon />}
               text={`No entries found${chain ? ` on ${chain.chainName}` : ''}`}

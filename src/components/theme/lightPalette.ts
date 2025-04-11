@@ -10,9 +10,9 @@ const lightPalette = {
     light: '#5f6266',
   },
   secondary: {
-    dark: '#FF0420',
-    main: '#FF0420',
-    light: '#FF0420',
+    dark: '#3c3c3c',
+    main: '#3c3c3c',
+    light: '#3c3c3c',
     background: '#F1F2F5',
   },
   complementary: {

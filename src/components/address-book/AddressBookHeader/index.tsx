@@ -10,7 +10,7 @@ import PageHeader from '@/components/common/PageHeader'
 import { ModalType } from '../AddressBookTable'
 import { useAppSelector } from '@/store'
 import { type AddressBookState, selectAllAddressBooks } from '@/store/addressBookSlice'
-import AddIcon from '@mui/icons-material/Add'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import mapProps from '@/utils/mad-props'
 
 interface HeaderButtonProps extends ButtonProps {
@@ -96,8 +96,8 @@ function AddressBookHeader({
                     '& input': {
                       padding: '4px 0',
                       '&::placeholder': {
-                        color: 'black',
-                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        color: '#6B6B6B',
                         opacity: 1,
                       },
                     },
@@ -157,26 +157,9 @@ function AddressBookHeader({
             <Track {...ADDRESS_BOOK_EVENTS.CREATE_ENTRY}>
               <HeaderButton
                 onClick={handleOpenModal(ModalType.ENTRY)}
-                icon={AddIcon}
+                icon={AddCircleOutlineIcon}
                 size="medium"
                 variant="outlined"
-                sx={{
-                  height: '54px',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  backgroundColor: 'black',
-                  paddingX: '16px',
-                  color: 'white',
-                  maxWidth: { xs: '100%', lg: 'fit-content' },
-                  '&:hover': {
-                    backgroundColor: '#333',
-                  },
-                  '&.Mui-disabled': {
-                    backgroundColor: '#EBECF1',
-                    color: '#A0A0A6',
-                  },
-                }}
               >
                 Add contact
               </HeaderButton>

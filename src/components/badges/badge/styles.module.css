@@ -1,7 +1,6 @@
 .badgeContainer {
   cursor: pointer;
   border-radius: 6px;
-  overflow: hidden;
   background-color: white;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

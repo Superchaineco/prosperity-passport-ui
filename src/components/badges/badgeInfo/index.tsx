@@ -56,14 +56,12 @@ function BadgeInfo({
         justifyContent="center"
         alignItems="center"
       >
-        <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" p="10px 30px 0px 30px">
-          {/* <SeasonChip season={currentBadge.metadata.season} style="info" /> */}
-
-          <Box display="flex" alignItems="center" gap={1}>
+        <Box display="flex" justifyContent="flex-end" width="100%" p="10px 30px 0px 30px">
+          <Box display="flex" gap={1}>
             <IconButton onClick={handleSwitchFavorite} className={css.actionBtn}>
               <SvgIcon
                 component={currentBadge?.isFavorite ? HeartFilled : Hearth}
-                sx={{ color: '#476520', fontSize: '20px' }}
+                sx={{ color: '#FF0420', fontSize: '20px' }}
                 inheritViewBox
               />
             </IconButton>
