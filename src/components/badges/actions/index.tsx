@@ -53,7 +53,7 @@ function BadgesActions({
   const { data: superChainAccount } = useAppSelector(selectSuperChainAccount)
 
   const router = useRouter()
-  const [isClaimModalOpen, setIsClaimModalOpen] = useState(true)
+  const [isClaimModalOpen, setIsClaimModalOpen] = useState(false)
   const [claimData, setClaimData] = useState<ClaimData | null>(null)
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
   const queryClient = useQueryClient()
