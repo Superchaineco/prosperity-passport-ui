@@ -1,7 +1,6 @@
 import React from 'react'
 import PageHeader from '@/components/common/PageHeader'
 import css from '@/components/common/PageHeader/styles.module.css'
-import LeaderboardNavigation from './LeaderboardNavigation'
 import { Box, Typography } from '@mui/material'
 import RefreshTimer from './RefreshTimer'
 

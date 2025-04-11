@@ -1,4 +1,4 @@
-import { Box, Divider, Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Divider, Skeleton, Stack } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import RankingProfile from './RankingProfile/index'
 import { useLeaderboard } from '@/hooks/super-chain/useLeaderboard'
