@@ -39,7 +39,7 @@ const Header = ({ onMenuToggle }: HeaderProps): ReactElement => {
 
       <div className={classnames(css.element, css.hideMobile, css.logo)}>
         <Link href={logoHref} passHref>
-          <SvgIcon component={ProsperityPassport} inheritViewBox style={{ width: '250px', height: '150px' }} />
+          <SvgIcon component={ProsperityPassport} inheritViewBox style={{ width: '250px', height: '22px' }} />
         </Link>
       </div>
 

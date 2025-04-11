@@ -43,11 +43,11 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
       ) : (
         <>
           {[
-            { label: `Claim ${perks.raffle?.value ?? 0} tickets per week` },
+            // { label: `Claim ${perks.raffle?.value ?? 0} tickets per week` },
             { label: `${perks.sponsoredTxns?.value ?? 0} Sponsored Transactions per week` },
           ].map((item, index) => (
             <Box key={index} display="flex" alignItems="center" gap={1} paddingY="1px">
-              <SvgIcon component={LockOpenIcon} sx={{ color: '#EF4444', fontSize: '16px' }} />
+              <SvgIcon component={LockOpenIcon} sx={{ color: '#476520', fontSize: '16px' }} />
               <Typography fontSize="14px" color="text.secondary">
                 {item.label}
               </Typography>

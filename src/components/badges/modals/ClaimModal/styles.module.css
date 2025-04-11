@@ -22,20 +22,19 @@
 }
 
 .levelUpButton {
-  left: 50%;
-  width: 100%;
-  border-radius: 100px;
+ 
+  border-radius: 6px;
   height: 48px;
-  transform: translateX(-50%);
+  
   padding: 8px 40px 8px 40px;
-  width: 240px;
-  background: radial-gradient(46.04% 263.1% at 50% 50%, #fcff52 0%, #b3b53a 100%)
+  width: 430px;
+  background: #476520
     /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
   cursor: pointer;
-  color: black;
+  color: white;
   border: 0;
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
   position: relative;
   overflow: hidden;
   margin-top: 24px;
@@ -44,7 +43,7 @@
 .shine {
   position: absolute;
   top: 0;
-  left: -100%; /* Empieza fuera del botón */
+  left: -100%;
   width: 100%;
   height: 100%;
   animation: shine-animation 2s infinite;

@@ -68,9 +68,9 @@ function ClaimModal({
           </Typography>
           <Box
             width="100%"
-            // border={1}
-            // borderRadius="12px"
-            // borderColor="#E1E2EA"
+            border={1}
+            borderRadius="12px"
+            borderColor="#E1E2EA"
             sx={{ borderStyle: 'dashed', backgroundColor: 'transparent' }}
             padding="12px"
           >
@@ -128,7 +128,7 @@ function ClaimModal({
               <Button
                 onClick={onClose}
                 variant="contained"
-                sx={{ width: '100%', mt: '30px', borderRadius: '30px', height: '48px' }}
+                sx={{ width: '100%', mt: '30px', borderRadius: '6px', height: '48px', fontSize: '16px' }}
               >
                 Continue
               </Button>

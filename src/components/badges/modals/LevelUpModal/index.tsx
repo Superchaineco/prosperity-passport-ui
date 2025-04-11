@@ -58,7 +58,7 @@ function LevelUpModal({ open, onClose, level }: { open: boolean; onClose: () => 
           <Button
             onClick={onClose}
             variant="contained"
-            sx={{ width: '100%', mt: '30px', borderRadius: '30px', height: '60px' }}
+            sx={{ width: '100%', mt: '30px', borderRadius: '6px', height: '48px', fontSize: '16px' }}
           >
             Return to Dashboard
           </Button>
