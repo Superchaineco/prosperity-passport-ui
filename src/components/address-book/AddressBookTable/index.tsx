@@ -151,7 +151,7 @@ function AddressBookTable({ chain, setTxFlow }: AddressBookTableProps) {
               <Track {...ADDRESS_BOOK_EVENTS.DELETE_ENTRY}>
                 <Tooltip title="Delete entry" placement="top">
                   <IconButton onClick={() => handleOpenModalWithValues(ModalType.REMOVE, address, name)} size="small">
-                    <SvgIcon component={DeleteIcon} inheritViewBox color="error" fontSize="small" />
+                    <SvgIcon component={DeleteIcon} inheritViewBox stroke="#415C1D" fontSize="small" />
                   </IconButton>
                 </Tooltip>
               </Track>

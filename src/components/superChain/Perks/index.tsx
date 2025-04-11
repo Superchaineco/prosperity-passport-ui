@@ -1,6 +1,5 @@
 import { Box, Skeleton, SvgIcon, Tooltip, Typography } from '@mui/material'
 import React, { useMemo } from 'react'
-import PerkRaffle from '@/public/images/superchain/perk-raffle.svg'
 import PerkSponsored from '@/public/images/superchain/perk-gas.svg'
 import type { Perks } from '@/features/superChain/services/badges.service'
 import css from './styles.module.css'
@@ -35,7 +34,7 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
         </>
       ) : (
         <>
-          <Box
+          {/* <Box
             display="flex"
             width="100%"
             flexDirection="row"
@@ -59,7 +58,7 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
             >
               Claim {perks.raffle?.value ?? 0} tickets per week
             </Typography>
-          </Box>
+          </Box> */}
 
           <Box
             display="flex"
@@ -75,14 +74,7 @@ function Perks({ data, isLoading }: { data: Perks | undefined; isLoading: boolea
               </Box>
             </Tooltip>
 
-            <Typography
-              fontSize={16}
-              border={1}
-              borderColor="secondary.main"
-              borderRadius="100px"
-              padding="12px"
-              width="100%"
-            >
+            <Typography fontSize={16} border={1} borderColor="#476520" padding="12px" width="100%">
               {perks.sponsoredTxns?.value ?? 0} Sponsored Transactions per week
             </Typography>
           </Box>

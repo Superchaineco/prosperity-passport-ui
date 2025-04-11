@@ -19,9 +19,7 @@ function LeaderboardHeader({ children }: { children?: React.ReactNode }) {
       action={
         <div>
           <div className={css.pageHeader}>
-            <div className={css.navWrapper}>
-              <LeaderboardNavigation />
-            </div>
+            <div className={css.navWrapper}>{/* <LeaderboardNavigation /> */}</div>
             {children && <div className={css.actionsWrapper}>{children}</div>}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Divider, Skeleton, Stack, Typography } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import RankingProfile from './RankingProfile/index'
 import { useLeaderboard } from '@/hooks/super-chain/useLeaderboard'
@@ -7,7 +7,7 @@ import type { Address } from 'viem'
 import { useUserRank } from '@/hooks/super-chain/useUserRank'
 import InfiniteScroll from '../common/InfiniteScroll'
 
-function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string) => void }) {
+function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string, rank: number) => void }) {
   const address = useSafeAddress()
   const [isFetching, setIsFetching] = useState(false)
   const [skip, setSkip] = useState(0)
@@ -57,15 +57,9 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string) => vo
       <main>
         <Stack spacing={2}>
           <Stack spacing={1}>
-            <Typography fontSize={12} fontWeight={600} color="gray">
-              YOUR RANKING
-            </Typography>
             <Skeleton variant="rounded" height={48} />
           </Stack>
           <Stack spacing={1}>
-            <Typography fontSize={12} fontWeight={600} color="gray">
-              TOP USERS OF ALL-TIME
-            </Typography>
             {Array.from(new Array(5)).map((_, index) => (
               <Skeleton key={index} variant="rounded" height={48} />
             ))}
@@ -79,12 +73,9 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string) => vo
     <main>
       <Stack spacing={2}>
         <Stack spacing={1}>
-          <Typography fontSize={12} fontWeight={600} color="gray">
-            YOUR RANKING
-          </Typography>
           <RankingProfile
             isMainProfile
-            onClick={() => handleUserSelect(address)}
+            onClick={() => handleUserSelect(address, rank!)}
             position={rank!}
             points={data!.superChainSmartAccount.points}
             name={data!.superChainSmartAccount.superChainId}
@@ -100,15 +91,15 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string) => vo
           />
         </Stack>
         <Stack spacing={1} height="100%">
-          <Typography fontSize={12} fontWeight={600} color="gray">
-            TOP USERS OF ALL-TIME
-          </Typography>
+          <Box sx={{ pb: '12px', pt: '12px', width: '100%' }}>
+            <Divider sx={{ width: '100%' }}></Divider>
+          </Box>
           {data?.superChainSmartAccounts.map((user, index) => (
             <RankingProfile
               key={index}
               position={index + 1}
               points={user.points}
-              onClick={() => handleUserSelect(user.safe)}
+              onClick={() => handleUserSelect(user.safe, index + 1)}
               name={user.superChainId}
               level={user.level}
               isMainProfile={user.safe.toLowerCase() === address.toLowerCase()}

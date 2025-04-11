@@ -48,8 +48,9 @@ function RefreshTimer() {
       alignItems="center"
       gap={1}
       sx={{
-        backgroundColor: '#EDEDF2',
-        borderRadius: '999px',
+        backgroundColor: '#FFFFFF',
+        border: '1px solid #E1E2EA',
+        borderRadius: '100px',
         px: 2,
         py: 0.5,
       }}

@@ -68,7 +68,6 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
             position="relative"
             height={120}
             border="2px solid var(--color-secondary-main)"
-            borderRadius="12px 0px 12px 12px"
             overflow="hidden"
           >
             <NounsAvatar seed={nounSeed} />
@@ -97,8 +96,7 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
                 justifyContent="center"
                 alignItems="center"
                 height="34px"
-                bgcolor="gray"
-                borderRadius="100px"
+                bgcolor="#8B8785"
                 padding="12px"
                 minWidth="76px"
               >
@@ -127,21 +125,23 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
                 <span style={{ color: 'var(--color-secondary-main)' }}>.prosperity</span>
               </Typography>
               <Box>
-                <Typography fontSize={14} fontWeight={500} color="var(--color-text-secondary)">
+                <Typography fontSize={14} fontWeight={500} color="#8C8C8C">
                   Prosperity Points:{' '}
                   <span
                     style={{
-                      color: 'var(--color-text-primary)',
+                      color: '#6B6B6B',
+                      fontWeight: 600,
                     }}
                   >
                     {Number(superChainSmartAccount.data.points)}
                   </span>
                 </Typography>
-                <Typography fontSize={14} fontWeight={500} color="var(--color-text-secondary)">
+                <Typography fontSize={14} fontWeight={500} color="#8C8C8C">
                   Points to level up:{' '}
                   <span
                     style={{
-                      color: 'var(--color-text-primary)',
+                      color: '#6B6B6B',
+                      fontWeight: 600,
                     }}
                   >
                     {Number(superChainSmartAccount.data.pointsToNextLevel ?? superChainSmartAccount.data.points)}

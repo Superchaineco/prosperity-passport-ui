@@ -21,9 +21,9 @@ function RankingProfile({ isMainProfile, position, points, name, level, badges, 
       sx={{
         cursor: onClick ? 'pointer' : 'default',
         border: '1px solid',
-        borderColor: isMainProfile ? '#C1D1FF' : '#F6F6F8',
-        borderRadius: '1000px',
-        backgroundColor: isMainProfile ? '#EBF0FF' : '#FCFCFD',
+        borderColor: isMainProfile ? '#476520' : '#F6F6F8',
+        borderRadius: '6px',
+        backgroundColor: isMainProfile ? '#EDF0E9' : '#FCFCFD',
       }}
       onClick={onClick}
       display="flex"
@@ -47,7 +47,7 @@ function RankingProfile({ isMainProfile, position, points, name, level, badges, 
           sx={{
             borderRadius: '50px',
             border: '1px solid',
-            borderColor: position == 1 ? '#FFEE05' : position == 2 ? '#D3D4D4' : position == 3 ? '#F2AA7D' : '#F6F6F8',
+            borderColor: position == 1 ? '#FFEE05' : position == 2 ? '#D3D4D4' : position == 3 ? '#F2AA7D' : '#E1E2EA',
             backgroundColor:
               position == 1 ? '#F5B800' : position == 2 ? '#A2ACB4' : position == 3 ? '#DB8466' : 'white',
             color: position <= 3 ? 'white' : 'black',
@@ -69,7 +69,7 @@ function RankingProfile({ isMainProfile, position, points, name, level, badges, 
             bgcolor="white"
             padding="3px 12px"
             borderRadius="100px"
-            sx={{ border: '1px solid #F6F6F8' }}
+            sx={{ border: '1px solid #E1E2EA' }}
           >
             <Typography fontSize={12} fontWeight={600} color="black">
               Level: {level}
@@ -81,7 +81,7 @@ function RankingProfile({ isMainProfile, position, points, name, level, badges, 
             borderRadius="100px"
             color="black"
             bgcolor="white"
-            sx={{ border: '1px solid #F6F6F8' }}
+            sx={{ border: '1px solid #E1E2EA' }}
           >
             <Typography fontSize={12} fontWeight={600}>
               Badges: {badges}
