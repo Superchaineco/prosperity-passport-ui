@@ -181,7 +181,6 @@ const UpdateAvatarModal = () => {
                         width: '100%',
                         height: '100%',
                         minHeight: '300px',
-                        borderRadius: '12px',
                       }}
                     >
                       <NounsAvatar seed={seed} />
@@ -283,16 +282,20 @@ const UpdateAvatarModal = () => {
                     onClick={handleSubmit}
                     disabled={!isChanged}
                     variant="contained"
-                    color="secondary"
+                    color="complementary"
                     fullWidth
                     sx={{
                       '@media (min-width: 600px)': {
                         width: 'auto',
                       },
+                      color: 'black',
+                      '&.Mui-disabled': {
+                        color: 'white',
+                      },
                     }}
                   >
-                    <Typography color="white">Save</Typography>
-                    <SvgIcon sx={{ marginLeft: 1 }} inheritViewBox component={Save} />
+                    <Typography sx={{ color: 'inherit' }}>Save</Typography>
+                    <SvgIcon sx={{ marginLeft: 1, color: 'inherit' }} inheritViewBox component={Save} />
                   </Button>
                 </CardActions>
               </TxCard>

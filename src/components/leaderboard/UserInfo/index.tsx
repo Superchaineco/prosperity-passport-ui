@@ -101,56 +101,43 @@ function UserInfo({
     <Stack padding="0px" justifyContent="flex-start" spacing={2} className={css.drawer}>
       {isLoading || !context ? (
         <>
-          <Box display="flex" justifyContent="center" width="100%" position="relative" marginTop="24px !important">
-            <Box display="flex" gap={1} position="absolute" color="grayText" top="-5%" right="-5%">
-              <ExplorerButton {...blockExplorerLink} color="inherit" />
-              <IconButton onClick={() => handleClose()}>
-                <SvgIcon component={Close} color="inherit" inheritViewBox fontSize="small" />
-              </IconButton>
-            </Box>
-            <Box
-              borderRadius="6px"
-              display="flex"
-              width="120px"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              border={2}
-              borderColor="secondary.main"
-            >
-              <Skeleton variant="rectangular" width={120} height={120} />
-              <Box width="100%" padding="12px" display="flex" justifyContent="center" bgcolor="secondary.main">
-                <Skeleton variant="text">
-                  <Typography textAlign="center" color="white">
-                    Level: <strong>4</strong>
-                  </Typography>
-                </Skeleton>
-              </Box>
-            </Box>
-          </Box>
-          <Skeleton variant="text">
-            <Typography display="flex" alignItems="center" fontWeight={600} fontSize={20}>
-              potatohead
-              <Typography component="span" fontSize="inherit" fontWeight="inherit" color="secondary.main">
-                .prosperity
-              </Typography>
-            </Typography>
-          </Skeleton>
-          <Skeleton variant="rounded" width={100} height={40} />
+          <Stack direction="row" justifyContent="space-between" alignItems="center" padding="12px" paddingBottom={0}>
+            <Stack direction="row" gap={1} padding="16px">
+              <Skeleton variant="rounded" width={60} height={30} />
+              <Skeleton variant="rounded" width={60} height={30} />
+            </Stack>
+            <Skeleton variant="circular" width={24} height={24} />
+          </Stack>
+
           <Box
             display="flex"
-            paddingTop={2}
-            alignItems="center"
-            justifyContent="center"
             flexDirection="column"
-            gap="20px"
+            width="100%"
+            sx={{
+              border: '1px solid #E1E2EA',
+              backgroundColor: '#FCFCFD',
+              paddingY: '20px',
+              alignItems: 'center',
+            }}
           >
-            <Skeleton variant="text" width={100} height={30} />
-            <Box display="flex" gap="12px">
-              {Array.from(new Array(3)).map((_, index) => (
-                <Skeleton key={index} variant="circular" width={60} height={60} />
-              ))}
-            </Box>
+            <Skeleton variant="circular" width={120} height={120} />
+            <Skeleton variant="rounded" width={32} height={32} sx={{ mt: 2 }} />
+          </Box>
+
+          <Stack sx={{ width: '100%', padding: '10px 28px' }}>
+            <Skeleton width={160} height={30} />
+            <Stack direction="row" spacing={2} mt={2}>
+              <Skeleton variant="rounded" width={80} height={32} />
+              <Skeleton variant="rounded" width={80} height={32} />
+              <Skeleton variant="rounded" width={80} height={32} />
+            </Stack>
+          </Stack>
+
+          <Divider sx={{ width: '100%', mt: 2 }} />
+          <Box display="flex" justifyContent="center" gap={2} padding={2}>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Skeleton key={i} variant="circular" width={60} height={60} />
+            ))}
           </Box>
         </>
       ) : (
@@ -269,7 +256,7 @@ function UserInfo({
                   border: '1px solid #E1E2EA',
                   color: 'black',
                   fontSize: '15px',
-                  p: '7px',
+                  p: '4px',
                   height: '30px',
                 }}
                 label={
@@ -291,7 +278,7 @@ function UserInfo({
                   border: '1px solid #E1E2EA',
                   color: 'black',
                   fontSize: '15px',
-                  p: '7px',
+                  p: '4px',
                   height: '30px',
                 }}
                 label={<Box textAlign="center">Level: {parseInt(context?.superchainsmartaccount[3])}</Box>}
@@ -303,7 +290,7 @@ function UserInfo({
                   border: '1px solid #E1E2EA',
                   color: 'black',
                   fontSize: '15px',
-                  p: '7px',
+                  p: '4px',
                   height: '30px',
                 }}
                 label={
