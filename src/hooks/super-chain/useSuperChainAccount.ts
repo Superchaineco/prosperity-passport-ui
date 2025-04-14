@@ -57,7 +57,7 @@ function useSuperChainAccount() {
           },
           onchainAnalytics: {
             platform: 'Web',
-            project: 'SuperAccounts',
+            project: 'ProsperityAccounts',
           },
           safeModulesVersion: '0.3.0',
           // ...
