@@ -37,8 +37,9 @@ const TxModalDialog = ({
             aria-label="close"
             onClick={(e) => onClose?.(e, 'backdropClick')}
             size="small"
+            sx={{ backgroundColor: '#E5E0DB' }}
           >
-            <CloseIcon fontSize="large" />
+            <CloseIcon fontSize="medium" stroke="black" sx={{ color: 'black' }} />
           </IconButton>
         </div>
       </DialogTitle>

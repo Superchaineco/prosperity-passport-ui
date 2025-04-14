@@ -158,7 +158,6 @@ const UpdateAvatarModal = () => {
       {modalState === ModalState.Error && <FailedTxnModal open onClose={onClose} handleRetry={handleSubmit} />}
       <Container className={css.container}>
         <Grid container gap={3} justifyContent="center">
-          {/* Main content */}
           <Grid item xs={12} md={10}>
             <div className={css.titleWrapper}>
               <Typography data-testid="modal-title" variant="h3" component="div" fontWeight="700" className={css.title}>

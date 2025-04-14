@@ -40,6 +40,7 @@
   color: var(--color-border-main);
   padding: var(--space-1);
   background-color: var(--color-border-light);
+  border-radius: 6px;
 }
 
 .paper {

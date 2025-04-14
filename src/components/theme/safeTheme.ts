@@ -229,17 +229,17 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
           {
             props: { variant: 'outlined' },
             style: ({ theme }) => ({
-              border: `1px solid ${theme.palette.border.light} !important`,
+              // border: `1px solid ${theme.palette.border.light} !important`,
             }),
           },
         ],
         styleOverrides: {
           root: ({ theme }) => ({
-            borderRadius: theme.shape.borderRadius,
+            borderRadius: 0, //theme.shape.borderRadius,
             boxSizing: 'border-box',
             border: '2px solid transparent',
             boxShadow: 'none',
-            backgroundColor: '#fcfcfd',
+            // backgroundColor: '#fcfcfd',
           }),
         },
       },
