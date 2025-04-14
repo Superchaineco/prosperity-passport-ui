@@ -6,7 +6,7 @@ function SafeAppPerks({ content }: { content?: string | ReactNode }) {
   return (
     <Box className={!content ? css.currentLevelNotActive : undefined}>
       <div className={css.currentLevelTitle}>
-        <Typography fontWeight={600} fontSize={14} color="white">
+        <Typography fontWeight={600} fontSize={14}>
           Current Level Perk
         </Typography>
       </div>

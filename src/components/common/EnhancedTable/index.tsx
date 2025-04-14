@@ -67,8 +67,8 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
   }
 
   return (
-    <TableHead>
-      <TableRow>
+    <TableHead sx={{ borderBottom: '2px solid #B3AFAB' }}>
+      <TableRow sx={{ borderBottom: '2px' }}>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}

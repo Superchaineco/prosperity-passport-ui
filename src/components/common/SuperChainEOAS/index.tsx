@@ -63,7 +63,7 @@ const SuperChainEOAS = () => {
                 <SvgIcon component={MoreIcon} inheritViewBox fontSize="medium" />
               </IconButton>
             </Box>
-            <Divider />
+            <Divider sx={{ borderBottomWidth: '2px', borderColor: '#B3AFAB' }} />
             <Box
               p={2}
               gap={2}

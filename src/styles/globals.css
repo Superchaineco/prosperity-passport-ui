@@ -136,7 +136,7 @@ body.beamerAnnouncementBarTopActive {
  
 }
 
-/* .MuiPaper-root{
-  border-radius: 12px;
+.MuiPaper-root{
+  border: none;
   
-} */
+} 
