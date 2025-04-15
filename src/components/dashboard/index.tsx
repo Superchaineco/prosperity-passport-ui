@@ -13,8 +13,6 @@ import SafeAppsDashboardSection from './SafeAppsDashboardSection/SafeAppsDashboa
 import EOAAddedModal from './EOAAddedModal'
 import { ADD_OWNER_MODAL_QUERY_PARAM } from '../accept-invite/alert-modal'
 import useWallet from '@/hooks/wallets/useWallet'
-
-import WrongNetworkModal from './WrongNetworkModal'
 import useIsWrongChain from '@/hooks/useIsWrongChain'
 import { useAppSelector } from '@/store'
 import { selectUndeployedSafe } from '@/store/slices'
