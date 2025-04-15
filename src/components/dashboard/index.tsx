@@ -78,7 +78,7 @@ const Dashboard = (): ReactElement => {
       </Grid>
       {showCreationModal ? <CreationDialog /> : null}
       {showEOAAddedModal ? <EOAAddedModal /> : null}
-      {isWrongChain && <WrongNetworkModal />}
+      {/* {isWrongChain && <WrongNetworkModal />} */}
     </>
   )
 }
