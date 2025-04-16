@@ -12,6 +12,8 @@ import { Chip } from '@/components/common/Chip'
 import Image from 'next/image'
 import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 import NetworkChip from '../networkChip'
+import BadgeStrategyRenderer from './BadgeStrategyRenderer'
+import { SelfVerificationStrategy } from './strategies/SelfVerificationStrategy'
 
 function BadgeInfo({
   currentBadge,
@@ -46,6 +48,9 @@ function BadgeInfo({
 
   const isCompleted = Number(currentBadge.tier) === currentBadge.badgeTiers.length
 
+  // Definir las estrategias disponibles
+  const strategies = [new SelfVerificationStrategy()]
+
   return (
     <Stack justifyContent="flex-start" alignItems="center" spacing={2} className={css.drawer}>
       <Box
@@ -72,6 +77,7 @@ function BadgeInfo({
           </Box>
         </Box>
       </Box>
+
       <Card sx={{ border: 'none', borderRadius: '0px', width: '100%' }}>
         <br></br>
         <CardMedia
@@ -280,6 +286,8 @@ function BadgeInfo({
                 </Box>
               ))}
             </Box>
+
+            <BadgeStrategyRenderer badge={currentBadge} strategies={strategies} />
           </Box>
         </CardContent>
       </Card>
