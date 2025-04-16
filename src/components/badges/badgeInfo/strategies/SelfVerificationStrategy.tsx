@@ -22,7 +22,7 @@ export class SelfVerificationStrategy implements BadgeRenderStrategy {
     this.selfApp = new SelfAppBuilder({
       appName: 'Prosperity Account',
       scope: 'prosperity-account',
-      endpoint: 'prosperity-passport-backend-production.up.railway.app/api/self/verify',
+      endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
       devMode: true,
       logoBase64: 'https://account.celopg.eco/images/pp-logo.png',
       userId: this.userId,
