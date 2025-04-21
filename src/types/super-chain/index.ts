@@ -16,9 +16,9 @@ export type SuperChainAccount = {
 }
 export type Badge = GetUserBadgesQuery['accountBadges'][number]
 export type ResponseBadge = { tier: string; points: string } & Badge['badge'] & {
-  claimableTier: number | null
-  claimable: boolean
-}
+    claimableTier: number | null
+    claimable: boolean
+  }
 export type SuperChainSmartAccountResponse = [Address, string, string, string, string[]]
 
 export type BadgeTierMetadata = {

@@ -30,7 +30,7 @@ class BadgesService {
       },
       (error) => {
         return Promise.reject(error)
-      }
+      },
     )
   }
 

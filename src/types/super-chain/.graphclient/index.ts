@@ -2259,13 +2259,17 @@ export type BadgeMetadata = {
 export type GetUserBadgesQuery = {
   badges: Array<
     Pick<Badge, 'badgeId' | 'uri'> & { metadata: BadgeMetadata } & {
-      badgeTiers: Array<Pick<BadgeTier, 'points' | 'tier' | 'uri'> & { metadata: BadgeLevelMetadata, condition?: string }>
+      badgeTiers: Array<
+        Pick<BadgeTier, 'points' | 'tier' | 'uri'> & { metadata: BadgeLevelMetadata; condition?: string }
+      >
     }
   >
   accountBadges: Array<
     Pick<AccountBadge, 'points' | 'tier'> & {
       badge: Pick<Badge, 'badgeId' | 'uri'> & { metadata: BadgeMetadata } & {
-        badgeTiers: Array<Pick<BadgeTier, 'points' | 'tier' | 'uri'> & { metadata: BadgeLevelMetadata, condition?: string }>
+        badgeTiers: Array<
+          Pick<BadgeTier, 'points' | 'tier' | 'uri'> & { metadata: BadgeLevelMetadata; condition?: string }
+        >
       }
     }
   >
