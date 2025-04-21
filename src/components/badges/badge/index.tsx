@@ -338,7 +338,9 @@ function Badge({
               {data.badgeTiers.map((tier, index) => (
                 <Box key={index} className={css.tierRow}>
                   <Typography fontSize="12px" fontWeight={500} fontFamily="Sora">
-                    {data.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString())}
+                    {tier.condition
+                      ? tier.condition
+                      : data.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString())}
                   </Typography>
                   <SvgIcon
                     inheritViewBox

@@ -268,7 +268,9 @@ function BadgeInfo({
                 <Box key={index}>
                   <Box display="flex" justifyContent="space-between" alignItems="center" paddingY="4px">
                     <Typography color="#4B4B4E" fontSize="12px">
-                      {currentBadge.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString())}
+                      {tier.condition
+                        ? tier.condition
+                        : currentBadge.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString())}
                     </Typography>
                     <SvgIcon
                       inheritViewBox

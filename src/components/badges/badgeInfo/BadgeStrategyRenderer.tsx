@@ -1,13 +1,11 @@
 import React from 'react'
 import type { ResponseBadge } from '@/types/super-chain'
 
-// Interfaz base para las estrategias de renderizado
 interface BadgeRenderStrategy {
   canRender: (badge: ResponseBadge) => boolean
   render: (badge: ResponseBadge) => React.ReactNode
 }
 
-// Estrategia por defecto
 class DefaultBadgeStrategy implements BadgeRenderStrategy {
   canRender(badge: ResponseBadge): boolean {
     return true
@@ -18,7 +16,6 @@ class DefaultBadgeStrategy implements BadgeRenderStrategy {
   }
 }
 
-// Contexto del renderizador de badges
 interface BadgeStrategyRendererProps {
   badge: ResponseBadge
   strategies: BadgeRenderStrategy[]
