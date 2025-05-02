@@ -109,34 +109,27 @@ body.beamerAnnouncementBarTopActive {
   left: 120px !important;
 }
 
-
 .MuiAccordion-root.Mui-expanded {
-  border-color: #47D3FF !important;
-  background-color: #DBF6FF !important;
+  border-color: #47d3ff !important;
+  background-color: #dbf6ff !important;
 }
 
-
 .MuiAccordionSummary-root {
-  background-color: #FFF !important;
+  background-color: #fff !important;
 }
 
 .MuiAccordionSummary-root.Mui-expanded {
-  background-color: #DBF6FF !important;
+  background-color: #dbf6ff !important;
 }
-
 
 .MuiAccordionDetails-root {
-  background-color: #FFFFFF !important;
+  background-color: #ffffff !important;
 }
-
-
 
 .MuiTableRow-root:hover {
   background-color: transparent !important;
- 
 }
 
-.MuiPaper-root{
+.MuiPaper-root {
   border: none;
-  
-} 
+}

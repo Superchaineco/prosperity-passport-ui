@@ -4,6 +4,7 @@ import { BACKEND_BASE_URI } from '@/config/constants'
 import type { ResponseBadge } from '@/types/super-chain'
 import local from '@/services/local-storage/local'
 import type { Setter } from '@/services/local-storage/useLocalStorage'
+import { badgeInterceptor } from './badge.interceptor'
 
 export type Perks = {
   name: string
@@ -14,6 +15,25 @@ class BadgesService {
     baseURL: BACKEND_BASE_URI,
     withCredentials: true,
   })
+
+  constructor() {
+    this.setupBadgeInterceptor()
+  }
+
+  private setupBadgeInterceptor(): void {
+    this.httpInstance.interceptors.response.use(
+      (response) => {
+        if (response.data && response.data.currentBadges) {
+          response.data.currentBadges = badgeInterceptor.interceptBadges(response.data.currentBadges)
+        }
+        return response
+      },
+      (error) => {
+        return Promise.reject(error)
+      },
+    )
+  }
+
   public switchFavoriteBadge(
     badgeId: number,
     safe: Address,
@@ -50,6 +70,7 @@ class BadgesService {
     const response = await this.httpInstance.get<{
       currentBadges: ResponseBadge[]
     }>(`/user/${account}/badges`)
+
     return response.data
   }
   public async attestBadges(account: Address) {
