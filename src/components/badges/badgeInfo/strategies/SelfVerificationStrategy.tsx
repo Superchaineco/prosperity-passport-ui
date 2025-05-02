@@ -20,7 +20,7 @@ export class SelfVerificationStrategy implements BadgeRenderStrategy {
 
     const { SelfAppBuilder } = await import('@selfxyz/qrcode')
     this.selfApp = new SelfAppBuilder({
-      appName: 'Prosperity Account',
+      appName: 'Prosperity Pass',
       scope: 'prosperity-account',
       endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
       devMode: true,

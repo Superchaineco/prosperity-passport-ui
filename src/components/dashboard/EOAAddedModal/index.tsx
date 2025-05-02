@@ -41,7 +41,7 @@ function EOAAddedModal() {
         </Typography>
         <Stack alignItems="center" spacing={1}>
           <Typography id="modal-modal-description" fontSize={16}>
-            Your wallet is now connected to Prosperity Account:{' '}
+            Your wallet is now connected to Prosperity Pass:{' '}
           </Typography>
           <Stack alignItems="center" direction="row">
             <Typography id="modal-modal-description" fontSize={16}>

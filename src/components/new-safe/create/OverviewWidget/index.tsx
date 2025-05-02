@@ -47,7 +47,7 @@ const OverviewWidget = ({
     <Grid item xs={12}>
       <Card className={css.card}>
         <div className={css.header}>
-          <Typography variant="h4">Your Prosperity Account preview</Typography>
+          <Typography variant="h4">Your Prosperity Pass preview</Typography>
         </div>
         {wallet ? (
           rows.map((row) => (

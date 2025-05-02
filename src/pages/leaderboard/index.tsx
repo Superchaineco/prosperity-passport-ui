@@ -41,7 +41,7 @@ function LeaderboardLayout() {
   return (
     <>
       <Head>
-        <title>Prosperity Account – Leaderboard</title>
+        <title>Prosperity Pass – Leaderboard</title>
       </Head>
       <Box width="100%" height="100%">
         <LeaderboardHeader />

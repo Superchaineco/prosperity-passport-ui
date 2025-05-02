@@ -8,7 +8,7 @@ const SingleTransaction: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Account – Transaction details</title>
+        <title>Prosperity Pass – Transaction details</title>
       </Head>
 
       <main>

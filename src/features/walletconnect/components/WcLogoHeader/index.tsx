@@ -13,7 +13,7 @@ const WcLogoHeader = ({ errorMessage }: { errorMessage?: string }): ReactElement
       </div>
 
       <Typography variant="h5" mt={2} mb={0.5} className={css.title}>
-        {errorMessage || 'Connect dApps to Prosperity Account'}
+        {errorMessage || 'Connect dApps to Prosperity Pass'}
       </Typography>
     </>
   )

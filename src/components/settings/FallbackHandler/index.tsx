@@ -33,7 +33,7 @@ export const FallbackHandler = (): ReactElement | null => {
 
   const warning = !hasFallbackHandler ? (
     <>
-      The Prosperity Account may not work correctly as no fallback handler is currently set.
+      The Prosperity Pass may not work correctly as no fallback handler is currently set.
       {txBuilder && (
         <>
           {' '}

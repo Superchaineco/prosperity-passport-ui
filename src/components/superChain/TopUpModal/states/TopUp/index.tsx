@@ -141,8 +141,8 @@ function TopUp({
         </Grid>
         <Grid item>
           <Box className={classNames(css.container, css.description)}>
-            This is the address of your Prosperity Account. Deposit funds by topping up or copying the address below.
-            Only send CELO and tokens (e.g. ERC20, ERC721) to this address.
+            This is the address of your Prosperity Pass. Deposit funds by topping up or copying the address below. Only
+            send CELO and tokens (e.g. ERC20, ERC721) to this address.
           </Box>
         </Grid>
         <Grid item>

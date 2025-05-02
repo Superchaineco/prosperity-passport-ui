@@ -45,10 +45,10 @@ const CreationDialog = () => {
     <Dialog className={css.creationModal} open={open}>
       <DialogContent sx={{ padding: 0 }}>
         <Typography variant="h3" fontWeight="700" mb={1}>
-          Welcome to Prosperity Account!
+          Welcome to Prosperity Pass!
         </Typography>
         <Typography variant="body2">
-          With this Prosperity Account, you will be able to explore and contribute to the Prosperity Account through the
+          With this Prosperity Pass, you will be able to explore and contribute to the Prosperity Pass through the
           following features:
         </Typography>
 
@@ -56,22 +56,22 @@ const CreationDialog = () => {
           <HintItem
             Icon={AccountIcon}
             title="Account"
-            description="Connect your Prosperity Account Wallets to your Prosperity Account to track your progress."
+            description="Connect your Prosperity Pass Wallets to your Prosperity Pass to track your progress."
           />
           <HintItem
             Icon={BadgesIcon}
             title="Badges"
-            description="Earn Prosperity Account progress badges based on the accomplishment of all your connected wallets."
+            description="Earn Prosperity Pass progress badges based on the accomplishment of all your connected wallets."
           />
           <HintItem
             Icon={LeaderBoardIcon}
             title="Leaderboard"
-            description="Earn Prosperity Account Points to climb the Leaderboard and become the top Celo Contributor."
+            description="Earn Prosperity Pass Points to climb the Leaderboard and become the top Celo Contributor."
           />
           <HintItem
             Icon={TransactionIcon}
             title="Transactions"
-            description="Benefit from Prosperity Account perks, which include several weekly free transactions based on your account level."
+            description="Benefit from Prosperity Pass perks, which include several weekly free transactions based on your account level."
           />
           <HintItem
             Icon={ContactsIcon}
@@ -81,7 +81,7 @@ const CreationDialog = () => {
           <HintItem
             Icon={AppsIcon}
             title="Apps"
-            description="Use native Prosperity Account apps to benefit from special perks or engage with any app through Wallet connect."
+            description="Use native Prosperity Pass apps to benefit from special perks or engage with any app through Wallet connect."
           />
         </Grid>
       </DialogContent>

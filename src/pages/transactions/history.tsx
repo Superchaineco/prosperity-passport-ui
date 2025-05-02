@@ -25,7 +25,7 @@ const History: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Account – Transactions</title>
+        <title>Prosperity Pass – Transactions</title>
       </Head>
 
       <TxHeader>

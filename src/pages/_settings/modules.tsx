@@ -10,7 +10,7 @@ const Modules: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Account – Settings – Modules</title>
+        <title>Prosperity Pass – Settings – Modules</title>
       </Head>
 
       <SettingsHeader />

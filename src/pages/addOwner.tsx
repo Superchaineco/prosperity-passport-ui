@@ -23,7 +23,7 @@ const AddOwner: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Account – Add Signer</title>
+        <title>Prosperity Pass – Add Signer</title>
       </Head>
     </>
   )

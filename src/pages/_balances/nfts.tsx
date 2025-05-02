@@ -43,7 +43,7 @@ const NFTs: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Account – NFTs</title>
+        <title>Prosperity Pass – NFTs</title>
       </Head>
 
       <AssetsHeader />

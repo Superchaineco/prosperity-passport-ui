@@ -17,7 +17,7 @@ const Settings: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Account – Settings</title>
+        <title>Prosperity Pass – Settings</title>
       </Head>
     </>
   )

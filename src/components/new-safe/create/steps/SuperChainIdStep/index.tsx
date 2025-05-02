@@ -57,7 +57,7 @@ function SuperChainID({
     if (isSuperChainIdRegistered) {
       setError(SetNameStepFields.id, {
         type: 'manual',
-        message: 'Sorry, that Prosperity Account ID already exists',
+        message: 'Sorry, that Prosperity Pass ID already exists',
       })
       return
     }

@@ -4,8 +4,8 @@ import lightPalette from '@/components/theme/lightPalette'
 import darkPalette from '@/components/theme/darkPalette'
 
 const descriptionText =
-  'Earn rewards for your Prosperity Account contributions with Prosperity Account Accounts. Track badges, manage transactions, and view your Prosperity Account. Get recognized for your participation.'
-const titleText = 'Prosperity Account'
+  'Earn rewards for your Prosperity Pass contributions with Prosperity Pass Accounts. Track badges, manage transactions, and view your Prosperity Pass. Get recognized for your participation.'
+const titleText = 'Prosperity Pass'
 
 const MetaTags = ({ prefetchUrl }: { prefetchUrl: string }) => (
   <>

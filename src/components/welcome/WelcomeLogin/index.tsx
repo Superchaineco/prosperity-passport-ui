@@ -60,7 +60,7 @@ const WelcomeLogin = () => {
           </Typography>
 
           <Typography mb={2} textAlign="center">
-            Log In or Sign Up to create a new Prosperity Account or open an existing one
+            Log In or Sign Up to create a new Prosperity Pass or open an existing one
           </Typography>
           <Stack direction="row" gap={2}>
             <Button
@@ -82,7 +82,7 @@ const WelcomeLogin = () => {
             placement="bottom"
             title={
               <Typography align="center">
-                Accept an invitation to add an extra Wallet to your Prosperity Account.
+                Accept an invitation to add an extra Wallet to your Prosperity Pass.
               </Typography>
             }
           >

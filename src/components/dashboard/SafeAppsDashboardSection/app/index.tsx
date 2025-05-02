@@ -25,7 +25,7 @@ function SuperChainApp({
             <Stack direction="row" gap="12px" justifyContent="flex-start" alignItems="center" fontSize="42px">
               <SvgIcon fontSize="inherit" component={PerkRaffle} inheritViewBox />
               <Typography fontWeight={600} fontSize={16}>
-                Prosperity Account Raffle
+                Prosperity Pass Raffle
               </Typography>
             </Stack>
             <Stack direction="row" gap={1}>

@@ -42,9 +42,9 @@ export const createOnboard = (
     },
 
     appMetadata: {
-      name: 'Prosperity Account',
+      name: 'Prosperity Pass',
       icon: location.origin + '/images/logo-round.svg',
-      description: 'Prosperity Account – smart contract wallet for Ethereum (ex-Gnosis Safe multisig)',
+      description: 'Prosperity Pass – smart contract wallet for Ethereum (ex-Gnosis Safe multisig)',
     },
 
     connect: {

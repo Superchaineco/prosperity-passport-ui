@@ -6,7 +6,7 @@ const AddressBook: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Account – Contacts</title>
+        <title>Prosperity Pass – Contacts</title>
       </Head>
 
       <AddressBookTable />

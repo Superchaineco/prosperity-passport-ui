@@ -98,7 +98,7 @@ function AddEOA({
               {addressHasSuperChainAccount && (
                 <Alert severity="error" icon={false}>
                   <Typography variant="body1" color="secondary" textAlign="center">
-                    This address is already connected to another Prosperity Account. Try another address.
+                    This address is already connected to another Prosperity Pass. Try another address.
                   </Typography>
                 </Alert>
               )}

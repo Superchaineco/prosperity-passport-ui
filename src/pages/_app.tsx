@@ -52,9 +52,9 @@ import { createSIWE } from '@/services/siwe'
 import { WC_PROJECT_ID as projectId } from '@/config/constants'
 
 const metadata = {
-  name: 'Prosperity Account',
+  name: 'Prosperity Pass',
   description:
-    'Earn rewards for your Prosperity Account contributions with Prosperity Account Accounts. Track badges, manage transactions, and view your Prosperity Account. Get recognized for your participation.',
+    'Earn rewards for your Prosperity Pass contributions with Prosperity Pass Accounts. Track badges, manage transactions, and view your Prosperity Pass. Get recognized for your participation.',
   url: 'https://account.celopg.eco',
   icons: ['https://account.celopg.eco/images/pp-logo.png'],
 }
@@ -161,7 +161,7 @@ const WebCoreApp = ({
   return (
     <Provider store={reduxStore}>
       <Head>
-        <title key="default-title">Prosperity Account</title>
+        <title key="default-title">Prosperity Pass</title>
         <MetaTags prefetchUrl={GATEWAY_URL} />
       </Head>
 

@@ -16,7 +16,7 @@ const Balances: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Prosperity Account – Assets</title>
+        <title>Prosperity Pass – Assets</title>
       </Head>
 
       <div className={css.container}>
