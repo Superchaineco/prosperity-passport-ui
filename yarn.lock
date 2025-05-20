@@ -4849,13 +4849,13 @@
     web3-core "^1.10.3"
     web3-utils "^1.10.3"
 
-"@safe-global/protocol-kit@^6.0.3":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@safe-global/protocol-kit/-/protocol-kit-6.0.3.tgz#7f84531bbfa9a1e2ea7bee859927a64666dee242"
-  integrity sha512-2FLDWgbKSxq1hZAY9qj7hqyPQLxPq7sWn9+uuJz0tkZZLccvcCvxA/sHagBj+6GAZR4qhrnHIJPahyFRA9cZug==
+"@safe-global/protocol-kit@^6.0.4":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@safe-global/protocol-kit/-/protocol-kit-6.0.4.tgz#971a45776ab1e4cdd3136515e49e3ad7dfd90c4f"
+  integrity sha512-zwUk7qqtdcjgj+PoDziFXU/rIdAJ1sbwSJBJ48EwsRQIUwT0QdNje3xvvAm22gCOVTvOBTwOwECO5koLEJPqSw==
   dependencies:
     "@safe-global/safe-deployments" "^1.37.32"
-    "@safe-global/safe-modules-deployments" "^2.2.7"
+    "@safe-global/safe-modules-deployments" "^2.2.8"
     "@safe-global/types-kit" "^2.0.1"
     abitype "^1.0.2"
     semver "^7.7.1"
@@ -4864,14 +4864,14 @@
     "@noble/curves" "^1.6.0"
     "@peculiar/asn1-schema" "^2.3.13"
 
-"@safe-global/relay-kit@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@safe-global/relay-kit/-/relay-kit-4.0.2.tgz#f5193af4dd77ce500c27b5be42870127bf7bc74a"
-  integrity sha512-0ughkJrqyTxvF3WtwHrs3ZQMNdcnmP1QiMv4zs6xBbmPgdCLGg4Nd7y0xIVLbUNgRsdhUrib0dqAG8MzgheI/Q==
+"@safe-global/relay-kit@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@safe-global/relay-kit/-/relay-kit-4.0.3.tgz#abab60469c91a917d5d0aca1540421476105542b"
+  integrity sha512-Ztc3PutmKZ5faqA10zwjRTHvMj+s68qcnaLWcyICFbh63VdphVZXkHoDUjMkXdiT1b11iqNqCvZQORmqB2hh7A==
   dependencies:
     "@gelatonetwork/relay-sdk" "^5.6.0"
-    "@safe-global/protocol-kit" "^6.0.3"
-    "@safe-global/safe-modules-deployments" "^2.2.7"
+    "@safe-global/protocol-kit" "^6.0.4"
+    "@safe-global/safe-modules-deployments" "^2.2.8"
     "@safe-global/types-kit" "^2.0.1"
     semver "^7.7.1"
     viem "^2.21.8"
@@ -4918,10 +4918,10 @@
   resolved "https://registry.yarnpkg.com/@safe-global/safe-modules-deployments/-/safe-modules-deployments-1.2.0.tgz#ca871c3f553cd16cbea1aac8f8be16498329a7d3"
   integrity sha512-/pjHIPaYwGRM5oOB7lc+yf28fWEq7twNP5dJxpLFgG/9UR4E3F+XfFdYkpP22eIvmOkBwCJXJZfPfESh9WSF2w==
 
-"@safe-global/safe-modules-deployments@^2.2.7":
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/@safe-global/safe-modules-deployments/-/safe-modules-deployments-2.2.7.tgz#8d9cabea778767776de2dc62258dcc458f2f2c14"
-  integrity sha512-xlnAW7d0394EwlRgWJ+nuQNQmGkL0qBE54pN+1IBbUEFvWW8q0SbhDsTmlGgeDM+9F8q2KM06Ip1JMmddppA/Q==
+"@safe-global/safe-modules-deployments@^2.2.8":
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/@safe-global/safe-modules-deployments/-/safe-modules-deployments-2.2.8.tgz#444bd078d8d04f2cac6427ed82608e8e9db314eb"
+  integrity sha512-XqRhEUzO8PNs5kCXztlPmQJBZO+YTDCRbiumCr5JBuS8RhU0pRSkG5Gs8qjKlZicxZvy3IdXZ14APVwb6+dj/Q==
 
 "@safe-global/types-kit@^2.0.1":
   version "2.0.1"
