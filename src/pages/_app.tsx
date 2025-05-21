@@ -55,8 +55,8 @@ const metadata = {
   name: 'Prosperity Pass',
   description:
     'Earn rewards for your Prosperity Pass contributions with Prosperity Pass Accounts. Track badges, manage transactions, and view your Prosperity Pass. Get recognized for your participation.',
-  url: 'https://account.celopg.eco',
-  icons: ['https://account.celopg.eco/images/pp-logo.png'],
+  url: 'https://pass.celopg.eco',
+  icons: ['https://pass.celopg.eco/images/pp-logo.png'],
 }
 if (!projectId) {
   throw new Error('Project ID is not defined')

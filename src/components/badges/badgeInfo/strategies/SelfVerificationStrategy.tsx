@@ -24,7 +24,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
       scope: 'prosperity-account',
       endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
       devMode: true,
-      logoBase64: 'https://account.celopg.eco/images/pp-logo.png',
+      logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
       userId: this.userId,
     }).build()
 
