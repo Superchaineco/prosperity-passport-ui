@@ -21,11 +21,16 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
     const { SelfAppBuilder } = await import('@selfxyz/qrcode')
     this.selfApp = new SelfAppBuilder({
       appName: 'Prosperity Pass',
-      scope: 'prosperity-account',
+      scope: 'prosperity',
       endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
       devMode: true,
       logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
       userId: this.userId,
+      disclosures: {
+        gender: true,
+        name: true,
+        nationality: true,
+      },
     }).build()
 
     const mod = await import('@selfxyz/qrcode')
@@ -50,6 +55,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
 
       const handleVerificationSuccess = () => {
         console.log('Verification successful')
+        alert('Verification successful')
         handleCloseModal()
       }
 
