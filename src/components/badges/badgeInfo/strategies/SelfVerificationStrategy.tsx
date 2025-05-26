@@ -5,7 +5,7 @@ import { Button, Dialog, DialogContent } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
 import axios, { AxiosResponse } from 'axios'
 import { BACKEND_BASE_URI } from '@/config/constants'
-import SelfQRcodeWrapper, { SelfAppBuilder } from '@selfxyz/qrcode'
+import { SelfAppBuilder } from '@selfxyz/qrcode' //SelfQRcodeWrapper
 
 const userId = uuidv4()
 const selfApp = new SelfAppBuilder({
@@ -98,14 +98,14 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
 
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
             <DialogContent>
-              <SelfQRcodeWrapper
+              {/* <SelfQRcodeWrapper
                 selfApp={selfApp}
                 onSuccess={() => {
                   // Handle successful verification
                   console.log('Verification successful!')
                   // Redirect or update UI
                 }}
-              />
+              /> */}
             </DialogContent>
           </Dialog>
         </>
