@@ -5,7 +5,7 @@ import { Button, Dialog, DialogContent } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
 import axios, { AxiosResponse } from 'axios'
 import { BACKEND_BASE_URI } from '@/config/constants'
-import SelfQRcodeWrapper, { SelfAppBuilder, SelfQRcode } from '@selfxyz/qrcode'
+import { SelfAppBuilder, SelfQRcode } from '@selfxyz/qrcode'
 
 class SelfVerificationStrategy implements BadgeRenderStrategy {
   private selfApp: any = null
