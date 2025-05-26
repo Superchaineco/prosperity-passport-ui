@@ -60,7 +60,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
 
         const intervalId = setInterval(async () => {
           try {
-            const response: AxiosResponse = await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${userId}`)
+            const response: AxiosResponse = await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${this.userId}`)
             if (response.status === 200) {
               handleVerificationSuccess()
             }
@@ -95,7 +95,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
             <DialogContent>
               <SelfQRcodeWrapper
-                selfApp={selfApp}
+                selfApp={this.selfApp}
                 onSuccess={() => {
                   // Handle successful verification
                   console.log('Verification successful!')
