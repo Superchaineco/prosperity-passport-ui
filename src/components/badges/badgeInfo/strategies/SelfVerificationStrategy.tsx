@@ -65,8 +65,8 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
       const { data } = useQuery({
         queryKey: ['self-verification', address],
         refetchInterval: 1000,
-        queryFn: () => axios.get(`${BACKEND_BASE_URI}/self/check?userId=${address}`),
-        enabled: isModalOpen && !!address,
+        queryFn: async () => (await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${address}`)).data,
+        enabled: !!address,
       })
 
       useEffect(() => {
@@ -89,8 +89,9 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
               marginTop: '16px',
               marginBottom: '16px',
             }}
+            disabled={data?.check}
           >
-            Verify Badge
+            {data?.check ? 'Verified' : 'Verify Badge'}
           </Button>
 
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
