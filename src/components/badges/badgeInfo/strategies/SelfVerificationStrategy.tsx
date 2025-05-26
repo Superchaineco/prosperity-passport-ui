@@ -96,7 +96,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
 
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
             <DialogContent>
-              {this.userId && (
+              {this.selfApp && (
                 <SelfQRcode
                   selfApp={this.selfApp}
                   onSuccess={() => {
