@@ -3,6 +3,8 @@ import type { ResponseBadge } from '@/types/super-chain'
 import type { BadgeRenderStrategy } from '../BadgeStrategyRenderer'
 import { Button, Dialog, DialogContent } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
+import axios, { AxiosResponse } from 'axios'
+import { BACKEND_BASE_URI } from '@/config/constants'
 
 class SelfVerificationStrategy implements BadgeRenderStrategy {
   private SelfQRcode: any = null
@@ -41,6 +43,10 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
   }
 
   render(badge: ResponseBadge): React.ReactNode {
+    const userId = this.userId
+    const selfApp = this.selfApp
+    const SelfQRcode = this.SelfQRcode
+
     const SelfVerificationComponent = () => {
       const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -57,6 +63,25 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
         alert('Verification successful')
         handleCloseModal()
       }
+
+      React.useEffect(() => {
+        if (!isModalOpen) return
+
+        const intervalId = setInterval(async () => {
+          try {
+            const response: AxiosResponse = await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${userId}`)
+            if (response.status === 200) {
+              handleCloseModal()
+            }
+          } catch {
+            // Ignorar errores
+          }
+        }, 1000)
+
+        return () => {
+          clearInterval(intervalId)
+        }
+      }, [isModalOpen])
 
       return (
         <>
@@ -78,9 +103,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
 
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
             <DialogContent>
-              {this.selfApp && this.SelfQRcode && (
-                <this.SelfQRcode selfApp={this.selfApp} onSuccess={handleVerificationSuccess} />
-              )}
+              {selfApp && SelfQRcode && <SelfQRcode selfApp={selfApp} onSuccess={handleVerificationSuccess} />}
             </DialogContent>
           </Dialog>
         </>
