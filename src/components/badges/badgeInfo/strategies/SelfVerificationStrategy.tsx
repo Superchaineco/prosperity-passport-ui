@@ -13,7 +13,7 @@ const selfApp = new SelfAppBuilder({
   scope: 'prosperity',
   endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
   logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
-  userId: userId,
+  userId,
   disclosures: {
     gender: true,
     name: true,
