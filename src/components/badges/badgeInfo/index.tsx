@@ -48,7 +48,6 @@ function BadgeInfo({
 
   const isCompleted = Number(currentBadge.tier) === currentBadge.badgeTiers.length
 
-  // Definir las estrategias disponibles
   const strategies = [new SelfVerificationStrategy()]
 
   return (

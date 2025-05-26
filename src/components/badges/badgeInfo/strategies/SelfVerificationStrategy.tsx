@@ -5,9 +5,23 @@ import { Button, Dialog, DialogContent } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
 import axios, { AxiosResponse } from 'axios'
 import { BACKEND_BASE_URI } from '@/config/constants'
+import SelfQRcodeWrapper, { SelfAppBuilder } from '@selfxyz/qrcode'
+
+const userId = uuidv4()
+const selfApp = new SelfAppBuilder({
+  appName: 'Prosperity Pass',
+  scope: 'prosperity',
+  endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
+  logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
+  userId: userId,
+  disclosures: {
+    gender: true,
+    name: true,
+    nationality: true,
+  },
+}).build()
 
 class SelfVerificationStrategy implements BadgeRenderStrategy {
-  private SelfQRcode: any = null
   private selfApp: any = null
   private userId: string | null = null
 
@@ -18,24 +32,9 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
   }
 
   private async initializeSelfApp() {
-    this.userId = uuidv4()
+    this.userId = userId
 
-    const { SelfAppBuilder } = await import('@selfxyz/qrcode')
-    this.selfApp = new SelfAppBuilder({
-      appName: 'Prosperity Pass',
-      scope: 'prosperity',
-      endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
-      logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
-      userId: this.userId,
-      disclosures: {
-        gender: true,
-        name: true,
-        nationality: true,
-      },
-    }).build()
-
-    const mod = await import('@selfxyz/qrcode')
-    this.SelfQRcode = mod.SelfQRcode
+    this.selfApp = selfApp
   }
 
   canRender(badge: ResponseBadge): boolean {
@@ -43,10 +42,6 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
   }
 
   render(badge: ResponseBadge): React.ReactNode {
-    const userId = this.userId
-    const selfApp = this.selfApp
-    const SelfQRcode = this.SelfQRcode
-
     const SelfVerificationComponent = () => {
       const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -102,7 +97,16 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
           </Button>
 
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
-            <DialogContent>{selfApp && SelfQRcode && <SelfQRcode selfApp={selfApp} />}</DialogContent>
+            <DialogContent>
+              <SelfQRcodeWrapper
+                selfApp={selfApp}
+                onSuccess={() => {
+                  // Handle successful verification
+                  console.log('Verification successful!')
+                  // Redirect or update UI
+                }}
+              />
+            </DialogContent>
           </Dialog>
         </>
       )

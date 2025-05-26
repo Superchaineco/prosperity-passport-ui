@@ -38,7 +38,6 @@ function Badge({
 
   const isCompleted = Number(data.tier) === data.badgeTiers.length
 
-  console.debug(data)
   return (
     <Box
       sx={{ maxWidth: '100%' }}
@@ -365,62 +364,3 @@ function Badge({
 }
 
 export default Badge
-
-{
-  /* <Stack padding={0} justifyContent="center" alignItems="center" spacing={1} position="relative">
-          <IconButton disabled={safeLoading} onClick={(e) => handleSwitchFavorite(e)} className={css.hearth}>
-            <SvgIcon component={isFavorite ? HeartFilled : Hearth} color="secondary" inheritViewBox fontSize="small" />
-          </IconButton>
-          {!!Number(data.tier) ? (
-            <img
-              width={72}
-              height={72}
-              src={data.badgeTiers[data.claimableTier! - 1].metadata['3DImage']}
-              className={!unClaimed ? css.unclaimed : undefined}
-              alt={data.metadata.platform}
-            />
-          ) : (
-            <img
-              width={72}
-              height={72}
-              src={data.badgeTiers[0].metadata['3DImage']}
-              className={!unClaimed ? css.unclaimed : undefined}
-              alt={data.metadata.platform}
-            />
-          )}
-          <Typography margin={0} fontWeight={600} fontSize={16} textAlign="center" variant="h4">
-            {data.metadata.name}
-          </Typography>
-          <Typography margin={0} fontSize={14} fontWeight={400} textAlign="center" color="text.secondary">
-            {data.metadata.description}
-          </Typography>
-          {data.badgeTiers.length !== Number(data.tier) && (
-            <Box border={2} borderRadius={1} padding="12px" borderColor="secondary.main">
-              {!!Number(data.tier) ? (
-                <>
-                  <Typography margin={0} textAlign="center" color="secondary.main">
-                    {renderNextTier ? 'Unlock Next Tier:' : 'Unlock First Tier:'}
-                  </Typography>
-                  <Typography textAlign="center" margin={0}>
-                    {data.metadata.condition.replace(
-                      '{{variable}}',
-                      renderNextTier
-                        ? data.badgeTiers[data.claimableTier || 0].metadata.minValue.toString()
-                        : data.badgeTiers[data.claimableTier ? data.claimableTier - 1 : 0].metadata.minValue.toString(),
-                    )}
-                  </Typography>
-                </>
-              ) : (
-                <>
-                  <Typography margin={0} textAlign="center" color="secondary.main">
-                    Unlock First Tier:
-                  </Typography>
-                  <Typography textAlign="center" margin={0}>
-                    {data.metadata.condition.replace('{{variable}}', data.badgeTiers[0].metadata.minValue.toString())}
-                  </Typography>
-                </>
-              )}
-            </Box>
-          )}
-        </Stack> */
-}
