@@ -5,7 +5,7 @@ import { Button, Dialog, DialogContent } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
 import axios, { AxiosResponse } from 'axios'
 import { BACKEND_BASE_URI } from '@/config/constants'
-import { SelfAppBuilder, SelfQRcode } from '@selfxyz/qrcode'
+import SelfQRcode from '@selfxyz/qrcode'
 
 class SelfVerificationStrategy implements BadgeRenderStrategy {
   private selfApp: any = null
@@ -19,6 +19,8 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
 
   private async initializeSelfApp() {
     this.userId = uuidv4()
+
+    const { SelfAppBuilder } = await import('@selfxyz/qrcode')
     this.selfApp = new SelfAppBuilder({
       appName: 'Prosperity Pass',
       scope: 'prosperity',
@@ -94,14 +96,14 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
 
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
             <DialogContent>
-              <SelfQRcode
-                selfApp={this.selfApp}
-                onSuccess={() => {
-                  // Handle successful verification
-                  console.log('Verification successful!')
-                  // Redirect or update UI
-                }}
-              />
+              {this.userId && (
+                <SelfQRcode
+                  selfApp={this.selfApp}
+                  onSuccess={() => {
+                    console.log('Success')
+                  }}
+                />
+              )}
             </DialogContent>
           </Dialog>
         </>
