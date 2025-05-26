@@ -71,7 +71,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
           try {
             const response: AxiosResponse = await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${userId}`)
             if (response.status === 200) {
-              handleCloseModal()
+              handleVerificationSuccess()
             }
           } catch {
             // Ignorar errores
@@ -102,9 +102,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
           </Button>
 
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
-            <DialogContent>
-              {selfApp && SelfQRcode && <SelfQRcode selfApp={selfApp} onSuccess={handleVerificationSuccess} />}
-            </DialogContent>
+            <DialogContent>{selfApp && SelfQRcode && <SelfQRcode selfApp={selfApp} />}</DialogContent>
           </Dialog>
         </>
       )
