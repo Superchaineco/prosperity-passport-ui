@@ -1,40 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { ResponseBadge } from '@/types/super-chain'
 import type { BadgeRenderStrategy } from '../BadgeStrategyRenderer'
 import { Button, Dialog, DialogContent } from '@mui/material'
-import { v4 as uuidv4 } from 'uuid'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { BACKEND_BASE_URI } from '@/config/constants'
-import SelfQRcode from '@selfxyz/qrcode'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import useSafeAddress from '@/hooks/useSafeAddress'
 
 class SelfVerificationStrategy implements BadgeRenderStrategy {
-  private selfApp: any = null
-  private userId: string | null = null
-
-  constructor() {
-    if (typeof document !== 'undefined') {
-      this.initializeSelfApp()
-    }
-  }
-
-  private async initializeSelfApp() {
-    this.userId = uuidv4()
-
-    const { SelfAppBuilder } = await import('@selfxyz/qrcode')
-    this.selfApp = new SelfAppBuilder({
-      appName: 'Prosperity Pass',
-      scope: 'prosperity',
-      endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
-      logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
-      userId: this.userId,
-      disclosures: {
-        gender: true,
-        name: true,
-        nationality: true,
-      },
-    }).build()
-  }
-
   canRender(badge: ResponseBadge): boolean {
     return badge.metadata.name === 'Self verification'
   }
@@ -42,6 +15,37 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
   render(badge: ResponseBadge): React.ReactNode {
     const SelfVerificationComponent = () => {
       const [isModalOpen, setIsModalOpen] = useState(false)
+      const [selfApp, setSelfApp] = useState<any>(null)
+      const [SelfQRcode, setSelfQRcode] = useState<any>(null)
+      const address = useSafeAddress()
+      const queryClient = useQueryClient()
+
+      useEffect(() => {
+        const init = async () => {
+          const { default: SelfQRcodeComponent, SelfAppBuilder } = await import('@selfxyz/qrcode')
+          setSelfQRcode(() => SelfQRcodeComponent)
+
+          const app = new SelfAppBuilder({
+            appName: 'Prosperity Pass',
+            scope: 'prosperity',
+            endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
+            logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
+            userId: address,
+            userIdType: 'hex',
+            disclosures: {
+              gender: true,
+              name: true,
+              nationality: true,
+            },
+          }).build()
+
+          setSelfApp(app)
+        }
+
+        if (address) {
+          init()
+        }
+      }, [address])
 
       const handleOpenModal = () => {
         setIsModalOpen(true)
@@ -54,27 +58,22 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
       const handleVerificationSuccess = () => {
         console.log('Verification successful')
         alert('Verification successful')
+        queryClient.invalidateQueries({ queryKey: ['self-verification', address] })
         handleCloseModal()
       }
 
-      React.useEffect(() => {
-        if (!isModalOpen) return
+      const { data } = useQuery({
+        queryKey: ['self-verification', address],
+        refetchInterval: 1000,
+        queryFn: () => axios.get(`${BACKEND_BASE_URI}/self/check?userId=${address}`),
+        enabled: isModalOpen && !!address,
+      })
 
-        const intervalId = setInterval(async () => {
-          try {
-            const response: AxiosResponse = await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${this.userId}`)
-            if (response.status === 200) {
-              handleVerificationSuccess()
-            }
-          } catch {
-            // Ignorar errores
-          }
-        }, 1000)
+      useEffect(() => {
+        console.debug(data)
+      }, [data])
 
-        return () => {
-          clearInterval(intervalId)
-        }
-      }, [isModalOpen])
+      if (!address || !selfApp || !SelfQRcode) return null
 
       return (
         <>
@@ -96,14 +95,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
 
           <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
             <DialogContent>
-              {this.selfApp && (
-                <SelfQRcode
-                  selfApp={this.selfApp}
-                  onSuccess={() => {
-                    console.log('Success')
-                  }}
-                />
-              )}
+              <SelfQRcode selfApp={selfApp} onSuccess={handleVerificationSuccess} />
             </DialogContent>
           </Dialog>
         </>
