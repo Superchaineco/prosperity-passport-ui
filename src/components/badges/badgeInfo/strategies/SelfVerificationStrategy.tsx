@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import type { ResponseBadge } from '@/types/super-chain'
 import type { BadgeRenderStrategy } from '../BadgeStrategyRenderer'
-import { Button, Dialog, DialogContent } from '@mui/material'
+import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, IconButton, Typography } from '@mui/material'
 import axios from 'axios'
 import { BACKEND_BASE_URI } from '@/config/constants'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import useSafeAddress from '@/hooks/useSafeAddress'
+import CloseIcon from '@mui/icons-material/Close'
 
 class SelfVerificationStrategy implements BadgeRenderStrategy {
   canRender(badge: ResponseBadge): boolean {
@@ -19,6 +20,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
       const [SelfQRcode, setSelfQRcode] = useState<any>(null)
       const address = useSafeAddress()
       const queryClient = useQueryClient()
+      const [successModalOpen, setSuccessModalOpen] = useState(false)
 
       useEffect(() => {
         const init = async () => {
@@ -33,8 +35,6 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
             userId: address,
             userIdType: 'hex',
             disclosures: {
-              gender: true,
-              name: true,
               nationality: true,
             },
           }).build()
@@ -56,10 +56,15 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
       }
 
       const handleVerificationSuccess = () => {
-        console.log('Verification successful')
-        alert('Verification successful')
         queryClient.invalidateQueries({ queryKey: ['self-verification', address] })
-        handleCloseModal()
+        setIsModalOpen(false)
+        setSuccessModalOpen(true)
+      }
+
+      const handleSuccessModalClose = () => {
+        setSuccessModalOpen(false)
+        // Redirigir a dashboard si deseas:
+        // router.push('/dashboard')
       }
 
       const { data } = useQuery({
@@ -82,7 +87,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
             color="primary"
             onClick={handleOpenModal}
             sx={{
-              borderRadius: '100px',
+              borderRadius: '6px',
               textTransform: 'none',
               fontWeight: 600,
               padding: '8px 24px',
@@ -91,12 +96,187 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
             }}
             disabled={data?.check}
           >
-            {data?.check ? 'Verified' : 'Verify Badge'}
+            {data?.check ? 'Verified' : 'Verify'}
           </Button>
 
-          <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
-            <DialogContent>
-              <SelfQRcode selfApp={selfApp} onSuccess={handleVerificationSuccess} />
+          <Dialog
+            open={isModalOpen}
+            onClose={handleCloseModal}
+            maxWidth="xs"
+            fullWidth
+            PaperProps={{
+              sx: {
+                borderRadius: '12px',
+                p: 0,
+                minWidth: 500,
+              },
+            }}
+          >
+            <Box display="flex" alignItems="center" justifyContent="space-between" px={3} pt="24px" pb="0px">
+              <DialogTitle
+                sx={{
+                  fontWeight: 600,
+                  fontSize: '24px',
+                  fontFamily: 'Inter',
+                  fontStyle: 'normal',
+                  lineHeight: '32px',
+                  letterSpacing: '0px',
+                  p: 0,
+                }}
+              >
+                Self Verification
+              </DialogTitle>
+              <IconButton onClick={handleCloseModal}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+
+            <Divider sx={{ mt: '24px', mb: '10px' }} />
+
+            <DialogContent
+              sx={{
+                textAlign: 'center',
+                px: 3,
+              }}
+            >
+              <Box display="flex" justifyContent="center" mb="24px">
+                <SelfQRcode selfApp={selfApp} onSuccess={handleVerificationSuccess} />
+              </Box>
+
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                sx={{
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontSize: '14px',
+                  fontStyle: 'normal',
+                  fontWeight: '400',
+                  lineHeight: '140%',
+                  letterSpacing: '0.25px',
+                }}
+              >
+                Scan this QR code to verify your identity through{' '}
+                <Typography
+                  sx={{
+                    color: '#476520',
+                    fontFamily: 'Inter',
+                    fontSize: '14px',
+                    fontStyle: 'normal',
+                    fontWeight: 500,
+                    lineHeight: '140%',
+                    letterSpacing: '0.25px',
+                    textDecorationLine: 'underline',
+                    textDecorationStyle: 'solid',
+                    textUnderlineOffset: 'auto',
+                  }}
+                  component="a"
+                  href="https://self.xyz/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  self.xyz
+                </Typography>
+                .
+              </Typography>
+
+              <Typography
+                variant="caption"
+                color="textSecondary"
+                sx={{
+                  fontFamily: 'Inter',
+                  fontSize: '12px',
+                  fontStyle: 'italic',
+                  fontWeight: 400,
+                  lineHeight: '140%',
+                  letterSpacing: '0.25px',
+                  textAlign: 'center',
+                  mb: '24px',
+                }}
+              >
+                We'll only confirm your Self verification status and validate your country.
+              </Typography>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog
+            open={successModalOpen}
+            onClose={handleSuccessModalClose}
+            maxWidth="xs"
+            fullWidth
+            PaperProps={{
+              sx: {
+                borderRadius: '12px',
+                p: 0,
+                minWidth: 500,
+              },
+            }}
+          >
+            <Box display="flex" alignItems="center" justifyContent="space-between" px={3} pt="24px">
+              <DialogTitle
+                sx={{
+                  fontWeight: 600,
+                  fontSize: '24px',
+                  fontFamily: 'Inter',
+                  fontStyle: 'normal',
+                  lineHeight: '32px',
+                  letterSpacing: '0px',
+                  p: 0,
+                }}
+              >
+                Self Verification Successful
+              </DialogTitle>
+              <IconButton onClick={handleSuccessModalClose}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+
+            <Divider sx={{ mt: '24px' }} />
+
+            <DialogContent
+              sx={{
+                textAlign: 'center',
+                px: 3,
+                pt: '24px',
+                pb: '24px',
+              }}
+            >
+              <Box width="64px" height="48px" borderRadius="6px" bgcolor="#D9D9D9" mx="auto" mb="24px" />
+
+              <Typography
+                variant="body2"
+                sx={{
+                  fontFamily: 'Inter',
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  color: '#000',
+                  lineHeight: '140%',
+                  letterSpacing: '0.25px',
+                  mb: '24px',
+                }}
+              >
+                Your country flag is now visible on your profile and the leaderboard.
+              </Typography>
+
+              <Button
+                variant="contained"
+                onClick={handleSuccessModalClose}
+                sx={{
+                  backgroundColor: '#000',
+                  color: '#fff',
+                  textTransform: 'none',
+                  borderRadius: '8px',
+                  padding: '10px 24px',
+                  fontFamily: 'Inter',
+                  fontWeight: 600,
+                  fontSize: '14px',
+                  ':hover': {
+                    backgroundColor: '#222',
+                  },
+                }}
+              >
+                Return to Dashboard
+              </Button>
             </DialogContent>
           </Dialog>
         </>

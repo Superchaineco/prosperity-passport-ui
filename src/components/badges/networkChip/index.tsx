@@ -13,7 +13,6 @@ interface NetworkChipProps {
 const NetworkChip: React.FC<NetworkChipProps> = ({ network, style, isFavorite, className }) => {
   const networkLogo = networks.find((x) => x.value === network.toLocaleLowerCase())?.icon ?? ''
   const isBadge = style === 'badge'
-  console.log(network)
 
   return isBadge ? (
     <Image src={networkLogo} alt={`${network} Logo`} width={24} height={24} loading="lazy" className={className} />

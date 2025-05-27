@@ -258,7 +258,7 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
       MuiDialogTitle: {
         styleOverrides: {
           root: ({ theme }) => ({
-            borderBottom: `1px solid ${theme.palette.border.light} !important`,
+
           }),
         },
       },
