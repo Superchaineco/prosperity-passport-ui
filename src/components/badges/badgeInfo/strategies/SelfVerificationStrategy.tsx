@@ -7,6 +7,7 @@ import { BACKEND_BASE_URI } from '@/config/constants'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import useSafeAddress from '@/hooks/useSafeAddress'
 import CloseIcon from '@mui/icons-material/Close'
+import CountryFlag from '@/components/countryFlag'
 
 class SelfVerificationStrategy implements BadgeRenderStrategy {
   canRender(badge: ResponseBadge): boolean {
@@ -241,7 +242,11 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
                 pb: '24px',
               }}
             >
-              <Box width="64px" height="48px" borderRadius="6px" bgcolor="#D9D9D9" mx="auto" mb="24px" />
+              {data?.data && (
+                <Box display="flex" justifyContent="center" mb="24px">
+                  <CountryFlag alpha3={JSON.parse(data.data)?.nationality ?? ''} />
+                </Box>
+              )}
 
               <Typography
                 variant="body2"
@@ -275,7 +280,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
                   },
                 }}
               >
-                Return to Dashboard
+                Accept
               </Button>
             </DialogContent>
           </Dialog>
