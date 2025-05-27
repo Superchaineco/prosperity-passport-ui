@@ -1,6 +1,7 @@
 import countries from 'i18n-iso-countries'
 import 'i18n-iso-countries/langs/en.json'
 import React from 'react'
+import 'flag-icons/css/flag-icons.min.css'
 
 countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
@@ -9,8 +10,9 @@ type Props = {
   size?: number
 }
 
-const CountryFlag: React.FC<Props> = ({ alpha3, size = 48 }) => {
+const CountryFlag: React.FC<Props> = ({ alpha3, size = 100 }) => {
   const alpha2 = countries.alpha3ToAlpha2(alpha3.toUpperCase())
+  console.log('Flag!!!!!!', alpha3, alpha2)
   if (!alpha2) return <span title="Unknown country">🏳️</span>
 
   return (

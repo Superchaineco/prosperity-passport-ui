@@ -244,7 +244,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
             >
               {data?.data && (
                 <Box display="flex" justifyContent="center" mb="24px">
-                  <CountryFlag alpha3={JSON.parse(data.data)?.nationality ?? ''} />
+                  <CountryFlag alpha3={data.data?.nationality ?? ''} />
                 </Box>
               )}
 
