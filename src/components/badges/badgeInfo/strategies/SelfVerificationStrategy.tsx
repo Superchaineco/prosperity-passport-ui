@@ -194,7 +194,7 @@ class SelfVerificationStrategy implements BadgeRenderStrategy {
                   mb: '24px',
                 }}
               >
-                We'll only confirm your Self verification status and validate your country.
+                We&apos;ll only confirm your Self verification status and validate your country.
               </Typography>
             </DialogContent>
           </Dialog>

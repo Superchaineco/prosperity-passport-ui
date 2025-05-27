@@ -257,9 +257,7 @@ const createSafeTheme = (mode: PaletteMode): Theme => {
       },
       MuiDialogTitle: {
         styleOverrides: {
-          root: ({ theme }) => ({
-
-          }),
+          root: ({ theme }) => ({}),
         },
       },
       MuiDialogActions: {
