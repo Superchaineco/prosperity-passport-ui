@@ -147,7 +147,7 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
         <DialogContent sx={{ textAlign: 'center', px: 3, pt: '24px', pb: '24px' }}>
           {data?.data && (
             <Box display="flex" justifyContent="center" mb="24px">
-              <CountryFlag alpha3={data.data?.nationality ?? ''} />
+              <CountryFlag alpha3={data.data?.nationality ?? ''} size={75} />
             </Box>
           )}
           <Typography variant="body2" sx={{ mb: '24px' }}>
