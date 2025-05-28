@@ -20,12 +20,14 @@ interface BadgeStrategyRendererProps {
   badge: ResponseBadge
   strategies: BadgeRenderStrategy[]
   defaultStrategy?: BadgeRenderStrategy
+  claimBadges: () => void
 }
 
 const BadgeStrategyRenderer: React.FC<BadgeStrategyRendererProps> = ({
   badge,
   strategies,
   defaultStrategy = new DefaultBadgeStrategy(),
+  claimBadges,
 }) => {
   const strategy = strategies.find((s) => s.canRender(badge)) || defaultStrategy
   return <>{strategy.render(badge)}</>

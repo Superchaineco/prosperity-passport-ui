@@ -38,7 +38,7 @@ function Badges({ season }: { season?: { code: number; name: string } }) {
   }>({
     queryKey: ['badges', safeAddress, safeLoaded],
     queryFn: async () => await badgesService.getBadges(safeAddress as `0x${string}`),
-    refetchInterval: 1000 * 60 * 2,
+    refetchInterval: 2000,
     enabled: !!safeLoaded,
   })
   const isClaimable = useMemo(() => data?.currentBadges.some((badge) => badge.claimable), [data?.currentBadges])
