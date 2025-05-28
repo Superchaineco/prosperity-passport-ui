@@ -2,8 +2,8 @@ import { gql, useLazyQuery, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Address } from 'viem'
 import useSafeAddress from '../useSafeAddress'
-import axios from 'axios';
-import { BACKEND_BASE_URI } from '@/config/constants';
+import axios from 'axios'
+import { BACKEND_BASE_URI } from '@/config/constants'
 
 export type Leaderboard = {
   superChainSmartAccounts: {
@@ -43,19 +43,14 @@ function getTimestampForLastWeek(): number {
   return Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60 // Unix timestamp for one week ago
 }
 
-
 interface NationalityBatchResponse {
-  [address: string]: string;
+  [address: string]: string
 }
 
 async function fetchNationalities(safeAddresses: string[]): Promise<Record<string, string>> {
-
-  const normalizedAddresses = Array.from(
-    new Set(safeAddresses.map(addr => addr.trim().toUpperCase()))
-  );
+  const normalizedAddresses = Array.from(new Set(safeAddresses.map((addr) => addr.trim().toUpperCase())))
 
   try {
-
     const response = await axios.post<NationalityBatchResponse>(
       `${BACKEND_BASE_URI}/leaderboard/nationalities`,
       { addresses: normalizedAddresses },
@@ -64,41 +59,35 @@ async function fetchNationalities(safeAddresses: string[]): Promise<Record<strin
           'Content-Type': 'application/json',
         },
         timeout: 5000,
-      }
-    );
+      },
+    )
 
+    const nationalities: Record<string, string> = {}
 
-    const nationalities: Record<string, string> = {};
+    normalizedAddresses.forEach((address) => {
+      nationalities[address] = response.data[address] || 'UNKNOWN'
+    })
 
-    normalizedAddresses.forEach(address => {
-      nationalities[address] = response.data[address] || 'UNKNOWN';
-    });
-
-    return nationalities;
-
+    return nationalities
   } catch (error) {
-    console.error('Error fetching nationalities:', error);
-
+    console.error('Error fetching nationalities:', error)
 
     if (axios.isAxiosError(error)) {
       console.error('Details:', {
         status: error.response?.status,
         data: error.response?.data,
         message: error.message,
-      });
+      })
     }
 
+    const fallback: Record<string, string> = {}
+    normalizedAddresses.forEach((address) => {
+      fallback[address] = 'UNKNOWN'
+    })
 
-    const fallback: Record<string, string> = {};
-    normalizedAddresses.forEach(address => {
-      fallback[address] = 'UNKNOWN';
-    });
-
-    return fallback;
+    return fallback
   }
 }
-
-
 
 export function useLeaderboard(user: Address, skip: number) {
   const GET_LEADERBOARD = gql`
@@ -142,56 +131,56 @@ export function useLeaderboard(user: Address, skip: number) {
       userId: user,
       skip,
     },
-  });
+  })
 
-  const [enhancedData, setEnhancedData] = useState<Leaderboard | null>(null);
-  const [isLoadingNationalities, setIsLoadingNationalities] = useState(false);
+  const [enhancedData, setEnhancedData] = useState<Leaderboard | null>(null)
+  const [isLoadingNationalities, setIsLoadingNationalities] = useState(false)
 
   useEffect(() => {
     if (data && !loading) {
       const fetchAndCombineData = async () => {
-        setIsLoadingNationalities(true);
+        setIsLoadingNationalities(true)
 
         try {
-          const safeAddresses = [
-            ...data.superChainSmartAccounts.map(account => account.safe),
-            safeAddress
-          ].filter(Boolean) as string[];
+          const safeAddresses = [...data.superChainSmartAccounts.map((account) => account.safe), safeAddress].filter(
+            Boolean,
+          ) as string[]
 
-
-          const nationalities = await fetchNationalities(safeAddresses);
+          const nationalities = await fetchNationalities(safeAddresses)
 
           const combinedData: Leaderboard = {
             ...data,
-            superChainSmartAccounts: data.superChainSmartAccounts.map(account => ({
+            superChainSmartAccounts: data.superChainSmartAccounts.map((account) => ({
               ...account,
-              nationality: nationalities[account.safe.toUpperCase()]
+              nationality: nationalities[account.safe.toUpperCase()],
             })),
-            superChainSmartAccount: data.superChainSmartAccount ? {
-              ...data.superChainSmartAccount,
-              nationality: nationalities[safeAddress.toUpperCase()]
-            } : data.superChainSmartAccount
-          };
+            superChainSmartAccount: data.superChainSmartAccount
+              ? {
+                  ...data.superChainSmartAccount,
+                  nationality: nationalities[safeAddress.toUpperCase()],
+                }
+              : data.superChainSmartAccount,
+          }
 
-          setEnhancedData(combinedData);
+          setEnhancedData(combinedData)
         } catch (err) {
-          console.error('Error fetching nationalities:', err);
+          console.error('Error fetching nationalities:', err)
 
-          setEnhancedData(data);
+          setEnhancedData(data)
         } finally {
-          setIsLoadingNationalities(false);
+          setIsLoadingNationalities(false)
         }
-      };
+      }
 
-      fetchAndCombineData();
+      fetchAndCombineData()
     }
-  }, [data, loading]);
+  }, [data, loading])
   return {
     data: enhancedData || data,
     loading: loading || isLoadingNationalities,
     error,
-    fetchMore
-  };
+    fetchMore,
+  }
 }
 
 export type WeeklyLeaderboard = {
