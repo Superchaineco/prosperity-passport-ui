@@ -39,6 +39,7 @@ function WeeklyLeaderboard() {
               name={currentUser.user!.superChainId}
               level={currentUser.user!.level}
               badges={currentUser.user!.badges.length}
+              nationality=""
               noun={{
                 accessory: parseInt(currentUser.user!.noun_accessory),
                 background: parseInt(currentUser.user!.noun_background),
@@ -62,6 +63,7 @@ function WeeklyLeaderboard() {
               level={user.level}
               isMainProfile={user.safe.toLowerCase() === address.toLowerCase()}
               badges={user.badges.length}
+              nationality=""
               noun={{
                 accessory: parseInt(user.noun_accessory),
                 background: parseInt(user.noun_background),
