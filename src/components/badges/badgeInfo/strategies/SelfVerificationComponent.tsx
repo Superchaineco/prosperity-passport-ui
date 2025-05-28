@@ -50,7 +50,7 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
   }
 
   const handleVerificationSuccess = () => {
-    if (isValidationModalOpen) {
+    if (isValidationModalOpen && data?.check) {
       queryClient.invalidateQueries({ queryKey: ['self-verification', address] })
       setValidationModalOpen(false)
       setSuccessModalOpen(true)
