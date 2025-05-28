@@ -3,19 +3,21 @@ import { Box, Stack, SvgIcon, Typography } from '@mui/material'
 import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import React from 'react'
 import { NounProps } from '@/components/new-safe/create/steps/AvatarStep'
+import CountryFlag from '@/components/countryFlag'
 
 type _Props = {
   isMainProfile?: boolean
   position: number
   points: string
   name: string
+  nationality: string | undefined
   level: string
   noun: NounProps
   badges: number
   onClick?: () => void
 }
 
-function RankingProfile({ isMainProfile, position, points, name, level, badges, noun, onClick }: _Props) {
+function RankingProfile({ isMainProfile, position, points, name, nationality, level, badges, noun, onClick }: _Props) {
   return (
     <Box
       sx={{
@@ -64,6 +66,7 @@ function RankingProfile({ isMainProfile, position, points, name, level, badges, 
           <Typography fontSize={14}>
             <strong>{name.split('.prosperity')[0]}</strong>.prosperity
           </Typography>
+          <CountryFlag alpha3={nationality ?? ''} size={20} />
           <Box
             display={{ xs: 'none', sm: 'block' }}
             bgcolor="white"

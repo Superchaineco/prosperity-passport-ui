@@ -1,6 +1,7 @@
 import { gql, useLazyQuery, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Address } from 'viem'
+import useSafeAddress from '../useSafeAddress'
 
 export type Leaderboard = {
   superChainSmartAccounts: {
@@ -8,6 +9,7 @@ export type Leaderboard = {
     level: string
     safe: string
     superChainId: string
+    nationality?: string
     badges: {
       id: string
       tier: string
@@ -22,6 +24,7 @@ export type Leaderboard = {
     points: string
     level: string
     superChainId: string
+    nationality?: string
     badges: {
       id: string
       tier: string
@@ -37,6 +40,31 @@ export type Leaderboard = {
 function getTimestampForLastWeek(): number {
   return Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60 // Unix timestamp for one week ago
 }
+
+
+async function fetchNationalities(safeAddresses: string[]): Promise<Record<string, string>> {
+  // Aquí debes implementar la llamada a tu servicio real que devuelve las nacionalidades
+  // Este es un ejemplo simulado que devuelve nacionalidades aleatorias
+  const nationalities: Record<string, string> = {};
+
+  for (const safe of safeAddresses) {
+    // Simulamos una llamada a la API
+    nationalities[safe] = await mockNationalityService(safe);
+  }
+
+  return nationalities;
+}
+
+// Función de ejemplo para simular el servicio de nacionalidad
+async function mockNationalityService(safe: string): Promise<string> {
+  const nationalities = ['US', 'UK', 'DE', 'FR', 'JP', 'BR', 'IN', 'CN'];
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(nationalities[Math.floor(Math.random() * nationalities.length)]);
+    }, 100);
+  });
+}
+
 
 export function useLeaderboard(user: Address, skip: number) {
   const GET_LEADERBOARD = gql`
@@ -74,12 +102,62 @@ export function useLeaderboard(user: Address, skip: number) {
     }
   `
 
-  return useQuery<Leaderboard>(GET_LEADERBOARD, {
+  const safeAddress = useSafeAddress()
+  const { data, loading, error, fetchMore } = useQuery<Leaderboard>(GET_LEADERBOARD, {
     variables: {
       userId: user,
       skip,
     },
-  })
+  });
+
+  const [enhancedData, setEnhancedData] = useState<Leaderboard | null>(null);
+  const [isLoadingNationalities, setIsLoadingNationalities] = useState(false);
+
+  useEffect(() => {
+    if (data && !loading) {
+      const fetchAndCombineData = async () => {
+        setIsLoadingNationalities(true);
+
+        try {
+          const safeAddresses = [
+            ...data.superChainSmartAccounts.map(account => account.safe),
+            safeAddress
+          ].filter(Boolean) as string[];
+
+
+          const nationalities = await fetchNationalities(safeAddresses);
+
+          const combinedData: Leaderboard = {
+            ...data,
+            superChainSmartAccounts: data.superChainSmartAccounts.map(account => ({
+              ...account,
+              nationality: nationalities[account.safe.toUpperCase()]
+            })),
+            superChainSmartAccount: data.superChainSmartAccount ? {
+              ...data.superChainSmartAccount,
+              nationality: nationalities[safeAddress.toUpperCase()]
+            } : data.superChainSmartAccount
+          };
+
+          setEnhancedData(combinedData);
+        } catch (err) {
+          console.error('Error fetching nationalities:', err);
+
+          setEnhancedData(data);
+        } finally {
+          setIsLoadingNationalities(false);
+        }
+      };
+
+      fetchAndCombineData();
+    }
+  }, [data, loading]);
+  return {
+    data: enhancedData || data,
+    loading: loading || isLoadingNationalities,
+    error,
+    fetchMore
+  };
 }
 
 export type WeeklyLeaderboard = {

@@ -81,6 +81,7 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string, rank:
             name={data!.superChainSmartAccount.superChainId}
             level={data!.superChainSmartAccount.level}
             badges={data!.superChainSmartAccount.badges.reduce((acc, badge) => acc + parseInt(badge.tier), 0)}
+            nationality={data!.superChainSmartAccount.nationality}
             noun={{
               accessory: parseInt(data!.superChainSmartAccount.noun_accessory),
               background: parseInt(data!.superChainSmartAccount.noun_background),
@@ -104,6 +105,7 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string, rank:
               level={user.level}
               isMainProfile={user.safe.toLowerCase() === address.toLowerCase()}
               badges={user.badges.reduce((acc, badge) => acc + parseInt(badge.tier), 0)}
+              nationality={user.nationality}
               noun={{
                 accessory: parseInt(user.noun_accessory),
                 background: parseInt(user.noun_background),
