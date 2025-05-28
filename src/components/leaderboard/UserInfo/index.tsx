@@ -253,7 +253,7 @@ function UserInfo({
                   </CopyAddressButton>
                   <ExplorerButton {...blockExplorerLink} color="inherit" />
                 </Box>
-                <CountryFlag alpha3={nationality ?? ''} size={24} sx={{ ml: 'auto', mt: '3px' }} />
+                <CountryFlag alpha3={nationality ?? ''} size={24} />
               </Stack>
             </Stack>
             <Stack direction="row" gap={1} sx={{ alignSelf: 'left', width: '100%' }}>
