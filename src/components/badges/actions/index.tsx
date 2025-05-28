@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Grid, InputAdornment, SelectChangeEvent, SvgIcon, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import SearchIcon from '@/public/images/common/search.svg'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -96,6 +96,17 @@ function BadgesActions({
     },
   })
 
+  useEffect(() => {
+    const handler = () => {
+      mutate()
+    }
+
+    window.addEventListener('claim-badges', handler)
+
+    return () => {
+      window.removeEventListener('claim-badges', handler)
+    }
+  }, [mutate])
   const handleCloseClaimModal = () => {
     setIsClaimModalOpen(false)
   }
