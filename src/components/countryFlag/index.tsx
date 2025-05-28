@@ -32,8 +32,9 @@ const CountryFlag: React.FC<Props> = ({ alpha3, size = 100 }) => {
         width: size,
         height: size * 0.75,
         display: 'inline-block',
-        borderRadius: 6,
+        borderRadius: 2.286,
         boxShadow: '0 0 2px rgba(0,0,0,0.3)',
+        border: '1px solid #E1E2EA',
       }}
     />
   ) : (

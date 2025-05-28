@@ -66,7 +66,7 @@ function RankingProfile({ isMainProfile, position, points, name, nationality, le
           <Typography fontSize={14}>
             <strong>{name.split('.prosperity')[0]}</strong>.prosperity
           </Typography>
-          <CountryFlag alpha3={nationality ?? ''} size={20} />
+          <CountryFlag alpha3={nationality ?? ''} size={24} />
           <Box
             display={{ xs: 'none', sm: 'block' }}
             bgcolor="white"

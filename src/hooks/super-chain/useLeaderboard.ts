@@ -2,6 +2,8 @@ import { gql, useLazyQuery, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Address } from 'viem'
 import useSafeAddress from '../useSafeAddress'
+import axios from 'axios';
+import { BACKEND_BASE_URI } from '@/config/constants';
 
 export type Leaderboard = {
   superChainSmartAccounts: {
@@ -42,28 +44,60 @@ function getTimestampForLastWeek(): number {
 }
 
 
+interface NationalityBatchResponse {
+  [address: string]: string;
+}
+
 async function fetchNationalities(safeAddresses: string[]): Promise<Record<string, string>> {
-  // Aquí debes implementar la llamada a tu servicio real que devuelve las nacionalidades
-  // Este es un ejemplo simulado que devuelve nacionalidades aleatorias
-  const nationalities: Record<string, string> = {};
 
-  for (const safe of safeAddresses) {
-    // Simulamos una llamada a la API
-    nationalities[safe] = await mockNationalityService(safe);
+  const normalizedAddresses = Array.from(
+    new Set(safeAddresses.map(addr => addr.trim().toUpperCase()))
+  );
+
+  try {
+
+    const response = await axios.post<NationalityBatchResponse>(
+      `${BACKEND_BASE_URI}/leaderboard/nationalities`,
+      { addresses: normalizedAddresses },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        timeout: 5000,
+      }
+    );
+
+
+    const nationalities: Record<string, string> = {};
+
+    normalizedAddresses.forEach(address => {
+      nationalities[address] = response.data[address] || 'UNKNOWN';
+    });
+
+    return nationalities;
+
+  } catch (error) {
+    console.error('Error fetching nationalities:', error);
+
+
+    if (axios.isAxiosError(error)) {
+      console.error('Details:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+    }
+
+
+    const fallback: Record<string, string> = {};
+    normalizedAddresses.forEach(address => {
+      fallback[address] = 'UNKNOWN';
+    });
+
+    return fallback;
   }
-
-  return nationalities;
 }
 
-// Función de ejemplo para simular el servicio de nacionalidad
-async function mockNationalityService(safe: string): Promise<string> {
-  const nationalities = ['US', 'UK', 'DE', 'FR', 'JP', 'BR', 'IN', 'CN'];
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(nationalities[Math.floor(Math.random() * nationalities.length)]);
-    }, 100);
-  });
-}
 
 
 export function useLeaderboard(user: Address, skip: number) {
