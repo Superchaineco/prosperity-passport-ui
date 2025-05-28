@@ -22,7 +22,7 @@ const CountryFlag: React.FC<Props> = ({ alpha3, size = 100 }) => {
   }, [])
 
   if (!alpha2) {
-    return <Skeleton variant="rectangular" width={size} height={size * 0.75} sx={{ borderRadius: 1 }} />
+    return <></>
   }
 
   return isReady ? (
