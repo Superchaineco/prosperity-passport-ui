@@ -1,5 +1,6 @@
 import ModalDialog from '@/components/common/ModalDialog'
 import NounsAvatar from '@/components/common/NounsAvatar'
+import CountryFlag from '@/components/countryFlag'
 import Badges from '@/components/superChain/Badges'
 import Perks from '@/components/superChain/Perks'
 import { BACKEND_BASE_URI } from '@/config/constants'
@@ -23,6 +24,7 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
 
   const { data, loading } = useLeaderboard(safeAddress, 0)
   const { rank } = useUserRank(safeAddress, loading, loading ? '0' : data?.superChainSmartAccount.points)
+  const nationality = data?.superChainSmartAccount.nationality
 
   const { data: user, isLoading: userIsLoading } = useQuery<UserResponse>({
     queryKey: ['AccountOverview'],
@@ -113,17 +115,14 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
               justifyContent="flex-start"
               alignItems="flex-start"
             >
-              <Typography
-                fontWeight={600}
-                color="primary"
-                fontSize={16}
-                whiteSpace="normal"
-                display="flex"
-                flexWrap="wrap"
-              >
-                {truncateName(superChainSmartAccount.data.superChainID.split('.prosperity')[0], 12)}
-                <span style={{ color: 'var(--color-secondary-main)' }}>.prosperity</span>
-              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Typography fontWeight={600} color="primary" fontSize={16} whiteSpace="normal" display="inline">
+                  {truncateName(superChainSmartAccount.data.superChainID.split('.prosperity')[0], 12)}
+                  <span style={{ color: 'var(--color-secondary-main)' }}>.prosperity</span>
+                </Typography>
+                <CountryFlag alpha3={nationality ?? ''} size={24} />
+              </Box>
+
               <Box>
                 <Typography fontSize={14} fontWeight={500} color="#8C8C8C">
                   Prosperity Points:{' '}

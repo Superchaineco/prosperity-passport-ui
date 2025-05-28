@@ -7,7 +7,11 @@ import type { Address } from 'viem'
 import { useUserRank } from '@/hooks/super-chain/useUserRank'
 import InfiniteScroll from '../common/InfiniteScroll'
 
-function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string, rank: number) => void }) {
+function Leaderboard({
+  handleUserSelect,
+}: {
+  handleUserSelect: (_: string, rank: number, nationality: string | undefined) => void
+}) {
   const address = useSafeAddress()
   const [isFetching, setIsFetching] = useState(false)
   const [skip, setSkip] = useState(0)
@@ -75,7 +79,7 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string, rank:
         <Stack spacing={1}>
           <RankingProfile
             isMainProfile
-            onClick={() => handleUserSelect(address, rank!)}
+            onClick={() => handleUserSelect(address, rank!, data!.superChainSmartAccount.nationality)}
             position={rank!}
             points={data!.superChainSmartAccount.points}
             name={data!.superChainSmartAccount.superChainId}
@@ -100,7 +104,7 @@ function Leaderboard({ handleUserSelect }: { handleUserSelect: (_: string, rank:
               key={index}
               position={index + 1}
               points={user.points}
-              onClick={() => handleUserSelect(user.safe, index + 1)}
+              onClick={() => handleUserSelect(user.safe, index + 1, user.nationality)}
               name={user.superChainId}
               level={user.level}
               isMainProfile={user.safe.toLowerCase() === address.toLowerCase()}

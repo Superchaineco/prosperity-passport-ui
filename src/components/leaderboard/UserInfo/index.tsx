@@ -20,17 +20,20 @@ import useAddressBook from '@/hooks/useAddressBook'
 import useContacts from '@/hooks/useContacts'
 import ContactAdded from '@/public/images/common/contact-added.svg'
 import { getNounData } from '@nouns/assets'
+import CountryFlag from '@/components/countryFlag'
 
 function UserInfo({
   context,
   rank,
   isLoading,
   handleClose,
+  nationality,
 }: {
   context?: UserResponse
   rank: number
   isLoading: boolean
   handleClose: () => void
+  nationality: string | undefined
 }) {
   const chainId = useChainId()
   const dispatch = useAppDispatch()
@@ -240,13 +243,17 @@ function UserInfo({
                   .prosperity
                 </Typography>
               </Typography>
-              <Stack direction="row" fontSize="20px">
-                <CopyAddressButton address={context.superchainsmartaccount[0]}>
-                  <IconButton aria-label="Copy address" size="small">
-                    <SvgIcon data-testid="copy-btn-icon" component={CopyIcon} inheritViewBox fontSize="inherit" />
-                  </IconButton>
-                </CopyAddressButton>
-                <ExplorerButton {...blockExplorerLink} color="inherit" />
+
+              <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%" fontSize="20px">
+                <Box display="flex" alignItems="center">
+                  <CopyAddressButton address={context.superchainsmartaccount[0]}>
+                    <IconButton aria-label="Copy address" size="small">
+                      <SvgIcon data-testid="copy-btn-icon" component={CopyIcon} inheritViewBox fontSize="inherit" />
+                    </IconButton>
+                  </CopyAddressButton>
+                  <ExplorerButton {...blockExplorerLink} color="inherit" />
+                </Box>
+                <CountryFlag alpha3={nationality ?? ''} size={24} sx={{ ml: 'auto', mt: '3px' }} />
               </Stack>
             </Stack>
             <Stack direction="row" gap={1} sx={{ alignSelf: 'left', width: '100%' }}>
