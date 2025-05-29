@@ -7,14 +7,11 @@ import { useEffect, useState } from 'react'
 function getNextDeadlineUTC(): Date {
   const now = new Date()
 
-  const result = new Date(now)
-  const currentUTCDay = now.getUTCDay()
-  const daysUntilSunday = currentUTCDay === 0 ? 7 : 7 - currentUTCDay
+  const nextHour = new Date(now)
+  nextHour.setUTCMinutes(0, 0, 0)
+  nextHour.setUTCHours(now.getUTCHours() + 1)
 
-  result.setUTCDate(now.getUTCDate() + daysUntilSunday)
-  result.setUTCHours(23, 59, 59, 999)
-
-  return result
+  return nextHour
 }
 
 function getTimeDiff(): { days: number; hours: number; minutes: number } {
