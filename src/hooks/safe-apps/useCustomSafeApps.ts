@@ -82,7 +82,7 @@ const fakeSafeApps: SafeAppData[] = [
   },
   {
     id: 0.31472726789485663,
-    url: 'https://alpha.regenerative.fi',
+    url: 'https://app.regenerative.fi',
     name: 'Regenerative Fi',
     description:
       'A UI that supports core Regenerative protocol functionality. Explore & create pools, manage liquidity, swap tokens and claim incentives.',
