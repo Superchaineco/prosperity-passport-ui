@@ -136,27 +136,50 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
         onClose={handleSuccessModalClose}
         maxWidth="xs"
         fullWidth
-        PaperProps={{ sx: { borderRadius: '12px', p: 0, minWidth: 500 } }}
+        PaperProps={{ sx: { borderRadius: '12px', p: 0, minWidth: 392 } }}
       >
-        <Box display="flex" alignItems="center" justifyContent="space-between" px={3} pt="24px">
-          <DialogTitle sx={{ fontWeight: 600, fontSize: '24px', fontFamily: 'Inter', p: 0 }}>
+        <Box display="flex" justifyContent="center" pt="24px" px="24px">
+          <DialogTitle
+            sx={{
+              fontWeight: 600,
+              fontSize: '24px',
+              fontFamily: 'Inter',
+              p: 0,
+              textAlign: 'center',
+            }}
+          >
             Self Verification Successful
           </DialogTitle>
         </Box>
-        <Divider sx={{ mt: '24px' }} />
-        <DialogContent sx={{ textAlign: 'center', px: 3, pt: '24px', pb: '24px' }}>
+
+        <DialogContent sx={{ textAlign: 'center', px: '24px', pt: '24px', pb: '24px' }}>
           {data?.data && (
             <Box display="flex" justifyContent="center" mb="24px">
               <CountryFlag alpha3={data.data?.nationality ?? ''} size={75} />
             </Box>
           )}
-          <Typography variant="body2" sx={{ mb: '24px' }}>
+
+          <Typography
+            sx={{
+              mb: '24px',
+              color: '#75757A',
+              textAlign: 'center',
+              fontFamily: 'Inter',
+              fontSize: '14px',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: '20px',
+            }}
+          >
             Your country flag is now visible on your profile and the leaderboard.
           </Typography>
+
           <Button
+            fullWidth
             variant="contained"
             onClick={handleSuccessModalClose}
             sx={{
+              mx: 0,
               backgroundColor: '#000',
               color: '#fff',
               textTransform: 'none',

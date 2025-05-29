@@ -58,102 +58,52 @@ function AddressBookHeader({
       title="Contacts"
       noBorder
       action={
-        <Grid container pb={1} spacing={1}>
-          <Grid item xs={12} mt={1} xl={5.5}>
-            <Box display="flex" alignItems="center" gap={2}>
-              <TextField
-                placeholder="Search"
-                variant="filled"
-                hiddenLabel
-                value={searchQuery}
-                onChange={(e) => onSearchQueryChange(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon component={SearchIcon} inheritViewBox color="border" />
-                    </InputAdornment>
-                  ),
-                  disableUnderline: true,
-                }}
-                fullWidth
-                size="medium"
-                sx={{
-                  width: '500px',
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={8}>
+            <TextField
+              placeholder="Search"
+              variant="filled"
+              hiddenLabel
+              value={searchQuery}
+              onChange={(e) => onSearchQueryChange(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SvgIcon component={SearchIcon} inheritViewBox color="border" />
+                  </InputAdornment>
+                ),
+                disableUnderline: true,
+              }}
+              fullWidth
+              size="medium"
+              sx={{
+                borderRadius: '6px',
+                backgroundColor: '#FFFFFF',
+                '& .MuiFilledInput-root': {
                   borderRadius: '6px',
-                  overflow: 'hidden',
                   backgroundColor: '#FFFFFF',
-                  '& .MuiFilledInput-root': {
-                    borderRadius: '6px',
-                    backgroundColor: '#FFFFFF',
-                    paddingX: '12px',
-                    height: '54px',
-                    '&:hover': {
-                      backgroundColor: '#E0E0E0',
-                    },
-                    '&.Mui-focused': {
-                      backgroundColor: '#FFFFFF',
-                    },
-                    '& input': {
-                      padding: '4px 0',
-                      '&::placeholder': {
-                        fontSize: '14px',
-                        color: '#6B6B6B',
-                        opacity: 1,
-                      },
-                    },
-                  },
-                }}
-              />
-
-              {/* <Box
-                component="button"
-                onClick={() => {
-                  onSearchQueryChange('')
-                }}
-                sx={{
-                  borderRadius: '6px',
-                  minWidth: '100px',
+                  paddingX: '12px',
                   height: '54px',
-                  padding: '12px',
-                  backgroundColor: 'transparent',
-                  color: 'black',
-                  fontWeight: 600,
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
                   '&:hover': {
                     backgroundColor: '#E0E0E0',
                   },
-                }}
-              >
-                Clear All
-              </Box> */}
-            </Box>
+                  '&.Mui-focused': {
+                    backgroundColor: '#FFFFFF',
+                  },
+                  '& input': {
+                    padding: '4px 0',
+                    '&::placeholder': {
+                      fontSize: '14px',
+                      color: '#6B6B6B',
+                      opacity: 1,
+                    },
+                  },
+                },
+              }}
+            />
           </Grid>
 
-          <Grid
-            item
-            xs={12}
-            md={7}
-            xl={6.5}
-            display="flex"
-            justifyContent={['space-between', , 'flex-end']}
-            alignItems="center"
-          >
-            {/* <Track {...ADDRESS_BOOK_EVENTS.IMPORT_BUTTON}> */}
-            {/*   <HeaderButton onClick={handleOpenModal(ModalType.IMPORT)} icon={ImportIcon}> */}
-            {/*     Import */}
-            {/*   </HeaderButton> */}
-            {/* </Track> */}
-            {/**/}
-            {/* <Track {...ADDRESS_BOOK_EVENTS.DOWNLOAD_BUTTON}> */}
-            {/*   <HeaderButton onClick={handleOpenModal(ModalType.EXPORT)} icon={ExportIcon} disabled={!canExport}> */}
-            {/*     Export */}
-            {/*   </HeaderButton> */}
-            {/* </Track> */}
-
+          <Grid item xs={12} md={4} display="flex" justifyContent={{ xs: 'flex-start', md: 'flex-end' }}>
             <Track {...ADDRESS_BOOK_EVENTS.CREATE_ENTRY}>
               <HeaderButton
                 onClick={handleOpenModal(ModalType.ENTRY)}
