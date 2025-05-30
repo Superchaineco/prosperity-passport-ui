@@ -24,7 +24,7 @@ function LeaderboardLayout() {
         return null
       }
       const response = await axios.get(`${BACKEND_BASE_URI}/user/${selectedUser}`)
-      console.log('ESTAAAA', response.data)
+
       return response.data
     },
     enabled: selectedUser !== zeroAddress,
