@@ -18,12 +18,13 @@ function LeaderboardLayout() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const { data, isLoading } = useQuery<UserResponse>({
-    queryKey: ['leaderboard', selectedUser],
+    queryKey: ['leaderboard-1', selectedUser],
     queryFn: async () => {
       if (selectedUser === zeroAddress) {
         return null
       }
       const response = await axios.get(`${BACKEND_BASE_URI}/user/${selectedUser}`)
+      console.log('ESTAAAA', response.data)
       return response.data
     },
     enabled: selectedUser !== zeroAddress,

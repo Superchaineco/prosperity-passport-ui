@@ -56,6 +56,7 @@ function UserInfo({
     }, {} as { [key: string]: any })
   }, [addressBook, contacts])
   const mergedEntriesArray = Object.entries(mergedEntries)
+
   const blockExplorerLink =
     chain && context ? getBlockExplorerLink(chain, context.superchainsmartaccount[0]) : undefined
 
