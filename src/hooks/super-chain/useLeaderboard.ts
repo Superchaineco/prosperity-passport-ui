@@ -1,9 +1,10 @@
-import { gql, useLazyQuery, useQuery } from '@apollo/client'
+import { gql, useApolloClient, useLazyQuery, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Address } from 'viem'
 import useSafeAddress from '../useSafeAddress'
 import axios from 'axios'
 import { BACKEND_BASE_URI } from '@/config/constants'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 export type Leaderboard = {
   superChainSmartAccounts: {
@@ -89,99 +90,93 @@ async function fetchNationalities(safeAddresses: string[]): Promise<Record<strin
   }
 }
 
-export function useLeaderboard(user: Address, skip: number) {
-  const GET_LEADERBOARD = gql`
-    query GetLeaderboard($userId: String, $skip: Int) {
-      superChainSmartAccounts(first: 20, skip: $skip, orderBy: points, orderDirection: desc) {
-        points
-        safe
-        level
-        superChainId
-        badges {
-          id
-          tier
-        }
-        noun_body
-        noun_head
-        noun_glasses
-        noun_accessory
-        noun_background
-      }
-      superChainSmartAccount(id: $userId) {
-        points
+const GET_LEADERBOARD = gql`
+  query GetLeaderboard($userId: String, $skip: Int) {
+    superChainSmartAccounts(first: 20, skip: $skip, orderBy: points, orderDirection: desc) {
+      points
+      safe
+      level
+      superChainId
+      badges {
         id
-        level
-        superChainId
-        badges {
-          id
-          tier
-        }
-        noun_body
-        noun_head
-        noun_glasses
-        noun_accessory
-        noun_background
+        tier
       }
+      noun_body
+      noun_head
+      noun_glasses
+      noun_accessory
+      noun_background
     }
-  `
-
-  const safeAddress = useSafeAddress()
-  const { data, loading, error, fetchMore } = useQuery<Leaderboard>(GET_LEADERBOARD, {
-    variables: {
-      userId: user,
-      skip,
-    },
-  })
-
-  const [enhancedData, setEnhancedData] = useState<Leaderboard | null>(null)
-  const [isLoadingNationalities, setIsLoadingNationalities] = useState(false)
-
-  useEffect(() => {
-    if (data && !loading) {
-      const fetchAndCombineData = async () => {
-        setIsLoadingNationalities(true)
-
-        try {
-          const safeAddresses = [...data.superChainSmartAccounts.map((account) => account.safe), safeAddress].filter(
-            Boolean,
-          ) as string[]
-
-          const nationalities = await fetchNationalities(safeAddresses)
-
-          const combinedData: Leaderboard = {
-            ...data,
-            superChainSmartAccounts: data.superChainSmartAccounts.map((account) => ({
-              ...account,
-              nationality: nationalities[account.safe.toUpperCase()],
-            })),
-            superChainSmartAccount: data.superChainSmartAccount
-              ? {
-                  ...data.superChainSmartAccount,
-                  nationality: nationalities[safeAddress.toUpperCase()],
-                }
-              : data.superChainSmartAccount,
-          }
-
-          setEnhancedData(combinedData)
-        } catch (err) {
-          console.error('Error fetching nationalities:', err)
-
-          setEnhancedData(data)
-        } finally {
-          setIsLoadingNationalities(false)
-        }
+    superChainSmartAccount(id: $userId) {
+      points
+      id
+      level
+      superChainId
+      badges {
+        id
+        tier
       }
-
-      fetchAndCombineData()
+      noun_body
+      noun_head
+      noun_glasses
+      noun_accessory
+      noun_background
     }
-  }, [data, loading])
-  return {
-    data: enhancedData || data,
-    loading: loading || isLoadingNationalities,
-    error,
-    fetchMore,
   }
+`
+
+export function useLeaderboard(userId: Address) {
+  const client = useApolloClient()
+  const safeAddress = useSafeAddress()
+
+  return useInfiniteQuery({
+    queryKey: ['leaderboard', userId],
+    queryFn: async ({ pageParam = 0 }) => {
+      const { data } = await client.query({
+        query: GET_LEADERBOARD,
+        variables: {
+          skip: pageParam,
+          userId: userId.toLowerCase(),
+        },
+        fetchPolicy: 'network-only',
+      })
+
+      const safeAddresses = [
+        ...data.superChainSmartAccounts.map((a: any) => a.safe),
+        ...(pageParam === 0 ? [safeAddress] : []), // solo en primera página
+      ].filter(Boolean)
+
+      let nationalities: Record<string, string> = {}
+      try {
+        nationalities = await fetchNationalities(safeAddresses)
+      } catch (err) {
+        console.error('Error fetching nationalities:', err)
+      }
+
+      const users = data.superChainSmartAccounts.map((account: any) => ({
+        ...account,
+        nationality: nationalities[account.safe.toUpperCase()],
+      }))
+
+      const mainUser =
+        pageParam === 0 && data.superChainSmartAccount
+          ? {
+            ...data.superChainSmartAccount,
+            nationality: nationalities[safeAddress.toUpperCase()],
+          }
+          : undefined
+
+      return {
+        users,
+        user: mainUser,
+        nextSkip: data.superChainSmartAccounts.length === 20 ? pageParam + 20 : undefined,
+      }
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextSkip,
+  })
 }
+
 
 export type WeeklyLeaderboard = {
   superChainSmartAccounts: {

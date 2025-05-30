@@ -1,5 +1,5 @@
 import { Box, Divider, Skeleton, Stack } from '@mui/material'
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import RankingProfile from './RankingProfile/index'
 import { useLeaderboard } from '@/hooks/super-chain/useLeaderboard'
 import useSafeAddress from '@/hooks/useSafeAddress'
@@ -13,50 +13,27 @@ function Leaderboard({
   handleUserSelect: (_: string, rank: number, nationality: string | undefined) => void
 }) {
   const address = useSafeAddress()
-  const [isFetching, setIsFetching] = useState(false)
-  const [skip, setSkip] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
-  const { data, loading, fetchMore } = useLeaderboard(address as Address, 0)
+
+  const { data, isLoading, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useLeaderboard(address as Address)
+
   const {
     rank,
-    error,
+    error: rankError,
     loading: rankLoading,
-  } = useUserRank(address as Address, loading, loading ? '0' : data?.superChainSmartAccount.points)
+  } = useUserRank(address as Address, isLoading, isLoading ? '0' : data?.pages[0]?.user?.points)
 
-  const handleLoadMore = useCallback(async () => {
-    if (isFetching || loading || !hasMore) return
-    setIsFetching(true)
+  const mainUser = data?.pages[0]?.user
+  const allUsers = data?.pages.flatMap((p) => p.users) ?? []
 
-    const newSkip = skip + 20
-    setSkip(newSkip)
-
-    const { data: fetchMoreData } = await fetchMore({
-      variables: {
-        skip: newSkip,
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult || !fetchMoreResult.superChainSmartAccounts.length) {
-          return previousResult
-        }
-        setIsFetching(false)
-
-        return {
-          ...fetchMoreResult,
-          superChainSmartAccounts: [
-            ...previousResult.superChainSmartAccounts,
-            ...fetchMoreResult.superChainSmartAccounts,
-          ],
-        }
-      },
-    })
-    if (!fetchMoreData || !fetchMoreData.superChainSmartAccounts.length) {
-      setHasMore(false)
+  const handleLoadMore = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
     }
-  }, [isFetching, loading, hasMore, skip, fetchMore])
+  }
 
-  if (error) return
+  if (error || rankError) return null
 
-  if (loading || !data || rankLoading) {
+  if (isLoading || rankLoading || !mainUser) {
     return (
       <main>
         <Stack spacing={2}>
@@ -79,36 +56,36 @@ function Leaderboard({
         <Stack spacing={1}>
           <RankingProfile
             isMainProfile
-            onClick={() => handleUserSelect(address, rank!, data!.superChainSmartAccount.nationality)}
+            onClick={() => handleUserSelect(address, rank!, mainUser.nationality)}
             position={rank!}
-            points={data!.superChainSmartAccount.points}
-            name={data!.superChainSmartAccount.superChainId}
-            level={data!.superChainSmartAccount.level}
-            badges={data!.superChainSmartAccount.badges.reduce((acc, badge) => acc + parseInt(badge.tier), 0)}
-            nationality={data!.superChainSmartAccount.nationality}
+            points={mainUser.points}
+            name={mainUser.superChainId}
+            level={mainUser.level}
+            badges={mainUser.badges.reduce((acc: any, badge: any) => acc + parseInt(badge.tier), 0)}
+            nationality={mainUser.nationality}
             noun={{
-              accessory: parseInt(data!.superChainSmartAccount.noun_accessory),
-              background: parseInt(data!.superChainSmartAccount.noun_background),
-              body: parseInt(data!.superChainSmartAccount.noun_body),
-              glasses: parseInt(data!.superChainSmartAccount.noun_glasses),
-              head: parseInt(data!.superChainSmartAccount.noun_head),
+              accessory: parseInt(mainUser.noun_accessory),
+              background: parseInt(mainUser.noun_background),
+              body: parseInt(mainUser.noun_body),
+              glasses: parseInt(mainUser.noun_glasses),
+              head: parseInt(mainUser.noun_head),
             }}
           />
         </Stack>
         <Stack spacing={1} height="100%">
           <Box sx={{ pb: '12px', pt: '12px', width: '100%' }}>
-            <Divider sx={{ width: '100%' }}></Divider>
+            <Divider sx={{ width: '100%' }} />
           </Box>
-          {data?.superChainSmartAccounts.map((user, index) => (
+          {allUsers.map((user, index) => (
             <RankingProfile
-              key={index}
+              key={user.safe}
               position={index + 1}
               points={user.points}
               onClick={() => handleUserSelect(user.safe, index + 1, user.nationality)}
               name={user.superChainId}
               level={user.level}
               isMainProfile={user.safe.toLowerCase() === address.toLowerCase()}
-              badges={user.badges.reduce((acc, badge) => acc + parseInt(badge.tier), 0)}
+              badges={user.badges.reduce((acc: any, badge: any) => acc + parseInt(badge.tier), 0)}
               nationality={user.nationality}
               noun={{
                 accessory: parseInt(user.noun_accessory),
@@ -119,9 +96,12 @@ function Leaderboard({
               }}
             />
           ))}
-
-          {hasMore &&
-            (isFetching ? <Skeleton variant="rounded" height={48} /> : <InfiniteScroll onLoadMore={handleLoadMore} />)}
+          {hasNextPage &&
+            (isFetchingNextPage ? (
+              <Skeleton variant="rounded" height={48} />
+            ) : (
+              <InfiniteScroll onLoadMore={handleLoadMore} />
+            ))}
         </Stack>
       </Stack>
     </main>
