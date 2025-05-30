@@ -22,9 +22,10 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
   const superChainSmartAccount = useAppSelector(selectSuperChainAccount)
   const safeAddress: Address = useSafeAddress() as Address
 
-  const { data, loading } = useLeaderboard(safeAddress, 0)
-  const { rank } = useUserRank(safeAddress, loading, loading ? '0' : data?.superChainSmartAccount.points)
-  const nationality = data?.superChainSmartAccount.nationality
+  const { data, isLoading } = useLeaderboard(safeAddress)
+  const mainUser = data?.pages[0]?.user
+  const { rank } = useUserRank(safeAddress, isLoading, isLoading ? '0' : mainUser?.points)
+  const nationality = mainUser?.nationality
 
   const { data: user, isLoading: userIsLoading } = useQuery<UserResponse>({
     queryKey: ['AccountOverview'],
@@ -41,15 +42,16 @@ function AccountOverview({ open, onClose }: { open: boolean; onClose: () => void
     return name
   }
 
-  const nounSeed = useMemo(() => {
-    return {
-      background: Number(superChainSmartAccount.data.noun[0]),
-      body: Number(superChainSmartAccount.data.noun[1]),
-      accessory: Number(superChainSmartAccount.data.noun[2]),
-      head: Number(superChainSmartAccount.data.noun[3]),
-      glasses: Number(superChainSmartAccount.data.noun[4]),
-    }
-  }, [superChainSmartAccount])
+  const nounSeed = useMemo(
+    () => ({
+      background: Number(mainUser?.noun_background ?? 0),
+      body: Number(mainUser?.noun_body ?? 0),
+      accessory: Number(mainUser?.noun_accessory ?? 0),
+      head: Number(mainUser?.noun_head ?? 0),
+      glasses: Number(mainUser?.noun_glasses ?? 0),
+    }),
+    [mainUser],
+  )
 
   return (
     <ModalDialog
