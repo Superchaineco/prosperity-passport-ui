@@ -12,7 +12,7 @@ function LeaderboardHeader({ children }: { children?: React.ReactNode }) {
           <Typography variant="h3" fontWeight={700}>
             Leaderboard
           </Typography>
-          <RefreshTimer />
+          {/* <RefreshTimer /> */}
         </Box>
       }
       action={
