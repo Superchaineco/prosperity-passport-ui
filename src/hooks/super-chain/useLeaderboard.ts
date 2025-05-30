@@ -1,4 +1,4 @@
-import { gql, useApolloClient, useLazyQuery, useQuery } from '@apollo/client'
+import { gql, useApolloClient, useLazyQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Address } from 'viem'
 import useSafeAddress from '../useSafeAddress'
@@ -161,9 +161,9 @@ export function useLeaderboard(userId: Address) {
       const mainUser =
         pageParam === 0 && data.superChainSmartAccount
           ? {
-            ...data.superChainSmartAccount,
-            nationality: nationalities[safeAddress.toUpperCase()],
-          }
+              ...data.superChainSmartAccount,
+              nationality: nationalities[safeAddress.toUpperCase()],
+            }
           : undefined
 
       return {
@@ -176,7 +176,6 @@ export function useLeaderboard(userId: Address) {
     getNextPageParam: (lastPage) => lastPage.nextSkip,
   })
 }
-
 
 export type WeeklyLeaderboard = {
   superChainSmartAccounts: {

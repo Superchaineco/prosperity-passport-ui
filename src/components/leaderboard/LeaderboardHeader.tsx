@@ -2,7 +2,6 @@ import React from 'react'
 import PageHeader from '@/components/common/PageHeader'
 import css from '@/components/common/PageHeader/styles.module.css'
 import { Box, Typography } from '@mui/material'
-import RefreshTimer from './RefreshTimer'
 
 function LeaderboardHeader({ children }: { children?: React.ReactNode }) {
   return (
