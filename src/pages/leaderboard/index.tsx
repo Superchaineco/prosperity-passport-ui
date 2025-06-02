@@ -14,7 +14,7 @@ import { type Address, zeroAddress } from 'viem'
 function LeaderboardLayout() {
   const [selectedUser, setSelectedUser] = useState<string | Address>(zeroAddress)
   const [selectedRank, setSelectedRank] = useState<number>(0)
-  const [selectedNationality, setSelectedNationality] = useState<string | undefined>('')
+  const [selectedNationality, setSelectedNationality] = useState<string | undefined>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const { data, isLoading } = useQuery<UserResponse>({
