@@ -73,8 +73,8 @@ class BadgesService {
 
     return response.data
   }
-  public async attestBadges(account: Address) {
-    const response = await this.httpInstance.post(`/user/${account}/badges/claim`)
+  public async attestBadges(account: Address, extraArguments: any) {
+    const response = await this.httpInstance.post(`/user/${account}/badges/claim`, extraArguments)
     return response.data
   }
   public async getPerks(account: Address) {

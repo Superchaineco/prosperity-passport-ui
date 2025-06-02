@@ -57,9 +57,10 @@ function BadgesActions({
   const [claimData, setClaimData] = useState<ClaimData | null>(null)
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
   const queryClient = useQueryClient()
+  const [selfUserId, setSelfUserId] = useState('')
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async () => {
-      return await badgesService.attestBadges(safeAddress as Address)
+      return await badgesService.attestBadges(safeAddress as Address, { selfUserId })
     },
     onError: (error) => {
       console.error(error)
@@ -97,7 +98,10 @@ function BadgesActions({
   })
 
   useEffect(() => {
-    const handler = () => {
+    const handler = (event: Event) => {
+      const customEvent = event as CustomEvent
+      const data = customEvent.detail
+      setSelfUserId(data.uderId as string)
       mutate()
     }
 

@@ -7,12 +7,14 @@ import useSafeAddress from '@/hooks/useSafeAddress'
 import CloseIcon from '@mui/icons-material/Close'
 import CountryFlag from '@/components/countryFlag'
 import { ResponseBadge } from '@/types/super-chain'
+import { uuidv4 } from '@walletconnect/utils'
 
 export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
   const [isValidationModalOpen, setValidationModalOpen] = useState(false)
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false)
   const [selfApp, setSelfApp] = useState<any>(null)
   const [SelfQRcode, setSelfQRcode] = useState<any>(null)
+  const [userId, setUserId] = useState<string | undefined>(undefined)
   const address = useSafeAddress()
   const queryClient = useQueryClient()
 
@@ -21,12 +23,14 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
       const { default: SelfQRcodeComponent, SelfAppBuilder } = await import('@selfxyz/qrcode')
       setSelfQRcode(() => SelfQRcodeComponent)
 
+      const uid = uuidv4()
+
       const app = new SelfAppBuilder({
         appName: 'Prosperity Pass',
         scope: 'prosperity',
         endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
         logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
-        userId: address,
+        userId: uid, //address,
         userIdType: 'hex',
         disclosures: {
           nationality: true,
@@ -34,6 +38,7 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
       }).build()
 
       setSelfApp(app)
+      setUserId(userId)
     }
 
     if (address) {
@@ -59,19 +64,19 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false)
-    window.dispatchEvent(new CustomEvent('claim-badges'))
+    window.dispatchEvent(new CustomEvent('claim-badges', { detail: { userId } }))
   }
 
   const { data } = useQuery({
-    queryKey: ['self-verification', address],
+    queryKey: ['self-verification', userId],
     refetchInterval: (query) => {
       if (query.state.data?.check) return false
       console.log('Refetch:', query.state.data)
       if (isValidationModalOpen || query.state == undefined) return 1000
       return false
     },
-    queryFn: async () => (await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${address}`)).data,
-    enabled: !!address,
+    queryFn: async () => (await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${userId}`)).data,
+    enabled: !!userId,
   })
 
   useEffect(() => {
