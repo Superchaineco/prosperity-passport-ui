@@ -61,7 +61,7 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false)
-    window.dispatchEvent(new CustomEvent('claim-badges', { detail: { userId } }))
+    window.dispatchEvent(new CustomEvent('claim-badges', { detail: { userId: userId?.toString() } }))
   }
 
   const { data } = useQuery({

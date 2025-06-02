@@ -101,7 +101,7 @@ function BadgesActions({
     const handler = (event: Event) => {
       const customEvent = event as CustomEvent
       const data = customEvent.detail
-      setSelfUserId(data.uderId as string)
+      setSelfUserId(data.userId as string)
       mutate()
     }
 
