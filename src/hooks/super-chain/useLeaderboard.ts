@@ -161,9 +161,9 @@ export function useLeaderboard(userId: Address) {
       const mainUser =
         pageParam === 0 && data.superChainSmartAccount
           ? {
-            ...data.superChainSmartAccount,
-            nationality: nationalities[safeAddress.toUpperCase()],
-          }
+              ...data.superChainSmartAccount,
+              nationality: nationalities[safeAddress.toUpperCase()],
+            }
           : undefined
 
       return {
