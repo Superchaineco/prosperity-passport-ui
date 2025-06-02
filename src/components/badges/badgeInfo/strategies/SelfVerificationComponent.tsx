@@ -31,7 +31,7 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
         endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
         logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
         userId: uid, //address,
-        userIdType: 'hex',
+        userIdType: 'uuid',
         disclosures: {
           nationality: true,
         },
