@@ -49,7 +49,7 @@ interface NationalityBatchResponse {
 }
 
 async function fetchNationalities(safeAddresses: string[]): Promise<Record<string, string>> {
-  const normalizedAddresses = Array.from(new Set(safeAddresses.map((addr) => addr.trim())))
+  const normalizedAddresses = Array.from(new Set(safeAddresses.map((addr) => addr.trim().toUpperCase())))
 
   try {
     const response = await axios.post<NationalityBatchResponse>(
@@ -161,9 +161,9 @@ export function useLeaderboard(userId: Address) {
       const mainUser =
         pageParam === 0 && data.superChainSmartAccount
           ? {
-              ...data.superChainSmartAccount,
-              nationality: nationalities[safeAddress.toUpperCase()],
-            }
+            ...data.superChainSmartAccount,
+            nationality: nationalities[safeAddress.toUpperCase()],
+          }
           : undefined
 
       return {
