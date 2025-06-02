@@ -14,7 +14,7 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false)
   const [selfApp, setSelfApp] = useState<any>(null)
   const [SelfQRcode, setSelfQRcode] = useState<any>(null)
-  const [userId, setUserId] = useState<string | undefined>(undefined)
+  const [userId] = useState<string | undefined>(uuidv4())
   const address = useSafeAddress()
   const queryClient = useQueryClient()
 
@@ -23,14 +23,12 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
       const { default: SelfQRcodeComponent, SelfAppBuilder } = await import('@selfxyz/qrcode')
       setSelfQRcode(() => SelfQRcodeComponent)
 
-      const uid = uuidv4()
-
       const app = new SelfAppBuilder({
         appName: 'Prosperity Pass',
         scope: 'prosperity',
         endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
         logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
-        userId: uid, //address,
+        userId: userId, //address,
         userIdType: 'uuid',
         disclosures: {
           nationality: true,
@@ -38,13 +36,12 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
       }).build()
 
       setSelfApp(app)
-      setUserId(userId)
     }
 
-    if (address) {
+    if (userId) {
       init()
     }
-  }, [address])
+  }, [userId])
 
   const handleOpenModal = () => {
     setValidationModalOpen(true)
@@ -75,7 +72,7 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
       if (isValidationModalOpen || query.state == undefined) return 1000
       return false
     },
-    queryFn: async () => (await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${userId}`)).data,
+    queryFn: async () => (await axios.get(`${BACKEND_BASE_URI}/self/check?userId=${userId}&account=${address}`)).data,
     enabled: !!userId,
   })
 
