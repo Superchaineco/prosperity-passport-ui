@@ -262,26 +262,27 @@ function UserInfo({
               </Stack>
             </Stack>
             <Stack direction="row" gap={1} sx={{ alignSelf: 'left', width: '100%' }}>
-              <Chip
-                sx={{
-                  backgroundColor: 'transparent',
-                  border: '1px solid #E1E2EA',
-                  borderRadius: '6px',
-                  color: 'black',
-                  fontSize: '12px',
-                  fontWeight: 500,
-                  height: '30px',
-                  '& .MuiChip-label': {
-                    px: '8px',
-                  },
-                }}
-                label={
-                  <Box display="flex" alignItems="center" gap={0.5}>
-                    <CountryFlag alpha3={nationality ?? ''} size={24} />
-                  </Box>
-                }
-              ></Chip>
-
+              {nationality && (
+                <Chip
+                  sx={{
+                    backgroundColor: 'transparent',
+                    border: '1px solid #E1E2EA',
+                    borderRadius: '6px',
+                    color: 'black',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    height: '30px',
+                    '& .MuiChip-label': {
+                      px: '8px',
+                    },
+                  }}
+                  label={
+                    <Box display="flex" alignItems="center" gap={0.5}>
+                      <CountryFlag alpha3={nationality ?? ''} size={24} />
+                    </Box>
+                  }
+                ></Chip>
+              )}
               <Chip
                 sx={{
                   backgroundColor: 'transparent',
