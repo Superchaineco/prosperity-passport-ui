@@ -152,14 +152,19 @@ function UserInfo({
                 sx={{
                   backgroundColor: 'transparent',
                   border: '1px solid #E1E2EA',
+                  borderRadius: '6px',
                   color: 'black',
-                  fontSize: '15px',
-                  p: '6px',
+                  fontSize: '12px',
                   height: '30px',
+                  fontWeight: 500,
+                  '& .MuiChip-label': {
+                    py: 0,
+                    px: 1,
+                    lineHeight: 0.8,
+                  },
                 }}
-                label={<Typography>Rank: {rank}</Typography>}
+                label={<>Rank: {rank}</>}
               />
-              {/* <SeasonChip season={parseInt(context?.superchainsmartaccount[3])} style="info" />*/}
             </Stack>
 
             <IconButton onClick={handleClose}>
@@ -218,7 +223,7 @@ function UserInfo({
                     left: '290px',
                     height: '34px',
                     width: '34px',
-                    borderRadius: '50px',
+                    borderRadius: '6px',
                     backgroundColor: 'black',
                     color: 'white',
                     '&:hover': {
@@ -254,7 +259,6 @@ function UserInfo({
                   </CopyAddressButton>
                   <ExplorerButton {...blockExplorerLink} color="inherit" />
                 </Box>
-                <CountryFlag alpha3={nationality ?? ''} size={24} />
               </Stack>
             </Stack>
             <Stack direction="row" gap={1} sx={{ alignSelf: 'left', width: '100%' }}>
@@ -262,14 +266,35 @@ function UserInfo({
                 sx={{
                   backgroundColor: 'transparent',
                   border: '1px solid #E1E2EA',
+                  borderRadius: '6px',
                   color: 'black',
-                  fontSize: '15px',
-                  p: '4px',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  height: '30px',
+                  '& .MuiChip-label': {
+                    px: '8px',
+                  },
+                }}
+                label={
+                  <Box display="flex" alignItems="center" gap={0.5}>
+                    <CountryFlag alpha3={nationality ?? ''} size={24} />
+                  </Box>
+                }
+              ></Chip>
+
+              <Chip
+                sx={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid #E1E2EA',
+                  borderRadius: '6px',
+                  color: 'black',
+                  fontSize: '12px',
+                  fontWeight: 500,
                   height: '30px',
                 }}
                 label={
                   <Box display="flex" alignItems="center" gap={0.5}>
-                    <Typography>{context?.superchainsmartaccount[2]}</Typography>
+                    {context?.superchainsmartaccount[2]}
                     <SvgIcon
                       component={ProsperityPassportPoints}
                       inheritViewBox
@@ -285,8 +310,8 @@ function UserInfo({
                   backgroundColor: 'transparent',
                   border: '1px solid #E1E2EA',
                   color: 'black',
-                  fontSize: '15px',
-                  p: '4px',
+                  fontSize: '12px',
+                  fontWeight: 500,
                   height: '30px',
                 }}
                 label={<Box textAlign="center">Level: {parseInt(context?.superchainsmartaccount[3])}</Box>}
@@ -297,8 +322,8 @@ function UserInfo({
                   backgroundColor: 'transparent',
                   border: '1px solid #E1E2EA',
                   color: 'black',
-                  fontSize: '15px',
-                  p: '4px',
+                  fontSize: '12px',
+                  fontWeight: 500,
                   height: '30px',
                 }}
                 label={
