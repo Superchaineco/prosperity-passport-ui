@@ -262,8 +262,9 @@ function UserInfo({
               </Stack>
             </Stack>
             <Stack direction="row" gap={1} sx={{ alignSelf: 'left', width: '100%' }}>
-              {nationality && (
+              {nationality != 'UNKNOWN' ? (
                 <Chip
+                  title={nationality}
                   sx={{
                     backgroundColor: 'transparent',
                     border: '1px solid #E1E2EA',
@@ -282,6 +283,8 @@ function UserInfo({
                     </Box>
                   }
                 ></Chip>
+              ) : (
+                ''
               )}
               <Chip
                 sx={{
