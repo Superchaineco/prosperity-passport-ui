@@ -5,11 +5,8 @@ import AccountIcon from '@/public/images/sidebar/account.svg'
 import BadgesIcon from '@/public/images/sidebar/badges.svg'
 import LeaderboardIcon from '@/public/images/sidebar/leaderboard.svg'
 import ContactsIcon from '@/public/images/sidebar/contacts.svg'
-// import AssetsIcon from '@/public/images/sidebar/assets.svg'
 import TransactionIcon from '@/public/images/sidebar/transactions.svg'
-// import ABIcon from '@/public/images/sidebar/address-book.svg'
-// import AppsIcon from '@/public/images/apps/apps-icon.svg'
-// import SettingsIcon from '@/public/images/sidebar/settings.svg'
+import Encrypted from '@/public/images/vaults/encrypted.svg'
 import { SvgIcon } from '@mui/material'
 
 export type NavItem = {
@@ -23,6 +20,11 @@ export const navItems: NavItem[] = [
     label: 'Account',
     icon: <SvgIcon component={AccountIcon} inheritViewBox />,
     href: AppRoutes.home,
+  },
+  {
+    label: 'Vaults',
+    icon: <SvgIcon component={Encrypted} inheritViewBox />,
+    href: AppRoutes.vaults.index,
   },
 
   {

@@ -1,9 +1,9 @@
 import { type ReactElement, type ReactNode, useState } from 'react'
-import dynamic from 'next/dynamic'
+import TopUpModal from '@/components/superChain/TopUpModal'
 
-const TopUpModal = dynamic(() => import('@/components/superChain/TopUpModal'))
+//const TopUpModal = dynamic(() => import('@/components/superChain/TopUpModal'))
 
-const QrCodeButton = ({ children }: { children: ReactNode }): ReactElement => {
+const QrCodeButton = ({ children, defaultToken }: { children: ReactNode; defaultToken?: string }): ReactElement => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
   return (
@@ -12,7 +12,7 @@ const QrCodeButton = ({ children }: { children: ReactNode }): ReactElement => {
         {children}
       </div>
 
-      <TopUpModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <TopUpModal open={modalOpen} onClose={() => setModalOpen(false)} defaultToken={defaultToken} />
     </>
   )
 }

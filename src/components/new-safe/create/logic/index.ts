@@ -35,7 +35,6 @@ import {
   SUPER_CHAIN_SETUP_ADDRESS,
 } from '@/features/superChain/constants'
 import type { NounProps } from '../steps/AvatarStep'
-import { Hex, concatHex } from 'viem'
 import { getDataSuffix } from '@divvi/referral-sdk'
 
 export type SafeCreationProps = {
@@ -45,8 +44,6 @@ export type SafeCreationProps = {
   id: string
   seed: NounProps
 }
-
-
 
 /**
  * Prepare data for creating a Safe for the Core SDK
@@ -62,7 +59,11 @@ export const getSafeDeployProps = async (
 
   const divviSuffix = getDataSuffix({
     consumer: '0xe6D39BB0a25fF3A1918adc57796656173918AfE5',
-    providers: ['0x0423189886d7966f0dd7e7d256898daeee625dca', '0xc95876688026be9d6fa7a7c33328bd013effa2bb', '0x5f0a55fad9424ac99429f635dfb9bf20c3360ab8'],
+    providers: [
+      '0x0423189886d7966f0dd7e7d256898daeee625dca',
+      '0xc95876688026be9d6fa7a7c33328bd013effa2bb',
+      '0x5f0a55fad9424ac99429f635dfb9bf20c3360ab8',
+    ],
   })
 
   const fullData = data + divviSuffix

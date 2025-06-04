@@ -23,6 +23,9 @@ export const AppRoutes = {
     custom: '/apps/custom',
     bookmarked: '/apps/bookmarked',
   },
+  vaults: {
+    index: '/vaults',
+  },
   balances: {
     nfts: '/balances/nfts',
     index: '/balances',

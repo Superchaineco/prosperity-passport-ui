@@ -19,6 +19,9 @@ import { getBlockExplorerLink } from '@/utils/chains'
 import { shortenAddress } from '@/utils/formatters'
 import useSuperChainAccount from '@/hooks/super-chain/useSuperChainAccount'
 import { SvgIconComponent } from '@mui/icons-material'
+import USDC from '@/public/images/currencies/usdc.svg'
+import USDT from '@/public/images/currencies/usdt.svg'
+
 const useStyles = makeStyles({
   select: {
     color: 'white',
@@ -52,16 +55,20 @@ export type Token = {
 
 const tokens: Record<string, Token> = {
   CELO: { values: [10, 20, 50], decimals: 18, address: '0x471EcE3750Da237f93B8E339c536989b8978a438', icon: Celo },
+  USDC: { values: [25, 50, 100], decimals: 6, address: 'xxxxx', icon: USDC },
+  USDT: { values: [25, 50, 100], decimals: 6, address: 'xxxxxx', icon: USDT },
 }
 
 function TopUp({
   handleTopUp,
   open,
   onClose,
+  defaultToken,
 }: {
   handleTopUp: (value: bigint, token: Token) => void
   open: boolean
   onClose: () => void
+  defaultToken?: string
 }): ReactElement {
   const { publicClient } = useSuperChainAccount()
   const superChainSmartAccount = useAppSelector(selectSuperChainAccount)
@@ -74,7 +81,7 @@ function TopUp({
       : undefined
   const [selectedValue, setSelectedValue] = useState<number | null>(null)
   const [customValue, setCustomValue] = useState<string>('')
-  const [selectedToken, setSelectedToken] = useState<keyof typeof tokens>('CELO')
+  const [selectedToken, setSelectedToken] = useState<keyof typeof tokens>(defaultToken ?? 'CELO')
   const [tokenBalance, setTokenBalance] = useState<number>(0)
   const nounSeed = useMemo(() => {
     return {

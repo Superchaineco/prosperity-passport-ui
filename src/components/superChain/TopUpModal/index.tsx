@@ -25,7 +25,15 @@ export enum ModalState {
   Success,
 }
 
-const TopUpModal = ({ open, onClose }: { open: boolean; onClose: () => void }): ReactElement => {
+const TopUpModal = ({
+  open,
+  onClose,
+  defaultToken,
+}: {
+  open: boolean
+  onClose: () => void
+  defaultToken?: string
+}): ReactElement => {
   const [modalState, setModalState] = useState<ModalState>(ModalState.TopUp)
   const [currentValue, setCurrentValue] = useState<null | bigint>(null)
   const [currentToken, setCurrentToken] = useState<Token | null>(null)
@@ -96,7 +104,9 @@ const TopUpModal = ({ open, onClose }: { open: boolean; onClose: () => void }): 
 
   return (
     <>
-      {modalState === ModalState.TopUp && <TopUp open={open} onClose={onCloseAndErase} handleTopUp={handleTopUp} />}
+      {modalState === ModalState.TopUp && (
+        <TopUp open={open} onClose={onCloseAndErase} handleTopUp={handleTopUp} defaultToken={defaultToken} />
+      )}
       {modalState === ModalState.LoadingTXN && (
         <LoadingTxn hash={transactionHash!} open={open} onClose={onCloseAndErase} />
       )}

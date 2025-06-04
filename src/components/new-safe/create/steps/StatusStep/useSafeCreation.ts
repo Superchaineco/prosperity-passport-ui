@@ -92,11 +92,7 @@ export const useSafeCreation = (
         setStatus(SafeCreationStatus.PROCESSING)
         waitForCreateSafeTx(taskId, setStatus)
       } else {
-
-
         const tx = await getSafeCreationTxInfo(provider, owners, threshold, saltNonce, chain, wallet, id, seed)
-
-
 
         const safeParams = {
           threshold,
@@ -112,10 +108,10 @@ export const useSafeCreation = (
 
         const options: DeploySafeProps['options'] = isEIP1559
           ? {
-            maxFeePerGas: maxFeePerGas?.toString(),
-            maxPriorityFeePerGas: maxPriorityFeePerGas?.toString(),
-            gasLimit: gasLimit.toString(),
-          }
+              maxFeePerGas: maxFeePerGas?.toString(),
+              maxPriorityFeePerGas: maxPriorityFeePerGas?.toString(),
+              gasLimit: gasLimit.toString(),
+            }
           : { gasPrice: maxFeePerGas?.toString(), gasLimit: gasLimit.toString() }
         console.log('DATA', safeDeployProps.safeAccountConfig.data)
         const response = await createNewSafe(provider, {
@@ -124,8 +120,6 @@ export const useSafeCreation = (
         })
 
         setStatus(SafeCreationStatus.SUCCESS)
-
-
       }
     } catch (err) {
       const _err = err as EthersError
