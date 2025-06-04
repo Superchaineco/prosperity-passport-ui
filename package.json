@@ -49,6 +49,7 @@
   "dependencies": {
     "@apollo/client": "^3.10.4",
     "@covalenthq/client-sdk": "^1.0.2",
+    "@divvi/referral-sdk": "^1.0.0",
     "@ducanh2912/next-pwa": "^9.7.1",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.0",
