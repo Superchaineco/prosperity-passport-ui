@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogActions,
   Stack,
+  SvgIcon,
 } from '@mui/material'
 import LaunchIcon from '@mui/icons-material/Launch'
 import Image from 'next/image'
@@ -50,11 +51,15 @@ function SuccessModal({ open, onClose, amount, symbol, txHash, vaultBalance, ico
               border: '1px dashed #1FC1BF',
             }}
           >
-            <Typography textAlign="center" fontSize="14px" gutterBottom>
+            <Typography textAlign="center" fontSize="14px" color="#0D5150" gutterBottom>
               Updated Vault Balance
             </Typography>
             <Stack direction="row" justifyContent="center" fontSize="16px" gap="6px" alignItems="center">
-              <Image src={icon} alt={symbol} width={28} height={24} />
+              {typeof icon === 'function' ? (
+                <SvgIcon component={icon} inheritViewBox alt="Compound" fontSize="inherit" width={28} height={24} />
+              ) : (
+                <Image src={icon} alt={symbol} width={28} height={24} />
+              )}
               <Typography variant="h4" textAlign="center" fontWeight="medium">
                 {Number(vaultBalance) === 0 ? '0.00' : Number(vaultBalance).toFixed(5)}
               </Typography>
@@ -63,7 +68,7 @@ function SuccessModal({ open, onClose, amount, symbol, txHash, vaultBalance, ico
 
           {txHash && (
             <Link
-              href={`https://optimistic.etherscan.io/tx/${txHash}`}
+              href={`https://celoscan.io/tx/${txHash}`}
               target="_blank"
               rel="noopener noreferrer"
               underline="hover"
@@ -86,7 +91,7 @@ function SuccessModal({ open, onClose, amount, symbol, txHash, vaultBalance, ico
           sx={{
             mt: 2,
             p: 2,
-            borderRadius: '100px',
+            borderRadius: '6px',
             backgroundColor: 'black',
             color: 'white',
             '&:hover': {

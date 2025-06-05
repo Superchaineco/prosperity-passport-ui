@@ -192,13 +192,13 @@ function TopUp({
               </MenuItem>
               <MenuItem value="cUSD">
                 <Box pr={1} display="flex" gap={1}>
-                  <Image src={cUSD} alt="cUSD" width={24} height={24} />
+                  <SvgIcon inheritViewBox component={cUSD} />
                   cUSD
                 </Box>
               </MenuItem>
               <MenuItem value="cEUR">
                 <Box pr={1} display="flex" gap={1}>
-                  <Image src={cEUR} alt="cEUR" width={24} height={24} />
+                  <SvgIcon inheritViewBox component={cEUR} />
                   cEUR
                 </Box>
               </MenuItem>

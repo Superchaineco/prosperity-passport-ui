@@ -223,19 +223,23 @@ function VaultCard({
         <Box sx={{ display: 'flex', gap: 2, p: 2 }}>
           {value > 0 ? (
             depreciated ? (
-              <Button fullWidth sx={{ borderRadius: 10, backgroundColor: '#F1F2F5' }} onClick={handleOpenWithdrawModal}>
+              <Button
+                fullWidth
+                sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
+                onClick={handleOpenWithdrawModal}
+              >
                 Withdraw
               </Button>
             ) : (
               <>
                 <Button
                   fullWidth
-                  sx={{ borderRadius: 10, backgroundColor: '#F1F2F5' }}
+                  sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
                   onClick={handleOpenWithdrawModal}
                 >
                   Withdraw
                 </Button>
-                <Button variant="contained" fullWidth sx={{ borderRadius: 10 }} onClick={handleOpenDepositModal}>
+                <Button variant="contained" fullWidth sx={{ borderRadius: '6px' }} onClick={handleOpenDepositModal}>
                   Deposit
                 </Button>
               </>

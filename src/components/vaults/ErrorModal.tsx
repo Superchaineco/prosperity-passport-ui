@@ -24,7 +24,6 @@ export default function ErrorModal({ open, onClose, onTryAgain, type }: ErrorMod
       PaperProps={{
         sx: {
           width: '360px',
-          borderRadius: '16px',
         },
       }}
     >
@@ -41,6 +40,7 @@ export default function ErrorModal({ open, onClose, onTryAgain, type }: ErrorMod
         <Typography fontSize={24} fontWeight={600} fontFamily="Sora">
           {isDeposit ? 'Deposit' : 'Withdrawal'} Failed
         </Typography>
+
         <Box
           onClick={onClose}
           sx={{
@@ -60,8 +60,9 @@ export default function ErrorModal({ open, onClose, onTryAgain, type }: ErrorMod
           <CloseIcon sx={{ fontSize: 12 }} />
         </Box>
       </DialogTitle>
+      <Divider />
 
-      <DialogContent sx={{ px: 3, pt: 3, pb: 3 }}>
+      <DialogContent sx={{ px: 3, pt: 1, pb: 3 }}>
         <Box display="flex" flexDirection="column" alignItems="center" textAlign="center" gap={1} sx={{ mt: '24px' }}>
           <ErrorOutlineIcon sx={{ fontSize: 24, color: '#FF2B3E' }} />
           <Typography variant="body2" sx={{ color: '#FF2B3E', fontSize: '14px', fontWeight: 400 }}>
@@ -88,7 +89,7 @@ export default function ErrorModal({ open, onClose, onTryAgain, type }: ErrorMod
           sx={{
             width: '152px',
             height: '40px',
-            borderRadius: '100px',
+            borderRadius: '6px',
             backgroundColor: '#F2F2F2',
             color: '#000',
             textTransform: 'none',
@@ -106,9 +107,9 @@ export default function ErrorModal({ open, onClose, onTryAgain, type }: ErrorMod
           sx={{
             width: '152px',
             height: '40px',
-            borderRadius: '100px',
-            backgroundColor: '#FF2B3E',
-            color: 'white',
+            borderRadius: '6px',
+            backgroundColor: '#FCFF52;',
+            color: 'black',
             textTransform: 'none',
             fontWeight: 600,
             '&:hover': {

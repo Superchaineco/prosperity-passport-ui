@@ -12,6 +12,7 @@ import {
   Stack,
   Divider,
   CircularProgress,
+  SvgIcon,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import useAAve from '@/hooks/vaults/useAAve'
@@ -130,7 +131,11 @@ function DepositModal({
         <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '24px' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Box width={24} height={24} fontSize="24px">
-              <Image src={icon} alt={symbol} width={28} height={24} />
+              {typeof icon === 'function' ? (
+                <SvgIcon component={icon} inheritViewBox alt="Compound" fontSize="inherit" width={28} height={24} />
+              ) : (
+                <Image src={icon} alt={symbol} width={28} height={24} />
+              )}
             </Box>
             <Typography fontSize="24px" fontWeight="bold">
               {symbol} Vault
@@ -221,7 +226,7 @@ function DepositModal({
               variant="contained"
               fullWidth
               disabled={!canDeposit}
-              sx={{ p: '16px', borderRadius: '100px', color: 'white !important', display: 'flex', gap: 1 }}
+              sx={{ p: '16px', borderRadius: '6px', color: 'white !important', display: 'flex', gap: 1 }}
               onClick={handleDeposit}
             >
               {isDepositing ? (
