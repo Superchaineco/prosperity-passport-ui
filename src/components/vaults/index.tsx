@@ -2,7 +2,7 @@ import { Box, Button, Card, CardContent, Divider, Grid, Skeleton, Stack, SvgIcon
 import React, { useState } from 'react'
 import cUSD from '@/public/images/currencies/cUSD.svg'
 import cEUR from '@/public/images/currencies/cEUR.svg'
-import wETH from '@/public/images/vaults/icons/ETH-OP.png'
+import wETH from '@/public/images/currencies/ethereum.svg'
 import Coinmarket from '@/public/images/vaults/protocols/Coinmarket.svg'
 import { useQuery } from '@tanstack/react-query'
 import { BACKEND_BASE_URI } from '@/config/constants'
