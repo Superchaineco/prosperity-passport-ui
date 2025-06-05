@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardContent, Divider, Grid, Skeleton, Stack, SvgIcon, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import cUSD from '@/public/images/currencies/cUSD.png'
-import cEUR from '@/public/images/currencies/cEURO.png'
+import cUSD from '@/public/images/currencies/cUSD.svg'
+import cEUR from '@/public/images/currencies/cEUR.svg'
 import wETH from '@/public/images/vaults/icons/ETH-OP.png'
 import Coinmarket from '@/public/images/vaults/protocols/Coinmarket.svg'
 import { useQuery } from '@tanstack/react-query'
@@ -143,7 +143,11 @@ function VaultCard({
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box width={36} height={36} fontSize={36}>
-              <Image src={icon} alt={title} width={36} height={30} />
+              {typeof icon === 'function' ? (
+                <SvgIcon component={icon} inheritViewBox alt="Compound" fontSize="inherit" width={36} height={30} />
+              ) : (
+                <Image src={icon} alt={title} width={36} height={30} />
+              )}
             </Box>
             <Typography fontSize={18} fontWeight={600} fontFamily="Sora">
               {title}
@@ -171,7 +175,7 @@ function VaultCard({
                   APY: <strong>{apy.toFixed(1)}%</strong>
                 </Typography>
                 <SvgIcon
-                  component={Coinmarket}
+                  component={typeof icon === 'function' ? icon : Coinmarket}
                   inheritViewBox
                   alt="Compound"
                   fontSize="inherit"
@@ -374,7 +378,7 @@ function Vaults() {
   }, 0)
   const averageApy = totalDeposits > 0 ? (totalWeightedApy / totalDeposits) * 100 : 0
 
-  const getVaultIcon = (symbol: string) => {
+  const getVaultIcon = (symbol: string): typeof cEUR | typeof wETH => {
     switch (symbol) {
       case 'cEUR':
         return cEUR
@@ -383,7 +387,7 @@ function Vaults() {
       case 'WETH':
         return wETH
       default:
-        return null
+        return wETH
     }
   }
 

@@ -20,8 +20,8 @@ import { shortenAddress } from '@/utils/formatters'
 import useSuperChainAccount from '@/hooks/super-chain/useSuperChainAccount'
 import { SvgIconComponent } from '@mui/icons-material'
 import WETH from '@/public/images/currencies/ethereum.svg'
-import CUSD from '@/public/images/currencies/cUSD.png'
-import CEUR from '@/public/images/currencies/cEURO.png'
+import cUSD from '@/public/images/currencies/cUSD.svg'
+import cEUR from '@/public/images/currencies/cEUR.svg'
 
 const useStyles = makeStyles({
   select: {
@@ -60,13 +60,13 @@ const tokens: Record<string, Token> = {
     values: [25, 50, 100],
     decimals: 18,
     address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
-    icon: CUSD as any,
+    icon: cUSD as any,
   },
   cEUR: {
     values: [25, 50, 100],
     decimals: 18,
     address: '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73',
-    icon: CEUR as any,
+    icon: cEUR as any,
   },
   WETH: { values: [0.01, 0.05, 0.1], decimals: 18, address: '0x122013fd7dF1C6F636a5bb8f03108E876548b455', icon: WETH },
 }
@@ -192,13 +192,13 @@ function TopUp({
               </MenuItem>
               <MenuItem value="cUSD">
                 <Box pr={1} display="flex" gap={1}>
-                  <Image src={CUSD} alt="cUSD" width={24} height={24} />
+                  <Image src={cUSD} alt="cUSD" width={24} height={24} />
                   cUSD
                 </Box>
               </MenuItem>
               <MenuItem value="cEUR">
                 <Box pr={1} display="flex" gap={1}>
-                  <Image src={CEUR} alt="cEUR" width={24} height={24} />
+                  <Image src={cEUR} alt="cEUR" width={24} height={24} />
                   cEUR
                 </Box>
               </MenuItem>
