@@ -19,8 +19,9 @@ import { getBlockExplorerLink } from '@/utils/chains'
 import { shortenAddress } from '@/utils/formatters'
 import useSuperChainAccount from '@/hooks/super-chain/useSuperChainAccount'
 import { SvgIconComponent } from '@mui/icons-material'
-import USDC from '@/public/images/currencies/usdc.svg'
-import USDT from '@/public/images/currencies/usdt.svg'
+import WETH from '@/public/images/currencies/ethereum.svg'
+import CUSD from '@/public/images/currencies/cUSD.png'
+import CEUR from '@/public/images/currencies/cEURO.png'
 
 const useStyles = makeStyles({
   select: {
@@ -55,8 +56,19 @@ export type Token = {
 
 const tokens: Record<string, Token> = {
   CELO: { values: [10, 20, 50], decimals: 18, address: '0x471EcE3750Da237f93B8E339c536989b8978a438', icon: Celo },
-  USDC: { values: [25, 50, 100], decimals: 6, address: 'xxxxx', icon: USDC },
-  USDT: { values: [25, 50, 100], decimals: 6, address: 'xxxxxx', icon: USDT },
+  cUSD: {
+    values: [25, 50, 100],
+    decimals: 18,
+    address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+    icon: CUSD as any,
+  },
+  cEUR: {
+    values: [25, 50, 100],
+    decimals: 18,
+    address: '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73',
+    icon: CEUR as any,
+  },
+  WETH: { values: [0.01, 0.05, 0.1], decimals: 18, address: '0x122013fd7dF1C6F636a5bb8f03108E876548b455', icon: WETH },
 }
 
 function TopUp({
@@ -178,12 +190,30 @@ function TopUp({
                   CELO
                 </Box>
               </MenuItem>
+              <MenuItem value="cUSD">
+                <Box pr={1} display="flex" gap={1}>
+                  <Image src={CUSD} alt="cUSD" width={24} height={24} />
+                  cUSD
+                </Box>
+              </MenuItem>
+              <MenuItem value="cEUR">
+                <Box pr={1} display="flex" gap={1}>
+                  <Image src={CEUR} alt="cEUR" width={24} height={24} />
+                  cEUR
+                </Box>
+              </MenuItem>
+              <MenuItem value="WETH">
+                <Box pr={1} display="flex" gap={1}>
+                  <SvgIcon inheritViewBox component={WETH} />
+                  WETH
+                </Box>
+              </MenuItem>
             </Select>
             {tokens[selectedToken].values.map((value, index) => (
               <Button
                 key={index}
                 onClick={() => setSelectedValue(index)}
-                disabled={selectedToken === 'ETH' ? value > Number(wallet?.balance) : value > tokenBalance}
+                disabled={selectedToken === 'CELO' ? value > Number(wallet?.balance) : value > tokenBalance}
                 className={css.amountButton}
                 style={{
                   maxWidth: '50px',
@@ -213,7 +243,7 @@ function TopUp({
                 selectedValue === null &&
                 (customValue === '' ||
                   Number(customValue) === 0 ||
-                  (selectedToken === 'ETH'
+                  (selectedToken === 'CELO'
                     ? Number(customValue) > Number(wallet?.balance ?? '0')
                     : Number(customValue) > tokenBalance))
               }

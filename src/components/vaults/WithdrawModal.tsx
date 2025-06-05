@@ -13,7 +13,7 @@ import {
   CircularProgress,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import useCompound from '@/hooks/compound/useCompound'
+import useAAve from '@/hooks/vaults/useAAve'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Address } from 'viem'
 import axios from 'axios'
@@ -48,7 +48,7 @@ function WithdrawModal({
   const address = useSafeAddress()
   const queryClient = useQueryClient()
   const { publicClient } = useSuperChainAccount()
-  const { getCompoundWithdrawCallable } = useCompound()
+  const { getAAveWithdrawCallable } = useAAve()
   const [amount, setAmount] = useState<string>('')
 
   const { mutate: withdraw, isPending: isWithdrawing } = useMutation({
@@ -56,7 +56,7 @@ function WithdrawModal({
       let hash = ''
 
       try {
-        const withdrawCallable = getCompoundWithdrawCallable(tokenAddress, supplyTokenAddress)
+        const withdrawCallable = getAAveWithdrawCallable(tokenAddress)
         const tx = await withdrawCallable.callContract(amount)
         hash = tx.toString()
       } catch (error) {

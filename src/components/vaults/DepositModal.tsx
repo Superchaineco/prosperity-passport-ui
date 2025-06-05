@@ -14,7 +14,7 @@ import {
   CircularProgress,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import useCompound from '@/hooks/compound/useCompound'
+import useAAve from '@/hooks/vaults/useAAve'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Address } from 'viem'
 import axios from 'axios'
@@ -54,7 +54,7 @@ function DepositModal({
 }: DepositModalProps) {
   const address = useSafeAddress()
   const { publicClient } = useSuperChainAccount()
-  const { getCompoundDepositCallable } = useCompound()
+  const { getAAveDepositCallable } = useAAve()
   const queryClient = useQueryClient()
   const { balances, loading } = useBalances()
   const [amount, setAmount] = useState<string>('')
@@ -72,11 +72,11 @@ function DepositModal({
     mutationFn: async () => {
       let hash = ''
       try {
-        const depositCallable = getCompoundDepositCallable(tokenAddress, supplyTokenAddress)
+        const depositCallable = getAAveDepositCallable(tokenAddress)
         const tx = await depositCallable.callContract(amount)
         hash = tx.toString()
       } catch (error) {
-        console.log(error)
+        console.error(error)
         onError()
         setAmount('')
         return
@@ -84,7 +84,7 @@ function DepositModal({
       try {
         await publicClient.waitForTransactionReceipt({ hash: hash as `0x${string}`, timeout: 5000 })
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
 
       const calculatedNewBalance = (Number(vaultBalance) + Number(amount)).toString()

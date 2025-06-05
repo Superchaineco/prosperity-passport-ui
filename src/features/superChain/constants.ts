@@ -1,7 +1,8 @@
 import SuperChainSetupABI from './abi/SuperChainSetup.json'
 import SuperChainModuleABI from './abi/SuperChainModule.json'
 import type { Address } from 'viem'
-import CometABI from '../compound/abi/comet.json'
+import CometABI from '../vaults/abi/comet.json'
+import AaveABI from '../vaults/abi/aave.json'
 
 enum ENVIRONMENTS {
   development = 'development',
@@ -32,6 +33,7 @@ const environmentConfig = {
 }[ENV]
 
 export const COMPOUND_ABI = CometABI
+export const AAVE_ABI = AaveABI
 export const SUPER_CHAIN_SETUP_ABI = SuperChainSetupABI
 export const SUPER_CHAIN_MODULE_ABI = SuperChainModuleABI
 export const SUPER_CHAIN_SETUP_ADDRESS = environmentConfig.SUPER_CHAIN_SETUP_ADDRESS as Address
