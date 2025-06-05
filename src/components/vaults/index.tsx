@@ -1,8 +1,8 @@
 import { Box, Button, Card, CardContent, Divider, Grid, Skeleton, Stack, SvgIcon, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import USDC_OP from '@/public/images/vaults/icons/USDC-OP.png'
-import USDT_OP from '@/public/images/vaults/icons/USDT-OP.png'
-import WETH from '@/public/images/vaults/icons/ETH-OP.png'
+import cUSD from '@/public/images/currencies/cUSD.png'
+import cEUR from '@/public/images/currencies/cEURO.png'
+import wETH from '@/public/images/vaults/icons/ETH-OP.png'
 import Coinmarket from '@/public/images/vaults/protocols/Coinmarket.svg'
 import { useQuery } from '@tanstack/react-query'
 import { BACKEND_BASE_URI } from '@/config/constants'
@@ -377,11 +377,11 @@ function Vaults() {
   const getVaultIcon = (symbol: string) => {
     switch (symbol) {
       case 'cEUR':
-        return USDC_OP
+        return cEUR
       case 'cUSD':
-        return USDT_OP
+        return cUSD
       case 'WETH':
-        return WETH
+        return wETH
       default:
         return null
     }
