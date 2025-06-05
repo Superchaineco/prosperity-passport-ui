@@ -1,4 +1,4 @@
-import { Eip1193Provider, MaxUint256, parseUnits } from 'ethers'
+import { Eip1193Provider, parseUnits } from 'ethers'
 import { type Address, encodeFunctionData, erc20Abi } from 'viem'
 import { Safe4337Pack } from '@safe-global/relay-kit'
 import { BACKEND_BASE_URI } from '@/config/constants'
@@ -11,7 +11,7 @@ import { patchFetch } from '@/utils/fecthPatch'
 function useAAve() {
   const wallet = useWallet()
   const safeAddress = useSafeAddress()
-  const AavePoolProvider = "0x3E59A31363E2ad014dcbc521c4a0d5757d9f3402"
+  const AavePoolProvider = '0x3E59A31363E2ad014dcbc521c4a0d5757d9f3402'
 
   const getAAveDepositCallable = (supplyToken: Address) => {
     return getDepositOnAAveCallable(supplyToken, AavePoolProvider)

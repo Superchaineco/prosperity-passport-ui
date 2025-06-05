@@ -175,7 +175,7 @@ function VaultCard({
                   APY: <strong>{apy.toFixed(1)}%</strong>
                 </Typography>
                 <SvgIcon
-                  component={typeof icon === 'function' ? icon : Coinmarket}
+                  component={Coinmarket}
                   inheritViewBox
                   alt="Compound"
                   fontSize="inherit"
@@ -246,7 +246,7 @@ function VaultCard({
                 variant="contained"
                 color="complementary"
                 fullWidth
-                sx={{ borderRadius: '6px', border: 'none' }}
+                sx={{ borderRadius: '6px', border: 'none', boxShadow: 'none' }}
                 onClick={handleOpenDepositModal}
               >
                 Activate
