@@ -26,11 +26,13 @@ interface Vault {
   balance?: number
   depreciated?: boolean
   min_deposit?: string
+  raw_balance?: string
 }
 
 function VaultCard({
   title,
   value,
+  rawValue,
   apy,
   icon,
   comet,
@@ -42,6 +44,7 @@ function VaultCard({
 }: {
   title: string
   value: number
+  rawValue: string
   apy: number
   icon: any
   comet: string
@@ -280,6 +283,7 @@ function VaultCard({
         symbol={title}
         icon={icon}
         maxAmount={value}
+        maxRawAmount={rawValue || '0'}
         tokenAddress={tokenAddress as Address}
         supplyTokenAddress={comet as Address}
         onSuccess={handleWithdrawSuccess}
@@ -442,6 +446,7 @@ function Vaults() {
               key={vault.comet}
               title={vault.symbol}
               value={Number(vault.balance) || 0}
+              rawValue={vault.raw_balance}
               apy={(Number(vault.rewards_apr) + Number(vault.interest_apr)) * 100}
               icon={icon}
               tokenIcon={vault.image}
