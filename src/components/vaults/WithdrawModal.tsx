@@ -29,6 +29,7 @@ interface WithdrawModalProps {
   symbol: string
   icon: any
   maxAmount?: number
+  maxRawAmount?: string
   tokenAddress: Address
   supplyTokenAddress: Address
   onSuccess: (amount: string, hash: string, balance: string) => void
@@ -41,6 +42,7 @@ function WithdrawModal({
   symbol,
   icon,
   maxAmount = 0,
+  maxRawAmount = '0',
   tokenAddress,
   supplyTokenAddress,
   onSuccess,
@@ -58,7 +60,11 @@ function WithdrawModal({
 
       try {
         const withdrawCallable = getAAveWithdrawCallable(tokenAddress)
-        const tx = await withdrawCallable.callContract(amount)
+        const withdrawAmount = Number(amount)
+        const epsilon = 1e-2
+        const isMaxAmount = Math.abs(withdrawAmount - maxAmount) <= epsilon
+
+        const tx = await withdrawCallable.callContract(isMaxAmount ? maxRawAmount : amount, !isMaxAmount)
         hash = tx.toString()
       } catch (error) {
         console.log(error)
@@ -95,14 +101,6 @@ function WithdrawModal({
 
   const handleWithdraw = () => {
     if (isWithdrawing) return
-
-    const withdrawAmount = Number(amount)
-    const epsilon = 1e-2
-
-    if (Math.abs(withdrawAmount - maxAmount) <= epsilon) {
-      setAmount(maxAmount.toString())
-    }
-
     withdraw()
   }
 

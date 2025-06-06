@@ -86,13 +86,13 @@ function useAAve() {
 
   const getWithdrawOnAAveCallable = (supplyToken: Address, contract: Address) => {
     return {
-      callContract: async (amount: string) => {
+      callContract: async (amount: string, parseAmount: boolean = true) => {
         patchFetch()
 
         const safe4337Pack = await initializeSafeKit()
 
         //TODO improve
-        const parsedAmount = parseUnits(amount, 18)
+        const parsedAmount = parseAmount ? parseUnits(amount, 18) : amount
 
         const withdrawTx: MetaTransactionData = {
           to: contract,
