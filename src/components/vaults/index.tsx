@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import cUSD from '@/public/images/currencies/cUSD.svg'
 import cEUR from '@/public/images/currencies/cEUR.svg'
 import wETH from '@/public/images/currencies/ethereum.svg'
+import USDT from '@/public/images/currencies/usdt.svg'
 import Coinmarket from '@/public/images/vaults/protocols/Coinmarket.svg'
 import { useQuery } from '@tanstack/react-query'
 import { BACKEND_BASE_URI } from '@/config/constants'
@@ -214,7 +215,11 @@ function VaultCard({
               gap: 1,
             }}
           >
-            <Image src={tokenIcon} alt={title} width={16} height={16} />
+            {tokenIcon ? (
+              <Image src={tokenIcon} alt={title} width={16} height={16} />
+            ) : (
+              <SvgIcon component={icon} inheritViewBox alt={title} width={16} height={16} />
+            )}
 
             <Typography fontSize="18px" variant="h4" fontWeight="bold">
               {value === 0 ? '0.00' : value.toFixed(5)}
@@ -394,6 +399,8 @@ function Vaults() {
         return cUSD
       case 'WETH':
         return wETH
+      case 'USDT':
+        return USDT
       default:
         return wETH
     }
@@ -446,7 +453,7 @@ function Vaults() {
               key={vault.comet}
               title={vault.symbol}
               value={Number(vault.balance) || 0}
-              rawValue={vault.raw_balance}
+              rawValue={vault.raw_balance || '0'}
               apy={(Number(vault.rewards_apr) + Number(vault.interest_apr)) * 100}
               icon={icon}
               tokenIcon={vault.image}

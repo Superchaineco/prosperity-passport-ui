@@ -8,6 +8,7 @@ import CopyButton from '@/components/common/CopyButton'
 import ExplorerButton from '@/components/common/ExplorerButton'
 import Image from 'next/image'
 import Celo from '@/public/images/currencies/celo.svg'
+import USDT from '@/public/images/currencies/usdt.svg'
 import lightPalette from '@/components/theme/lightPalette'
 import { useAppSelector } from '@/store'
 import { selectSuperChainAccount } from '@/store/superChainAccountSlice'
@@ -67,6 +68,12 @@ const tokens: Record<string, Token> = {
     decimals: 18,
     address: '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73',
     icon: cEUR as any,
+  },
+  USDT: {
+    values: [25, 50, 100],
+    decimals: 18,
+    address: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
+    icon: USDT as any,
   },
   WETH: { values: [0.01, 0.05, 0.1], decimals: 18, address: '0x122013fd7dF1C6F636a5bb8f03108E876548b455', icon: WETH },
 }
