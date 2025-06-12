@@ -59,7 +59,11 @@ export const getSafeDeployProps = async (
 
   const divviSuffix = getDataSuffix({
     consumer: '0x49E59F6267401e05b482B0020A1A65d63E782Ea4',
-    providers: ['0x0423189886d7966f0dd7e7d256898daeee625dca', '0xc95876688026be9d6fa7a7c33328bd013effa2bb', '0x7beb0e14f8d2e6f6678cc30d867787b384b19e20'],
+    providers: [
+      '0x0423189886d7966f0dd7e7d256898daeee625dca',
+      '0xc95876688026be9d6fa7a7c33328bd013effa2bb',
+      '0x7beb0e14f8d2e6f6678cc30d867787b384b19e20',
+    ],
   })
 
   const fullData = data + divviSuffix
