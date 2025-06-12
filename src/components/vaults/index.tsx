@@ -141,7 +141,7 @@ function VaultCard({
   }
 
   return (
-    <Grid item xs={4}>
+    <Grid item xs={12} sm={6} md={6} lg={4}>
       <Card variant="outlined" sx={{ p: 0 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -324,12 +324,12 @@ function Vaults() {
 
   if (isLoadingVaults || !vaults) {
     return (
-      <Stack gap={2} p={1} sx={{ width: '100%' }}>
+      <Stack gap={2} p={{ xs: 0.5, md: 1 }} sx={{ width: '100%' }}>
         <Skeleton variant="text" width={200} height={40} />
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Card variant="outlined">
-              <CardContent>
+              <CardContent sx={{ minHeight: { xs: 114, sm: 'auto' } }}>
                 <Stack gap={1}>
                   <Skeleton variant="text" width={150} height={24} />
                   <Skeleton variant="text" width={120} height={32} />
@@ -338,8 +338,8 @@ function Vaults() {
             </Card>
           </Grid>
           <Grid item xs={6}>
-            <Card variant="outlined">
-              <CardContent>
+            <Card variant="outlined" sx={{ p: 0 }}>
+              <CardContent sx={{ minHeight: { xs: 114, sm: 'auto' } }}>
                 <Stack gap={1}>
                   <Skeleton variant="text" width={150} height={24} />
                   <Skeleton variant="text" width={120} height={32} />
@@ -407,7 +407,7 @@ function Vaults() {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Card variant="outlined">
-            <CardContent>
+            <CardContent sx={{ minHeight: { xs: 114, sm: 'auto' } }}>
               <Stack gap={1}>
                 <Typography fontSize="16px" color="GrayText">
                   Total Vault Deposits
@@ -421,7 +421,7 @@ function Vaults() {
         </Grid>
         <Grid item xs={6}>
           <Card variant="outlined">
-            <CardContent>
+            <CardContent sx={{ minHeight: { xs: 114, sm: 'auto' } }}>
               <Stack gap={1}>
                 <Typography fontSize="16px" color="GrayText">
                   Average APY
