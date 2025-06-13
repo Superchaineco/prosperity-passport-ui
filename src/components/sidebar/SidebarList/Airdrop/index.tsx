@@ -99,8 +99,15 @@ export const SidebarAirdropComponent = ({ item }: { item: any }) => {
           </SidebarListItemText>
         </SidebarListItemButton>
       ) : (
-        <DefaultSidebarListItemButton>
-          {item.icon && <SidebarListItemIcon badge={false}>{item.icon}</SidebarListItemIcon>}
+        <DefaultSidebarListItemButton
+          selected={isSelected}
+          href={{ pathname: getRoute(item.href), query: { safe: router.query.safe } }}
+        >
+          {item.icon && (
+            <SidebarListItemIcon badge={false} color="#000000" stroke="#FCFF52">
+              {item.icon}
+            </SidebarListItemIcon>
+          )}
 
           <DefaultSidebarListItemText data-testid="sidebar-list-item" bold>
             {item.label}
