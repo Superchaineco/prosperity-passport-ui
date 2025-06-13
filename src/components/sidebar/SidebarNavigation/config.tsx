@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react'
+import type { ReactElement, ReactNode } from 'react'
 import React from 'react'
 import { AppRoutes } from '@/config/routes'
 import AccountIcon from '@/public/images/sidebar/account.svg'
@@ -8,11 +8,14 @@ import ContactsIcon from '@/public/images/sidebar/contacts.svg'
 import TransactionIcon from '@/public/images/sidebar/transactions.svg'
 import Encrypted from '@/public/images/vaults/encrypted.svg'
 import { SvgIcon } from '@mui/material'
+import { SidebarAirdropComponent } from '../SidebarList/Airdrop'
+import Celo from '@/public/tokens/celo.svg'
 
 export type NavItem = {
   label: string
   icon?: ReactElement
   href: string
+  customComponent?: ReactNode
 }
 
 export const navItems: NavItem[] = [
@@ -51,6 +54,20 @@ export const navItems: NavItem[] = [
     label: 'Transactions',
     icon: <SvgIcon component={TransactionIcon} inheritViewBox />,
     href: AppRoutes.transactions.history,
+  },
+  {
+    label: 'Claim Celo',
+    icon: <SvgIcon component={Celo} inheritViewBox />,
+    href: AppRoutes.airdrop,
+    customComponent: (
+      <SidebarAirdropComponent
+        item={{
+          label: 'Claim Celo',
+          icon: <SvgIcon component={Celo} inheritViewBox />,
+          href: AppRoutes.airdrop,
+        }}
+      />
+    ),
   },
 
   // {
