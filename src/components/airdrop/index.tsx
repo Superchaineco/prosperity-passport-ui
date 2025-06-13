@@ -19,8 +19,8 @@ import Celo from '@/public/tokens/celo.svg'
 import useSafeAddress from '@/hooks/useSafeAddress'
 import { Address, createWalletClient, custom, formatUnits, getContract } from 'viem'
 import StarsAnimation from '../badges/modals/StarsAnimation'
-import { CHAIN_ID, AIRDROP_ABI, AIRDROP_ADDRESS } from '@/features/superChain/constants'
-import { sepolia, optimism } from 'viem/chains'
+import { AIRDROP_ABI, AIRDROP_ADDRESS } from '@/features/superChain/constants'
+import { celo } from 'viem/chains'
 import useWallet from '@/hooks/wallets/useWallet'
 import { EthereumProvider } from 'permissionless/utils/toOwner'
 import usePimlico from '@/hooks/usePimlico'
@@ -51,7 +51,7 @@ function Claim() {
       if (!smartAccountClient) return
       // TODO: remove this when we are ready to use smart accounts
       const walletClient = createWalletClient({
-        chain: CHAIN_ID === sepolia.id.toString() ? sepolia : optimism,
+        chain: celo,
         transport: custom(wallet?.provider as EthereumProvider),
         account: wallet?.address as Address,
       })
@@ -80,7 +80,7 @@ function Claim() {
 
   const handleAddTokenToWallet = async () => {
     const walletClient = createWalletClient({
-      chain: CHAIN_ID === sepolia.id.toString() ? sepolia : optimism,
+      chain: celo,
       transport: custom(wallet?.provider as EthereumProvider),
     })
     try {
