@@ -61,18 +61,22 @@ const Navigation = (): ReactElement => {
 
         return (
           <ListItem key={item.href} disablePadding selected={isSelected}>
-            <SidebarListItemButton
-              selected={isSelected}
-              href={{ pathname: getRoute(item.href), query: { safe: router.query.safe } }}
-            >
-              {item.icon && <SidebarListItemIcon badge={getBadge(item)}>{item.icon}</SidebarListItemIcon>}
+            {item.customComponent ? (
+              item.customComponent
+            ) : (
+              <SidebarListItemButton
+                selected={isSelected}
+                href={{ pathname: getRoute(item.href), query: { safe: router.query.safe } }}
+              >
+                {item.icon && <SidebarListItemIcon badge={getBadge(item)}>{item.icon}</SidebarListItemIcon>}
 
-              <SidebarListItemText data-testid="sidebar-list-item" bold>
-                {item.label}
+                <SidebarListItemText data-testid="sidebar-list-item" bold>
+                  {item.label}
 
-                <SidebarListItemCounter count={getCounter(item)} />
-              </SidebarListItemText>
-            </SidebarListItemButton>
+                  <SidebarListItemCounter count={getCounter(item)} />
+                </SidebarListItemText>
+              </SidebarListItemButton>
+            )}
           </ListItem>
         )
       })}

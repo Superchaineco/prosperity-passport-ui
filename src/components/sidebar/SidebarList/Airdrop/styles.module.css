@@ -1,0 +1,72 @@
+.list {
+  display: grid;
+  gap: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.icon {
+  min-width: 0;
+  margin-right: var(--space-2);
+}
+
+.listItemButton {
+  border-radius: 6px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  background: radial-gradient(75.69% 522.62% at 24.31% 50%, #fdff8b 0%, #fcff52 49.66%, #e5e84b 100%) !important;
+  color: #111 !important;
+}
+
+.shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  animation: shine-animation 2s infinite;
+}
+
+.shine > rect {
+  fill: transparent !important;
+}
+
+@keyframes shine-animation {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 20%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.list :global .MuiListItemButton-root {
+  color: var(--color-text-primary);
+}
+
+[data-theme='dark'] .list :global .Mui-selected {
+  background-color: var(--color-border-light);
+}
+
+.list :global .MuiListItemButton-root:hover {
+  border-radius: 6px;
+  background-color: var(--color-background-light);
+}
+
+.list :global .Mui-selected {
+  border-radius: 6px;
+  background-color: var(--color-background-main);
+}
+
+.listItemButton :global .beamer_icon.active {
+  top: auto;
+  left: 28px;
+  bottom: 10px;
+  width: 6px;
+  height: 6px;
+  color: transparent;
+}
