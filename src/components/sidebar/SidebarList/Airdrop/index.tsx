@@ -82,6 +82,8 @@ export const SidebarAirdropComponent = ({ item }: { item: any }) => {
   }
 
   const isSelected = currentSubdirectory === getSubdirectory(item.href)
+
+  if (!airdropData?.eligible || isCheckLoading) return null
   return (
     <>
       {airdropData?.eligible && !airdropData?.claimed ? (
