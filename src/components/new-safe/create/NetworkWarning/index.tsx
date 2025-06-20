@@ -6,17 +6,19 @@ const NetworkWarning = () => {
   const chain = useCurrentChain()
 
   if (!chain) return null
-
-  return (
-    <Alert severity="warning" sx={{ mt: 3 }}>
-      <AlertTitle sx={{ fontWeight: 700 }}>Change your wallet network</AlertTitle>
-      You are trying to create a Prosperity Pass on {chain.chainName}. Make sure that your wallet is set to the same
-      network.
-      <Box mt={2}>
-        <ChainSwitcher />
-      </Box>
-    </Alert>
-  )
+  console.log('CHAIN!!!', chain)
+  if (chain?.chainName != 'Celo')
+    return (
+      <Alert severity="warning" sx={{ mt: 3 }}>
+        <AlertTitle sx={{ fontWeight: 700 }}>Change your wallet network</AlertTitle>
+        You are trying to create a Prosperity Pass on {chain.chainName}. Make sure that your wallet is set to the same
+        network.
+        <Box mt={2}>
+          <ChainSwitcher />
+        </Box>
+      </Alert>
+    )
+  return null
 }
 
 export default NetworkWarning

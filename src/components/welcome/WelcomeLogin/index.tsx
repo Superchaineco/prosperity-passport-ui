@@ -20,17 +20,17 @@ const WelcomeLogin = () => {
   }, [])
 
   const handleConnect = async () => {
-    open()
-    await onLogin()
+    if (wallet) {
+      await onLogin()
+    } else {
+      open()
+      await onLogin()
+    }
   }
 
   const handleAcceptInvite = async () => {
     setRedirectPath(AppRoutes.invites)
-    if (wallet) {
-      await onLogin()
-    } else {
-      handleConnect()
-    }
+    await handleConnect()
   }
 
   useEffect(() => {
