@@ -109,7 +109,7 @@ export const CreateSafeStatus = ({ data, setProgressColor, setStep }: StepRender
         </>
       )}
 
-      {showStartOver && (
+      {/* {showStartOver && (
         <>
           <Divider />
           <Box className={layoutCss.row}>
@@ -118,7 +118,7 @@ export const CreateSafeStatus = ({ data, setProgressColor, setStep }: StepRender
             </Button>
           </Box>
         </>
-      )}
+      )} */}
       {displaySafeLink && (
         <>
           <Divider />
