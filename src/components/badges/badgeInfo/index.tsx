@@ -14,6 +14,7 @@ import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 import NetworkChip from '../networkChip'
 import BadgeStrategyRenderer from './BadgeStrategyRenderer'
 import { SelfVerificationStrategy } from './strategies/SelfVerificationStrategy'
+import { FarcasterLinkStrategy } from './strategies/FarcasterLinkStrategy'
 
 function BadgeInfo({
   currentBadge,
@@ -48,7 +49,7 @@ function BadgeInfo({
 
   const isCompleted = Number(currentBadge.tier) === currentBadge.badgeTiers.length
 
-  const strategies = [new SelfVerificationStrategy()]
+  const strategies = [new SelfVerificationStrategy(), new FarcasterLinkStrategy()]
 
   return (
     <Stack justifyContent="flex-start" alignItems="center" spacing={2} className={css.drawer}>
