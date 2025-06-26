@@ -55,6 +55,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@farcaster/auth-kit": "^0.8.1",
     "@gnosis.pm/zodiac": "^4.0.1",
     "@mui/icons-material": "^5.14.20",
     "@mui/material": "^5.14.20",
