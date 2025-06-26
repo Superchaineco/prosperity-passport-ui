@@ -12,7 +12,7 @@ import axios from 'axios'
 
 class FarcasterLinkStrategy implements BadgeRenderStrategy {
   canRender(badge: ResponseBadge): boolean {
-    return badge.metadata.name === 'FarCaster Connection'
+    return badge.metadata.name === 'Farcaster Connection'
   }
 
   render(badge: ResponseBadge): React.ReactNode {
