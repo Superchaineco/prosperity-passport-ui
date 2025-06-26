@@ -11,6 +11,11 @@ import badgesService from '@/features/superChain/services/badges.service'
 import useSafeInfo from '@/hooks/useSafeInfo'
 
 export const networks = [
+  {
+    label: 'Optimism',
+    value: 'optimism',
+    icon: 'https://safe-transaction-assets.safe.global/chains/10/chain_logo.png',
+  },
   { label: 'Celo', value: 'celo', icon: 'https://safe-transaction-assets.safe.global/chains/42220/chain_logo.png' },
 
   { label: 'Ethereum', value: 'ethereum', icon: 'https://safe-transaction-assets.safe.global/chains/1/chain_logo.png' },
