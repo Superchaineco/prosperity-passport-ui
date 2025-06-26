@@ -7,11 +7,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Super Account - Season 7 Badges</title>
+        <title>Prosperity Pass - Season 1 Badges</title>
       </Head>
 
       <main>
-        <Badges season={{ code: 7, name: 'Season 7' }} />
+        <Badges season={{ code: 7, name: 'Season 1' }} />
       </main>
     </>
   )

@@ -51,7 +51,7 @@ const NavTabs = ({ tabs }: { tabs: NavItem[] }) => {
               className={css.label}
             >
               {tab.label}
-              {tab.label === 'Season 7' && (
+              {tab.label === 'Season 1' && (
                 <Box
                   component="span"
                   sx={{

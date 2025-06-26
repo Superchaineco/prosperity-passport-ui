@@ -2,11 +2,16 @@ import { Box, Typography, Card, CardContent, Divider, Chip } from '@mui/material
 import Image from 'next/image'
 import { AppRoutes } from '@/config/routes'
 import { GradientProgress } from '..'
+import NavTabs from '@/components/common/NavTabs'
 
 export const badgesNavItems = [
   {
     label: 'All-Time',
     href: AppRoutes.badges.allTime,
+  },
+  {
+    label: 'Season 1',
+    href: AppRoutes.badges.season7,
   },
 ]
 
@@ -34,7 +39,7 @@ function BadgesHeader({
       <Typography variant="h2" fontWeight={700} gutterBottom pb={4}>
         Badges
       </Typography>
-      {/* <NavTabs tabs={badgesNavItems} /> */}
+      <NavTabs tabs={badgesNavItems} />
       <Divider sx={{ mb: 2, width: '100%' }} />
 
       <Box display="flex" gap={2} flexDirection={{ xs: 'column', sm: 'row' }} alignItems="stretch" width="100%">
@@ -57,7 +62,7 @@ function BadgesHeader({
                 Badges
               </Typography>
 
-              {season && (
+              {/* {season && (
                 <Chip
                   label={
                     <Box display="flex" alignItems="center" gap={0.5}>
@@ -87,7 +92,7 @@ function BadgesHeader({
                     border: '1px solid #6B5DE7',
                   }}
                 />
-              )}
+              )} */}
             </Box>
 
             <Typography variant="h1" sx={{ fontSize: '40px', mt: 2 }} fontWeight={600}>

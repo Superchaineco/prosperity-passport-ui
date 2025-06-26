@@ -149,7 +149,7 @@ export const leaderboardNavItems = [
     href: AppRoutes.leaderboard.index,
   },
   {
-    label: 'Season 7',
+    label: 'Season 1',
     href: AppRoutes.leaderboard.index,
   },
 ]
