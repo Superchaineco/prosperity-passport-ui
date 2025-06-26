@@ -1,4 +1,4 @@
-import { Box, Typography, Card, CardContent, Divider, Chip } from '@mui/material'
+import { Box, Typography, Card, CardContent, Divider } from '@mui/material'
 import Image from 'next/image'
 import { AppRoutes } from '@/config/routes'
 import { GradientProgress } from '..'
