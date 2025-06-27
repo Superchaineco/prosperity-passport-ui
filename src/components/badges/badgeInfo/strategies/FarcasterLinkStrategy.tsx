@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import useSafeAddress from '@/hooks/useSafeAddress'
 import { Box } from '@mui/material'
 
-import { JSON_RPC_PROVIDER } from '@/features/superChain/constants'
+import { JSON_RPC_PROVIDER_OP } from '@/features/superChain/constants'
 import { BACKEND_AUTH_URI, BACKEND_BASE_URI } from '@/config/constants'
 import axios from 'axios'
 
@@ -24,7 +24,7 @@ export { FarcasterLinkStrategy }
 
 const domain = 'pass.celopg.eco'
 const siweUri = BACKEND_AUTH_URI + '/verify'
-const rpcUrl = JSON_RPC_PROVIDER
+const rpcUrl = JSON_RPC_PROVIDER_OP
 
 export function FarcasterVerificationComponent({ badge }: { badge: ResponseBadge }) {
   const address = useSafeAddress()
