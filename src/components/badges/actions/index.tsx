@@ -56,16 +56,20 @@ function BadgesActions({
   const [isClaimModalOpen, setIsClaimModalOpen] = useState(false)
   const [claimData, setClaimData] = useState<ClaimData | null>(null)
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
+  const [isLoadingModalOpen, setIsLoadingModalOpen] = useState(false)
   const queryClient = useQueryClient()
   const [selfUserId, setSelfUserId] = useState('')
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async () => {
+      setIsLoadingModalOpen(true)
       return await badgesService.attestBadges(safeAddress as Address, { selfUserId })
     },
     onError: (error) => {
+      setIsLoadingModalOpen(false)
       console.error(error)
     },
     onSuccess: (data) => {
+      setIsLoadingModalOpen(false)
       queryClient.cancelQueries({ queryKey: ['superChainAccount', safeAddress] })
       queryClient.cancelQueries({ queryKey: ['badges', safeAddress, safeLoaded] })
       queryClient.setQueryData(['superChainAccount', safeAddress], (old: SuperChainAccount) => {
@@ -101,10 +105,11 @@ function BadgesActions({
     const handler = (event: Event) => {
       const customEvent = event as CustomEvent
       const data = customEvent.detail
-      setSelfUserId(data.userId as string)
+      if (data?.userId) setSelfUserId(data.userId as string)
       mutate()
     }
 
+    window.removeEventListener('claim-badges', handler)
     window.addEventListener('claim-badges', handler)
 
     return () => {
@@ -138,7 +143,7 @@ function BadgesActions({
         level={Number(superChainAccount?.level)}
         onClose={handleCloseLevelUpModal}
       />
-      <LoadingModal open={isPending} title="Updating badges" />
+      <LoadingModal open={isLoadingModalOpen && isPending} title="Updating badges" />
       <FailedTxnModal open={isError} onClose={handleCloseLevelUpModal} handleRetry={() => mutate()} />
       <Grid container spacing={1} item>
         <Divider sx={{ mt: 1, mb: 2, width: '100%' }} />

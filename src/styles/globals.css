@@ -133,3 +133,41 @@ body.beamerAnnouncementBarTopActive {
 .MuiPaper-root {
   border: none;
 }
+
+
+
+
+._1n3pr301 {
+  font-family: "DM Sans" !important;
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  line-height: 24px !important;
+  letter-spacing: 0.08px;
+  display: flex !important;
+  height: 40px !important;
+  padding: 15px 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  align-self: stretch !important;
+  border-radius: 6px !important;
+  background-color: #000 !important;
+  color: #fff !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  border-radius: 6px !important;
+  min-width: 200px;
+}
+
+
+
+
+._1n3pr301 svg:first-of-type {
+  display: none !important;
+}
+
+._1n3pr301:hover {
+  background-color: #222 !important;
+}
