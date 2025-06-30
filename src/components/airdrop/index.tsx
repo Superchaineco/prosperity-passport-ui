@@ -192,22 +192,16 @@ function Claim() {
                 <SvgIcon component={Celo} inheritViewBox fontSize="inherit" />
               </Box>
             </Box>
-            {airdropData.claimed ? (
-              <Button variant="outlined" onClick={handleAddTokenToWallet}>
-                Add to Wallet
-              </Button>
-            ) : (
-              <Button variant="contained" color="secondary" onClick={handleClaimClick}>
-                {isClaiming ? (
-                  <Box display="flex" gap={1} alignItems="center">
-                    Claiming CELO Tokens
-                    <CircularProgress color="inherit" size={24} />
-                  </Box>
-                ) : (
-                  'Claim CELO Tokens'
-                )}
-              </Button>
-            )}
+            <Button disabled={airdropData?.claimed} variant="contained" color="secondary" onClick={handleClaimClick}>
+              {isClaiming ? (
+                <Box display="flex" gap={1} alignItems="center">
+                  Claiming CELO Tokens
+                  <CircularProgress color="inherit" size={24} />
+                </Box>
+              ) : (
+                'Claim CELO Tokens'
+              )}
+            </Button>
           </Grid>
           <Grid item xs={12} sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2, marginBottom: 2 }}>
             <Typography variant="h4" fontSize={20} fontWeight={600}>
