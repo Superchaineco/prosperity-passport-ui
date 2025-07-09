@@ -1,9 +1,13 @@
 import { useEffect } from 'react'
-import { GAS_PRICE_TYPE, getChainsConfig, RPC_AUTHENTICATION, setBaseUrl, type ChainInfo } from '@safe-global/safe-gateway-typescript-sdk'
+import {
+  GAS_PRICE_TYPE,
+  getChainsConfig,
+  RPC_AUTHENTICATION,
+  setBaseUrl,
+  type ChainInfo,
+} from '@safe-global/safe-gateway-typescript-sdk'
 import useAsync, { type AsyncResult } from '../useAsync'
 import { logError, Errors } from '@/services/exceptions'
-
-
 
 const celoChain: ChainInfo = {
   chainId: '42220',
@@ -49,9 +53,8 @@ const celoChain: ChainInfo = {
   theme: {
     textColor: '#ffffff',
     backgroundColor: '#35D07F',
-  }
+  },
 }
-
 
 const getConfigs = async (): Promise<ChainInfo[]> => {
   setBaseUrl('https://safe-client.safe.global')
