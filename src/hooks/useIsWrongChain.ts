@@ -5,7 +5,10 @@ import useChainId from '@/hooks/useChainId'
 
 const useIsWrongChain = (dynamically = false): boolean => {
   const wallet = useWallet()
-  const chainId = dynamically ? useReactiveChainId() : useChainId()
+  const reactiveChainId = useReactiveChainId()
+  const staticChainId = useChainId()
+  const chainId = dynamically ? reactiveChainId : staticChainId
+
 
   if (!wallet || !chainId) return false
 
