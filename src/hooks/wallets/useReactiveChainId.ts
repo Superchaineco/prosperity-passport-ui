@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// Define el tipo mínimo para Ethereum provider
+
 type EIP1193Provider = {
     request: (args: { method: string }) => Promise<any>
     on: (event: string, handler: (...args: any[]) => void) => void
