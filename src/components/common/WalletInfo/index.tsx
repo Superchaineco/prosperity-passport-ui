@@ -20,6 +20,7 @@ import useSocialWallet from '@/hooks/wallets/mpc/useSocialWallet'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
 import useChainId from '@/hooks/useChainId'
 import { useDisconnect } from '@reown/appkit/react'
+import useReactiveChainId from '@/hooks/wallets/useReactiveChainId'
 
 type WalletInfoProps = {
   wallet: ConnectedWallet
@@ -42,7 +43,8 @@ export const WalletInfo = ({
   addressBook,
   handleClose,
 }: WalletInfoProps) => {
-  const chainInfo = useAppSelector((state) => selectChainById(state, wallet.chainId))
+  const chainId = useReactiveChainId()
+  const chainInfo = useAppSelector((state) => selectChainById(state, chainId!))
   const prefix = chainInfo?.shortName
 
   const { disconnect } = useDisconnect()

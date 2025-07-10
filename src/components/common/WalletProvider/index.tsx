@@ -17,18 +17,20 @@ const WalletProvider = ({ children }: { children: ReactNode }): ReactElement => 
   }
 
   useEffect(() => {
-    if (!isConnected) return setWallet(null)
+    if (!isConnected || !caipAddress) return setWallet(null)
+
     const ethersProvider = new BrowserProvider(walletProvider as EIP1193Provider)
+
     ;(async () => {
       setWallet({
         address: address!,
         balance: await getWalletBalance(ethersProvider, address!),
         label: 'Reown',
         provider: walletProvider as EIP1193Provider,
-        chainId: caipAddress!.split(':')[1],
+        chainId: caipAddress.split(':')[1],
       })
     })()
-  }, [isConnected])
+  }, [isConnected, caipAddress])
 
   return <WalletContext.Provider value={wallet}>{children}</WalletContext.Provider>
 }

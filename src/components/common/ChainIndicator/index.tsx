@@ -24,7 +24,7 @@ const fallbackChainConfig = {
     backgroundColor: '#ddd',
     textColor: '#000',
   },
-  chainLogoUri: null,
+  chainLogoUri: '/images/common/beauty-alert.svg',
 }
 
 const ChainIndicator = ({

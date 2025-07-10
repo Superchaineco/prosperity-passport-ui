@@ -4,6 +4,7 @@ import css from '@/components/new-safe/create/OverviewWidget/styles.module.css'
 import WalletOverview from '../../../common/WalletOverview'
 import ChainIndicator from '../../../common/ChainIndicator'
 import useWallet from '@/hooks/wallets/useWallet'
+import useReactiveChainId from '@/hooks/wallets/useReactiveChainId'
 
 const LOGO_DIMENSIONS = '22px'
 
@@ -15,13 +16,14 @@ const OverviewWidget = ({
   walletName: string
 }): ReactElement | null => {
   const wallet = useWallet()
+  const chainId = useReactiveChainId()
   const rows = [
     ...(wallet ? [{ title: 'Wallet', component: <WalletOverview wallet={wallet} /> }] : []),
     ...(wallet
       ? [
           {
             title: 'Network',
-            component: <ChainIndicator inline />,
+            component: <ChainIndicator inline chainId={chainId} />,
           },
         ]
       : []),

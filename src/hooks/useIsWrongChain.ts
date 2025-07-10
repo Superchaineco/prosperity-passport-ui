@@ -1,11 +1,12 @@
 import { CHAIN_ID } from '@/features/superChain/constants'
-import useChainId from '@/hooks/useChainId'
+import useReactiveChainId from '@/hooks/wallets/useReactiveChainId'
 import useWallet from '@/hooks/wallets/useWallet'
 
 const useIsWrongChain = (): boolean => {
-  const chainId = useChainId()
+  const reactiveChainId = useReactiveChainId()
   const wallet = useWallet()
-  return !wallet || !chainId ? false : wallet.chainId !== CHAIN_ID
+
+  return !!wallet && reactiveChainId !== CHAIN_ID
 }
 
 export default useIsWrongChain

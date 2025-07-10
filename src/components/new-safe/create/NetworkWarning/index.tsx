@@ -6,7 +6,6 @@ const NetworkWarning = () => {
   const chain = useCurrentChain()
 
   if (!chain) return null
-  console.log('CHAIN!!!', chain)
   if (chain?.chainName != 'Celo')
     return (
       <Alert severity="warning" sx={{ mt: 3 }}>

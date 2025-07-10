@@ -13,14 +13,14 @@ const celoChain: ChainInfo = {
   chainId: '42220',
   chainName: 'Celo',
   description: 'Celo mainnet',
-  chainLogoUri: 'https://cryptologos.cc/logos/celo-celo-logo.png',
+  chainLogoUri: '/images/currencies/celo.svg',
   l2: false,
   isTestnet: false,
   nativeCurrency: {
     name: 'CELO',
     symbol: 'CELO',
     decimals: 18,
-    logoUri: 'https://cryptologos.cc/logos/celo-celo-logo.png',
+    logoUri: '/images/currencies/celo.svg',
   },
   transactionService: '',
   blockExplorerUriTemplate: {
