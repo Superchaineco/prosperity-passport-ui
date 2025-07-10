@@ -9,7 +9,6 @@ const useIsWrongChain = (dynamically = false): boolean => {
   const staticChainId = useChainId()
   const chainId = dynamically ? reactiveChainId : staticChainId
 
-
   if (!wallet || !chainId) return false
 
   return wallet.chainId !== CHAIN_ID
