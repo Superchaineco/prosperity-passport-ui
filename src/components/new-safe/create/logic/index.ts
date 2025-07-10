@@ -21,7 +21,7 @@ import type { AppDispatch, AppThunk } from '@/store'
 import { showNotification } from '@/store/notificationsSlice'
 import { SafeFactory } from '@safe-global/protocol-kit'
 import type Safe from '@safe-global/protocol-kit'
-import type { DeploySafeProps } from '@safe-global/protocol-kit'
+import type { ContractNetworksConfig, DeploySafeProps } from '@safe-global/protocol-kit'
 import { createEthersAdapter, isValidSafeVersion } from '@/hooks/coreSDK/safeCoreSDK'
 
 import { backOff } from 'exponential-backoff'
@@ -36,6 +36,7 @@ import {
 } from '@/features/superChain/constants'
 import type { NounProps } from '../steps/AvatarStep'
 import { getDataSuffix } from '@divvi/referral-sdk'
+import useSafeAddress from '@/hooks/useSafeAddress'
 
 export type SafeCreationProps = {
   owners: string[]
@@ -109,7 +110,12 @@ const getSafeFactory = async (
     throw new Error('Invalid Safe version')
   }
   const ethAdapter = await createEthersAdapter(ethersProvider)
+
+
   const safeFactory = await SafeFactory.create({ ethAdapter, safeVersion })
+  console.log('🧪 SafeFactory address:', await safeFactory.getAddress())
+  console.log('🧪 SafeFactory version:', await safeFactory.getSafeVersion())
+  console.log('🧪 SafeFactory chainId:', await safeFactory.getChainId())
   return safeFactory
 }
 
@@ -144,7 +150,18 @@ export const computeNewSafeAddress = async (
     props.superChainProps.id,
     props.safeAccountConfig.owners[0],
   )
-  return safeFactory.predictSafeAddress(
+  console.log('🧪 Salt nonce (as string):', props.saltNonce)
+
+  console.log('🧪 Predicting address with: ', {
+    owners: props.safeAccountConfig.owners,
+    threshold: props.safeAccountConfig.threshold,
+    to,
+    data,
+    fallbackHandler: props.safeAccountConfig.fallbackHandler,
+    saltNonce: props.saltNonce,
+  })
+
+  const predicted = await safeFactory.predictSafeAddress(
     {
       ...props.safeAccountConfig,
       data,
@@ -152,6 +169,8 @@ export const computeNewSafeAddress = async (
     },
     Number(props.saltNonce).toString(),
   )
+  console.log('🧪 Predicted address:', predicted)
+  return predicted
 }
 
 /**
@@ -167,6 +186,7 @@ export const encodeSafeCreationTx = async ({
   seed,
 }: SafeCreationProps & { chain: ChainInfo }) => {
   const readOnlySafeContract = await getReadOnlyGnosisSafeContract(chain, LATEST_SAFE_VERSION)
+  console.log('🧪 Singleton (Safe Master Copy):', await readOnlySafeContract.getAddress())
   const readOnlyProxyContract = await getReadOnlyProxyFactoryContract(chain.chainId, LATEST_SAFE_VERSION)
   // const readOnlyFallbackHandlerContract = await getReadOnlyFallbackHandlerContract(chain.chainId, LATEST_SAFE_VERSION)
 
@@ -182,6 +202,8 @@ export const encodeSafeCreationTx = async ({
     '0',
     ZERO_ADDRESS,
   ])
+  console.log('🧪 Actual encoded Safe setupData:', setupData)
+  console.log('🧪 Actual singleton used in creation:', await readOnlySafeContract.getAddress())
 
   return readOnlyProxyContract.encode('createProxyWithNonce', [
     await readOnlySafeContract.getAddress(),
@@ -244,7 +266,10 @@ export const estimateSafeCreationGas = async (
 
 export const pollSafeInfo = async (chainId: string, safeAddress: string): Promise<SafeInfo> => {
   // exponential delay between attempts for around 4 min
-  return backOff(() => getSafeInfo(chainId, safeAddress), {
+  const address = useSafeAddress()
+
+  //CHANGE!!!!
+  return backOff(() => getSafeInfo(chainId, address), {
     startingDelay: 750,
     maxDelay: 20000,
     numOfAttempts: 19,
