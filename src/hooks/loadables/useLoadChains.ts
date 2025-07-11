@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import {
+  FEATURES,
   GAS_PRICE_TYPE,
   getChainsConfig,
   RPC_AUTHENTICATION,
@@ -30,7 +31,7 @@ const celoChain: ChainInfo = {
   },
   disabledWallets: [],
   ensRegistryAddress: undefined,
-  features: [],
+  features: [FEATURES.SAFE_APPS],
   gasPrice: [
     {
       type: GAS_PRICE_TYPE.FIXED,
