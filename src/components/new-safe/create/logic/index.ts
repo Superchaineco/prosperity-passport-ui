@@ -45,7 +45,14 @@ export type SafeCreationProps = {
   id: string
   seed: NounProps
 }
-
+const divviSuffix = getDataSuffix({
+  consumer: '0x49E59F6267401e05b482B0020A1A65d63E782Ea4',
+  providers: [
+    '0x0423189886d7966f0dd7e7d256898daeee625dca',
+    '0xc95876688026be9d6fa7a7c33328bd013effa2bb',
+    '0x7beb0e14f8d2e6f6678cc30d867787b384b19e20',
+  ],
+})
 /**
  * Prepare data for creating a Safe for the Core SDK
  */
@@ -58,14 +65,7 @@ export const getSafeDeployProps = async (
 
   const { data, to } = getSuperChainSetupCallData(safeParams.seed, safeParams.id, safeParams.owners[0])
 
-  const divviSuffix = getDataSuffix({
-    consumer: '0x49E59F6267401e05b482B0020A1A65d63E782Ea4',
-    providers: [
-      '0x0423189886d7966f0dd7e7d256898daeee625dca',
-      '0xc95876688026be9d6fa7a7c33328bd013effa2bb',
-      '0x7beb0e14f8d2e6f6678cc30d867787b384b19e20',
-    ],
-  })
+
 
   const fullData = data + divviSuffix
   return {
@@ -152,11 +152,12 @@ export const computeNewSafeAddress = async (
   )
   console.log('🧪 Salt nonce (as string):', props.saltNonce)
 
+  const fullData = data + divviSuffix
   console.log('🧪 Predicting address with: ', {
     owners: props.safeAccountConfig.owners,
     threshold: props.safeAccountConfig.threshold,
     to,
-    data,
+    data: fullData,
     fallbackHandler: props.safeAccountConfig.fallbackHandler,
     saltNonce: props.saltNonce,
   })
@@ -164,7 +165,7 @@ export const computeNewSafeAddress = async (
   const predicted = await safeFactory.predictSafeAddress(
     {
       ...props.safeAccountConfig,
-      data,
+      data: fullData,
       to,
     },
     Number(props.saltNonce).toString(),
