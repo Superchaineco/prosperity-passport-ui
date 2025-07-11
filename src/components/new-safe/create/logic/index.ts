@@ -36,7 +36,6 @@ import {
 } from '@/features/superChain/constants'
 import type { NounProps } from '../steps/AvatarStep'
 import { getDataSuffix } from '@divvi/referral-sdk'
-import useSafeAddress from '@/hooks/useSafeAddress'
 
 export type SafeCreationProps = {
   owners: string[]
@@ -264,10 +263,7 @@ export const estimateSafeCreationGas = async (
 
 export const pollSafeInfo = async (chainId: string, safeAddress: string): Promise<SafeInfo> => {
   // exponential delay between attempts for around 4 min
-  const address = useSafeAddress()
-
-  //CHANGE!!!!
-  return backOff(() => getSafeInfo(chainId, address), {
+  return backOff(() => getSafeInfo(chainId, safeAddress), {
     startingDelay: 750,
     maxDelay: 20000,
     numOfAttempts: 19,
