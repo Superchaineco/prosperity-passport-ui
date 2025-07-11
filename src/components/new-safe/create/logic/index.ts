@@ -21,7 +21,7 @@ import type { AppDispatch, AppThunk } from '@/store'
 import { showNotification } from '@/store/notificationsSlice'
 import { SafeFactory } from '@safe-global/protocol-kit'
 import type Safe from '@safe-global/protocol-kit'
-import type { ContractNetworksConfig, DeploySafeProps } from '@safe-global/protocol-kit'
+import type { DeploySafeProps } from '@safe-global/protocol-kit'
 import { createEthersAdapter, isValidSafeVersion } from '@/hooks/coreSDK/safeCoreSDK'
 
 import { backOff } from 'exponential-backoff'
@@ -64,8 +64,6 @@ export const getSafeDeployProps = async (
   // const readOnlyFallbackHandlerContract = await getReadOnlyFallbackHandlerContract(chain.chainId, LATEST_SAFE_VERSION)
 
   const { data, to } = getSuperChainSetupCallData(safeParams.seed, safeParams.id, safeParams.owners[0])
-
-
 
   const fullData = data + divviSuffix
   return {
@@ -110,7 +108,6 @@ const getSafeFactory = async (
     throw new Error('Invalid Safe version')
   }
   const ethAdapter = await createEthersAdapter(ethersProvider)
-
 
   const safeFactory = await SafeFactory.create({ ethAdapter, safeVersion })
   console.log('🧪 SafeFactory address:', await safeFactory.getAddress())
