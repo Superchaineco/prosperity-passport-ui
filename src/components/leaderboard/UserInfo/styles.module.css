@@ -1,6 +1,6 @@
 .drawer {
   padding-top: var(--header-height);
-  overflow: hidden;
+  overflow: auto;
   height: 100%;
   width: 340px;
   max-width: 90vw;
@@ -12,9 +12,11 @@
   padding: 0;
   color: var(--color-primary-light);
 }
+
 .unclaimed {
   opacity: 0.5;
 }
+
 .avatar {
   border-radius: 6px 6px 0 0;
 }
