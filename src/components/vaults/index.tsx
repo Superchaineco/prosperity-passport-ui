@@ -389,7 +389,7 @@ function Vaults() {
     const totalApr = Number(vault.rewards_apr) + Number(vault.interest_apr)
     return sum + (Number(vault.balance) || 0) * totalApr
   }, 0)
-  const averageApy = totalDeposits > 0 ? (totalWeightedApy / totalDeposits) * 100 : 0
+  const averageApy = totalDeposits > 0 ? (totalWeightedApy / totalDeposits) : 0
 
   const getVaultIcon = (symbol: string): typeof cEUR | typeof wETH => {
     switch (symbol) {
@@ -454,7 +454,7 @@ function Vaults() {
               title={vault.symbol}
               value={Number(vault.balance) || 0}
               rawValue={vault.raw_balance || '0'}
-              apy={(Number(vault.rewards_apr) + Number(vault.interest_apr)) * 100}
+              apy={Number(vault.rewards_apr) + Number(vault.interest_apr)}
               icon={icon}
               tokenIcon={vault.image}
               comet={vault.comet}
