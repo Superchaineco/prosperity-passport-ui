@@ -20,7 +20,6 @@
   animation: spin 2s linear infinite;
 }
 
-
 .marqueeWrapper {
   overflow: hidden;
   height: 1.5rem;

@@ -134,11 +134,8 @@ body.beamerAnnouncementBarTopActive {
   border: none;
 }
 
-
-
-
 ._1n3pr301 {
-  font-family: "DM Sans" !important;
+  font-family: 'DM Sans' !important;
   font-size: 16px !important;
   font-style: normal !important;
   font-weight: 600 !important;
@@ -160,9 +157,6 @@ body.beamerAnnouncementBarTopActive {
   border-radius: 6px !important;
   min-width: 200px;
 }
-
-
-
 
 ._1n3pr301 svg:first-of-type {
   display: none !important;

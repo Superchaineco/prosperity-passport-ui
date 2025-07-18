@@ -175,12 +175,12 @@ const AssetsTable = ({
               ),
             },
             balance: {
-              rawValue: Number(item.balance) / 10 ** item.tokenInfo.decimals,
+              rawValue: Number(item.balance) / 10 ** (item.tokenInfo.decimals ?? 18),
               collapsed: item.tokenInfo.address === hidingAsset,
               content: (
                 <TokenAmount
                   value={item.balance}
-                  decimals={item.tokenInfo.decimals}
+                  decimals={item.tokenInfo.decimals ?? 18}
                   tokenSymbol={item.tokenInfo.symbol}
                 />
               ),
