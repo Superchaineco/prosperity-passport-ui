@@ -1,5 +1,6 @@
 import { BACKEND_BASE_URI } from '@/config/constants'
 import { JSON_RPC_PROVIDER } from '@/features/superChain/constants'
+import { getSiweToken } from '@/utils/helpers'
 import { createSmartAccountClient } from 'permissionless'
 import { toSafeSmartAccount } from 'permissionless/accounts'
 import { createPimlicoClient } from 'permissionless/clients/pimlico'
@@ -8,10 +9,11 @@ import { entryPoint07Address } from 'viem/account-abstraction'
 import { celo } from 'viem/chains'
 
 const pimlicoTransport = () => {
+  const token = getSiweToken()
   return http(`${BACKEND_BASE_URI}/user-op-reverse-proxy`, {
     fetchOptions: {
       //  credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     },
   })
 }
