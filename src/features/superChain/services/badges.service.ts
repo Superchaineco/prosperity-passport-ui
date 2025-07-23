@@ -14,7 +14,7 @@ export type Perks = {
 class BadgesService {
   httpInstance = axios.create({
     baseURL: BACKEND_BASE_URI,
-    withCredentials: true,
+    //withCredentials: true,
   })
 
   constructor() {

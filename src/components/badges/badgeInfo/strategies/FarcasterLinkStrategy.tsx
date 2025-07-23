@@ -42,7 +42,7 @@ export function FarcasterVerificationComponent({ badge }: { badge: ResponseBadge
     setCurrentUser(res.displayName!)
     const httpInstance = axios.create({
       baseURL: BACKEND_BASE_URI,
-      withCredentials: true,
+      // withCredentials: true,
     })
     const token = getSiweToken()
     try {
