@@ -22,3 +22,11 @@ export function assertWallet(wallet: ConnectedWallet | null): asserts wallet {
 export function assertOnboard(onboard: OnboardAPI | undefined): asserts onboard {
   return invariant(onboard, 'Onboard not connected')
 }
+
+export function getSiweToken(): string | null {
+  return localStorage.getItem('siwe-jwt');
+}
+export const siweSignOut = (): boolean => {
+  localStorage.removeItem('siwe-jwt');
+  return true;
+};

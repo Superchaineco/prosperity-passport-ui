@@ -9,6 +9,7 @@ import { Box } from '@mui/material'
 import { JSON_RPC_PROVIDER_OP } from '@/features/superChain/constants'
 import { BACKEND_AUTH_URI, BACKEND_BASE_URI } from '@/config/constants'
 import axios from 'axios'
+import { getSiweToken } from '@/utils/helpers'
 
 class FarcasterLinkStrategy implements BadgeRenderStrategy {
   canRender(badge: ResponseBadge): boolean {
@@ -43,9 +44,17 @@ export function FarcasterVerificationComponent({ badge }: { badge: ResponseBadge
       baseURL: BACKEND_BASE_URI,
       withCredentials: true,
     })
-
+    const token = getSiweToken()
     try {
-      await httpInstance.post(`${BACKEND_BASE_URI}/farcaster/verify/${address}`, { ...res })
+      await httpInstance.post(
+        `${BACKEND_BASE_URI}/farcaster/verify/${address}`,
+        { ...res },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
       window.dispatchEvent(new CustomEvent('claim-badges'))
     } catch (error) {
       console.error('Verification failed:', error)

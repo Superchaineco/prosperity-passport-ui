@@ -5,6 +5,7 @@ import type { ResponseBadge } from '@/types/super-chain'
 import local from '@/services/local-storage/local'
 import type { Setter } from '@/services/local-storage/useLocalStorage'
 import { badgeInterceptor } from './badge.interceptor'
+import { getSiweToken } from '@/utils/helpers'
 
 export type Perks = {
   name: string
@@ -74,7 +75,12 @@ class BadgesService {
     return response.data
   }
   public async attestBadges(account: Address, extraArguments: any) {
-    const response = await this.httpInstance.post(`/user/${account}/badges/claim`, extraArguments)
+    const token = getSiweToken()
+    const response = await this.httpInstance.post(`/user/${account}/badges/claim`, extraArguments, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     return response.data
   }
   public async getPerks(account: Address) {
