@@ -6,7 +6,6 @@ import { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
 import useWallet from '../wallets/useWallet'
 import useSafeAddress from '../useSafeAddress'
 import { COMPOUND_ABI } from '@/features/superChain/constants'
-import { patchFetch } from '@/utils/fecthPatch'
 
 function useCompound() {
   const wallet = useWallet()
@@ -42,8 +41,6 @@ function useCompound() {
   const getDepositOnCompoundCallable = (supplyToken: Address, contract: Address) => {
     return {
       callContract: async (amount: string) => {
-        patchFetch()
-
         //TODO improve
         const bigIntAmount =
           supplyToken == '0x01f32b1c2345538c0c6f582fcb022739c4a194ebb' ? parseUnits(amount, 18) : parseUnits(amount, 6)
@@ -87,8 +84,6 @@ function useCompound() {
   const getWithdrawOnCompoundCallable = (supplyToken: Address, contract: Address) => {
     return {
       callContract: async (amount: string) => {
-        patchFetch()
-
         const safe4337Pack = await initializeSafeKit()
 
         //TODO improve

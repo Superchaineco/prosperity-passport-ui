@@ -6,7 +6,6 @@ import { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
 import useWallet from '../wallets/useWallet'
 import useSafeAddress from '../useSafeAddress'
 import { AAVE_ABI } from '@/features/superChain/constants'
-import { patchFetch } from '@/utils/fecthPatch'
 
 function useAAve() {
   const wallet = useWallet()
@@ -43,8 +42,6 @@ function useAAve() {
   const getDepositOnAAveCallable = (supplyToken: Address, contract: Address) => {
     return {
       callContract: async (amount: string) => {
-        patchFetch()
-
         //TODO improve
         const parsedAmount = parseUnits(amount, 18)
 
@@ -87,8 +84,6 @@ function useAAve() {
   const getWithdrawOnAAveCallable = (supplyToken: Address, contract: Address) => {
     return {
       callContract: async (amount: string, parseAmount: boolean = true) => {
-        patchFetch()
-
         const safe4337Pack = await initializeSafeKit()
 
         //TODO improve
