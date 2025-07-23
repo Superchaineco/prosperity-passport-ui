@@ -24,9 +24,9 @@ export function assertOnboard(onboard: OnboardAPI | undefined): asserts onboard 
 }
 
 export function getSiweToken(): string | null {
-  return localStorage.getItem('siwe-jwt');
+  return localStorage.getItem('siwe-jwt')
 }
 export const siweSignOut = (): boolean => {
-  localStorage.removeItem('siwe-jwt');
-  return true;
-};
+  localStorage.removeItem('siwe-jwt')
+  return true
+}
