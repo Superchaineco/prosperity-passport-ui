@@ -7,13 +7,14 @@ import {
 } from '@reown/appkit-siwe'
 import { BACKEND_AUTH_URI } from '@/config/constants'
 import { AppKitNetwork } from '@reown/appkit/networks'
-import { siweSignOut } from '@/utils/helpers'
+import { getSiweToken, siweSignOut } from '@/utils/helpers'
 
 export async function getSession() {
   const res = await fetch(BACKEND_AUTH_URI + '/session', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${getSiweToken() || ''}`,
     },
     //credentials: 'include',
   })
