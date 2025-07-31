@@ -9,7 +9,8 @@ type CheckAirdropEligibilityResponse = {
   reasons: string[]
 }
 
-export async function checkAirdropEligibility(address: string): Promise<CheckAirdropEligibilityResponse> {
+export async function checkAirdropEligibility(address: string): Promise<CheckAirdropEligibilityResponse | null> {
+  return null
   const response = await axios.get<CheckAirdropEligibilityResponse>(`${BACKEND_BASE_URI}/airdrop/${address}`)
   return response.data
 }
