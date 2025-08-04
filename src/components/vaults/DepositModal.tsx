@@ -71,9 +71,10 @@ function DepositModal({
 
   const { mutate: deposit, isPending: isDepositing } = useMutation({
     mutationFn: async () => {
+      const token = balances.items.find((item) => item.tokenInfo.address === tokenAddress)
       let hash = ''
       try {
-        const depositCallable = getAAveDepositCallable(tokenAddress)
+        const depositCallable = getAAveDepositCallable(tokenAddress, token?.tokenInfo.decimals ?? 18)
         const tx = await depositCallable.callContract(amount)
         hash = tx.toString()
       } catch (error) {

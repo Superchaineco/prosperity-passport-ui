@@ -288,6 +288,7 @@ function VaultCard({
         symbol={title}
         icon={icon}
         maxAmount={value}
+        decimals={decimals}
         maxRawAmount={rawValue || '0'}
         tokenAddress={tokenAddress as Address}
         supplyTokenAddress={comet as Address}

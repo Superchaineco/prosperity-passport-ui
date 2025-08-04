@@ -31,6 +31,7 @@ interface WithdrawModalProps {
   maxAmount?: number
   maxRawAmount?: string
   tokenAddress: Address
+  decimals: number
   supplyTokenAddress: Address
   onSuccess: (amount: string, hash: string, balance: string) => void
   onError: () => void
@@ -44,6 +45,7 @@ function WithdrawModal({
   maxAmount = 0,
   maxRawAmount = '0',
   tokenAddress,
+  decimals,
   supplyTokenAddress,
   onSuccess,
   onError,
@@ -59,7 +61,7 @@ function WithdrawModal({
       let hash = ''
 
       try {
-        const withdrawCallable = getAAveWithdrawCallable(tokenAddress)
+        const withdrawCallable = getAAveWithdrawCallable(tokenAddress, decimals)
         const withdrawAmount = Number(amount)
         const epsilon = 1e-2
         const isMaxAmount = Math.abs(withdrawAmount - maxAmount) <= epsilon

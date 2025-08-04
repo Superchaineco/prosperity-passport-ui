@@ -12,13 +12,13 @@ function useAAve() {
   const safeAddress = useSafeAddress()
   const AavePoolProvider = '0x3E59A31363E2ad014dcbc521c4a0d5757d9f3402'
 
-  const getAAveDepositCallable = (supplyToken: Address) => {
-    return getDepositOnAAveCallable(supplyToken, AavePoolProvider)
-  }
+  const getAAveDepositCallable = (supplyToken: Address, decimals: number) => {
+    return getDepositOnAAveCallable(supplyToken, AavePoolProvider, decimals);
+  };
 
-  const getAAveWithdrawCallable = (supplyToken: Address) => {
-    return getWithdrawOnAAveCallable(supplyToken, AavePoolProvider)
-  }
+  const getAAveWithdrawCallable = (supplyToken: Address, decimals: number) => {
+    return getWithdrawOnAAveCallable(supplyToken, AavePoolProvider, decimals);
+  };
 
   const initializeSafeKit = async (): Promise<Safe4337Pack> => {
     return await Safe4337Pack.init({
@@ -39,11 +39,11 @@ function useAAve() {
       safeModulesVersion: '0.3.0',
     })
   }
-  const getDepositOnAAveCallable = (supplyToken: Address, contract: Address) => {
+  const getDepositOnAAveCallable = (supplyToken: Address, contract: Address, decimals: number) => {
     return {
       callContract: async (amount: string) => {
-        //TODO improve
-        const parsedAmount = parseUnits(amount, 18)
+        console.debug({ amount, decimals })
+        const parsedAmount = parseUnits(amount, decimals)
 
         const approveTx: MetaTransactionData = {
           to: supplyToken,
@@ -81,13 +81,12 @@ function useAAve() {
     }
   }
 
-  const getWithdrawOnAAveCallable = (supplyToken: Address, contract: Address) => {
+  const getWithdrawOnAAveCallable = (supplyToken: Address, contract: Address, decimals: number) => {
     return {
       callContract: async (amount: string, parseAmount: boolean = true) => {
         const safe4337Pack = await initializeSafeKit()
 
-        //TODO improve
-        const parsedAmount = parseAmount ? parseUnits(amount, 18) : amount
+        const parsedAmount = parseAmount ? parseUnits(amount, decimals) : amount
 
         const withdrawTx: MetaTransactionData = {
           to: contract,
