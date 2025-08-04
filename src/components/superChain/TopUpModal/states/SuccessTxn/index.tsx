@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, Stack, SvgIcon, Typography } from '@mui/material'
 import React from 'react'
 import css from './styles.module.css'
-import { formatEther } from 'viem'
+import { formatEther, formatUnits } from 'viem'
 import ExplorerButton from '@/components/common/ExplorerButton'
 import { useCurrentChain } from '@/hooks/useChains'
 import { getBlockExplorerLink } from '@/utils/chains'
@@ -49,7 +49,7 @@ function SuccessTxn({
           borderRadius="6px"
         >
           <Typography fontWeight={600} fontSize={22}>
-            {formatEther(value)}
+            {formatUnits(value, token.decimals ?? 18)}
           </Typography>
           <SvgIcon inheritViewBox component={token.icon} />
         </Box>

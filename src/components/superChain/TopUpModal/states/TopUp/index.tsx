@@ -71,7 +71,7 @@ const tokens: Record<string, Token> = {
   },
   USDT: {
     values: [25, 50, 100],
-    decimals: 18,
+    decimals: 6,
     address: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
     icon: USDT as any,
   },
@@ -191,30 +191,14 @@ function TopUp({
               }}
               value={selectedToken}
             >
-              <MenuItem value="CELO">
-                <Box pr={1} display="flex" gap={1}>
-                  <SvgIcon inheritViewBox component={Celo} />
-                  CELO
-                </Box>
-              </MenuItem>
-              <MenuItem value="cUSD">
-                <Box pr={1} display="flex" gap={1}>
-                  <SvgIcon inheritViewBox component={cUSD} />
-                  cUSD
-                </Box>
-              </MenuItem>
-              <MenuItem value="cEUR">
-                <Box pr={1} display="flex" gap={1}>
-                  <SvgIcon inheritViewBox component={cEUR} />
-                  cEUR
-                </Box>
-              </MenuItem>
-              <MenuItem value="WETH">
-                <Box pr={1} display="flex" gap={1}>
-                  <SvgIcon inheritViewBox component={WETH} />
-                  WETH
-                </Box>
-              </MenuItem>
+              {Object.keys(tokens).map((token) => (
+                <MenuItem key={token} value={token}>
+                  <Box pr={1} display="flex" gap={1}>
+                    <SvgIcon inheritViewBox component={tokens[token].icon} />
+                    {token}
+                  </Box>
+                </MenuItem>
+              ))}
             </Select>
             {tokens[selectedToken].values.map((value, index) => (
               <Button
