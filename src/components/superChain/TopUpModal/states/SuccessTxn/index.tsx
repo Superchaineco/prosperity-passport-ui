@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, Stack, SvgIcon, Typography } from '@mui/material'
 import React from 'react'
 import css from './styles.module.css'
-import { formatEther, formatUnits } from 'viem'
+import { formatUnits } from 'viem'
 import ExplorerButton from '@/components/common/ExplorerButton'
 import { useCurrentChain } from '@/hooks/useChains'
 import { getBlockExplorerLink } from '@/utils/chains'

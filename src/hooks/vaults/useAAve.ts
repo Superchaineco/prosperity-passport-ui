@@ -13,12 +13,12 @@ function useAAve() {
   const AavePoolProvider = '0x3E59A31363E2ad014dcbc521c4a0d5757d9f3402'
 
   const getAAveDepositCallable = (supplyToken: Address, decimals: number) => {
-    return getDepositOnAAveCallable(supplyToken, AavePoolProvider, decimals);
-  };
+    return getDepositOnAAveCallable(supplyToken, AavePoolProvider, decimals)
+  }
 
   const getAAveWithdrawCallable = (supplyToken: Address, decimals: number) => {
-    return getWithdrawOnAAveCallable(supplyToken, AavePoolProvider, decimals);
-  };
+    return getWithdrawOnAAveCallable(supplyToken, AavePoolProvider, decimals)
+  }
 
   const initializeSafeKit = async (): Promise<Safe4337Pack> => {
     return await Safe4337Pack.init({
