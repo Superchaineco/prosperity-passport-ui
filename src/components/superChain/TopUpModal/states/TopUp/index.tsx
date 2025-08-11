@@ -100,7 +100,7 @@ function TopUp({
       : undefined
   const [selectedValue, setSelectedValue] = useState<number | null>(null)
   const [customValue, setCustomValue] = useState<string>('')
-  const [selectedToken, setSelectedToken] = useState<keyof typeof tokens>(defaultToken ?? 'CELO')
+  const [selectedToken, setSelectedToken] = useState<keyof typeof tokens>('CELO')
   const [tokenBalance, setTokenBalance] = useState<number>(0)
   const nounSeed = useMemo(() => {
     return {

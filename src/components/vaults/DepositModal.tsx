@@ -15,7 +15,7 @@ import {
   SvgIcon,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import useAAve from '@/hooks/vaults/useAAve'
+import useVaults from '@/hooks/vaults/useVaults'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Address } from 'viem'
 import axios from 'axios'
@@ -32,12 +32,13 @@ interface DepositModalProps {
   symbol: string
   icon: any
   tokenAddress: Address
-  supplyTokenAddress: Address
   vaultBalance: string
   onSuccess: (amount: string, hash: string, balance: string) => void
   onError: () => void
   minDepositAmount?: string
-  tokenIcon: string
+  tokenIcon?: string
+  strategy: string
+  decimals: number
 }
 
 function DepositModal({
@@ -46,16 +47,17 @@ function DepositModal({
   symbol,
   icon,
   tokenAddress,
-  supplyTokenAddress,
   vaultBalance,
   onSuccess,
   onError,
   minDepositAmount = '100',
   tokenIcon,
+  strategy,
+  decimals,
 }: DepositModalProps) {
   const address = useSafeAddress()
   const { publicClient } = useSuperChainAccount()
-  const { getAAveDepositCallable } = useAAve()
+  const { getDepositCallable } = useVaults()
   const queryClient = useQueryClient()
   const { balances, loading } = useBalances()
   const [amount, setAmount] = useState<string>('')
@@ -65,8 +67,8 @@ function DepositModal({
     const token = balances.items.find((item) => item.tokenInfo.address === tokenAddress)
     if (!token) return 0
     const balance = token.balance
-    const decimals = token.tokenInfo.decimals
-    return balance ? Number(balance) / 10 ** decimals : 0
+    const tokenDecimals = token.tokenInfo.decimals
+    return balance ? Number(balance) / 10 ** tokenDecimals : 0
   }, [balances, tokenAddress])
 
   const { mutate: deposit, isPending: isDepositing } = useMutation({
@@ -74,7 +76,7 @@ function DepositModal({
       const token = balances.items.find((item) => item.tokenInfo.address === tokenAddress)
       let hash = ''
       try {
-        const depositCallable = getAAveDepositCallable(tokenAddress, token?.tokenInfo.decimals ?? 18)
+        const depositCallable = getDepositCallable(strategy, tokenAddress, decimals ?? token?.tokenInfo.decimals ?? 18)
         const tx = await depositCallable.callContract(amount)
         hash = tx.toString()
       } catch (error) {
@@ -132,7 +134,9 @@ function DepositModal({
         <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '24px' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Box width={24} height={24} fontSize="24px">
-              {typeof icon === 'function' ? (
+              {tokenIcon ? (
+                <Image src={tokenIcon} alt={symbol} width={28} height={24} />
+              ) : typeof icon === 'function' ? (
                 <SvgIcon component={icon} inheritViewBox alt="Compound" fontSize="inherit" width={28} height={24} />
               ) : (
                 <Image src={icon} alt={symbol} width={28} height={24} />
@@ -189,7 +193,20 @@ function DepositModal({
                 />
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <Box width={24} height={24} fontSize="24px">
-                    <Image src={tokenIcon} alt={symbol} width={24} height={24} />
+                    {tokenIcon ? (
+                      <Image src={tokenIcon} alt={symbol} width={28} height={24} />
+                    ) : typeof icon === 'function' ? (
+                      <SvgIcon
+                        component={icon}
+                        inheritViewBox
+                        alt="Compound"
+                        fontSize="inherit"
+                        width={28}
+                        height={24}
+                      />
+                    ) : (
+                      <Image src={icon} alt={symbol} width={28} height={24} />
+                    )}
                   </Box>
                   <Typography fontSize="16px" fontWeight="bold">
                     {symbol}

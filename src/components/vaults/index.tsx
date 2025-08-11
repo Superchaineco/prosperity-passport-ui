@@ -2,9 +2,11 @@ import { Box, Button, Card, CardContent, Divider, Grid, Skeleton, Stack, SvgIcon
 import React, { useState } from 'react'
 import cUSD from '@/public/images/currencies/cUSD.svg'
 import cEUR from '@/public/images/currencies/cEUR.svg'
+import CELO from '@/public/images/currencies/celo.svg'
 import wETH from '@/public/images/currencies/ethereum.svg'
 import USDT from '@/public/images/currencies/usdt.svg'
 import Coinmarket from '@/public/images/vaults/protocols/Coinmarket.svg'
+import Celo from '@/public/images/vaults/protocols/celo.svg'
 import { useQuery } from '@tanstack/react-query'
 import { BACKEND_BASE_URI } from '@/config/constants'
 import axios from 'axios'
@@ -17,17 +19,20 @@ import Image from 'next/image'
 import ErrorModal from './ErrorModal'
 
 interface Vault {
-  comet: string
-  rewards_apr: string
+  reserve?: string
   asset: string
   symbol: string
+  name?: string
   decimals: number
   image: string | null
-  interest_apr: string
-  balance?: number
-  depreciated?: boolean
-  min_deposit?: string
+  interest_apr?: string | number
+  rewards_apr?: string | number
+  apr?: string | number
+  balance?: string | number
   raw_balance?: string
+  depreciated?: boolean
+  min_deposit?: string | number
+  _strategy?: string
 }
 
 function VaultCard({
@@ -36,9 +41,10 @@ function VaultCard({
   rawValue,
   apy,
   icon,
-  comet,
   tokenAddress,
   tokenIcon,
+  balanceSymbol,
+  strategy,
   depreciated = false,
   minDepositAmount = '100',
   decimals = 6,
@@ -48,9 +54,10 @@ function VaultCard({
   rawValue: string
   apy: number
   icon: any
-  comet: string
   tokenAddress: string
   tokenIcon: any
+  balanceSymbol: string
+  strategy: string
   depreciated?: boolean
   minDepositAmount?: string
   decimals: number
@@ -65,6 +72,8 @@ function VaultCard({
   const [newBalance, setNewBalance] = useState(value.toString())
   const [maxAmount, setMaxAmount] = useState(value)
   const [lastOperationType, setLastOperationType] = useState<'deposit' | 'withdraw'>('deposit')
+  const [unstakingAmount, setUnstakingAmount] = useState<number | null>(null)
+  const [unstakingAvailableAt, setUnstakingAvailableAt] = useState<string | null>(null)
 
   const handleOpenDepositModal = () => {
     setIsDepositModalOpen(true)
@@ -120,12 +129,20 @@ function VaultCard({
   }
 
   const handleWithdrawSuccess = (amount: string, hash: string, balance: string) => {
+    // para instant (sin cooldown)
     setAmount(amount)
     setTxHash(hash)
     setNewBalance(balance)
     setMaxAmount(Number(balance))
     setLastOperationType('withdraw')
     setShowSuccess(true)
+    setIsWithdrawModalOpen(false)
+  }
+
+  const handleWithdrawCooldownStarted = (amount: string, availableAt: string) => {
+    // No success modal; activar tarjeta de "Unstaking"
+    setUnstakingAmount(Number(amount) || 0)
+    setUnstakingAvailableAt(availableAt)
     setIsWithdrawModalOpen(false)
   }
 
@@ -139,6 +156,42 @@ function VaultCard({
     setLastOperationType('deposit')
     setShowError(true)
     setIsDepositModalOpen(false)
+  }
+
+  const strategyIcon = strategy === 'stcelo' ? Celo : Coinmarket
+
+  const renderUnstakingCard = () => {
+    if (!unstakingAmount || !unstakingAvailableAt) return null
+    const ms = new Date(unstakingAvailableAt).getTime() - Date.now()
+    const days = Math.max(0, Math.floor(ms / (24 * 60 * 60 * 1000)))
+    const hours = Math.max(0, Math.floor((ms % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)))
+
+    return (
+      <Box sx={{ display: 'flex', gap: 2, p: 2 }}>
+        <Button variant="contained" fullWidth sx={{ borderRadius: '6px' }} onClick={handleOpenDepositModal}>
+          Activate
+        </Button>
+        <Box
+          sx={{
+            flex: 1,
+            borderRadius: '6px',
+            border: '1px solid',
+            borderColor: 'divider',
+            p: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            bgcolor: '#F8F9FB',
+          }}
+        >
+          <Stack direction="row" alignItems="center" gap={1}>
+            <Image src={'/images/currencies/celo.svg'} alt="CELO" width={16} height={16} />
+            <Typography fontWeight={700}>Unstaking {unstakingAmount}</Typography>
+          </Stack>
+          <Typography color="text.secondary">Available in {days}d {hours}h</Typography>
+        </Box>
+      </Box>
+    )
   }
 
   return (
@@ -179,7 +232,7 @@ function VaultCard({
                   APY: <strong>{apy.toFixed(1)}%</strong>
                 </Typography>
                 <SvgIcon
-                  component={Coinmarket}
+                  component={strategyIcon}
                   inheritViewBox
                   alt="Compound"
                   fontSize="inherit"
@@ -216,9 +269,9 @@ function VaultCard({
             }}
           >
             {tokenIcon ? (
-              <Image src={tokenIcon} alt={title} width={16} height={16} />
+              <Image src={tokenIcon} alt={balanceSymbol} width={16} height={16} />
             ) : (
-              <SvgIcon component={icon} inheritViewBox alt={title} width={16} height={16} />
+              <SvgIcon component={icon} inheritViewBox alt={balanceSymbol} width={16} height={16} />
             )}
 
             <Typography fontSize="18px" variant="h4" fontWeight="bold">
@@ -228,18 +281,12 @@ function VaultCard({
         </Box>
         <Divider />
 
-        <Box sx={{ display: 'flex', gap: 2, p: 2 }}>
-          {value > 0 ? (
-            depreciated ? (
-              <Button
-                fullWidth
-                sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
-                onClick={handleOpenWithdrawModal}
-              >
-                Withdraw
-              </Button>
-            ) : (
-              <>
+        {unstakingAmount && unstakingAvailableAt ? (
+          renderUnstakingCard()
+        ) : (
+          <Box sx={{ display: 'flex', gap: 2, p: 2 }}>
+            {value > 0 ? (
+              depreciated ? (
                 <Button
                   fullWidth
                   sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
@@ -247,60 +294,72 @@ function VaultCard({
                 >
                   Withdraw
                 </Button>
-                <Button variant="contained" fullWidth sx={{ borderRadius: '6px' }} onClick={handleOpenDepositModal}>
-                  Deposit
+              ) : (
+                <>
+                  <Button
+                    fullWidth
+                    sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
+                    onClick={handleOpenWithdrawModal}
+                  >
+                    Withdraw
+                  </Button>
+                  <Button variant="contained" fullWidth sx={{ borderRadius: '6px' }} onClick={handleOpenDepositModal}>
+                    Deposit
+                  </Button>
+                </>
+              )
+            ) : (
+              !depreciated && (
+                <Button
+                  variant="contained"
+                  color="complementary"
+                  fullWidth
+                  sx={{ borderRadius: '6px', border: 'none', boxShadow: 'none' }}
+                  onClick={handleOpenDepositModal}
+                >
+                  Activate
                 </Button>
-              </>
-            )
-          ) : (
-            !depreciated && (
-              <Button
-                variant="contained"
-                color="complementary"
-                fullWidth
-                sx={{ borderRadius: '6px', border: 'none', boxShadow: 'none' }}
-                onClick={handleOpenDepositModal}
-              >
-                Activate
-              </Button>
-            )
-          )}
-        </Box>
+              )
+            )}
+          </Box>
+        )}
       </Card>
 
       <DepositModal
         open={isDepositModalOpen}
         onClose={handleCloseDepositModal}
-        symbol={title}
+        symbol={balanceSymbol}
         icon={icon}
         tokenAddress={tokenAddress as Address}
-        supplyTokenAddress={comet as Address}
         vaultBalance={value.toString()}
-        tokenIcon={tokenIcon}
         onSuccess={handleDepositSuccess}
         minDepositAmount={minDepositAmount}
         onError={handleDepositError}
+        strategy={strategy}
+        decimals={decimals}
       />
 
       <WithdrawModal
         open={isWithdrawModalOpen}
         onClose={handleCloseWithdrawModal}
-        symbol={title}
+        symbol={balanceSymbol}
         icon={icon}
         maxAmount={value}
         decimals={decimals}
+        tokenIcon={tokenIcon}
         maxRawAmount={rawValue || '0'}
         tokenAddress={tokenAddress as Address}
-        supplyTokenAddress={comet as Address}
         onSuccess={handleWithdrawSuccess}
         onError={handleWithdrawError}
+        strategy={strategy}
+        onUnstakingStarted={handleWithdrawCooldownStarted}
       />
 
       <SuccessModal
         open={showSuccess}
         onClose={handleCloseSuccess}
         amount={amount}
-        symbol={title}
+        symbol={balanceSymbol}
         txHash={txHash}
         vaultBalance={newBalance}
         icon={icon}
@@ -387,8 +446,9 @@ function Vaults() {
   const totalDeposits = vaults.reduce((sum: number, vault: Vault) => sum + (Number(vault.balance) || 0), 0)
 
   const totalWeightedApy = vaults.reduce((sum: number, vault: Vault) => {
-    const totalApr = Number(vault.rewards_apr) + Number(vault.interest_apr)
-    return sum + (Number(vault.balance) || 0) * totalApr
+    const apr =
+      vault.apr !== undefined ? Number(vault.apr) : (Number(vault.rewards_apr) || 0) + (Number(vault.interest_apr) || 0)
+    return sum + (Number(vault.balance) || 0) * apr
   }, 0)
   const averageApy = totalDeposits > 0 ? totalWeightedApy / totalDeposits : 0
 
@@ -402,6 +462,8 @@ function Vaults() {
         return wETH
       case 'USDT':
         return USDT
+      case 'CELO':
+        return CELO
       default:
         return wETH
     }
@@ -447,21 +509,30 @@ function Vaults() {
           const icon = getVaultIcon(vault.symbol)
           if (!icon) return null
 
-          console.debug(vault.image)
+          const apr =
+            vault.apr !== undefined
+              ? Number(vault.apr)
+              : (Number(vault.rewards_apr) || 0) + (Number(vault.interest_apr) || 0)
+          const strategy = (vault._strategy || 'aave').toString()
+
+          // Token a mostrar en el balance (p.ej., stCELO para estrategia stCELO)
+          const balanceSymbol = strategy === 'stcelo' ? 'stCELO' : vault.symbol
+          const balanceIcon = strategy === 'stcelo' ? '/images/currencies/stCELO.svg' : vault.image
 
           return (
             <VaultCard
-              key={vault.comet}
-              title={vault.symbol}
+              key={(vault.reserve || vault.asset) as string}
+              title={vault.name || vault.symbol}
               value={Number(vault.balance) || 0}
               rawValue={vault.raw_balance || '0'}
-              apy={Number(vault.rewards_apr) + Number(vault.interest_apr)}
+              apy={apr}
               icon={icon}
-              tokenIcon={vault.image}
-              comet={vault.comet}
+              tokenIcon={balanceIcon}
               tokenAddress={vault.asset}
+              balanceSymbol={balanceSymbol}
+              strategy={strategy}
               depreciated={vault.depreciated}
-              minDepositAmount={vault.min_deposit}
+              minDepositAmount={vault.min_deposit !== undefined ? String(vault.min_deposit) : undefined}
               decimals={vault.decimals}
             />
           )
