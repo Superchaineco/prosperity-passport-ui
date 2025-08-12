@@ -86,7 +86,7 @@ function DepositModal({
         return
       }
       try {
-        await publicClient.waitForTransactionReceipt({ hash: hash as `0x${string}`, timeout: 5000, confirmations: 1 })
+        await publicClient.waitForTransactionReceipt({ hash: hash as `0x${string}`, confirmations: 1 })
       } catch (error) {
         console.error(error)
       } finally {
