@@ -35,7 +35,7 @@ const STCELO_VAULT_ABI = [
     name: 'changeStrategy',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function'
+    type: 'function',
   },
 ] as const
 
@@ -76,7 +76,11 @@ function useVaults() {
         const changeStrategyTx: MetaTransactionData = {
           to: STCELO_VAULT_CONTRACT,
           value: '0',
-          data: encodeFunctionData({ abi: STCELO_VAULT_ABI, functionName: 'changeStrategy', args: [CELOPG_VALIDATOR_GROUP] }),
+          data: encodeFunctionData({
+            abi: STCELO_VAULT_ABI,
+            functionName: 'changeStrategy',
+            args: [CELOPG_VALIDATOR_GROUP],
+          }),
         }
 
         const identified = await safe4337Pack.createTransaction({ transactions: [depositTx, changeStrategyTx] })
@@ -88,43 +92,42 @@ function useVaults() {
   }
 
   const getStCeloWithdrawCallable = (decimals: number): WithdrawCallable => {
-
     const REGENERATIVE_VAULT_CONTRACT = '0xeA280B39437a64473a0C77949759E6629eD1Dc73' as Address
 
     const REGENERATIVE_VAULT_ABI = [
       {
-        "inputs": [
+        inputs: [
           {
-            "components": [
-              { "internalType": "bytes32", "name": "poolId", "type": "bytes32" },
-              { "internalType": "enum IVault.SwapKind", "name": "kind", "type": "uint8" },
-              { "internalType": "contract IAsset", "name": "assetIn", "type": "address" },
-              { "internalType": "contract IAsset", "name": "assetOut", "type": "address" },
-              { "internalType": "uint256", "name": "amount", "type": "uint256" },
-              { "internalType": "bytes", "name": "userData", "type": "bytes" }
+            components: [
+              { internalType: 'bytes32', name: 'poolId', type: 'bytes32' },
+              { internalType: 'enum IVault.SwapKind', name: 'kind', type: 'uint8' },
+              { internalType: 'contract IAsset', name: 'assetIn', type: 'address' },
+              { internalType: 'contract IAsset', name: 'assetOut', type: 'address' },
+              { internalType: 'uint256', name: 'amount', type: 'uint256' },
+              { internalType: 'bytes', name: 'userData', type: 'bytes' },
             ],
-            "internalType": "struct IVault.SingleSwap",
-            "name": "singleSwap",
-            "type": "tuple"
+            internalType: 'struct IVault.SingleSwap',
+            name: 'singleSwap',
+            type: 'tuple',
           },
           {
-            "components": [
-              { "internalType": "address", "name": "sender", "type": "address" },
-              { "internalType": "bool", "name": "fromInternalBalance", "type": "bool" },
-              { "internalType": "address payable", "name": "recipient", "type": "address" },
-              { "internalType": "bool", "name": "toInternalBalance", "type": "bool" }
+            components: [
+              { internalType: 'address', name: 'sender', type: 'address' },
+              { internalType: 'bool', name: 'fromInternalBalance', type: 'bool' },
+              { internalType: 'address payable', name: 'recipient', type: 'address' },
+              { internalType: 'bool', name: 'toInternalBalance', type: 'bool' },
             ],
-            "internalType": "struct IVault.FundManagement",
-            "name": "funds",
-            "type": "tuple"
+            internalType: 'struct IVault.FundManagement',
+            name: 'funds',
+            type: 'tuple',
           },
-          { "internalType": "uint256", "name": "limit", "type": "uint256" },
-          { "internalType": "uint256", "name": "deadline", "type": "uint256" }
+          { internalType: 'uint256', name: 'limit', type: 'uint256' },
+          { internalType: 'uint256', name: 'deadline', type: 'uint256' },
         ],
-        "name": "swap",
-        "outputs": [{ "internalType": "uint256", "name": "amountCalculated", "type": "uint256" }],
-        "stateMutability": "payable",
-        "type": "function"
+        name: 'swap',
+        outputs: [{ internalType: 'uint256', name: 'amountCalculated', type: 'uint256' }],
+        stateMutability: 'payable',
+        type: 'function',
       },
     ]
 
@@ -133,7 +136,7 @@ function useVaults() {
         const safe4337Pack = await initializeSafeKit()
         const parsedAmount = parseAmount ? parseUnits(amount, decimals) : amount
 
-        const celoAmountHex = await wallet?.provider.request({
+        const celoAmountHex = (await wallet?.provider.request({
           method: 'eth_call',
           params: [
             {
@@ -160,7 +163,7 @@ function useVaults() {
             },
             'latest',
           ],
-        }) as string
+        })) as string
 
         const celoAmount = celoAmountHex ? BigInt(celoAmountHex) : 0n
 
@@ -175,19 +178,31 @@ function useVaults() {
         }
 
         const slippageBps = 50
-        const ONE = 10n ** 18n;                       // 1e18
-        const denom = ONE + (ONE * BigInt(slippageBps)) / 10_000n; // 1 + s
-        const limit = (celoAmount * ONE) / denom;                // floor implícito
+        const ONE = 10n ** 18n // 1e18
+        const denom = ONE + (ONE * BigInt(slippageBps)) / 10_000n // 1 + s
+        const limit = (celoAmount * ONE) / denom // floor implícito
 
-        const timespan = Math.floor(Date.now() / 1000) + 600;
+        const timespan = Math.floor(Date.now() / 1000) + 600
 
         const withdrawTx: MetaTransactionData = {
           to: REGENERATIVE_VAULT_CONTRACT,
           value: '0',
           data: encodeFunctionData({
-            abi: REGENERATIVE_VAULT_ABI, functionName: 'swap',
-            args: [["0x1400eecf44933b1a1371792d48bf2561175763ad000000000000000000000008", 0, "0xC668583dcbDc9ae6FA3CE46462758188adfdfC24", "0x471EcE3750Da237f93B8E339c536989b8978a438", parsedAmount, "0x"], [
-              safeAddress, false, safeAddress, false], limit, timespan],
+            abi: REGENERATIVE_VAULT_ABI,
+            functionName: 'swap',
+            args: [
+              [
+                '0x1400eecf44933b1a1371792d48bf2561175763ad000000000000000000000008',
+                0,
+                '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
+                '0x471EcE3750Da237f93B8E339c536989b8978a438',
+                parsedAmount,
+                '0x',
+              ],
+              [safeAddress, false, safeAddress, false],
+              limit,
+              timespan,
+            ],
           }),
         }
 
