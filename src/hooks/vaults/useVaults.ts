@@ -20,7 +20,7 @@ type WithdrawCallable = {
 
 const STCELO_VAULT_CONTRACT = '0x0239b96D10a434a56CC9E09383077A0490cF9398' as Address
 const STCELO_CONTRACT = '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24' as Address
-const CELOPG_VALIDATOR_GROUP = '0x5665D72AC368124d496995EaAEDF9998e080Fc11' as Address
+const CELOPG_VALIDATOR_GROUP = '0x6F769BcC21A867b839b6cA59dDe6c6C90c1DF18D' as Address
 const STCELO_VAULT_ABI = [
   { inputs: [], name: 'deposit', outputs: [], stateMutability: 'payable', type: 'function' },
   {
@@ -64,7 +64,6 @@ function useVaults() {
   const getStCeloDepositCallable = (decimals: number): DepositCallable => {
     return {
       callContract: async (amount: string) => {
-        const safe4337Pack = await initializeSafeKit()
         const valueWei = parseUnits(amount, decimals ?? 18)
 
         const depositTx: MetaTransactionData = {
@@ -83,7 +82,10 @@ function useVaults() {
           }),
         }
 
-        const identified = await safe4337Pack.createTransaction({ transactions: [depositTx, changeStrategyTx] })
+
+        const safe4337Pack = await initializeSafeKit()
+
+        const identified = await safe4337Pack.createTransaction({ transactions: [depositTx, changeStrategyTx], options: {} })
         const signed = await safe4337Pack.signSafeOperation(identified)
         const userOpHash = await safe4337Pack.executeTransaction({ executable: signed })
         return userOpHash
