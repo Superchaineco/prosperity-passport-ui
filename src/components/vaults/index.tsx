@@ -275,7 +275,7 @@ function VaultCard({
             <Typography fontWeight={600} fontSize={16}>
               Unstaking
             </Typography>
-            <Image src={'/images/currencies/celo.svg'} alt="CELO" width={16} height={16} />
+            <Image src="/images/currencies/celo.svg" alt="CELO" width={16} height={16} />
             <Typography fontWeight={600} fontSize={16}>
               {activePendingWithdrawal.amount.toFixed(2)}
             </Typography>

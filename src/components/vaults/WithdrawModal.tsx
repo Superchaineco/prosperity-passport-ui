@@ -316,7 +316,7 @@ function WithdrawModal({
       <Box sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '12px', p: '12px' }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Stack direction="row" alignItems="center" gap={1}>
-            <Image src={'/images/currencies/celo.svg'} alt="CELO" width={24} height={24} />
+            <Image src="/images/currencies/celo.svg" alt="CELO" width={24} height={24} />
             <Typography fontWeight={700}>CELO</Typography>
           </Stack>
           <Stack alignItems="flex-end">
@@ -364,13 +364,13 @@ function WithdrawModal({
     <Box padding="24px" display="flex" flexDirection="column" gap={2}>
       <Typography variant="h6">Unstaking Initiated</Typography>
       <Typography>
-        You've started a withdrawal of <strong>{Number(amount || '0').toFixed(2)} CELO</strong>. Your funds will be
+        You&apos;ve started a withdrawal of <strong>{Number(amount || '0').toFixed(2)} CELO</strong>. Your funds will be
         available in 3 days, by <strong>{availableDate}</strong>.
       </Typography>
       <Box sx={{ border: '1px dashed', borderColor: 'divider', borderRadius: '12px', p: 2, bgcolor: '#F3FFF3' }}>
         <Typography>Funds available in 3 days</Typography>
         <Stack direction="row" alignItems="center" gap={1}>
-          <Image src={'/images/currencies/celo.svg'} alt="CELO" width={20} height={20} />
+          <Image src="/images/currencies/celo.svg" alt="CELO" width={20} height={20} />
           <Typography fontWeight={700}>{Number(amount || '0').toFixed(2)} CELO</Typography>
         </Stack>
       </Box>
