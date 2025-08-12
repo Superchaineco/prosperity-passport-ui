@@ -136,37 +136,6 @@ function useVaults() {
         const safe4337Pack = await initializeSafeKit()
         const parsedAmount = parseAmount ? parseUnits(amount, decimals) : amount
 
-        const celoAmountHex = (await wallet?.provider.request({
-          method: 'eth_call',
-          params: [
-            {
-              to: STCELO_VAULT_CONTRACT,
-              data: encodeFunctionData({
-                abi: [
-                  {
-                    inputs: [
-                      {
-                        internalType: 'uint256',
-                        name: 'stCeloAmount',
-                        type: 'uint256',
-                      },
-                    ],
-                    name: 'toCelo',
-                    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-                    stateMutability: 'view',
-                    type: 'function',
-                  },
-                ],
-                functionName: 'toCelo',
-                args: [parsedAmount as bigint],
-              }),
-            },
-            'latest',
-          ],
-        })) as string
-
-        const celoAmount = celoAmountHex ? BigInt(celoAmountHex) : 0n
-
         const approveTx: MetaTransactionData = {
           to: STCELO_CONTRACT,
           value: '0',
@@ -178,9 +147,9 @@ function useVaults() {
         }
 
         const slippageBps = 50
-        const ONE = 10n ** 18n // 1e18
-        const denom = ONE + (ONE * BigInt(slippageBps)) / 10_000n // 1 + s
-        const limit = (celoAmount * ONE) / denom // floor implícito
+        const ONE = 10n ** 18n
+        const denom = ONE + (ONE * BigInt(slippageBps)) / 10_000n
+        const limit = (BigInt(parseAmount) * ONE) / denom
 
         const timespan = Math.floor(Date.now() / 1000) + 600
 
