@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardContent, Divider, Grid, Skeleton, Stack, SvgIcon, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import cUSD from '@/public/images/currencies/cUSD.svg'
 import cEUR from '@/public/images/currencies/cEUR.svg'
 import CELO from '@/public/images/currencies/celo.svg'
@@ -13,7 +13,8 @@ import axios from 'axios'
 import useSafeAddress from '@/hooks/useSafeAddress'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import { Address } from 'viem'
+import { Address, createPublicClient, http } from 'viem'
+import { celo } from 'viem/chains'
 import SuccessModal from './SuccessModal'
 import Image from 'next/image'
 import ErrorModal from './ErrorModal'
@@ -34,6 +35,28 @@ interface Vault {
   min_deposit?: string | number
   _strategy?: string
 }
+
+// ABI para getPendingWithdrawals del contrato Account
+const ACCOUNT_CONTRACT_ABI = [
+  {
+    inputs: [{ internalType: 'address', name: 'beneficiary', type: 'address' }],
+    name: 'getPendingWithdrawals',
+    outputs: [
+      { internalType: 'uint256[]', name: 'values', type: 'uint256[]' },
+      { internalType: 'uint256[]', name: 'timestamps', type: 'uint256[]' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+] as const
+
+const ACCOUNT_CONTRACT_ADDRESS = '0x4aAD04D41FD7fd495503731C5a2579e19054C432' as Address
+
+// Cliente público para leer contratos en Celo
+const publicClient = createPublicClient({
+  chain: celo,
+  transport: http(),
+})
 
 function VaultCard({
   title,
@@ -74,6 +97,48 @@ function VaultCard({
   const [lastOperationType, setLastOperationType] = useState<'deposit' | 'withdraw'>('deposit')
   const [unstakingAmount, setUnstakingAmount] = useState<number | null>(null)
   const [unstakingAvailableAt, setUnstakingAvailableAt] = useState<string | null>(null)
+
+  const safeAddress = useSafeAddress()
+
+  const { data: pendingWithdrawals } = useQuery({
+    queryKey: ['pendingWithdrawals', tokenAddress],
+    queryFn: async () => {
+      if (strategy !== 'stcelo') return null
+      try {
+        const result = await publicClient.readContract({
+          address: ACCOUNT_CONTRACT_ADDRESS,
+          abi: ACCOUNT_CONTRACT_ABI,
+          functionName: 'getPendingWithdrawals',
+          args: [safeAddress as Address],
+        })
+        const [values, timestamps] = result
+        return values.map((value, index) => ({
+          amount: Number(value) / 1e18, // Convertir de wei a CELO
+          timestamp: Number(timestamps[index]) * 1000, // Convertir a milliseconds
+        }))
+      } catch (error) {
+        console.error('Error fetching pending withdrawals:', error)
+        return []
+      }
+    },
+    enabled: strategy === 'stcelo',
+  })
+
+  // Usar datos reales si están disponibles, sino usar estado local de mock
+  const activePendingWithdrawal = useMemo(() => {
+    if (pendingWithdrawals && pendingWithdrawals.length > 0) {
+      // Usar el primer pending withdrawal real
+      return pendingWithdrawals[0]
+    }
+    if (unstakingAmount && unstakingAvailableAt) {
+      // Usar estado local de mock
+      return {
+        amount: unstakingAmount,
+        timestamp: new Date(unstakingAvailableAt).getTime(),
+      }
+    }
+    return null
+  }, [pendingWithdrawals, unstakingAmount, unstakingAvailableAt])
 
   const handleOpenDepositModal = () => {
     setIsDepositModalOpen(true)
@@ -161,34 +226,63 @@ function VaultCard({
   const strategyIcon = strategy === 'stcelo' ? Celo : Coinmarket
 
   const renderUnstakingCard = () => {
-    if (!unstakingAmount || !unstakingAvailableAt) return null
-    const ms = new Date(unstakingAvailableAt).getTime() - Date.now()
+    if (!activePendingWithdrawal) return null
+
+    const ms = activePendingWithdrawal.timestamp - Date.now()
     const days = Math.max(0, Math.floor(ms / (24 * 60 * 60 * 1000)))
     const hours = Math.max(0, Math.floor((ms % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)))
 
+    // Si el tiempo ya pasó, mostrar "Ready to claim"
+    const isReady = ms <= 0
+
     return (
-      <Box sx={{ display: 'flex', gap: 2, p: 2 }}>
-        <Button variant="contained" fullWidth sx={{ borderRadius: '6px' }} onClick={handleOpenDepositModal}>
-          Activate
-        </Button>
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, p: 2 }}>
+        {value > 0 ? (
+          <Button
+            variant="contained"
+            sx={{ borderRadius: '6px', border: 'none', boxShadow: 'none', flex: 1 }}
+            onClick={handleOpenDepositModal}
+          >
+            Deposit
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            color="complementary"
+            sx={{ borderRadius: '6px', border: 'none', boxShadow: 'none', flex: 1 }}
+            onClick={handleOpenDepositModal}
+          >
+            Activate
+          </Button>
+        )}
         <Box
           sx={{
             flex: 1,
             borderRadius: '6px',
             border: '1px solid',
-            borderColor: 'divider',
-            p: 1.5,
+            borderColor: isReady ? 'success.main' : 'divider',
+            p: '2px 16px',
+            gap: '1px',
+            height: '48px',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-between',
-            bgcolor: '#F8F9FB',
+            bgcolor: isReady ? '#E8F5E8' : '#F8F9FB',
           }}
         >
           <Stack direction="row" alignItems="center" gap={1}>
+            <Typography fontWeight={600} fontSize={16}>
+              Unstaking
+            </Typography>
             <Image src={'/images/currencies/celo.svg'} alt="CELO" width={16} height={16} />
-            <Typography fontWeight={700}>Unstaking {unstakingAmount}</Typography>
+            <Typography fontWeight={600} fontSize={16}>
+              {activePendingWithdrawal.amount.toFixed(2)}
+            </Typography>
           </Stack>
-          <Typography color="text.secondary">Available in {days}d {hours}h</Typography>
+          <Typography fontSize={12} fontWeight={400} color={isReady ? 'success.main' : 'text.secondary'}>
+            {isReady ? 'Ready to claim' : `Available in ${days}d ${hours}h`}
+          </Typography>
         </Box>
       </Box>
     )
@@ -281,7 +375,7 @@ function VaultCard({
         </Box>
         <Divider />
 
-        {unstakingAmount && unstakingAvailableAt ? (
+        {activePendingWithdrawal ? (
           renderUnstakingCard()
         ) : (
           <Box sx={{ display: 'flex', gap: 2, p: 2 }}>

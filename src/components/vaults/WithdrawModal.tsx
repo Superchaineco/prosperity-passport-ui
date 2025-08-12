@@ -212,8 +212,8 @@ function WithdrawModal({
       <Card variant="outlined" aria-disabled sx={{ bgcolor: '#FFF6F0', opacity: 0.6, cursor: 'disabled' }}>
         <CardActionArea
           onClick={() => {
-            setMethod('instant')
-            setStep('form')
+            // setMethod('instant')
+            // setStep('form')
           }}
           sx={{ p: 2, alignItems: 'flex-start' }}
         >
