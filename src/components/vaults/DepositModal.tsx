@@ -86,13 +86,14 @@ function DepositModal({
         return
       }
       try {
-        await publicClient.waitForTransactionReceipt({ hash: hash as `0x${string}`, timeout: 5000 })
+        await publicClient.waitForTransactionReceipt({ hash: hash as `0x${string}`, timeout: 5000, confirmations: 1 })
       } catch (error) {
         console.error(error)
+      } finally {
+        await axios.post(`${BACKEND_BASE_URI}/vaults/${address}/refresh`)
       }
 
       const calculatedNewBalance = (Number(vaultBalance) + Number(amount)).toString()
-      await axios.post(`${BACKEND_BASE_URI}/vaults/${address}/refresh`)
 
       onSuccess(amount, hash, calculatedNewBalance)
       setAmount('')

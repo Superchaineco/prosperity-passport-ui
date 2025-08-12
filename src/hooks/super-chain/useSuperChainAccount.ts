@@ -91,7 +91,7 @@ function useSuperChainAccount() {
   }
   const publicClient = createPublicClient({
     chain: celo,
-    transport: http(),
+    transport: http(JSON_RPC_PROVIDER),
   })
   return {
     getReadOnlySuperChainSmartAccount,
