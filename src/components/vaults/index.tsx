@@ -30,6 +30,7 @@ interface Vault {
   apr?: string | number
   balance?: string | number
   raw_balance?: string
+  supply_balance?: string | number
   depreciated?: boolean
   min_deposit?: string | number
   _strategy?: string
@@ -47,6 +48,8 @@ function VaultCard({
   depreciated = false,
   minDepositAmount = '100',
   decimals = 6,
+  withdrawMaxAmount,
+  withdrawRatio,
 }: {
   title: string
   value: number
@@ -59,6 +62,8 @@ function VaultCard({
   depreciated?: boolean
   minDepositAmount?: string
   decimals: number
+  withdrawMaxAmount?: number
+  withdrawRatio?: number
 }) {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
@@ -125,10 +130,16 @@ function VaultCard({
   }
 
   const handleWithdrawSuccess = (amount: string, hash: string, balance: string) => {
-    setAmount(amount)
+    // amount es en stCELO cuando strategy === 'stcelo'
+    // balance recibido desde WithdrawModal es el nuevo balance en stCELO
+    const isStCelo = strategy === 'stcelo'
+    const newStCeloBalance = Number(balance)
+    const newSupplyBalance = isStCelo && withdrawRatio ? (newStCeloBalance * withdrawRatio).toString() : balance
+
+    setAmount(isStCelo && withdrawRatio ? (Number(amount) * withdrawRatio).toString() : amount)
     setTxHash(hash)
-    setNewBalance(balance)
-    setMaxAmount(Number(balance))
+    setNewBalance(isStCelo ? newSupplyBalance : balance)
+    setMaxAmount(isStCelo ? newStCeloBalance : Number(balance))
     setLastOperationType('withdraw')
     setShowSuccess(true)
     setIsWithdrawModalOpen(false)
@@ -289,18 +300,20 @@ function VaultCard({
         onClose={handleCloseWithdrawModal}
         symbol={balanceSymbol}
         icon={icon}
-        maxAmount={value}
+        maxAmount={withdrawMaxAmount ?? value}
+        maxRawAmount={rawValue}
         decimals={decimals}
         tokenAddress={tokenAddress as Address}
         onSuccess={handleWithdrawSuccess}
         onError={handleWithdrawError}
         strategy={strategy}
+        previewRatio={withdrawRatio}
       />
 
       <SuccessModal
         open={showSuccess}
         onClose={handleCloseSuccess}
-        amount={amount}
+        amount={Number(amount).toFixed(2)} // Redondear a 2 decimales
         symbol={balanceSymbol}
         txHash={txHash}
         vaultBalance={newBalance}
@@ -457,11 +470,22 @@ function Vaults() {
               : (Number(vault.rewards_apr) || 0) + (Number(vault.interest_apr) || 0)
           const strategy = (vault._strategy || 'aave').toString()
 
+          const displayValue = strategy === 'stcelo' ? Number(vault.supply_balance) || 0 : Number(vault.balance) || 0
+
+          // Ratio stCELO -> CELO para el withdraw preview
+          const withdrawRatio =
+            strategy === 'stcelo' && Number(vault.balance) > 0
+              ? (Number(vault.supply_balance) || 0) / Number(vault.balance)
+              : undefined
+
+          // MaxAmount para withdraw: usar balance (stCELO) cuando es stcelo
+          const withdrawMaxAmount = strategy === 'stcelo' ? Number(vault.balance) || 0 : displayValue
+
           return (
             <VaultCard
               key={(vault.reserve || vault.asset) as string}
               title={vault.name || vault.symbol}
-              value={Number(vault.balance) || 0}
+              value={displayValue}
               rawValue={vault.raw_balance || '0'}
               apy={apr}
               icon={icon}
@@ -471,6 +495,8 @@ function Vaults() {
               depreciated={vault.depreciated}
               minDepositAmount={vault.min_deposit !== undefined ? String(vault.min_deposit) : undefined}
               decimals={vault.decimals}
+              withdrawMaxAmount={withdrawMaxAmount}
+              withdrawRatio={withdrawRatio}
             />
           )
         })}

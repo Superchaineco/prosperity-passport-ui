@@ -82,10 +82,12 @@ function useVaults() {
           }),
         }
 
-
         const safe4337Pack = await initializeSafeKit()
 
-        const identified = await safe4337Pack.createTransaction({ transactions: [depositTx, changeStrategyTx], options: {} })
+        const identified = await safe4337Pack.createTransaction({
+          transactions: [depositTx, changeStrategyTx],
+          options: {},
+        })
         const signed = await safe4337Pack.signSafeOperation(identified)
         const userOpHash = await safe4337Pack.executeTransaction({ executable: signed })
         return userOpHash

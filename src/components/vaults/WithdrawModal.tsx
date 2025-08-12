@@ -39,6 +39,7 @@ interface WithdrawModalProps {
   onError: () => void
   strategy: string
   tokenIcon?: string
+  previewRatio?: number
 }
 
 function WithdrawModal({
@@ -54,6 +55,7 @@ function WithdrawModal({
   onError,
   strategy,
   tokenIcon,
+  previewRatio,
 }: WithdrawModalProps) {
   const address = useSafeAddress()
   const queryClient = useQueryClient()
@@ -87,9 +89,14 @@ function WithdrawModal({
         console.log(error)
       }
 
-      const calculatedNewBalance = (Number(maxAmount) - Number(amount)).toString()
+      // Calcular nuevo balance local (en unidades del vault: stCELO cuando strategy === 'stcelo')
+      const withdrawAmountNum = Number(amount) || 0
+      const epsilon = 1e-2
+      const isMaxAmount = Math.abs(withdrawAmountNum - maxAmount) <= epsilon
+      const newBalanceNum = isMaxAmount ? 0 : Math.max(0, Number(maxAmount) - withdrawAmountNum)
+
       await axios.post(`${BACKEND_BASE_URI}/vaults/${address}/refresh`)
-      onSuccess(amount, hash, calculatedNewBalance)
+      onSuccess(amount, hash, newBalanceNum.toString())
       setAmount('')
     },
     onSuccess: () => {
@@ -156,7 +163,8 @@ function WithdrawModal({
 
   const renderWithdrawUI = () => {
     if (isStakingVault) {
-      // Invalidación visual del input de porcentaje
+      const ratio = previewRatio || 1
+      const previewAmount = (Number(amount || '0') * ratio).toFixed(2)
       const pctNum = Number(customPctInput)
       const isPctInvalid = customPctInput !== '' && (isNaN(pctNum) || pctNum < 0 || pctNum > 100)
 
@@ -172,8 +180,7 @@ function WithdrawModal({
                 variant="contained"
                 size="small"
                 onClick={() => {
-                  const amt = ((maxAmount * percentage) / 100).toFixed(2)
-                  setAmount(amt)
+                  setAmount(((maxAmount * percentage) / 100).toFixed(2))
                   setSelectedPct(percentage)
                   setCustomPctInput(String(percentage))
                 }}
@@ -223,7 +230,7 @@ function WithdrawModal({
             sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '12px', p: '12px' }}
           >
             <Typography fontSize="24px" fontWeight="bold">
-              {Number(amount || '0').toFixed(2)}
+              {previewAmount}
             </Typography>
             <Box display="flex" alignItems="center" gap="6px">
               {typeof icon === 'function' ? (

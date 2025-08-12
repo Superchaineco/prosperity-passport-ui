@@ -23,9 +23,20 @@ interface SuccessModalProps {
   txHash?: string
   vaultBalance: string
   type: 'deposit' | 'withdraw'
+  amountSymbol?: string
 }
 
-function SuccessModal({ open, onClose, amount, symbol, txHash, vaultBalance, icon, type }: SuccessModalProps) {
+function SuccessModal({
+  open,
+  onClose,
+  amount,
+  symbol,
+  txHash,
+  vaultBalance,
+  icon,
+  type,
+  amountSymbol,
+}: SuccessModalProps) {
   const isDeposit = type === 'deposit'
 
   return (
@@ -38,8 +49,8 @@ function SuccessModal({ open, onClose, amount, symbol, txHash, vaultBalance, ico
       <DialogContent sx={{ p: '24px !important' }}>
         <Box display="flex" flexDirection="column" alignItems="center" gap="16px">
           <Typography color="text.secondary" textAlign="center">
-            You {isDeposit ? 'added' : 'withdrew'} <strong>{amount}</strong> {symbol} {isDeposit ? 'to' : 'from'} the{' '}
-            {symbol} vault.
+            You {isDeposit ? 'added' : 'withdrew'} <strong>{amount}</strong> {amountSymbol || symbol}{' '}
+            {isDeposit ? 'to' : 'from'} the {symbol} vault.
           </Typography>
 
           <Box
