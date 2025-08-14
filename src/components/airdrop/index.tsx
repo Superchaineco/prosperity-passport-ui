@@ -25,6 +25,10 @@ import useWallet from '@/hooks/wallets/useWallet'
 import { EthereumProvider } from 'permissionless/utils/toOwner'
 import usePimlico from '@/hooks/usePimlico'
 import { publicClient } from '@/services/pimlico'
+import TrendingUpIcon from '@mui/icons-material/TrendingUp'
+import NewReleasesOutlinedIcon from '@mui/icons-material/NewReleasesOutlined'
+import router from 'next/router'
+import { AppRoutes } from '@/config/routes'
 
 function Claim() {
   const safeAddress = useSafeAddress()
@@ -43,6 +47,9 @@ function Claim() {
     enabled: !!safeAddress,
   })
 
+  const handleStakeClick = () => {
+    router.push({ pathname: AppRoutes.vaults.index, query: { safe: router.query.safe, vaults: 'celo' } })
+  }
   const handleClaimClick = async () => {
     if (isClaiming) return
     setIsClaiming(true)
@@ -192,7 +199,13 @@ function Claim() {
                 <SvgIcon component={Celo} inheritViewBox fontSize="inherit" />
               </Box>
             </Box>
-            <Button disabled={airdropData?.claimed} variant="contained" color="secondary" onClick={handleClaimClick}>
+            <Button
+              disabled={airdropData?.claimed}
+              sx={{}}
+              variant="contained"
+              color="secondary"
+              onClick={handleClaimClick}
+            >
               {isClaiming ? (
                 <Box display="flex" gap={1} alignItems="center">
                   Claiming CELO Tokens
@@ -203,27 +216,80 @@ function Claim() {
               )}
             </Button>
           </Grid>
-          <Grid item xs={12} sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2, marginBottom: 2 }}>
-            <Typography variant="h4" fontSize={20} fontWeight={600}>
-              Your Activities
-            </Typography>
-            <List>
-              {airdropData?.reasons.map((reason, index) => (
-                <ListItem key={index}>
-                  <Box fontSize="24px" display="flex" gap={1} alignItems="center">
-                    <SvgIcon component={BeautySuccess} inheritViewBox fontSize="inherit" />
-                    <Typography fontSize="16px" fontWeight={400}>
-                      {reason}
-                    </Typography>
-                  </Box>
-                </ListItem>
-              ))}
-            </List>
-          </Grid>
-          {!airdropData?.claimed && (
-            <Grid item xs={12}>
-              <Alert severity="warning">Token Claim #1 is available until February 12, 2025.</Alert>
+          {airdropData?.claimed && (
+            <Grid item xs={12} sx={{ backgroundColor: 'white', p: 2, borderRadius: 2, mb: 2 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  flexDirection: { xs: 'column', sm: 'row' },
+                }}
+              >
+                <Box sx={{ flex: 1 }}>
+                  <Typography variant="h4" fontSize={20} fontWeight={600}>
+                    Make your CELO work for you
+                  </Typography>
+
+                  <List sx={{ py: 0 }}>
+                    <ListItem sx={{ px: 0 }}>
+                      <Box fontSize="24px" display="flex" gap={1} alignItems="center">
+                        <SvgIcon component={TrendingUpIcon} inheritViewBox fontSize="inherit" />
+                        <Typography fontSize="16px" fontWeight={400}>
+                          Earn 1.8% yield APR
+                        </Typography>
+                      </Box>
+                    </ListItem>
+                    <ListItem sx={{ px: 0 }}>
+                      <Box fontSize="24px" display="flex" gap={1} alignItems="center">
+                        <SvgIcon component={NewReleasesOutlinedIcon} inheritViewBox fontSize="inherit" />
+                        <Typography fontSize="16px" fontWeight={400}>
+                          Contributes toward unlocking the Staker Badge
+                        </Typography>
+                      </Box>
+                    </ListItem>
+                  </List>
+                </Box>
+
+                <Box
+                  sx={{
+                    ml: { sm: 'auto' },
+                    alignSelf: { sm: 'stretch' }, // ocupa la altura del bloque
+                    display: 'flex',
+                    alignItems: 'center', // centra verticalmente
+                    justifyContent: 'flex-end', // pegado a la derecha
+                  }}
+                >
+                  <Button sx={{ backgroundColor: '#476520' }} variant="contained" onClick={handleStakeClick}>
+                    Stake CELO
+                  </Button>
+                </Box>
+              </Box>
             </Grid>
+          )}
+          {!airdropData?.claimed && (
+            <>
+              <Grid item xs={12} sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2, marginBottom: 2 }}>
+                <Typography variant="h4" fontSize={20} fontWeight={600}>
+                  Your Activities
+                </Typography>
+                <List>
+                  {airdropData?.reasons.map((reason, index) => (
+                    <ListItem key={index}>
+                      <Box fontSize="24px" display="flex" gap={1} alignItems="center">
+                        <SvgIcon component={BeautySuccess} inheritViewBox fontSize="inherit" />
+                        <Typography fontSize="16px" fontWeight={400}>
+                          {reason}
+                        </Typography>
+                      </Box>
+                    </ListItem>
+                  ))}
+                </List>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Alert severity="warning">Token Claim #1 is available until February 12, 2025.</Alert>
+              </Grid>
+            </>
           )}
         </>
       )}

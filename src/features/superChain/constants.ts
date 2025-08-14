@@ -33,7 +33,7 @@ const environmentConfig = {
     SUBGRAPH_URL:
       'https://gateway.thegraph.com/api/e2382481a319ad3d1d0d65473d606d24/subgraphs/id/3dQGijWxqpFfXUenK9TjLc9wijNeDDSjGtw3ztWMQb2n',
     CHAIN_ID: '42220',
-    AIRDROP_ADDRESS: '0xcc86F7903f52EEb20c512D26C829e1545D577c47',
+    AIRDROP_ADDRESS: '0x2a4871972Ece4e6E04a07E0F3e3D8168a261Dce2',
   },
 }[ENV]
 
