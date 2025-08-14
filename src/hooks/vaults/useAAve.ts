@@ -72,11 +72,24 @@ function useAAve() {
         })
 
         const signedSafeOperation = await safe4337Pack.signSafeOperation(identifiedSafeOperation)
-        const userOperationHash = await safe4337Pack.executeTransaction({
+        const userOpHash = await safe4337Pack.executeTransaction({
           executable: signedSafeOperation,
         })
 
-        return userOperationHash
+
+        let userOperationReceipt = null
+
+        const startTime = Date.now()
+        const timeout = 60 * 1000 // 1 minuto
+
+        while (!userOperationReceipt && Date.now() - startTime < timeout) {
+          // Wait 2 seconds before checking the status again
+          await new Promise((resolve) => setTimeout(resolve, 2000))
+          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(
+            userOpHash
+          )
+        }
+        return userOpHash
       },
     }
   }
@@ -102,11 +115,23 @@ function useAAve() {
         })
 
         const signedSafeOperation = await safe4337Pack.signSafeOperation(identifiedSafeOperation)
-        const userOperationHash = await safe4337Pack.executeTransaction({
+        const userOpHash = await safe4337Pack.executeTransaction({
           executable: signedSafeOperation,
         })
 
-        return userOperationHash
+        let userOperationReceipt = null
+
+        const startTime = Date.now()
+        const timeout = 60 * 1000 // 1 minuto
+
+        while (!userOperationReceipt && Date.now() - startTime < timeout) {
+          // Wait 2 seconds before checking the status again
+          await new Promise((resolve) => setTimeout(resolve, 2000))
+          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(
+            userOpHash
+          )
+        }
+        return userOpHash
       },
     }
   }

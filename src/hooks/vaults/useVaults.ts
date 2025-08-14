@@ -90,6 +90,19 @@ function useVaults() {
         })
         const signed = await safe4337Pack.signSafeOperation(identified)
         const userOpHash = await safe4337Pack.executeTransaction({ executable: signed })
+
+        let userOperationReceipt = null
+
+        const startTime = Date.now()
+        const timeout = 60 * 1000 // 1 minuto
+
+        while (!userOperationReceipt && Date.now() - startTime < timeout) {
+          // Wait 2 seconds before checking the status again
+          await new Promise((resolve) => setTimeout(resolve, 2000))
+          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(
+            userOpHash
+          )
+        }
         return userOpHash
       },
     }
@@ -182,6 +195,19 @@ function useVaults() {
         const identified = await safe4337Pack.createTransaction({ transactions: [approveTx, withdrawTx] })
         const signed = await safe4337Pack.signSafeOperation(identified)
         const userOpHash = await safe4337Pack.executeTransaction({ executable: signed })
+
+        let userOperationReceipt = null
+
+        const startTime = Date.now()
+        const timeout = 60 * 1000 // 1 minuto
+
+        while (!userOperationReceipt && Date.now() - startTime < timeout) {
+          // Wait 2 seconds before checking the status again
+          await new Promise((resolve) => setTimeout(resolve, 2000))
+          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(
+            userOpHash
+          )
+        }
         return userOpHash
       },
     }

@@ -83,11 +83,6 @@ function WithdrawModal({
         onError()
         return
       }
-      try {
-        await publicClient.waitForTransactionReceipt({ hash: hash as `0x${string}`, timeout: 5000 })
-      } catch (error) {
-        console.log(error)
-      }
 
       // Calcular nuevo balance local (en unidades del vault: stCELO cuando strategy === 'stcelo')
       const withdrawAmountNum = Number(amount) || 0
