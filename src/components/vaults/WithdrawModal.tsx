@@ -125,7 +125,7 @@ function WithdrawModal({
     onClose()
   }
 
-  const isValidAmount = Boolean(amount) && Number(amount) > 0
+  const isValidAmount = Boolean(amount) && Number(amount) > 0 && Number(amount) <= maxAmount
   const isStakingVault = strategy === 'stcelo'
 
   const handleCustomPctChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -206,7 +206,7 @@ function WithdrawModal({
               placeholder="0"
               inputProps={{ min: 0, max: 100, step: 1 }}
               error={isPctInvalid}
-              sx={{ width: 84 }}
+              sx={{ width: 98 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
@@ -345,7 +345,7 @@ function WithdrawModal({
           <Button
             variant="contained"
             fullWidth
-            disabled={!isValidAmount}
+            disabled={!isValidAmount || isWithdrawing}
             sx={{ p: '16px', borderRadius: '6px', color: 'white !important', display: 'flex', gap: 1 }}
             onClick={handleWithdraw}
           >

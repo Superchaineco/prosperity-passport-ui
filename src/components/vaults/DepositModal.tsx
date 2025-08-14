@@ -244,7 +244,7 @@ function DepositModal({
             <Button
               variant="contained"
               fullWidth
-              disabled={!canDeposit}
+              disabled={!canDeposit || isDepositing}
               sx={{ p: '16px', borderRadius: '6px', color: 'white !important', display: 'flex', gap: 1 }}
               onClick={handleDeposit}
             >
@@ -252,7 +252,7 @@ function DepositModal({
                 <>
                   <CircularProgress color="inherit" size={24} />
                   <Typography fontSize="16px" fontWeight="bold">
-                    Depositing...
+                    Depositing (please be patient, this can last)...
                   </Typography>
                 </>
               ) : (
