@@ -85,13 +85,8 @@ function DepositModal({
         setAmount('')
         return
       }
-      try {
-        await publicClient.waitForTransactionReceipt({ hash: hash as `0x${string}`, confirmations: 1 })
-      } catch (error) {
-        console.error(error)
-      } finally {
-        await axios.post(`${BACKEND_BASE_URI}/vaults/${address}/refresh`)
-      }
+
+      await axios.post(`${BACKEND_BASE_URI}/vaults/${address}/refresh`)
 
       const calculatedNewBalance = (Number(vaultBalance) + Number(amount)).toString()
 
