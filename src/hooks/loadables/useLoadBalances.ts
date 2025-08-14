@@ -54,7 +54,7 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
       })
       balances.fiatTotal = (
         Number(balances.fiatTotal) -
-          Number(balances.items.find((token) => token.tokenInfo.type === 'NATIVE_TOKEN')?.fiatBalance) || 0
+        Number(balances.items.find((token) => token.tokenInfo.type === 'NATIVE_TOKEN')?.fiatBalance) || 0
       ).toString()
 
       //Hotfix to avoid ERC-20 and CELO assets issue
@@ -75,7 +75,7 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
           ),
       )
       balances.items = balances.items
-        .filter((balance) => balance.tokenInfo.type !== 'NATIVE_TOKEN')
+        //.filter((balance) => balance.tokenInfo.type !== 'NATIVE_TOKEN')
         .map((balance) => {
           const logo = tokensLogoToInject.find((token) => token.address === balance.tokenInfo.address)
           return logo ? { ...balance, tokenInfo: { ...balance.tokenInfo, logoUri: logo.logoUri } } : balance
