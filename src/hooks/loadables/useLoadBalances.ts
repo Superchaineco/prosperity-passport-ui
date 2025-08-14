@@ -54,7 +54,7 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
       })
       balances.fiatTotal = (
         Number(balances.fiatTotal) -
-        Number(balances.items.find((token) => token.tokenInfo.type === 'NATIVE_TOKEN')?.fiatBalance) || 0
+          Number(balances.items.find((token) => token.tokenInfo.type === 'NATIVE_TOKEN')?.fiatBalance) || 0
       ).toString()
 
       //Hotfix to avoid ERC-20 and CELO assets issue
