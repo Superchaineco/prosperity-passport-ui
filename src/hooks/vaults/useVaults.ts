@@ -99,9 +99,7 @@ function useVaults() {
         while (!userOperationReceipt && Date.now() - startTime < timeout) {
           // Wait 2 seconds before checking the status again
           await new Promise((resolve) => setTimeout(resolve, 2000))
-          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(
-            userOpHash
-          )
+          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
         }
         return userOpHash
       },
@@ -204,9 +202,7 @@ function useVaults() {
         while (!userOperationReceipt && Date.now() - startTime < timeout) {
           // Wait 2 seconds before checking the status again
           await new Promise((resolve) => setTimeout(resolve, 2000))
-          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(
-            userOpHash
-          )
+          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
         }
         return userOpHash
       },
