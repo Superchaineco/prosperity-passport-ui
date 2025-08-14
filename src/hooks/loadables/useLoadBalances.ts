@@ -54,29 +54,26 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
       })
       balances.fiatTotal = (
         Number(balances.fiatTotal) -
-        Number(balances.items.find((token) => token.tokenInfo.type === 'NATIVE_TOKEN')?.fiatBalance) || 0
+          Number(balances.items.find((token) => token.tokenInfo.type === 'NATIVE_TOKEN')?.fiatBalance) || 0
       ).toString()
 
       //Hotfix to avoid ERC-20 and CELO assets issue
-      const ZERO = '0x0000000000000000000000000000000000000000';
-      const CELO_ERC20 = '0x471ece3750da237f93b8e339c536989b8978a438';
-
+      const ZERO = '0x0000000000000000000000000000000000000000'
+      const CELO_ERC20 = '0x471ece3750da237f93b8e339c536989b8978a438'
 
       const celoErc20Balances = new Set(
         (balances.items ?? [])
-          .filter(({ tokenInfo }) =>
-            tokenInfo.type === 'ERC20' &&
-            tokenInfo.address?.toLowerCase() === CELO_ERC20
-          )
-          .map(({ balance }) => balance)
-      );
-      balances.items = (balances.items ?? []).filter(({ tokenInfo, balance }) =>
-        !(
-          tokenInfo.type === 'NATIVE_TOKEN' &&
-          tokenInfo.address?.toLowerCase() === ZERO &&
-          celoErc20Balances.has(balance)
-        )
-      );
+          .filter(({ tokenInfo }) => tokenInfo.type === 'ERC20' && tokenInfo.address?.toLowerCase() === CELO_ERC20)
+          .map(({ balance }) => balance),
+      )
+      balances.items = (balances.items ?? []).filter(
+        ({ tokenInfo, balance }) =>
+          !(
+            tokenInfo.type === 'NATIVE_TOKEN' &&
+            tokenInfo.address?.toLowerCase() === ZERO &&
+            celoErc20Balances.has(balance)
+          ),
+      )
       balances.items = balances.items
         .filter((balance) => balance.tokenInfo.type !== 'NATIVE_TOKEN')
         .map((balance) => {
