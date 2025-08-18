@@ -39,6 +39,7 @@ function Claim() {
   const [isClaiming, setIsClaiming] = useState(false)
   const [isShowStars, setIsShowStars] = useState(false)
   const [isClaimedOpen, setIsClaimedOpen] = useState(false)
+  const [claimHash, setclaimHash] = useState('')
 
   const {
     data: airdropData,
@@ -65,7 +66,7 @@ function Claim() {
     if (isClaiming) return
     setIsClaiming(true)
     setIsShowStars(false)
-    setIsClaimedOpen(true)
+
     try {
       if (!smartAccountClient) return
       // TODO: remove this when we are ready to use smart accounts
@@ -90,9 +91,11 @@ function Claim() {
       ])
       await publicClient.waitForTransactionReceipt({ hash: hash! })
       await airdropClaimed(safeAddress, hash!)
+      setclaimHash(hash)
       await refetchAirdrop()
       setIsClaiming(false)
       setIsShowStars(true)
+      setIsClaimedOpen(true)
     } catch (error) {
       setIsClaiming(false)
       console.error('Error claiming tokens:', error)
@@ -345,7 +348,7 @@ function Claim() {
             icon={CeloIcon}
             amount={formatUnits(BigInt(airdropData?.value), 18)}
             amountUsd={formatUnits(BigInt(airdropData?.value), 18)}
-            txHash={'0x1234...abcd' as Address}
+            txHash={claimHash as Address}
             onContinue={() => {
               setIsClaimedOpen(false)
               handleStakeClick()
