@@ -74,6 +74,7 @@ export const SidebarAirdropComponent = ({ item }: { item: any }) => {
     queryKey: ['check-airdrop', safeAddress],
     queryFn: () => checkAirdropEligibility(safeAddress),
     enabled: !!safeAddress,
+    refetchInterval: 120000,
   })
 
   const currentSubdirectory = getSubdirectory(router.pathname)
@@ -83,7 +84,7 @@ export const SidebarAirdropComponent = ({ item }: { item: any }) => {
 
   const isSelected = currentSubdirectory === getSubdirectory(item.href)
 
-  if (!airdropData?.eligible || isCheckLoading) return null
+  if (isCheckLoading) return null
   return (
     <>
       {airdropData?.eligible && !airdropData?.claimed ? (

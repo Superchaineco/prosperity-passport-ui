@@ -15,7 +15,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { checkAirdropEligibility } from '@/services/airdrop'
 import BeautySuccess from '@/public/images/common/beauty-success.svg'
-import Celo from '@/public/tokens/celo.svg'
+import CeloIcon from '@/public/tokens/celo.svg'
 import useSafeAddress from '@/hooks/useSafeAddress'
 import { Address, createWalletClient, custom, formatUnits, getContract } from 'viem'
 import StarsAnimation from '../badges/modals/StarsAnimation'
@@ -29,6 +29,8 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import NewReleasesOutlinedIcon from '@mui/icons-material/NewReleasesOutlined'
 import router from 'next/router'
 import { AppRoutes } from '@/config/routes'
+import RefreshTimer from '../leaderboard/RefreshTimer'
+import ClaimCompletedDialog from './ClaimCompleted'
 
 function Claim() {
   const safeAddress = useSafeAddress()
@@ -36,6 +38,7 @@ function Claim() {
   const { smartAccountClient } = usePimlico()
   const [isClaiming, setIsClaiming] = useState(false)
   const [isShowStars, setIsShowStars] = useState(false)
+  const [isClaimedOpen, setIsClaimedOpen] = useState(false)
 
   const {
     data: airdropData,
@@ -47,6 +50,14 @@ function Claim() {
     enabled: !!safeAddress,
   })
 
+  const expireDate = new Date(airdropData?.expiration_date || '0')
+  const formattedExpireDate = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'UTC',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(expireDate)
+
   const handleStakeClick = () => {
     router.push({ pathname: AppRoutes.vaults.index, query: { safe: router.query.safe, vaults: 'celo' } })
   }
@@ -54,6 +65,7 @@ function Claim() {
     if (isClaiming) return
     setIsClaiming(true)
     setIsShowStars(false)
+    setIsClaimedOpen(true)
     try {
       if (!smartAccountClient) return
       // TODO: remove this when we are ready to use smart accounts
@@ -81,6 +93,7 @@ function Claim() {
       setIsClaiming(false)
       setIsShowStars(true)
     } catch (error) {
+      setIsClaiming(false)
       console.error('Error claiming tokens:', error)
     }
   }
@@ -109,7 +122,7 @@ function Claim() {
     return (
       <Grid container gap="24px" paddingY="72px" paddingX="120px">
         <Typography variant="h1" fontSize={24} fontWeight={600}>
-          SUNNY Community Claim #1
+          Celo Community Claim
         </Typography>
         <Grid item xs={12}>
           <Skeleton variant="text" width={300} height={40} />
@@ -151,6 +164,32 @@ function Claim() {
       <Typography variant="h1" fontSize={24} fontWeight={600}>
         Celo Community Claim #1
       </Typography>
+      <RefreshTimer message="Ends in " deadLine={expireDate} />
+
+      {!airdropData?.eligible && (
+        <>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: 'white',
+              borderRadius: '6px',
+              gap: '16px',
+              padding: '24px',
+            }}
+          >
+            <Typography variant="h4" fontSize={20} fontWeight={600}>
+              Oops! It looks like you're not eligible for this airdrop.
+            </Typography>
+            <Typography fontSize={16} fontWeight={400} variant="body2" color="textSecondary">
+              You don’t currently meet the eligibility criteria for Celo Community Claim #1. Stay tuned for future
+              opportunities to earn rewards!
+            </Typography>
+          </Grid>
+        </>
+      )}
       {airdropData?.eligible && (
         <>
           <Grid
@@ -184,7 +223,6 @@ function Claim() {
               justifyContent: 'space-between',
               backgroundColor: 'white',
               borderRadius: '6px',
-              gap: '16px',
               padding: '24px',
             }}
           >
@@ -196,14 +234,19 @@ function Claim() {
                 <Typography fontSize="24px" fontWeight={600}>
                   {formatUnits(BigInt(airdropData?.value), 18)}
                 </Typography>
-                <SvgIcon component={Celo} inheritViewBox fontSize="inherit" />
+                <SvgIcon component={CeloIcon} inheritViewBox fontSize="inherit" />
               </Box>
             </Box>
             <Button
               disabled={airdropData?.claimed}
-              sx={{}}
+              sx={{
+                backgroundColor: '#476520',
+                color: 'white',
+                height: '48px',
+                padding: '0 16px',
+                marginY: 'auto',
+              }}
               variant="contained"
-              color="secondary"
               onClick={handleClaimClick}
             >
               {isClaiming ? (
@@ -287,10 +330,26 @@ function Claim() {
               </Grid>
 
               <Grid item xs={12}>
-                <Alert severity="warning">Token Claim #1 is available until February 12, 2025.</Alert>
+                <Alert severity="warning">
+                  You must claim your tokens before {formattedExpireDate}. They&apos;ll expire after this date.
+                </Alert>
               </Grid>
             </>
           )}
+
+          <ClaimCompletedDialog
+            open={isClaimedOpen}
+            onClose={() => setIsClaimedOpen(false)}
+            symbol="CELO"
+            icon={CeloIcon}
+            amount={formatUnits(BigInt(airdropData?.value), 18)}
+            amountUsd={formatUnits(BigInt(airdropData?.value), 18)}
+            txHash={'0x1234...abcd' as Address}
+            onContinue={() => {
+              setIsClaimedOpen(false)
+              handleStakeClick()
+            }}
+          />
         </>
       )}
     </Grid>
