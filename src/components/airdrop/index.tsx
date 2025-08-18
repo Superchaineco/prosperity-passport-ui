@@ -182,10 +182,10 @@ function Claim() {
             }}
           >
             <Typography variant="h4" fontSize={20} fontWeight={600}>
-              Oops! It looks like you're not eligible for this airdrop.
+              Oops! It looks like you&apos;re not eligible for this airdrop.
             </Typography>
             <Typography fontSize={16} fontWeight={400} variant="body2" color="textSecondary">
-              You don’t currently meet the eligibility criteria for Celo Community Claim #1. Stay tuned for future
+              You don&apos;t currently meet the eligibility criteria for Celo Community Claim #1. Stay tuned for future
               opportunities to earn rewards!
             </Typography>
           </Grid>
