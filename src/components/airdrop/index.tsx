@@ -91,7 +91,7 @@ function Claim() {
       ])
 
       await publicClient.waitForTransactionReceipt({ hash: hash! })
-      await airdropClaimed(safeAddress, hash!)
+      await airdropClaimed(safeAddress, airdropData?.airdrop_id!, hash!)
       setclaimHash(hash)
       await refetchAirdrop()
       setIsClaiming(false)

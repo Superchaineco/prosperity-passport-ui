@@ -8,6 +8,7 @@ type CheckAirdropEligibilityResponse = {
   claimed: boolean
   reasons: string[]
   expiration_date: Date
+  airdrop_id: string | null
 }
 
 export async function checkAirdropEligibility(address: string): Promise<CheckAirdropEligibilityResponse | null> {
@@ -15,8 +16,9 @@ export async function checkAirdropEligibility(address: string): Promise<CheckAir
   return response.data
 }
 
-export async function airdropClaimed(address: string, hash: string): Promise<void> {
+export async function airdropClaimed(address: string, airdropId: string, hash: string): Promise<void> {
   await axios.post(`${BACKEND_BASE_URI}/airdrop/${address}`, {
+    airdropId,
     hash,
   })
 }
