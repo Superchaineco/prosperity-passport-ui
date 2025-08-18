@@ -21,7 +21,7 @@ const environmentConfig = {
     JSON_RPC_PROVIDER_OP: process.env.NEXT_PUBLIC_JSON_RPC_PROVIDER_OP,
     SUBGRAPH_URL: 'https://api.studio.thegraph.com/query/72352/prosperity-passport/version/latest',
     CHAIN_ID: '42220',
-    AIRDROP_ADDRESS: '0xcc86F7903f52EEb20c512D26C829e1545D577c47',
+    AIRDROP_ADDRESS: '0x2a4871972Ece4e6E04a07E0F3e3D8168a261Dce2',
   },
   production: {
     SUPER_CHAIN_SETUP_ADDRESS: '0xe0651391D3fEF63F14FB33C9cf4F157F3eD0F4AF',
