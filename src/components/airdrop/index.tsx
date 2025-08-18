@@ -89,6 +89,7 @@ function Claim() {
         airdropData?.value,
         airdropData?.proofs,
       ])
+
       await publicClient.waitForTransactionReceipt({ hash: hash! })
       await airdropClaimed(safeAddress, hash!)
       setclaimHash(hash)
@@ -98,27 +99,8 @@ function Claim() {
       setIsClaimedOpen(true)
     } catch (error) {
       setIsClaiming(false)
+      alert('Error claiming tokens. Please try again later.')
       console.error('Error claiming tokens:', error)
-    }
-  }
-
-  const handleAddTokenToWallet = async () => {
-    const walletClient = createWalletClient({
-      chain: celo,
-      transport: custom(wallet?.provider as EthereumProvider),
-    })
-    try {
-      await walletClient.watchAsset({
-        type: 'ERC20',
-        options: {
-          address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
-          decimals: 18,
-          symbol: 'CELO',
-          image: 'https://pass.celopg.eco/tokens/celo.svg',
-        },
-      })
-    } catch (error) {
-      console.error('Error adding token to wallet:', error)
     }
   }
 
@@ -168,8 +150,7 @@ function Claim() {
       <Typography variant="h1" fontSize={24} fontWeight={600}>
         Celo Community Claim #1
       </Typography>
-      <RefreshTimer message="Ends in " deadLine={expireDate} />
-
+      {!airdropData?.claimed && <RefreshTimer message="Ends in " deadLine={expireDate} />}
       {!airdropData?.eligible && (
         <>
           <Grid
