@@ -67,7 +67,6 @@ function useVaults() {
       callContract: async (amount: string) => {
         const valueWei = parseUnits(amount, decimals ?? 18)
 
-
         const depositTx: MetaTransactionData = {
           to: STCELO_VAULT_CONTRACT,
           value: valueWei.toString(),
@@ -83,7 +82,6 @@ function useVaults() {
             args: [CELOPG_VALIDATOR_GROUP],
           }),
         }
-
 
         patchFetch()
         const safe4337Pack = await initializeSafeKit()
