@@ -14,3 +14,10 @@ export async function checkAirdropEligibility(address: string): Promise<CheckAir
   const response = await axios.get<CheckAirdropEligibilityResponse>(`${BACKEND_BASE_URI}/airdrop/${address}`)
   return response.data
 }
+
+
+export async function airdropClaimed(address: string, hash: string): Promise<void> {
+  await axios.post(`${BACKEND_BASE_URI}/airdrop/${address}`, {
+    hash: hash,
+  });
+}

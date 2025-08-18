@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { checkAirdropEligibility } from '@/services/airdrop'
+import { airdropClaimed, checkAirdropEligibility } from '@/services/airdrop'
 import BeautySuccess from '@/public/images/common/beauty-success.svg'
 import CeloIcon from '@/public/tokens/celo.svg'
 import useSafeAddress from '@/hooks/useSafeAddress'
@@ -89,6 +89,7 @@ function Claim() {
         airdropData?.proofs,
       ])
       await publicClient.waitForTransactionReceipt({ hash: hash! })
+      await airdropClaimed(safeAddress, hash!)
       await refetchAirdrop()
       setIsClaiming(false)
       setIsShowStars(true)
