@@ -6,6 +6,7 @@ import { BACKEND_BASE_URI } from '@/config/constants'
 import { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
 import useWallet from '../wallets/useWallet'
 import useSafeAddress from '../useSafeAddress'
+import { patchFetch } from '@/utils/fecthPatch'
 
 export type VaultStrategy = 'aave' | 'stcelo' | string
 
@@ -56,7 +57,7 @@ function useVaults() {
       options: {
         safeAddress,
       },
-      onchainAnalytics: { platform: 'Web', project: 'SuperAccounts' },
+      onchainAnalytics: { platform: 'Web', project: 'ProsperityAccounts' },
       safeModulesVersion: '0.3.0',
     })
   }
@@ -65,6 +66,7 @@ function useVaults() {
     return {
       callContract: async (amount: string) => {
         const valueWei = parseUnits(amount, decimals ?? 18)
+
 
         const depositTx: MetaTransactionData = {
           to: STCELO_VAULT_CONTRACT,
@@ -82,6 +84,8 @@ function useVaults() {
           }),
         }
 
+
+        patchFetch()
         const safe4337Pack = await initializeSafeKit()
 
         const identified = await safe4337Pack.createTransaction({
@@ -148,6 +152,7 @@ function useVaults() {
 
     return {
       callContract: async (amount: string, parseAmount: boolean = true) => {
+        patchFetch()
         const safe4337Pack = await initializeSafeKit()
         const parsedAmount = parseAmount ? parseUnits(amount, decimals) : amount
 
