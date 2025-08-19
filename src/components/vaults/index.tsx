@@ -17,6 +17,7 @@ import { Address } from 'viem'
 import SuccessModal from './SuccessModal'
 import Image from 'next/image'
 import ErrorModal from './ErrorModal'
+import useBalances from '@/hooks/useBalances'
 
 interface Vault {
   reserve?: string
@@ -70,7 +71,6 @@ function VaultCard({
   const [isUrlOpened, setIsUrlOpened] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showError, setShowError] = useState(false)
-
   const [amount, setAmount] = useState('')
   const [txHash, setTxHash] = useState('')
   const [newBalance, setNewBalance] = useState(value.toString())
@@ -334,6 +334,7 @@ function VaultCard({
 
 function Vaults() {
   const address = useSafeAddress()
+  const { balances } = useBalances()
   const { data: vaults, isLoading: isLoadingVaults } = useQuery<Vault[]>({
     queryKey: ['vaults', address],
     queryFn: async () => {
@@ -399,7 +400,12 @@ function Vaults() {
     )
   }
 
-  const totalDeposits = vaults.reduce((sum: number, vault: Vault) => sum + (Number(vault.balance) || 0), 0)
+  const totalDeposits = vaults.reduce((sum: number, vault: Vault) => {
+    const usdConversion = parseFloat(
+      balances.items.find((item) => item.tokenInfo.address === vault.asset)?.fiatConversion || '0',
+    )
+    return sum + (Number(vault.balance) || 0) * usdConversion
+  }, 0)
 
   const totalWeightedApy = vaults.reduce((sum: number, vault: Vault) => {
     const apr =

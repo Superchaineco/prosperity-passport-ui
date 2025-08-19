@@ -139,7 +139,11 @@ const AssetsTable = ({
   const { isAssetSelected, toggleAsset, hidingAsset, cancel, deselectAll, saveChanges } = useHideAssets(() =>
     setShowHiddenAssets(false),
   )
-  const hiddenAssets = ['0xDeE98402A302e4D707fB9bf2bac66fAEEc31e8Df', '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24']
+  const hiddenAssets = [
+    '0xDeE98402A302e4D707fB9bf2bac66fAEEc31e8Df',
+    '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
+    '0xBba98352628B0B0c4b40583F593fFCb630935a45',
+  ]
   const visibleAssets = useMemo(() => balances.items, [balances.items])
   const hasNoAssets = !loading && balances.items.length === 1 && balances.items[0].balance === '0'
 

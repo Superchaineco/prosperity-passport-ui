@@ -247,7 +247,7 @@ function DepositModal({
                 <>
                   <CircularProgress color="inherit" size={24} />
                   <Typography fontSize="16px" fontWeight="bold">
-                    Depositing (please be patient, this can last)...
+                    Depositing...
                   </Typography>
                 </>
               ) : (
