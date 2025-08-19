@@ -31,6 +31,7 @@ import router from 'next/router'
 import { AppRoutes } from '@/config/routes'
 import RefreshTimer from '../leaderboard/RefreshTimer'
 import ClaimCompletedDialog from './ClaimCompleted'
+import useBalances from '@/hooks/useBalances'
 
 function Claim() {
   const safeAddress = useSafeAddress()
@@ -40,7 +41,7 @@ function Claim() {
   const [isShowStars, setIsShowStars] = useState(false)
   const [isClaimedOpen, setIsClaimedOpen] = useState(false)
   const [claimHash, setclaimHash] = useState('')
-
+  const { balances } = useBalances()
   const {
     data: airdropData,
     isLoading: isCheckLoading,
@@ -50,6 +51,12 @@ function Claim() {
     queryFn: () => checkAirdropEligibility(safeAddress),
     enabled: !!safeAddress,
   })
+  const erc20Token = (airdropData?.token ?? '0x471EcE3750Da237f93B8E339c536989b8978a438') as Address
+  const usdConversion = parseFloat(
+    balances.items.find((item) => item.tokenInfo.address === erc20Token)?.fiatConversion || '0',
+  )
+  const airDropAmount = formatUnits(BigInt(airdropData?.value ?? 0), 18)
+  const usdAmount = (usdConversion * parseFloat(airDropAmount)).toFixed(2)
 
   const expireDate = new Date(airdropData?.expiration_date || '0')
   const formattedExpireDate = new Intl.DateTimeFormat('en-US', {
@@ -84,7 +91,7 @@ function Claim() {
         },
       })
       const hash = await airdropContract.write.claimERC20([
-        '0x471EcE3750Da237f93B8E339c536989b8978a438' as Address,
+        erc20Token,
         safeAddress as Address,
         airdropData?.value,
         airdropData?.proofs,
@@ -327,8 +334,8 @@ function Claim() {
             onClose={() => setIsClaimedOpen(false)}
             symbol="CELO"
             icon={CeloIcon}
-            amount={formatUnits(BigInt(airdropData?.value), 18)}
-            amountUsd={formatUnits(BigInt(airdropData?.value), 18)}
+            amount={airDropAmount}
+            amountUsd={usdAmount}
             txHash={claimHash as Address}
             onContinue={() => {
               setIsClaimedOpen(false)

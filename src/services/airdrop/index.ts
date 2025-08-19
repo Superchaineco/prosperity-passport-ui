@@ -9,6 +9,7 @@ type CheckAirdropEligibilityResponse = {
   reasons: string[]
   expiration_date: Date
   airdrop_id: string | null
+  token: string | null
 }
 
 export async function checkAirdropEligibility(address: string): Promise<CheckAirdropEligibilityResponse | null> {

@@ -139,7 +139,7 @@ const AssetsTable = ({
   const { isAssetSelected, toggleAsset, hidingAsset, cancel, deselectAll, saveChanges } = useHideAssets(() =>
     setShowHiddenAssets(false),
   )
-
+  const hiddenAssets = ['0xDeE98402A302e4D707fB9bf2bac66fAEEc31e8Df', '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24']
   const visibleAssets = useMemo(() => balances.items, [balances.items])
   const hasNoAssets = !loading && balances.items.length === 1 && balances.items[0].balance === '0'
 
@@ -159,11 +159,11 @@ const AssetsTable = ({
         return {
           key: item.tokenInfo.address,
           selected: isSelected,
-          collapsed: item.tokenInfo.address === hidingAsset,
+          collapsed: item.tokenInfo.address === hidingAsset || hiddenAssets.includes(item.tokenInfo.address),
           cells: {
             asset: {
               rawValue: item.tokenInfo.name,
-              collapsed: item.tokenInfo.address === hidingAsset,
+              collapsed: item.tokenInfo.address === hidingAsset || hiddenAssets.includes(item.tokenInfo.address),
               content: (
                 <div className={css.token}>
                   <TokenIcon logoUri={item.tokenInfo.logoUri} tokenSymbol={item.tokenInfo.symbol} />
@@ -176,7 +176,7 @@ const AssetsTable = ({
             },
             balance: {
               rawValue: Number(item.balance) / 10 ** (item.tokenInfo.decimals ?? 18),
-              collapsed: item.tokenInfo.address === hidingAsset,
+              collapsed: item.tokenInfo.address === hidingAsset || hiddenAssets.includes(item.tokenInfo.address),
               content: (
                 <TokenAmount
                   value={item.balance}
@@ -187,7 +187,7 @@ const AssetsTable = ({
             },
             value: {
               rawValue: rawFiatValue,
-              collapsed: item.tokenInfo.address === hidingAsset,
+              collapsed: item.tokenInfo.address === hidingAsset || hiddenAssets.includes(item.tokenInfo.address),
               content: (
                 <>
                   <FiatValue value={item.fiatBalance} />
@@ -214,7 +214,7 @@ const AssetsTable = ({
             actions: {
               rawValue: '',
               sticky: true,
-              collapsed: item.tokenInfo.address === hidingAsset,
+              collapsed: item.tokenInfo.address === hidingAsset || hiddenAssets.includes(item.tokenInfo.address),
               content: (
                 <Box display="flex" flexDirection="row" gap={1} alignItems="center">
                   <>
