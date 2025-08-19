@@ -98,8 +98,11 @@ function Claim() {
       ])
 
       await publicClient.waitForTransactionReceipt({ hash: hash! })
-      await airdropClaimed(safeAddress, airdropData?.airdrop_id!, hash!)
       setclaimHash(hash)
+      try {
+        await airdropClaimed(safeAddress, airdropData?.airdrop_id!, hash!)
+      } catch (error) {}
+
       await refetchAirdrop()
       setIsClaiming(false)
       setIsShowStars(true)
