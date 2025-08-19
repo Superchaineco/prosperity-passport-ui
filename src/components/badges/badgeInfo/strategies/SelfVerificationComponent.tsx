@@ -8,6 +8,9 @@ import CloseIcon from '@mui/icons-material/Close'
 import CountryFlag from '@/components/countryFlag'
 import { ResponseBadge } from '@/types/super-chain'
 import { uuidv4 } from '@walletconnect/utils'
+import dynamic from 'next/dynamic'
+
+const SelfQRcodeWrapper = dynamic(() => import('@selfxyz/qrcode').then((mod) => mod.SelfQRcodeWrapper), { ssr: false })
 
 export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
   const [isValidationModalOpen, setValidationModalOpen] = useState(false)
@@ -20,16 +23,17 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
 
   useEffect(() => {
     const init = async () => {
-      const { default: SelfQRcodeComponent, SelfAppBuilder } = await import('@selfxyz/qrcode')
-      setSelfQRcode(() => SelfQRcodeComponent)
+      const { SelfAppBuilder } = await import('@selfxyz/qrcode')
 
       const app = new SelfAppBuilder({
         appName: 'Prosperity Pass',
         scope: 'prosperity',
         endpoint: 'https://prosperity-passport-backend-production.up.railway.app/api/self/verify',
+        endpointType: 'https',
         logoBase64: 'https://pass.celopg.eco/images/pp-logo.png',
         userId, //address,
         userIdType: 'uuid',
+        version: 2,
         disclosures: {
           nationality: true,
         },
@@ -80,7 +84,7 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
     if (data?.check) handleVerificationSuccess()
   }, [data])
 
-  if (!address || !selfApp || !SelfQRcode) return null
+  if (!address || !selfApp) return null
 
   return (
     <>
@@ -112,7 +116,19 @@ export function SelfVerificationComponent({ badge }: { badge: ResponseBadge }) {
         <Divider sx={{ mt: '24px', mb: '10px' }} />
         <DialogContent sx={{ textAlign: 'center', px: 3 }}>
           <Box display="flex" justifyContent="center" mb="24px">
-            <SelfQRcode selfApp={selfApp} onSuccess={handleVerificationSuccess} />
+            {selfApp ? (
+              <SelfQRcodeWrapper
+                selfApp={selfApp}
+                onSuccess={handleVerificationSuccess}
+                onError={() => {
+                  console.error('Error generating QR code')
+                }}
+              />
+            ) : (
+              <Typography variant="body2" color="textSecondary">
+                Loading QR code...
+              </Typography>
+            )}
           </Box>
           <Typography variant="body2" color="textSecondary">
             Scan this QR code to verify your identity through{' '}
