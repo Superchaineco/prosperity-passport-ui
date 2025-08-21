@@ -40,6 +40,7 @@ interface WithdrawModalProps {
   strategy: string
   tokenIcon?: string
   previewRatio?: number
+  assetPrice?: number
 }
 
 function WithdrawModal({
@@ -56,6 +57,7 @@ function WithdrawModal({
   strategy,
   tokenIcon,
   previewRatio,
+  assetPrice = 0,
 }: WithdrawModalProps) {
   const address = useSafeAddress()
   const queryClient = useQueryClient()
@@ -286,7 +288,7 @@ function WithdrawModal({
           </Stack>
           <Stack direction="row" justifyContent="space-between" alignItems="center" mt={1}>
             <Typography color="text.secondary" fontSize="14px">
-              ${(Number(amount) || 0).toFixed(2)}
+              ${((Number(amount) || 0) * assetPrice).toFixed(2)}
             </Typography>
             <Typography color="text.secondary" fontSize="14px">
               Available: {maxAmount.toFixed(5)}{' '}
