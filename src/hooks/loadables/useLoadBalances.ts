@@ -29,6 +29,14 @@ const tokensLogoToInject = [
     address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
     logoUri: '/tokens/0x471EcE3750Da237f93B8E339c536989b8978a438.png',
   },
+  {
+    address: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
+    logoUri: '/tokens/usdt.svg',
+  },
+{
+  address: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
+  logoUri: '/tokens/usdc.svg',
+}
 ]
 
 export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
