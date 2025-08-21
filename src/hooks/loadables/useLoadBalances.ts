@@ -27,7 +27,7 @@ const useTokenListSetting = (): boolean | undefined => {
 const tokensLogoToInject = [
   {
     address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
-    logoUri: '/tokens/0x471EcE3750Da237f93B8E339c536989b8978a438.png',
+    logoUri: '/tokens/celo.svg',
   },
   {
     address: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
