@@ -55,20 +55,20 @@ export const navItems: NavItem[] = [
     icon: <SvgIcon component={TransactionIcon} inheritViewBox />,
     href: AppRoutes.transactions.history,
   },
-  {
-    label: 'Claim Celo',
-    icon: <SvgIcon component={Celo} inheritViewBox />,
-    href: AppRoutes.airdrop,
-    customComponent: (
-      <SidebarAirdropComponent
-        item={{
-          label: 'Claim Celo',
-          icon: <SvgIcon component={Celo} inheritViewBox />,
-          href: AppRoutes.airdrop,
-        }}
-      />
-    ),
-  },
+  // {
+  //   label: 'Claim Celo',
+  //   icon: <SvgIcon component={Celo} inheritViewBox />,
+  //   href: AppRoutes.airdrop,
+  //   customComponent: (
+  //     <SidebarAirdropComponent
+  //       item={{
+  //         label: 'Claim Celo',
+  //         icon: <SvgIcon component={Celo} inheritViewBox />,
+  //         href: AppRoutes.airdrop,
+  //       }}
+  //     />
+  //   ),
+  // },
 
   // {
   //   label: 'Apps',
