@@ -28,6 +28,7 @@ interface Vault {
   image: string | null
   interest_apr?: string | number
   rewards_apr?: string | number
+  asset_price?: number
   apr?: string | number
   balance?: string | number
   raw_balance?: string
@@ -401,18 +402,14 @@ function Vaults() {
   }
 
   const totalDeposits = vaults.reduce((sum: number, vault: Vault) => {
-    const usdConversion = parseFloat(
-      balances.items.find((item) => item.tokenInfo.address === vault.asset)?.fiatConversion || '0',
-    )
-    return sum + (Number(vault.balance) || 0) * usdConversion
+    return sum + (Number(vault.balance) || 0) * (vault.asset_price || 1)
   }, 0)
 
   const totalWeightedApy = vaults.reduce((sum: number, vault: Vault) => {
-    const apr =
-      vault.apr !== undefined ? Number(vault.apr) : (Number(vault.rewards_apr) || 0) + (Number(vault.interest_apr) || 0)
-    return sum + (Number(vault.balance) || 0) * apr
+    const apr = Number(vault.apr) / 100
+    return sum + (Number(vault.balance) || 0) * (vault.asset_price || 1) * apr
   }, 0)
-  const averageApy = totalDeposits > 0 ? totalWeightedApy / totalDeposits : 0
+  const averageApy = totalDeposits > 0 ? (totalWeightedApy / totalDeposits) * 100 : 0
 
   const getVaultIcon = (symbol: string): typeof cEUR | typeof wETH => {
     switch (symbol) {
