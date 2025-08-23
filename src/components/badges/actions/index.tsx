@@ -118,6 +118,7 @@ function BadgesActions({
   }, [mutate])
   const handleCloseClaimModal = () => {
     setIsClaimModalOpen(false)
+    router.push({ pathname: AppRoutes.home, query: { safe: router.query.safe } })
   }
 
   const handleCloseLevelUpModal = () => {
