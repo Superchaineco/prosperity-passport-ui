@@ -39,6 +39,7 @@ interface DepositModalProps {
   tokenIcon?: string
   strategy: string
   decimals: number
+  assetPrice?: number
 }
 
 function DepositModal({
@@ -54,6 +55,7 @@ function DepositModal({
   tokenIcon,
   strategy,
   decimals,
+  assetPrice = 0,
 }: DepositModalProps) {
   const address = useSafeAddress()
   const { publicClient } = useSuperChainAccount()
@@ -211,7 +213,7 @@ function DepositModal({
               </Stack>
               <Stack direction="row" justifyContent="space-between" alignItems="center" mt={1}>
                 <Typography color="text.secondary" fontSize="14px">
-                  ${(Number(amount) || 0).toFixed(2)}
+                  ${((Number(amount) || 0) * assetPrice).toFixed(2)}
                 </Typography>
                 <Typography color="text.secondary" fontSize="14px">
                   Available: {maxAmount}{' '}

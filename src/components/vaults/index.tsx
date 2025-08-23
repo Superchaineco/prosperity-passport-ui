@@ -52,6 +52,7 @@ function VaultCard({
   decimals = 6,
   withdrawMaxAmount,
   withdrawRatio,
+  vault,
 }: {
   title: string
   value: number
@@ -66,6 +67,7 @@ function VaultCard({
   decimals: number
   withdrawMaxAmount?: number
   withdrawRatio?: number
+  vault?: Vault
 }) {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
@@ -295,6 +297,7 @@ function VaultCard({
         onError={handleDepositError}
         strategy={strategy}
         decimals={decimals}
+        assetPrice={vault?.asset_price}
       />
 
       <WithdrawModal
@@ -310,6 +313,7 @@ function VaultCard({
         onError={handleWithdrawError}
         strategy={strategy}
         previewRatio={withdrawRatio}
+        assetPrice={vault?.asset_price}
       />
 
       <SuccessModal
@@ -501,6 +505,7 @@ function Vaults() {
               decimals={vault.decimals}
               withdrawMaxAmount={withdrawMaxAmount}
               withdrawRatio={withdrawRatio}
+              vault={vault}
             />
           )
         })}
