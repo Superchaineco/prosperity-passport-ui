@@ -67,12 +67,12 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
 
       // Find native CELO token
       const nativeCeloToken = (balances.items ?? []).find(
-        ({ tokenInfo }) => tokenInfo.type === 'NATIVE_TOKEN' && tokenInfo.address?.toLowerCase() === ZERO
+        ({ tokenInfo }) => tokenInfo.type === 'NATIVE_TOKEN' && tokenInfo.address?.toLowerCase() === ZERO,
       )
 
       // Find ERC-20 CELO token
       const erc20CeloToken = (balances.items ?? []).find(
-        ({ tokenInfo }) => tokenInfo.type === 'ERC20' && tokenInfo.address?.toLowerCase() === CELO_ERC20.toLowerCase()
+        ({ tokenInfo }) => tokenInfo.type === 'ERC20' && tokenInfo.address?.toLowerCase() === CELO_ERC20.toLowerCase(),
       )
 
       // Store the native CELO fiat balance before removing it
@@ -88,8 +88,7 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
 
       // Remove native CELO from the list always
       balances.items = (balances.items ?? []).filter(
-        ({ tokenInfo }) =>
-          !(tokenInfo.type === 'NATIVE_TOKEN' && tokenInfo.address?.toLowerCase() === ZERO)
+        ({ tokenInfo }) => !(tokenInfo.type === 'NATIVE_TOKEN' && tokenInfo.address?.toLowerCase() === ZERO),
       )
 
       // If there's no ERC-20 CELO but there's native CELO, convert native to ERC-20
@@ -102,8 +101,9 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
             decimals: 18,
             symbol: 'CELO',
             name: 'Celo native asset',
-            logoUri: 'https://safe-transaction-assets.safe.global/tokens/logos/0x471EcE3750Da237f93B8E339c536989b8978a438.png'
-          }
+            logoUri:
+              'https://safe-transaction-assets.safe.global/tokens/logos/0x471EcE3750Da237f93B8E339c536989b8978a438.png',
+          },
         })
       }
       balances.items = balances.items
