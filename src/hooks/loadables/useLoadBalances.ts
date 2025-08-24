@@ -1,7 +1,7 @@
 import { getCounterfactualBalance } from '@/features/counterfactual/utils'
 import { useWeb3 } from '@/hooks/wallets/web3'
 import { useEffect, useMemo } from 'react'
-import { getBalances, type SafeBalanceResponse } from '@safe-global/safe-gateway-typescript-sdk'
+import { getBalances, type SafeBalanceResponse, TokenType } from '@safe-global/safe-gateway-typescript-sdk'
 import { useAppSelector } from '@/store'
 import useAsync, { type AsyncResult } from '../useAsync'
 import { Errors, logError } from '@/services/exceptions'
@@ -60,28 +60,52 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
       let balances = await getBalances(chainId, safeAddress, currency, {
         trusted: isTrustedTokenList,
       })
-      balances.fiatTotal = (
-        Number(balances.fiatTotal) -
-          Number(balances.items.find((token) => token.tokenInfo.type === 'NATIVE_TOKEN')?.fiatBalance) || 0
-      ).toString()
 
-      //Hotfix to avoid ERC-20 and CELO assets issue
+      //Hotfix to handle CELO native vs ERC-20: prefer ERC-20, convert native to ERC-20 if no ERC-20 exists
       const ZERO = '0x0000000000000000000000000000000000000000'
-      const CELO_ERC20 = '0x471ece3750da237f93b8e339c536989b8978a438'
+      const CELO_ERC20 = '0x471EcE3750Da237f93B8E339c536989b8978a438'
 
-      const celoErc20Balances = new Set(
-        (balances.items ?? [])
-          .filter(({ tokenInfo }) => tokenInfo.type === 'ERC20' && tokenInfo.address?.toLowerCase() === CELO_ERC20)
-          .map(({ balance }) => balance),
+      // Find native CELO token
+      const nativeCeloToken = (balances.items ?? []).find(
+        ({ tokenInfo }) => tokenInfo.type === 'NATIVE_TOKEN' && tokenInfo.address?.toLowerCase() === ZERO
       )
+
+      // Find ERC-20 CELO token
+      const erc20CeloToken = (balances.items ?? []).find(
+        ({ tokenInfo }) => tokenInfo.type === 'ERC20' && tokenInfo.address?.toLowerCase() === CELO_ERC20.toLowerCase()
+      )
+
+      // Store the native CELO fiat balance before removing it
+      const nativeCeloFiatBalance = nativeCeloToken?.fiatBalance ? Number(nativeCeloToken.fiatBalance) : 0
+
+      // Remove native CELO from fiatTotal only if we're NOT converting it to ERC-20
+      // or if there's already an ERC-20 CELO (to avoid double counting)
+      if (nativeCeloToken && erc20CeloToken) {
+        // If both exist, remove native from fiatTotal to avoid duplication
+        balances.fiatTotal = (Number(balances.fiatTotal) - nativeCeloFiatBalance).toString()
+      }
+      // If only native exists, we'll convert it to ERC-20, so keep it in fiatTotal
+
+      // Remove native CELO from the list always
       balances.items = (balances.items ?? []).filter(
-        ({ tokenInfo, balance }) =>
-          !(
-            tokenInfo.type === 'NATIVE_TOKEN' &&
-            tokenInfo.address?.toLowerCase() === ZERO &&
-            celoErc20Balances.has(balance)
-          ),
+        ({ tokenInfo }) =>
+          !(tokenInfo.type === 'NATIVE_TOKEN' && tokenInfo.address?.toLowerCase() === ZERO)
       )
+
+      // If there's no ERC-20 CELO but there's native CELO, convert native to ERC-20
+      if (!erc20CeloToken && nativeCeloToken) {
+        balances.items.push({
+          ...nativeCeloToken,
+          tokenInfo: {
+            type: TokenType.ERC20,
+            address: CELO_ERC20,
+            decimals: 18,
+            symbol: 'CELO',
+            name: 'Celo native asset',
+            logoUri: 'https://safe-transaction-assets.safe.global/tokens/logos/0x471EcE3750Da237f93B8E339c536989b8978a438.png'
+          }
+        })
+      }
       balances.items = balances.items
         //.filter((balance) => balance.tokenInfo.type !== 'NATIVE_TOKEN')
         .map((balance) => {
