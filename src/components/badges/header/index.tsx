@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { AppRoutes } from '@/config/routes'
 import { GradientProgress } from '..'
 import NavTabs from '@/components/common/NavTabs'
+import RefreshTimer from '@/components/leaderboard/RefreshTimer'
+import { getCurrentSeason, getSeasonByCode } from '@/services/season'
 
 export const badgesNavItems = [
   {
@@ -11,7 +13,7 @@ export const badgesNavItems = [
   },
   {
     label: 'Season 1',
-    href: AppRoutes.badges.season7,
+    href: AppRoutes.badges.season1,
   },
 ]
 
@@ -33,12 +35,19 @@ function BadgesHeader({
   isLoading: boolean
 }) {
   const progress = (points / pointsToNextLevel) * 100
+  const currentSeason = getCurrentSeason()
+  const seasonObject = getSeasonByCode(season?.code ?? 0)
 
   return (
     <Box p={1} sx={{ width: '100%' }}>
-      <Typography variant="h2" fontWeight={700} gutterBottom pb={4}>
-        Badges
-      </Typography>
+      <Box display="flex" alignItems="center" gap={2} pb={4}>
+        <Typography variant="h2" fontWeight={700}>
+          Badges
+        </Typography>
+        {currentSeason && (
+          <RefreshTimer deadLine={currentSeason.toDate} message={`${currentSeason.name} • `} messageAfter=" left" />
+        )}
+      </Box>
       <NavTabs tabs={badgesNavItems} />
       <Divider sx={{ mb: 2, width: '100%' }} />
 

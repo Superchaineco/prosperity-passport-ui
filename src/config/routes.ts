@@ -9,14 +9,14 @@ export const AppRoutes = {
   home: '/home',
   badges: {
     allTime: '/badges',
-    season7: '/badges/season-7',
+    season1: '/badges/season-1',
   },
   cookie: '/cookie',
   contacts: '/contacts',
   addOwner: '/addOwner',
   _offline: '/_offline',
   airdrop: '/airdrop',
-  leaderboard: { index: '/leaderboard', season7: '/leaderboard/season-7' },
+  leaderboard: { index: '/leaderboard', season1: '/leaderboard/season-1' },
   apps: {
     open: '/apps/open',
     index: '/apps',
