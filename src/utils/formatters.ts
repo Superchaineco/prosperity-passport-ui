@@ -94,7 +94,6 @@ export const formatError = (error: Error & { reason?: string }): string => {
   return ` ${capitalize(reason)}`
 }
 
-
 export function stripHtml(html?: string): string {
-  return html ? html.replace(/<[^>]*>/g, '') : '';
+  return html ? html.replace(/<[^>]*>/g, '') : ''
 }
