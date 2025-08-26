@@ -214,7 +214,14 @@ function BadgeInfo({
             </Stack>
 
             <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
-              <Typography color="#75757A">{currentBadge?.metadata.description}</Typography>
+              <Typography
+                color="#75757A"
+                dangerouslySetInnerHTML={{
+                  __html: currentBadge?.metadata.description ?? '',
+                }}
+              >
+                {currentBadge?.metadata.description}
+              </Typography>
               {currentBadge.claimable && <Chip label="Claimable" />}
             </Box>
             <Box
