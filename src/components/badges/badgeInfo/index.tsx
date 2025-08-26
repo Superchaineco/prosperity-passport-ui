@@ -219,9 +219,7 @@ function BadgeInfo({
                 dangerouslySetInnerHTML={{
                   __html: currentBadge?.metadata.description ?? '',
                 }}
-              >
-                {currentBadge?.metadata.description}
-              </Typography>
+              />
               {currentBadge.claimable && <Chip label="Claimable" />}
             </Box>
             <Box
