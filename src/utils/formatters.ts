@@ -93,3 +93,8 @@ export const formatError = (error: Error & { reason?: string }): string => {
   if (!reason.endsWith('.')) reason += '.'
   return ` ${capitalize(reason)}`
 }
+
+
+export function stripHtml(html?: string): string {
+  return html ? html.replace(/<[^>]*>/g, '') : '';
+}

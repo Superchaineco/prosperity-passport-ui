@@ -11,6 +11,7 @@ import Hearth from '@/public/images/common/hearth.svg'
 import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 import { Address } from 'viem'
 import useSafeInfo from '@/hooks/useSafeInfo'
+import { stripHtml } from '@/utils/formatters'
 function Badge({
   data,
   switchFavorite,
@@ -242,7 +243,7 @@ function Badge({
             ))}
           </Box>
           <Typography color="text.secondary" sx={{ wordBreak: 'break-word' }}>
-            {data.metadata.description}
+            {stripHtml(data.metadata.description)}
           </Typography>
         </Box>
         {isCompleted ? (

@@ -216,6 +216,16 @@ function BadgeInfo({
             <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
               <Typography
                 color="#75757A"
+                sx={{
+                  '& a': {
+                    color: 'primary.main',
+                    textDecoration: 'underline',
+                    fontWeight: 500,
+                  },
+                  '& a:hover': {
+                    color: 'secondary.main',
+                  },
+                }}
                 dangerouslySetInnerHTML={{
                   __html: currentBadge?.metadata.description ?? '',
                 }}
