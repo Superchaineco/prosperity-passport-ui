@@ -104,8 +104,7 @@ const fakeSafeApps: SafeAppData[] = [
     iconUrl: 'https://pass.celopg.eco/images/apps/snapshot.svg',
     description: 'A fully integrated suite to manage DAO governance.',
     chainIds: ['42220'],
-    tags: ['Governance', 'DAO'
-    ],
+    tags: ['Governance', 'DAO'],
     accessControl: {
       type: 'NO_RESTRICTIONS' as SafeAppAccessPolicyTypes,
       value: [],
