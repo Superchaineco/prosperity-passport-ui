@@ -12,6 +12,7 @@ import CheckCircleIcon from '@/public/images/common/check-circle.svg'
 import { Address } from 'viem'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import { stripHtml } from '@/utils/formatters'
+import { specialBadgeParsing } from '../badgeInfo'
 function Badge({
   data,
   switchFavorite,
@@ -340,7 +341,10 @@ function Badge({
                   <Typography fontSize="12px" fontWeight={500} fontFamily="Sora">
                     {tier.condition
                       ? tier.condition
-                      : data.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString())}
+                      : specialBadgeParsing(
+                          data.metadata.name,
+                          data.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString()),
+                        )}
                   </Typography>
                   <SvgIcon
                     inheritViewBox

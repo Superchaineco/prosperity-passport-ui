@@ -3,6 +3,7 @@ import { Box, Skeleton, SvgIcon, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 import ProsperityPassportPoints from '@/public/images/common/prosperity-passport-points.svg'
 import Image from 'next/image'
+import { specialBadgeParsing } from '@/components/badges/badgeInfo'
 
 function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: boolean }) {
   return (
@@ -30,9 +31,12 @@ function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: b
                   alignItems="center"
                 >
                   <Typography fontSize={14} textAlign="center" fontWeight={400}>
-                    {badge.badge.metadata.condition.replace(
-                      '{{variable}}',
-                      badge.badge.badgeTiers[parseInt(badge.tier) - 1].metadata.minValue.toString(),
+                    {specialBadgeParsing(
+                      badge.badge.metadata.name,
+                      badge.badge.metadata.condition.replace(
+                        '{{variable}}',
+                        badge.badge.badgeTiers[parseInt(badge.tier) - 1].metadata.minValue.toString(),
+                      ),
                     )}
                   </Typography>
                   <Box justifyContent="center" alignItems="center" display="flex" gap={1}>

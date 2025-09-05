@@ -294,7 +294,10 @@ function BadgeInfo({
                     <Typography color="#4B4B4E" fontSize="12px">
                       {tier.condition
                         ? tier.condition
-                        : currentBadge.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString())}
+                        : specialBadgeParsing(
+                            currentBadge.metadata.name,
+                            currentBadge.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString()),
+                          )}
                     </Typography>
                     <SvgIcon
                       inheritViewBox
@@ -319,6 +322,26 @@ function BadgeInfo({
       </Card>
     </Stack>
   )
+}
+
+export function specialBadgeParsing(badge: string, tierString: string) {
+  if (badge === 'Community Guild Member' || badge.toString() === '25') {
+    switch (tierString) {
+      case '1 level Celorian':
+        return 'Beginner Celorian'
+      case '2 level Celorian':
+        return 'Adventurer Celorian'
+      case '3 level Celorian':
+        return 'Vanguard Celorian'
+      case '4 level Celorian':
+        return 'Pioneer Celorian'
+      case '5 level Celorian':
+        return 'Champion Celorian'
+      default:
+        return tierString
+    }
+  }
+  return tierString
 }
 
 export default BadgeInfo
