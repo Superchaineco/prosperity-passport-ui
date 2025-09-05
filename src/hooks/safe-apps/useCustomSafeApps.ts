@@ -99,18 +99,19 @@ const fakeSafeApps: SafeAppData[] = [
   },
   {
     id: 109,
-    url: 'https://app.glodollar.org/',
-    name: 'GloDollar',
-    iconUrl: 'https://pass.celopg.eco/images/apps/glodollar.jpg',
-    description: 'Fund what matters—at zero cost to you',
+    url: 'https://snapshot.box/#/s:celopg.eth',
+    name: 'Snapshot',
+    iconUrl: 'https://pass.celopg.eco/images/apps/snapshot.svg',
+    description: 'A fully integrated suite to manage DAO governance.',
     chainIds: ['42220'],
-    tags: ['ReFi', 'DeFi'],
+    tags: ['Governance', 'DAO'
+    ],
     accessControl: {
       type: 'NO_RESTRICTIONS' as SafeAppAccessPolicyTypes,
       value: [],
     },
     features: [],
-    developerWebsite: 'https://glodollar.org',
+    developerWebsite: '',
     socialProfiles: [],
   },
 ]
