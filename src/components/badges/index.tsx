@@ -48,7 +48,7 @@ function Badges({ season }: { season?: { code: number; name: string } }) {
   })
   const isClaimable = useMemo(() => data?.currentBadges.some((badge) => badge.claimable), [data?.currentBadges])
   const currentPageBadges = season
-    ? data?.currentBadges.filter((x) => x.metadata.season === season.code)
+    ? data?.currentBadges.filter((x) => Number(x.metadata.season) === Number(season.code))
     : data?.currentBadges
   const filteredBadges = useMemo(() => {
     if (!data || !currentPageBadges) return []
