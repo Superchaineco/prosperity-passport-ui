@@ -318,18 +318,25 @@ function BadgeInfo({
   )
 }
 
-export function specialBadgeParsing(badge: string, tierString: string) {
+export function specialBadgeParsing(badge: string, tierString: string, tierNumber?: number): string {
+  if (tierNumber) tierString = tierNumber.toString()
+
   if (badge === 'Community Guild Member' || badge.toString() === '25') {
     switch (tierString) {
       case '1 level Celorian':
+      case '1':
         return 'Beginner Celorian'
       case '2 level Celorian':
+      case '2':
         return 'Adventurer Celorian'
       case '3 level Celorian':
+      case '3':
         return 'Vanguard Celorian'
       case '4 level Celorian':
+      case '4':
         return 'Pioneer Celorian'
       case '5 level Celorian':
+      case '5':
         return 'Champion Celorian'
       default:
         return tierString
@@ -338,15 +345,20 @@ export function specialBadgeParsing(badge: string, tierString: string) {
   if (badge === 'Hold USDGLO on Celo' || badge.toString() === '13') {
     switch (tierString) {
       case 'Hold USDGLO on Celo 1':
-        return 'Hold $1 USDGLO for more than 1 day'
+      case '1':
+        return 'held > $1 Glo Dollar for more than 1 day'
       case 'Hold USDGLO on Celo 2':
-        return 'Hold $10 USDGLO for more than 7 adys'
+      case '2':
+        return 'held > $10 Glo Dollar for more than 7 days'
       case 'Hold USDGLO on Celo 3':
-        return 'Hold $100 USDGLO for more than 28 days'
+      case '3':
+        return 'held > $100 Glo Dollar for more than 28 days'
       case 'Hold USDGLO on Celo 4':
-        return 'Hold $1000 USDGLO for more than 28 days'
+      case '4':
+        return 'held > $1000 Glo Dollar for more than 28 days'
       case 'Hold USDGLO on Celo 5':
-        return 'Hold $5000 USDGLO for more than 28 days'
+      case '5':
+        return 'held > $5000 Glo Dollar for more than 28 days'
       default:
         return tierString
     }

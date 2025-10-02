@@ -344,6 +344,7 @@ function Badge({
                       : specialBadgeParsing(
                           data.metadata.name,
                           data.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString()),
+                          parseInt(tier.tier),
                         )}
                   </Typography>
                   <SvgIcon

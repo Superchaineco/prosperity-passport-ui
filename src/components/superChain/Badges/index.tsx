@@ -37,6 +37,7 @@ function Badges({ badges, isLoading }: { badges?: BadgeResponse[]; isLoading?: b
                         '{{variable}}',
                         badge.badge.badgeTiers[parseInt(badge.tier) - 1].metadata.minValue.toString(),
                       ),
+                      parseInt(badge.tier),
                     )}
                   </Typography>
                   <Box justifyContent="center" alignItems="center" display="flex" gap={1}>
