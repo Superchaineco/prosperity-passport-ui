@@ -335,6 +335,22 @@ export function specialBadgeParsing(badge: string, tierString: string) {
         return tierString
     }
   }
+  if (badge === 'Hold USDGLO on Celo' || badge.toString() === '13') {
+    switch (tierString) {
+      case 'Hold USDGLO on Celo 1':
+        return 'Hold $1 USDGLO for more than 1 day'
+      case 'Hold USDGLO on Celo 2':
+        return 'Hold $10 USDGLO for more than 7 adys'
+      case 'Hold USDGLO on Celo 3':
+        return 'Hold $100 USDGLO for more than 28 days'
+      case 'Hold USDGLO on Celo 4':
+        return 'Hold $1000 USDGLO for more than 28 days'
+      case 'Hold USDGLO on Celo 5':
+        return 'Hold $5000 USDGLO for more than 28 days'
+      default:
+        return tierString
+    }
+  }
   return tierString
 }
 
