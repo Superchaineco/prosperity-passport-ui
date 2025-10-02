@@ -222,6 +222,16 @@ function BadgeInfo({
                   <>
                     <Typography
                       color="#75757A"
+                      sx={{
+                        '& a': {
+                          color: 'primary.main',
+                          textDecoration: 'underline',
+                          fontWeight: 500,
+                        },
+                        '& a:hover': {
+                          color: 'secondary.main',
+                        },
+                      }}
                       dangerouslySetInnerHTML={{
                         __html: currentBadge?.metadata.description.replaceAll('FarCaster', 'Farcaster') ?? '',
                       }}
