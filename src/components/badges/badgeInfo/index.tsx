@@ -220,9 +220,12 @@ function BadgeInfo({
                   strategy.renderDescription(currentBadge)
                 ) : (
                   <>
-                    <Typography color="#75757A">
-                      {currentBadge?.metadata.description.replaceAll('FarCaster', 'Farcaster')}
-                    </Typography>
+                    <Typography
+                      color="#75757A"
+                      dangerouslySetInnerHTML={{
+                        __html: currentBadge?.metadata.description.replaceAll('FarCaster', 'Farcaster') ?? '',
+                      }}
+                    />
                   </>
                 )}
                 {currentBadge.claimable && <Chip label="Claimable" />}
