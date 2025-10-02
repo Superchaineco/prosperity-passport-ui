@@ -340,7 +340,7 @@ function Badge({
                 <Box key={index} className={css.tierRow}>
                   <Typography fontSize="12px" fontWeight={500} fontFamily="Sora">
                     {tier.condition
-                      ? tier.condition
+                      ? specialBadgeParsing(data.metadata.name, tier.condition, parseInt(tier.tier))
                       : specialBadgeParsing(
                           data.metadata.name,
                           data.metadata.condition.replace('{{variable}}', tier.metadata.minValue.toString()),

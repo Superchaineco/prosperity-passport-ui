@@ -290,7 +290,11 @@ function BadgeInfo({
                     <Box key={index}>
                       <Box display="flex" justifyContent="space-between" alignItems="center" paddingY="4px">
                         <Typography color="#4B4B4E" fontSize="12px">
-                          {currentBadge.metadata.condition.replace('{{variable}}', formatXP(tier.metadata.minValue))}
+                          {specialBadgeParsing(
+                            currentBadge.badgeId,
+                            currentBadge.metadata.condition.replace('{{variable}}', formatXP(tier.metadata.minValue)),
+                            parseInt(tier.tier),
+                          )}
                         </Typography>
 
                         <SvgIcon
@@ -319,8 +323,6 @@ function BadgeInfo({
 }
 
 export function specialBadgeParsing(badge: string, tierString: string, tierNumber?: number): string {
-  if (tierNumber) tierString = tierNumber.toString()
-
   if (badge === 'Community Guild Member' || badge.toString() === '25') {
     switch (tierString) {
       case '1 level Celorian':
@@ -342,21 +344,21 @@ export function specialBadgeParsing(badge: string, tierString: string, tierNumbe
         return tierString
     }
   }
-  if (badge === 'Hold USDGLO on Celo' || badge.toString() === '13') {
+  if (badge === 'USD GLO tiers' || badge.toString() === '13') {
+    if (tierNumber) tierString = tierNumber.toString()
     switch (tierString) {
-      case 'Hold USDGLO on Celo 1':
       case '1':
         return 'held > $1 Glo Dollar for more than 1 day'
-      case 'Hold USDGLO on Celo 2':
+
       case '2':
         return 'held > $10 Glo Dollar for more than 7 days'
-      case 'Hold USDGLO on Celo 3':
+
       case '3':
         return 'held > $100 Glo Dollar for more than 28 days'
-      case 'Hold USDGLO on Celo 4':
+
       case '4':
         return 'held > $1000 Glo Dollar for more than 28 days'
-      case 'Hold USDGLO on Celo 5':
+
       case '5':
         return 'held > $5000 Glo Dollar for more than 28 days'
       default:
