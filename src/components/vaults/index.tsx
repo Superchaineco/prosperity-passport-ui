@@ -1,4 +1,16 @@
-import { Box, Button, Card, CardContent, Divider, Grid, Skeleton, Stack, SvgIcon, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  Skeleton,
+  Stack,
+  SvgIcon,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import React, { useState } from 'react'
 import cUSD from '@/public/images/currencies/cUSD.svg'
 import cEUR from '@/public/images/currencies/cEUR.svg'
@@ -257,13 +269,18 @@ function VaultCard({
               </Button>
             ) : (
               <>
-                <Button
-                  fullWidth
-                  sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
-                  onClick={handleOpenWithdrawModal}
-                >
-                  Withdraw
-                </Button>
+                <Tooltip title="Withdrawals currently de-activated, will be live again soon" arrow>
+                  <span style={{ width: '100%' }}>
+                    <Button
+                      disabled
+                      fullWidth
+                      sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
+                      onClick={handleOpenWithdrawModal}
+                    >
+                      Withdraw
+                    </Button>
+                  </span>
+                </Tooltip>
                 <Button variant="contained" fullWidth sx={{ borderRadius: '6px' }} onClick={handleOpenDepositModal}>
                   Deposit
                 </Button>
