@@ -8,9 +8,10 @@ import { Errors, logError } from '@/services/exceptions'
 import { selectCurrency, selectSettings, TOKEN_LISTS } from '@/store/settingsSlice'
 import { useCurrentChain } from '../useChains'
 import { FEATURES, hasFeature } from '@/utils/chains'
-import { POLLING_INTERVAL } from '@/config/constants'
+import { BACKEND_BASE_URI, POLLING_INTERVAL } from '@/config/constants'
 import useIntervalCounter from '../useIntervalCounter'
 import useSafeInfo from '../useSafeInfo'
+import axios from 'axios'
 
 const useTokenListSetting = (): boolean | undefined => {
   const chain = useCurrentChain()
@@ -37,7 +38,28 @@ const tokensLogoToInject = [
     address: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
     logoUri: '/tokens/usdc.svg',
   },
+  {
+    address: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
+    logoUri: '/tokens/stCelo.svg',
+  }
 ]
+
+const tokensNeedingExternalPrice = [
+  {
+    address: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
+    symbol: 'stCELO'
+  }
+]
+
+const fetchTokenPrice = async (address: string): Promise<number> => {
+  try {
+    const response = await axios.get(`${BACKEND_BASE_URI}/assets/${address}/price`)
+    return response.data
+  } catch (error) {
+    console.error(`Error fetching price for ${address}:`, error)
+    return 0
+  }
+}
 
 export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
   const [pollCount, resetPolling] = useIntervalCounter(POLLING_INTERVAL)
@@ -60,6 +82,25 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
       let balances = await getBalances(chainId, safeAddress, currency, {
         trusted: isTrustedTokenList,
       })
+
+      for (const balance of balances.items) {
+        const logo = tokensLogoToInject.find(t => t.address.toLowerCase() === balance.tokenInfo.address?.toLowerCase())
+        if (logo) {
+          balance.tokenInfo.logoUri = logo.logoUri
+        }
+
+        const needsPrice = tokensNeedingExternalPrice.find(t => t.address.toLowerCase() === balance.tokenInfo.address?.toLowerCase())
+        if (needsPrice) {
+          const price = await fetchTokenPrice(needsPrice.address)
+          console.debug({ price })
+          if (price > 0) {
+            const balanceInDecimal = Number(balance.balance) / Math.pow(10, balance.tokenInfo.decimals)
+            balance.fiatBalance = (balanceInDecimal * price).toString()
+            balance.fiatConversion = price.toString()
+          }
+        }
+      }
+
 
       //Hotfix to handle CELO native vs ERC-20: prefer ERC-20, convert native to ERC-20 if no ERC-20 exists
       const ZERO = '0x0000000000000000000000000000000000000000'
@@ -106,12 +147,17 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
           },
         })
       }
-      balances.items = balances.items
-        //.filter((balance) => balance.tokenInfo.type !== 'NATIVE_TOKEN')
-        .map((balance) => {
-          const logo = tokensLogoToInject.find((token) => token.address === balance.tokenInfo.address)
-          return logo ? { ...balance, tokenInfo: { ...balance.tokenInfo, logoUri: logo.logoUri } } : balance
-        })
+
+      balances.items.sort((a, b) => {
+        const aHasValue = Number(a.fiatBalance) > 0
+        const bHasValue = Number(b.fiatBalance) > 0
+
+        if (aHasValue === bHasValue) {
+          return Number(b.fiatBalance) - Number(a.fiatBalance)
+        }
+
+        return aHasValue ? -1 : 1
+      })
 
       return balances
     },
