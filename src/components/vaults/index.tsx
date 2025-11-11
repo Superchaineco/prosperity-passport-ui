@@ -269,28 +269,13 @@ function VaultCard({
               </Button>
             ) : (
               <>
-                {strategy === 'stcelo' ? (
-                  <Tooltip title="Withdrawals currently de-activated, will be live again soon" arrow>
-                    <span style={{ width: '100%' }}>
-                      <Button
-                        disabled
-                        fullWidth
-                        sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
-                        onClick={handleOpenWithdrawModal}
-                      >
-                        Withdraw
-                      </Button>
-                    </span>
-                  </Tooltip>
-                ) : (
-                  <Button
-                    fullWidth
-                    sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
-                    onClick={handleOpenWithdrawModal}
-                  >
-                    Withdraw
-                  </Button>
-                )}
+                <Button
+                  fullWidth
+                  sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
+                  onClick={handleOpenWithdrawModal}
+                >
+                  Withdraw
+                </Button>
                 <Button variant="contained" fullWidth sx={{ borderRadius: '6px' }} onClick={handleOpenDepositModal}>
                   Deposit
                 </Button>
