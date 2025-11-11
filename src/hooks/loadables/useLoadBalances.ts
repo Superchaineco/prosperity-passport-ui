@@ -41,14 +41,14 @@ const tokensLogoToInject = [
   {
     address: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
     logoUri: '/tokens/stCelo.svg',
-  }
+  },
 ]
 
 const tokensNeedingExternalPrice = [
   {
     address: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
-    symbol: 'stCELO'
-  }
+    symbol: 'stCELO',
+  },
 ]
 
 const fetchTokenPrice = async (address: string): Promise<number> => {
@@ -84,12 +84,16 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
       })
 
       for (const balance of balances.items) {
-        const logo = tokensLogoToInject.find(t => t.address.toLowerCase() === balance.tokenInfo.address?.toLowerCase())
+        const logo = tokensLogoToInject.find(
+          (t) => t.address.toLowerCase() === balance.tokenInfo.address?.toLowerCase(),
+        )
         if (logo) {
           balance.tokenInfo.logoUri = logo.logoUri
         }
 
-        const needsPrice = tokensNeedingExternalPrice.find(t => t.address.toLowerCase() === balance.tokenInfo.address?.toLowerCase())
+        const needsPrice = tokensNeedingExternalPrice.find(
+          (t) => t.address.toLowerCase() === balance.tokenInfo.address?.toLowerCase(),
+        )
         if (needsPrice) {
           const price = await fetchTokenPrice(needsPrice.address)
           console.debug({ price })
@@ -100,7 +104,6 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
           }
         }
       }
-
 
       //Hotfix to handle CELO native vs ERC-20: prefer ERC-20, convert native to ERC-20 if no ERC-20 exists
       const ZERO = '0x0000000000000000000000000000000000000000'
