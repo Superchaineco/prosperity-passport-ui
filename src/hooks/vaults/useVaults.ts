@@ -251,7 +251,7 @@ function useVaults() {
     try {
       const publicClient = createPublicClient({
         chain: celo,
-        transport: http('https://rpc.celopg.eco')
+        transport: http('https://rpc.celopg.eco'),
       })
 
       const parsedAmount = parseUnits(amount, decimals)
@@ -315,49 +315,55 @@ function useVaults() {
         ],
       })
 
-      const ratio = Number(parsedAmount) / Number(result);
-      const slipagge = await calculateRatioDifference('0xC668583dcbDc9ae6FA3CE46462758188adfdfC24', '0x471EcE3750Da237f93B8E339c536989b8978a438', ratio);
-      setSlipagge(slipagge || 0);
+      const ratio = Number(parsedAmount) / Number(result)
+      const slipagge = await calculateRatioDifference(
+        '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
+        '0x471EcE3750Da237f93B8E339c536989b8978a438',
+        ratio,
+      )
+      setSlipagge(slipagge || 0)
 
       // Convertir el resultado de wei a formato decimal
       const outputAmount = (Number(result) / Math.pow(10, decimals)).toString()
       return outputAmount
-
     } catch (error) {
       console.error('Error consultando swap output:', error)
       throw error
     }
   }
 
-  const priceCache: Record<string, number> = {};
+  const priceCache: Record<string, number> = {}
 
-  async function calculateRatioDifference(tokenA: string, tokenB: string, providedRatio: number): Promise<number | null> {
+  async function calculateRatioDifference(
+    tokenA: string,
+    tokenB: string,
+    providedRatio: number,
+  ): Promise<number | null> {
     try {
       const fetchPrices = async (tokens: string[]): Promise<Record<string, number>> => {
-        const response = await axios.get(`${BACKEND_BASE_URI}/assets/${tokens.join(',')}/prices`);
-        return response.data; // Se espera que el backend devuelva un objeto con los precios
-      };
-
-      const prices = await fetchPrices([tokenA, tokenB]);
-      const priceA = prices[tokenA] || 0;
-      const priceB = prices[tokenB] || 0;
-
-      console.debug(`Prices fetched - ${tokenA}:`, priceA, `${tokenB}:`, priceB);
-
-      if (priceA > 0 && priceB > 0) {
-        const marketRatio = priceA / priceB;
-
-        console.debug(`Market ratio for ${tokenA} and ${tokenB}:`, marketRatio, providedRatio);
-
-        return (Math.abs(providedRatio - marketRatio) / marketRatio) * 100;
+        const response = await axios.get(`${BACKEND_BASE_URI}/assets/${tokens.join(',')}/prices`)
+        return response.data // Se espera que el backend devuelva un objeto con los precios
       }
 
-      return null;
-    } catch (error) {
-      console.error(`Error calculating ratio difference for ${tokenA} and ${tokenB}:`, error);
-      return null;
-    }
+      const prices = await fetchPrices([tokenA, tokenB])
+      const priceA = prices[tokenA] || 0
+      const priceB = prices[tokenB] || 0
 
+      console.debug(`Prices fetched - ${tokenA}:`, priceA, `${tokenB}:`, priceB)
+
+      if (priceA > 0 && priceB > 0) {
+        const marketRatio = priceA / priceB
+
+        console.debug(`Market ratio for ${tokenA} and ${tokenB}:`, marketRatio, providedRatio)
+
+        return (Math.abs(providedRatio - marketRatio) / marketRatio) * 100
+      }
+
+      return null
+    } catch (error) {
+      console.error(`Error calculating ratio difference for ${tokenA} and ${tokenB}:`, error)
+      return null
+    }
   }
 
   return {
@@ -365,7 +371,7 @@ function useVaults() {
     getWithdrawCallable,
     getExpectedOutputAmount,
     calculateRatioDifference,
-    slipagge
+    slipagge,
   }
 }
 
