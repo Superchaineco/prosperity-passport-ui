@@ -51,15 +51,15 @@ const tokensNeedingExternalPrice = [
   },
 ]
 
-const fetchTokenPrice = async (address: string): Promise<number> => {
+const fetchTokenPrices = async (addresses: string[]): Promise<Record<string, number>> => {
   try {
-    const response = await axios.get(`${BACKEND_BASE_URI}/assets/${address}/price`)
-    return response.data
+    const response = await axios.get(`${BACKEND_BASE_URI}/assets/${addresses.join(',')}/prices`);
+    return response.data; // Se espera que el backend devuelva un objeto con los precios
   } catch (error) {
-    console.error(`Error fetching price for ${address}:`, error)
-    return 0
+    console.error(`Error fetching prices for ${addresses.join(', ')}:`, error);
+    return addresses.reduce((acc, address) => ({ ...acc, [address]: 0 }), {}); // Retornar 0 para todos los assets en caso de error
   }
-}
+};
 
 export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
   const [pollCount, resetPolling] = useIntervalCounter(POLLING_INTERVAL)
@@ -83,6 +83,9 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
         trusted: isTrustedTokenList,
       })
 
+      const addressesNeedingPrices = tokensNeedingExternalPrice.map(t => t.address.toLowerCase());
+      const prices = await fetchTokenPrices(addressesNeedingPrices);
+
       for (const balance of balances.items) {
         const logo = tokensLogoToInject.find(
           (t) => t.address.toLowerCase() === balance.tokenInfo.address?.toLowerCase(),
@@ -95,8 +98,8 @@ export const useLoadBalances = (): AsyncResult<SafeBalanceResponse> => {
           (t) => t.address.toLowerCase() === balance.tokenInfo.address?.toLowerCase(),
         )
         if (needsPrice) {
-          const price = await fetchTokenPrice(needsPrice.address)
-          console.debug({ price })
+          const price = prices[needsPrice.address.toLowerCase()] || 0;
+          console.debug({ price });
           if (price > 0) {
             const balanceInDecimal = Number(balance.balance) / Math.pow(10, balance.tokenInfo.decimals)
             balance.fiatBalance = (balanceInDecimal * price).toString()

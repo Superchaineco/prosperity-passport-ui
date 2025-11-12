@@ -19,6 +19,8 @@ import {
   ListItem,
   Checkbox,
   FormControlLabel,
+  Link,
+  Skeleton,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
@@ -74,6 +76,7 @@ function WithdrawModal({
   const [dynamicPreviewAmount, setDynamicPreviewAmount] = useState<string>('0')
   const [isAcknowledged, setIsAcknowledged] = useState<boolean>(false)
   const [showSlippageWarning, setShowSlippageWarning] = useState<boolean>(false)
+  const [isCalculatingPreview, setIsCalculatingPreview] = useState<boolean>(false)
 
   const { mutate: withdraw, isPending: isWithdrawing } = useMutation({
     mutationFn: async () => {
@@ -148,6 +151,8 @@ function WithdrawModal({
       return
     }
 
+    setIsCalculatingPreview(true) // Indicar que se está calculando el preview
+
     try {
       const expectedOutput = await getExpectedOutputAmount(inputAmount, decimals)
       console.debug('Expected output from dynamic calculation:', expectedOutput)
@@ -157,6 +162,8 @@ function WithdrawModal({
       // Fallback al ratio estático si falla la consulta
       const fallbackAmount = (Number(inputAmount) * (previewRatio || 1)).toFixed(2)
       setDynamicPreviewAmount(fallbackAmount)
+    } finally {
+      setIsCalculatingPreview(false) // Finalizar el cálculo del preview
     }
   }
 
@@ -200,8 +207,11 @@ function WithdrawModal({
   const renderWithdrawUI = () => {
     if (isStakingVault) {
       // Usar el preview amount dinámico o fallback al cálculo estático
-      const previewAmount =
-        dynamicPreviewAmount !== '0' ? dynamicPreviewAmount : (Number(amount || '0') * (previewRatio || 1)).toFixed(2)
+      const previewAmount = isCalculatingPreview
+        ? null // No mostrar el valor mientras se calcula
+        : dynamicPreviewAmount !== '0'
+        ? dynamicPreviewAmount
+        : (Number(amount || '0') * (previewRatio || 1)).toFixed(2)
       const pctNum = Number(customPctInput)
       const isPctInvalid = customPctInput !== '' && (isNaN(pctNum) || pctNum < 0 || pctNum > 100)
 
@@ -268,9 +278,17 @@ function WithdrawModal({
             justifyContent="space-between"
             sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '12px', p: '12px' }}
           >
-            <Typography fontSize="24px" fontWeight="bold">
-              {previewAmount}
-            </Typography>
+            {isCalculatingPreview ? (
+              <Skeleton variant="text">
+                <Typography fontSize="24px" fontWeight="bold">
+                  +++++++++++++++
+                </Typography>
+              </Skeleton>
+            ) : (
+              <Typography fontSize="24px" fontWeight="bold">
+                {previewAmount}
+              </Typography>
+            )}
             <Box display="flex" alignItems="center" gap="6px">
               {typeof icon === 'function' ? (
                 <SvgIcon component={icon} inheritViewBox fontSize="inherit" width={28} height={24} />
@@ -401,6 +419,16 @@ function WithdrawModal({
                   <li style={{ marginBottom: '4px' }}>Withdraw less to reduce slippage</li>
                   <li>Wait for lower demand to receive more CELO</li>
                 </ul>
+                <Link
+                  href="/prosperity-passport"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{ color: '#FA8900', textDecoration: 'underline' }}
+                >
+                  <Typography>
+                    Or, withdraw your stCELO directly from your Prosperity Passport via transaction
+                  </Typography>
+                </Link>
               </Alert>
             </Box>
           )}
