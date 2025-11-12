@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -32,6 +32,8 @@ import { BACKEND_BASE_URI } from '@/config/constants'
 import useSafeAddress from '@/hooks/useSafeAddress'
 import useSuperChainAccount from '@/hooks/super-chain/useSuperChainAccount'
 import Image from 'next/image'
+import { TxModalContext } from '../tx-flow'
+import { TokenTransferFlow } from '../tx-flow/flows'
 
 interface WithdrawModalProps {
   open: boolean
@@ -77,6 +79,7 @@ function WithdrawModal({
   const [isAcknowledged, setIsAcknowledged] = useState<boolean>(false)
   const [showSlippageWarning, setShowSlippageWarning] = useState<boolean>(false)
   const [isCalculatingPreview, setIsCalculatingPreview] = useState<boolean>(false)
+  const { setTxFlow } = useContext(TxModalContext)
 
   const { mutate: withdraw, isPending: isWithdrawing } = useMutation({
     mutationFn: async () => {
@@ -118,6 +121,11 @@ function WithdrawModal({
     if (isStakingVault) {
       await updatePreviewAmount(maxAmountStr)
     }
+  }
+
+  const onSendClick = (tokenAddress: string) => {
+    handleClose()
+    setTxFlow(<TokenTransferFlow tokenAddress={tokenAddress} />)
   }
 
   const handleAmountChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -419,16 +427,15 @@ function WithdrawModal({
                   <li style={{ marginBottom: '4px' }}>Withdraw less to reduce slippage</li>
                   <li>Wait for lower demand to receive more CELO</li>
                 </ul>
-                <Link
-                  href="/prosperity-passport"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ color: '#FA8900', textDecoration: 'underline' }}
+                <Button
+                  variant="text"
+                  onClick={() => onSendClick('0xC668583dcbDc9ae6FA3CE46462758188adfdfC24')}
+                  sx={{ color: '#FA8900', textDecoration: 'underline', padding: 0, textAlign: 'left' }}
                 >
                   <Typography>
                     Or, withdraw your stCELO directly from your Prosperity Passport via transaction
                   </Typography>
-                </Link>
+                </Button>
               </Alert>
             </Box>
           )}
