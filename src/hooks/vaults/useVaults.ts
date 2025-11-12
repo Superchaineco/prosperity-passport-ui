@@ -333,18 +333,14 @@ function useVaults() {
 
   async function calculateRatioDifference(tokenA: string, tokenB: string, providedRatio: number): Promise<number | null> {
     try {
-      const fetchPrice = async (token: string): Promise<number> => {
-        if (priceCache[token]) {
-          return priceCache[token];
-        }
-
-        const response = await axios.get(`${BACKEND_BASE_URI}/assets/${token}/price`);
-        const price = response.data;
-        priceCache[token] = price; // Cachear el precio
-        return price;
+      const fetchPrices = async (tokens: string[]): Promise<Record<string, number>> => {
+        const response = await axios.get(`${BACKEND_BASE_URI}/assets/${tokens.join(',')}/prices`);
+        return response.data; // Se espera que el backend devuelva un objeto con los precios
       };
 
-      const [priceA, priceB] = await Promise.all([fetchPrice(tokenA), fetchPrice(tokenB)]);
+      const prices = await fetchPrices([tokenA, tokenB]);
+      const priceA = prices[tokenA] || 0;
+      const priceB = prices[tokenB] || 0;
 
       console.debug(`Prices fetched - ${tokenA}:`, priceA, `${tokenB}:`, priceB);
 
@@ -356,10 +352,10 @@ function useVaults() {
         return (Math.abs(providedRatio - marketRatio) / marketRatio) * 100;
       }
 
-      return null
+      return null;
     } catch (error) {
-      console.error(`Error calculating ratio difference for ${tokenA} and ${tokenB}:`, error)
-      return null
+      console.error(`Error calculating ratio difference for ${tokenA} and ${tokenB}:`, error);
+      return null;
     }
 
   }
