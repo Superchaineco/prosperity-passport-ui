@@ -48,8 +48,7 @@ function useVaults() {
   const wallet = useWallet()
   const safeAddress = useSafeAddress()
 
-  const [slipagge, setSlipagge] = useState<number>()
-
+  const [slippage, setSlippage] = useState<number>()
   const initializeSafeKit = async (): Promise<Safe4337Pack> => {
     return await Safe4337Pack.init({
       provider: wallet?.provider as Eip1193Provider,
@@ -301,8 +300,8 @@ function useVaults() {
           {
             poolId: '0xa14d533365c510319dc886ff5c3dd5fe5f1141f5000200000000000000000015',
             kind: 0, // GIVEN_IN
-            assetIn: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24', // stCELO
-            assetOut: '0x471EcE3750Da237f93B8E339c536989b8978a438', // CELO
+            assetIn: '0x471EcE3750Da237f93B8E339c536989b8978a438', // stCELO
+            assetOut: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24', // CELO
             amount: parsedAmount,
             userData: '0x',
           },
@@ -315,13 +314,14 @@ function useVaults() {
         ],
       })
 
+
       const ratio = Number(parsedAmount) / Number(result)
-      const slipagge = await calculateRatioDifference(
+      const slippage = await calculateRatioDifference(
         '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
         '0x471EcE3750Da237f93B8E339c536989b8978a438',
         ratio,
       )
-      setSlipagge(slipagge || 0)
+      setSlippage(slippage || 0)
 
       // Convertir el resultado de wei a formato decimal
       const outputAmount = (Number(result) / Math.pow(10, decimals)).toString()
@@ -371,7 +371,7 @@ function useVaults() {
     getWithdrawCallable,
     getExpectedOutputAmount,
     calculateRatioDifference,
-    slipagge,
+    slippage,
   }
 }
 

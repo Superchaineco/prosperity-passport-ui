@@ -68,7 +68,7 @@ function WithdrawModal({
   const address = useSafeAddress()
   const queryClient = useQueryClient()
   const { publicClient } = useSuperChainAccount()
-  const { getWithdrawCallable, getExpectedOutputAmount, slipagge } = useVaults()
+  const { getWithdrawCallable, getExpectedOutputAmount, slippage } = useVaults()
   const [amount, setAmount] = useState<string>('')
   const [selectedPct, setSelectedPct] = useState<number | null>(null)
   const [customPctInput, setCustomPctInput] = useState<string>('')
@@ -380,13 +380,13 @@ function WithdrawModal({
   }
 
   useEffect(() => {
-    if (!slipagge) return
-    if (slipagge > 5) {
+    if (!slippage) return
+    if (slippage > 3) {
       setShowSlippageWarning(true)
     } else {
       setShowSlippageWarning(false)
     }
-  }, [slipagge])
+  }, [slippage])
 
   return (
     <>
@@ -413,41 +413,43 @@ function WithdrawModal({
         <Divider />
         <Box p="24px" display="flex" flexDirection="column" gap="16px">
           {showSlippageWarning && (
-            <Box sx={{ border: '1px solid #FA8900', backgroundColor: '#FFF7E6', borderRadius: '8px' }}>
-              <Alert severity="warning">
-                <Typography fontWeight="bold" color="#FA8900" gutterBottom>
-                  High demand detected
-                </Typography>
-                <Typography>Current demand may cause significant slippage on your withdrawal. You can:</Typography>
-                <ul style={{ paddingLeft: '20px', marginTop: '8px' }}>
-                  <li style={{ marginBottom: '4px' }}>Continue anyway</li>
-                  <li style={{ marginBottom: '4px' }}>Withdraw less to reduce slippage</li>
-                  <li>Wait for lower demand to receive more CELO</li>
-                </ul>
-                <Button
-                  variant="text"
-                  onClick={() => onSendClick('0xC668583dcbDc9ae6FA3CE46462758188adfdfC24')}
-                  sx={{ color: '#FA8900', textDecoration: 'underline', padding: 0, textAlign: 'left' }}
-                >
-                  <Typography>
-                    Or, withdraw your stCELO directly from your Prosperity Passport via transaction
+            <>
+              <Box sx={{ border: '1px solid #FA8900', backgroundColor: '#FFF7E6', borderRadius: '8px' }}>
+                <Alert severity="warning">
+                  <Typography fontWeight="bold" color="#FA8900" gutterBottom>
+                    High demand detected
                   </Typography>
-                </Button>
-              </Alert>
-            </Box>
-          )}
-          <Box display="flex" flexDirection="column" gap="8px">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isAcknowledged}
-                  onChange={(e) => setIsAcknowledged(e.target.checked)}
-                  color="primary"
+                  <Typography>Current demand may cause significant slippage on your withdrawal. You can:</Typography>
+                  <ul style={{ paddingLeft: '20px', marginTop: '8px' }}>
+                    <li style={{ marginBottom: '4px' }}>Continue anyway</li>
+                    <li style={{ marginBottom: '4px' }}>Withdraw less to reduce slippage</li>
+                    <li>Wait for lower demand to receive more CELO</li>
+                  </ul>
+                  <Button
+                    variant="text"
+                    onClick={() => onSendClick('0xC668583dcbDc9ae6FA3CE46462758188adfdfC24')}
+                    sx={{ color: '#FA8900', textDecoration: 'underline', padding: 0, textAlign: 'left' }}
+                  >
+                    <Typography>
+                      Or, withdraw your stCELO directly from your Prosperity Passport via transaction
+                    </Typography>
+                  </Button>
+                </Alert>
+              </Box>
+              <Box display="flex" flexDirection="column" gap="8px">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isAcknowledged}
+                      onChange={(e) => setIsAcknowledged(e.target.checked)}
+                      color="primary"
+                    />
+                  }
+                  label="I acknowledge the slippage and want to proceed"
                 />
-              }
-              label="I acknowledge the slippage and want to proceed"
-            />
-          </Box>
+              </Box>
+            </>
+          )}
 
           <Button
             variant="contained"
