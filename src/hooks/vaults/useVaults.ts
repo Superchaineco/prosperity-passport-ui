@@ -314,7 +314,6 @@ function useVaults() {
         ],
       })
 
-
       const ratio = Number(parsedAmount) / Number(result)
       const slippage = await calculateRatioDifference(
         '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
