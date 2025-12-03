@@ -1,6 +1,6 @@
-import { Address, createPublicClient, createWalletClient, custom, decodeFunctionResult, encodeFunctionData, erc20Abi, http } from 'viem'
+import { Address, encodeFunctionData, erc20Abi } from 'viem'
 import useAAve from './useAAve'
-import { AbiCoder, Eip1193Provider, parseUnits } from 'ethers'
+import { Eip1193Provider, parseUnits } from 'ethers'
 import { Safe4337Pack } from '@safe-global/relay-kit'
 import { BACKEND_BASE_URI } from '@/config/constants'
 import { MetaTransactionData } from '@safe-global/safe-core-sdk-types'
@@ -8,10 +8,10 @@ import useWallet from '../wallets/useWallet'
 import useSafeAddress from '../useSafeAddress'
 import { patchFetch } from '@/utils/fecthPatch'
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import JSBI from 'jsbi'
-import { ChainId, convertQuoteToRoute, createConfig, EVM, executeRoute, getQuote, getRoutes, getStepTransaction, QuoteRequest, RoutesRequest } from "@lifi/sdk";
 import useSuperChainAccount from '../super-chain/useSuperChainAccount'
+import { QuoteRequest, RoutesRequest } from '@lifi/types'
 
 export type VaultStrategy = 'aave' | 'stcelo' | string
 
@@ -51,16 +51,35 @@ function useVaults() {
   const safeAddress = useSafeAddress()
   const { publicClient } = useSuperChainAccount()
 
-
   const [slippage, setSlippage] = useState<number>()
-  const initializeSafeKit = async (): Promise<Safe4337Pack> => {
-    createConfig({
-      integrator: "ProsperityPassport",
-      rpcUrls: {
-        [ChainId.CEL]: ["https://rpc.celopg.eco"]
-      },
 
-    });
+  useEffect(() => {
+    let isMounted = true
+
+    const initializeLiFi = async () => {
+      try {
+        const { createConfig, ChainId } = await import('@lifi/sdk')
+        if (isMounted) {
+          createConfig({
+            integrator: "ProsperityPassport",
+            rpcUrls: {
+              [ChainId.CEL]: ["https://rpc.celopg.eco"]
+            },
+          })
+        }
+      } catch (err) {
+        console.error('Error initializing Li.Fi:', err)
+      }
+    }
+
+    initializeLiFi()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const initializeSafeKit = async (): Promise<Safe4337Pack> => {
     return await Safe4337Pack.init({
       provider: wallet?.provider as Eip1193Provider,
       signer: wallet?.address,
@@ -120,7 +139,9 @@ function useVaults() {
           await new Promise((resolve) => setTimeout(resolve, 2000))
           userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
         }
-        return userOpHash
+
+        console.debug({ userOperationReceipt })
+        return userOperationReceipt?.userOpHash || userOpHash
       },
     }
   }
@@ -152,6 +173,8 @@ function useVaults() {
       callContract: async (amount: string, parseAmount: boolean = true) => {
         patchFetch()
         try {
+
+          const { ChainId, getQuote, convertQuoteToRoute, getStepTransaction } = await import('@lifi/sdk')
 
           const safe4337Pack = await initializeSafeKit()
 
@@ -265,7 +288,8 @@ function useVaults() {
   const getExpectedOutputAmount = async (amount: string, decimals: number = 18): Promise<string> => {
     try {
       const rawTokenAmountIn = parseUnits(amount, decimals)
-      console.debug({ amount })
+
+      const { ChainId, getRoutes } = await import('@lifi/sdk')
 
 
       const routesRequest: RoutesRequest = {
