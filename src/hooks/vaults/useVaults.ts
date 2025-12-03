@@ -61,9 +61,9 @@ function useVaults() {
         const { createConfig, ChainId } = await import('@lifi/sdk')
         if (isMounted) {
           createConfig({
-            integrator: "ProsperityPassport",
+            integrator: 'ProsperityPassport',
             rpcUrls: {
-              [ChainId.CEL]: ["https://rpc.celopg.eco"]
+              [ChainId.CEL]: ['https://rpc.celopg.eco'],
             },
           })
         }
@@ -95,8 +95,6 @@ function useVaults() {
       safeModulesVersion: '0.3.0',
     })
   }
-
-
 
   const getStCeloDepositCallable = (decimals: number): DepositCallable => {
     return {
@@ -152,11 +150,8 @@ function useVaults() {
     const extraDigits = Math.pow(10, countDecimals(amount))
     const adjustedAmount = amount * extraDigits
     return JSBI.divide(
-      JSBI.multiply(
-        JSBI.BigInt(adjustedAmount),
-        JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals))
-      ),
-      JSBI.BigInt(extraDigits)
+      JSBI.multiply(JSBI.BigInt(adjustedAmount), JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals))),
+      JSBI.BigInt(extraDigits),
     )
   }
 
@@ -173,14 +168,11 @@ function useVaults() {
       callContract: async (amount: string, parseAmount: boolean = true) => {
         patchFetch()
         try {
-
           const { ChainId, getQuote, convertQuoteToRoute, getStepTransaction } = await import('@lifi/sdk')
 
           const safe4337Pack = await initializeSafeKit()
 
-          const rawTokenAmountIn = parseUnits(
-            amount, decimals
-          )
+          const rawTokenAmountIn = parseUnits(amount, decimals)
 
           const quoteRequest: QuoteRequest = {
             fromChain: ChainId.CEL,
@@ -189,9 +181,9 @@ function useVaults() {
             toToken: '0x471EcE3750Da237f93B8E339c536989b8978a438',
             fromAmount: rawTokenAmountIn.toString(),
             fromAddress: safeAddress,
-          };
+          }
 
-          const quote = await getQuote(quoteRequest);
+          const quote = await getQuote(quoteRequest)
 
           console.debug({ quote })
           const route = convertQuoteToRoute(quote)
@@ -211,7 +203,7 @@ function useVaults() {
           console.debug({ route })
           for (const _step of route.steps) {
             // Request transaction data for the current step
-            const step = await getStepTransaction(_step);
+            const step = await getStepTransaction(_step)
 
             const tx: MetaTransactionData = {
               to: step.transactionRequest?.to as Address,
@@ -220,7 +212,6 @@ function useVaults() {
             }
 
             transactions.push(tx)
-
           }
           console.debug({ transactions })
 
@@ -241,8 +232,6 @@ function useVaults() {
             userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
           }
           return userOperationReceipt?.receipt.transactionHash
-
-
         } catch (error) {
           console.error('Error during stCELO withdraw:', error)
           throw error
@@ -288,38 +277,37 @@ function useVaults() {
 
       const { ChainId, getRoutes } = await import('@lifi/sdk')
 
-
       const routesRequest: RoutesRequest = {
         fromChainId: ChainId.CEL,
         toChainId: ChainId.CEL,
         fromTokenAddress: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
         toTokenAddress: '0x471EcE3750Da237f93B8E339c536989b8978a438',
         fromAmount: rawTokenAmountIn.toString(),
-      };
+      }
 
+      const result = await getRoutes(routesRequest)
+      const routes = result.routes
 
-      const result = await getRoutes(routesRequest);
-      const routes = result.routes;
-
-
-      const quote = routes[0].toAmount;
+      const quote = routes[0].toAmount
 
       const ratio = Number(rawTokenAmountIn) / Number(quote)
 
       const expectedOut = await publicClient.readContract({
-        abi: [{
-          inputs: [
-            {
-              internalType: 'uint256',
-              name: 'stCeloAmount',
-              type: 'uint256',
-            },
-          ],
-          name: 'toCelo',
-          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-          stateMutability: 'view',
-          type: 'function',
-        }],
+        abi: [
+          {
+            inputs: [
+              {
+                internalType: 'uint256',
+                name: 'stCeloAmount',
+                type: 'uint256',
+              },
+            ],
+            name: 'toCelo',
+            outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+            stateMutability: 'view',
+            type: 'function',
+          },
+        ],
         address: '0x0239b96D10a434a56CC9E09383077A0490cF9398',
         functionName: 'toCelo',
         args: [rawTokenAmountIn],
@@ -338,7 +326,6 @@ function useVaults() {
       throw error
     }
   }
-
 
   async function calculateRatioDifference(
     tokenA: string,
