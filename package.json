@@ -57,6 +57,7 @@
     "@emotion/styled": "^11.11.0",
     "@farcaster/auth-kit": "^0.8.1",
     "@gnosis.pm/zodiac": "^4.0.1",
+    "@lifi/sdk": "^3.13.6",
     "@mui/icons-material": "^5.14.20",
     "@mui/material": "^5.14.20",
     "@mui/styles": "^5.15.16",
