@@ -1,5 +1,4 @@
-import { Address, encodeFunctionData, erc20Abi, createPublicClient, http } from 'viem'
-import { celo } from 'viem/chains'
+import { Address, encodeFunctionData, erc20Abi } from 'viem'
 import useAAve from './useAAve'
 import { Eip1193Provider, parseUnits } from 'ethers'
 import { Safe4337Pack } from '@safe-global/relay-kit'
@@ -9,7 +8,10 @@ import useWallet from '../wallets/useWallet'
 import useSafeAddress from '../useSafeAddress'
 import { patchFetch } from '@/utils/fecthPatch'
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import JSBI from 'jsbi'
+import useSuperChainAccount from '../super-chain/useSuperChainAccount'
+import { QuoteRequest, RoutesRequest } from '@lifi/types'
 
 export type VaultStrategy = 'aave' | 'stcelo' | string
 
@@ -47,8 +49,36 @@ function useVaults() {
   const { getAAveDepositCallable, getAAveWithdrawCallable } = useAAve()
   const wallet = useWallet()
   const safeAddress = useSafeAddress()
+  const { publicClient } = useSuperChainAccount()
 
   const [slippage, setSlippage] = useState<number>()
+
+  useEffect(() => {
+    let isMounted = true
+
+    const initializeLiFi = async () => {
+      try {
+        const { createConfig, ChainId } = await import('@lifi/sdk')
+        if (isMounted) {
+          createConfig({
+            integrator: "ProsperityPassport",
+            rpcUrls: {
+              [ChainId.CEL]: ["https://rpc.celopg.eco"]
+            },
+          })
+        }
+      } catch (err) {
+        console.error('Error initializing Li.Fi:', err)
+      }
+    }
+
+    initializeLiFi()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
   const initializeSafeKit = async (): Promise<Safe4337Pack> => {
     return await Safe4337Pack.init({
       provider: wallet?.provider as Eip1193Provider,
@@ -65,6 +95,8 @@ function useVaults() {
       safeModulesVersion: '0.3.0',
     })
   }
+
+
 
   const getStCeloDepositCallable = (decimals: number): DepositCallable => {
     return {
@@ -107,111 +139,114 @@ function useVaults() {
           await new Promise((resolve) => setTimeout(resolve, 2000))
           userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
         }
-        return userOpHash
+
+        console.debug({ userOperationReceipt })
+        return userOperationReceipt?.userOpHash || userOpHash
       },
     }
   }
 
-  const getStCeloWithdrawCallable = (decimals: number): WithdrawCallable => {
-    const REGENERATIVE_VAULT_CONTRACT = '0xeA280B39437a64473a0C77949759E6629eD1Dc73' as Address
+  // Función auxiliar para convertir cantidad legible a unidades mínimas del token
+  // Basada en: https://docs.uniswap.org/sdk/v3/guides/swaps/routing
+  const fromReadableAmount = (amount: number, decimals: number): JSBI => {
+    const extraDigits = Math.pow(10, countDecimals(amount))
+    const adjustedAmount = amount * extraDigits
+    return JSBI.divide(
+      JSBI.multiply(
+        JSBI.BigInt(adjustedAmount),
+        JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals))
+      ),
+      JSBI.BigInt(extraDigits)
+    )
+  }
 
-    const REGENERATIVE_VAULT_ABI = [
-      {
-        inputs: [
-          {
-            components: [
-              { internalType: 'bytes32', name: 'poolId', type: 'bytes32' },
-              { internalType: 'enum IVault.SwapKind', name: 'kind', type: 'uint8' },
-              { internalType: 'contract IAsset', name: 'assetIn', type: 'address' },
-              { internalType: 'contract IAsset', name: 'assetOut', type: 'address' },
-              { internalType: 'uint256', name: 'amount', type: 'uint256' },
-              { internalType: 'bytes', name: 'userData', type: 'bytes' },
-            ],
-            internalType: 'struct IVault.SingleSwap',
-            name: 'singleSwap',
-            type: 'tuple',
-          },
-          {
-            components: [
-              { internalType: 'address', name: 'sender', type: 'address' },
-              { internalType: 'bool', name: 'fromInternalBalance', type: 'bool' },
-              { internalType: 'address payable', name: 'recipient', type: 'address' },
-              { internalType: 'bool', name: 'toInternalBalance', type: 'bool' },
-            ],
-            internalType: 'struct IVault.FundManagement',
-            name: 'funds',
-            type: 'tuple',
-          },
-          { internalType: 'uint256', name: 'limit', type: 'uint256' },
-          { internalType: 'uint256', name: 'deadline', type: 'uint256' },
-        ],
-        name: 'swap',
-        outputs: [{ internalType: 'uint256', name: 'amountCalculated', type: 'uint256' }],
-        stateMutability: 'payable',
-        type: 'function',
-      },
-    ]
+  const countDecimals = (x: number): number => {
+    if (Math.floor(x.valueOf()) === x.valueOf()) return 0
+    return x.toString().split('.')[1].length || 0
+  }
+
+  const getStCeloWithdrawCallable = (decimals: number): WithdrawCallable => {
+    // NUEVA IMPLEMENTACIÓN: Usando Uniswap V3 SDK con una Pool simple
+    // Referencia: https://docs.uniswap.org/sdk/v3/guides/swaps/executing-a-trade
 
     return {
       callContract: async (amount: string, parseAmount: boolean = true) => {
         patchFetch()
-        const safe4337Pack = await initializeSafeKit()
-        const parsedAmount = parseAmount ? parseUnits(amount, decimals) : amount
+        try {
 
-        const approveTx: MetaTransactionData = {
-          to: STCELO_CONTRACT,
-          value: '0',
-          data: encodeFunctionData({
-            abi: erc20Abi,
-            functionName: 'approve',
-            args: [REGENERATIVE_VAULT_CONTRACT, parsedAmount as bigint],
-          }),
+          const { ChainId, getQuote, convertQuoteToRoute, getStepTransaction } = await import('@lifi/sdk')
+
+          const safe4337Pack = await initializeSafeKit()
+
+          const rawTokenAmountIn = parseUnits(
+            amount, decimals
+          )
+
+          const quoteRequest: QuoteRequest = {
+            fromChain: ChainId.CEL,
+            toChain: ChainId.CEL,
+            fromToken: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
+            toToken: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+            fromAmount: rawTokenAmountIn.toString(),
+            fromAddress: safeAddress,
+          };
+
+          const quote = await getQuote(quoteRequest);
+
+          console.debug({ quote })
+          const route = convertQuoteToRoute(quote)
+
+          const approveTx: MetaTransactionData = {
+            to: STCELO_CONTRACT as Address,
+            value: '0',
+            data: encodeFunctionData({
+              abi: erc20Abi,
+              functionName: 'approve',
+              args: [route.steps[0].transactionRequest?.to as Address, BigInt(rawTokenAmountIn.toString())],
+            }),
+          }
+
+          const transactions = [approveTx]
+
+          console.debug({ route })
+          for (const _step of route.steps) {
+            // Request transaction data for the current step
+            const step = await getStepTransaction(_step);
+
+            const tx: MetaTransactionData = {
+              to: step.transactionRequest?.to as Address,
+              value: step.transactionRequest?.value?.toString() || '0',
+              data: step.transactionRequest?.data as `0x${string}`,
+            }
+
+            transactions.push(tx)
+
+          }
+          console.debug({ transactions })
+
+          const identified = await safe4337Pack.createTransaction({
+            transactions,
+          })
+
+          const signed = await safe4337Pack.signSafeOperation(identified)
+          const userOpHash = await safe4337Pack.executeTransaction({ executable: signed })
+
+          // Esperar confirmación
+          let userOperationReceipt = null
+          const startTime = Date.now()
+          const timeout = 60 * 1000
+
+          while (!userOperationReceipt && Date.now() - startTime < timeout) {
+            await new Promise((resolve) => setTimeout(resolve, 2000))
+            userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
+          }
+          return userOperationReceipt?.receipt.transactionHash
+
+
+        } catch (error) {
+          console.error('Error during stCELO withdraw:', error)
+          throw error
         }
-
-        const slippageBps = 50
-        const ONE = 10n ** 18n
-        const denom = ONE + (ONE * BigInt(slippageBps)) / 10_000n
-        const limit = (BigInt(parseAmount) * ONE) / denom
-
-        const timespan = Math.floor(Date.now() / 1000) + 600
-
-        const withdrawTx: MetaTransactionData = {
-          to: REGENERATIVE_VAULT_CONTRACT,
-          value: '0',
-          data: encodeFunctionData({
-            abi: REGENERATIVE_VAULT_ABI,
-            functionName: 'swap',
-            args: [
-              [
-                '0x1400eecf44933b1a1371792d48bf2561175763ad000000000000000000000008',
-                0,
-                '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
-                '0x471EcE3750Da237f93B8E339c536989b8978a438',
-                parsedAmount,
-                '0x',
-              ],
-              [safeAddress, false, safeAddress, false],
-              limit,
-              timespan,
-            ],
-          }),
-        }
-
-        const identified = await safe4337Pack.createTransaction({ transactions: [approveTx, withdrawTx] })
-        const signed = await safe4337Pack.signSafeOperation(identified)
-        const userOpHash = await safe4337Pack.executeTransaction({ executable: signed })
-
-        let userOperationReceipt = null
-
-        const startTime = Date.now()
-        const timeout = 60 * 1000 // 1 minuto
-
-        while (!userOperationReceipt && Date.now() - startTime < timeout) {
-          // Wait 2 seconds before checking the status again
-          await new Promise((resolve) => setTimeout(resolve, 2000))
-          userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
-        }
-        return userOpHash
       },
     }
   }
@@ -241,97 +276,69 @@ function useVaults() {
   }
 
   /**
-   * Consulta el output exacto del swap usando querySwap del contrato Balancer
+   * Obtiene el output esperado del swap usando Uniswap QuoterV2
+   * Referencia: https://docs.uniswap.org/sdk/v3/guides/swaps/getting-a-quote
    * @param amount - Cantidad de stCELO a convertir (en formato string)
    * @param decimals - Decimales del token (normalmente 18)
    * @returns Promise con la cantidad exacta de CELO que se recibirá
    */
   const getExpectedOutputAmount = async (amount: string, decimals: number = 18): Promise<string> => {
     try {
-      const publicClient = createPublicClient({
-        chain: celo,
-        transport: http('https://rpc.celopg.eco'),
-      })
+      const rawTokenAmountIn = parseUnits(amount, decimals)
 
-      const parsedAmount = parseUnits(amount, decimals)
-      const BALANCER_VAULT_CONTRACT = '0x9E49cF316C976EE0E776f09730130A900801E371' as Address
+      const { ChainId, getRoutes } = await import('@lifi/sdk')
 
-      const BALANCER_VAULT_ABI = [
-        {
+
+      const routesRequest: RoutesRequest = {
+        fromChainId: ChainId.CEL,
+        toChainId: ChainId.CEL,
+        fromTokenAddress: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
+        toTokenAddress: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+        fromAmount: rawTokenAmountIn.toString(),
+      };
+
+
+      const result = await getRoutes(routesRequest);
+      const routes = result.routes;
+
+
+      const quote = routes[0].toAmount;
+
+      const ratio = Number(rawTokenAmountIn) / Number(quote)
+
+      const expectedOut = await publicClient.readContract({
+        abi: [{
           inputs: [
             {
-              components: [
-                { internalType: 'bytes32', name: 'poolId', type: 'bytes32' },
-                { internalType: 'enum IVault.SwapKind', name: 'kind', type: 'uint8' },
-                { internalType: 'contract IAsset', name: 'assetIn', type: 'address' },
-                { internalType: 'contract IAsset', name: 'assetOut', type: 'address' },
-                { internalType: 'uint256', name: 'amount', type: 'uint256' },
-                { internalType: 'bytes', name: 'userData', type: 'bytes' },
-              ],
-              internalType: 'struct IVault.SingleSwap',
-              name: 'singleSwap',
-              type: 'tuple',
-            },
-            {
-              components: [
-                { internalType: 'address', name: 'sender', type: 'address' },
-                { internalType: 'bool', name: 'fromInternalBalance', type: 'bool' },
-                { internalType: 'address payable', name: 'recipient', type: 'address' },
-                { internalType: 'bool', name: 'toInternalBalance', type: 'bool' },
-              ],
-              internalType: 'struct IVault.FundManagement',
-              name: 'funds',
-              type: 'tuple',
+              internalType: 'uint256',
+              name: 'stCeloAmount',
+              type: 'uint256',
             },
           ],
-          name: 'querySwap',
+          name: 'toCelo',
           outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
           stateMutability: 'view',
           type: 'function',
-        },
-      ] as const
-
-      // Consultar el output exacto usando querySwap
-      const result = await publicClient.readContract({
-        address: BALANCER_VAULT_CONTRACT,
-        abi: BALANCER_VAULT_ABI,
-        functionName: 'querySwap',
-        args: [
-          {
-            poolId: '0xa14d533365c510319dc886ff5c3dd5fe5f1141f5000200000000000000000015',
-            kind: 0, // GIVEN_IN
-            assetIn: '0x471EcE3750Da237f93B8E339c536989b8978a438', // stCELO
-            assetOut: '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24', // CELO
-            amount: parsedAmount,
-            userData: '0x',
-          },
-          {
-            sender: safeAddress as Address,
-            fromInternalBalance: false,
-            recipient: safeAddress as Address,
-            toInternalBalance: false,
-          },
-        ],
+        }],
+        address: '0x0239b96D10a434a56CC9E09383077A0490cF9398',
+        functionName: 'toCelo',
+        args: [rawTokenAmountIn],
       })
 
-      const ratio = Number(parsedAmount) / Number(result)
-      const slippage = await calculateRatioDifference(
-        '0xC668583dcbDc9ae6FA3CE46462758188adfdfC24',
-        '0x471EcE3750Da237f93B8E339c536989b8978a438',
-        ratio,
-      )
-      setSlippage(slippage || 0)
+      const expectedRatio = Number(rawTokenAmountIn) / Number(expectedOut)
 
-      // Convertir el resultado de wei a formato decimal
-      const outputAmount = (Number(result) / Math.pow(10, decimals)).toString()
+      const slippagePercentage = Math.abs((expectedRatio - ratio) / expectedRatio) * 100
+
+      setSlippage(slippagePercentage || 0)
+
+      const outputAmount = (Number(quote) / Math.pow(10, decimals)).toString()
       return outputAmount
     } catch (error) {
-      console.error('Error consultando swap output:', error)
+      console.error('Error obteniendo quote de Uniswap:', error)
       throw error
     }
   }
 
-  const priceCache: Record<string, number> = {}
 
   async function calculateRatioDifference(
     tokenA: string,

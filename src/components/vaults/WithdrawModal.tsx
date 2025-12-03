@@ -203,7 +203,7 @@ function WithdrawModal({
     }
 
     setSelectedPct(pct)
-    const newAmount = ((maxAmount * pct) / 100).toFixed(2)
+    const newAmount = pct === 100 ? maxAmount.toString() : ((maxAmount * pct) / 100).toFixed(2)
     setAmount(newAmount)
 
     await updatePreviewAmount(newAmount)
@@ -232,7 +232,8 @@ function WithdrawModal({
                 variant="contained"
                 size="small"
                 onClick={async () => {
-                  const newAmount = ((maxAmount * percentage) / 100).toFixed(2)
+                  const newAmount =
+                    percentage === 100 ? maxAmount.toString() : ((maxAmount * percentage) / 100).toFixed(2)
                   setAmount(newAmount)
                   setSelectedPct(percentage)
                   setCustomPctInput(String(percentage))
@@ -454,7 +455,7 @@ function WithdrawModal({
           <Button
             variant="contained"
             fullWidth
-            disabled={!isValidAmount || isWithdrawing || !isAcknowledged}
+            disabled={!isValidAmount || isWithdrawing}
             sx={{ p: '16px', borderRadius: '6px', color: 'white !important', display: 'flex', gap: 1 }}
             onClick={handleWithdraw}
           >
