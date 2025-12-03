@@ -178,10 +178,9 @@ function useVaults() {
 
           const safe4337Pack = await initializeSafeKit()
 
-          // Convertir string de cantidad a número para el cálculo
-          const amountNumber = Number(amount)
-          const rawTokenAmountIn = fromReadableAmount(amountNumber, decimals)
-
+          const rawTokenAmountIn = parseUnits(
+            amount, decimals
+          )
 
           const quoteRequest: QuoteRequest = {
             fromChain: ChainId.CEL,
@@ -241,10 +240,8 @@ function useVaults() {
             await new Promise((resolve) => setTimeout(resolve, 2000))
             userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
           }
-          return userOpHash
+          return userOperationReceipt?.receipt.transactionHash
 
-          console.log('All steps executed successfully');
-          throw new Error('stCELO withdraw via Uniswap V3 SDK is under development.')
 
         } catch (error) {
           console.error('Error during stCELO withdraw:', error)
