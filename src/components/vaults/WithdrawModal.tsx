@@ -454,7 +454,7 @@ function WithdrawModal({
           <Button
             variant="contained"
             fullWidth
-            disabled={!isValidAmount || isWithdrawing || !isAcknowledged}
+            disabled={!isValidAmount || isWithdrawing}
             sx={{ p: '16px', borderRadius: '6px', color: 'white !important', display: 'flex', gap: 1 }}
             onClick={handleWithdraw}
           >
