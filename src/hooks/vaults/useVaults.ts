@@ -185,7 +185,6 @@ function useVaults() {
 
           const quote = await getQuote(quoteRequest)
 
-          console.debug({ quote })
           const route = convertQuoteToRoute(quote)
 
           const approveTx: MetaTransactionData = {
@@ -199,8 +198,6 @@ function useVaults() {
           }
 
           const transactions = [approveTx]
-
-          console.debug({ route })
           for (const _step of route.steps) {
             // Request transaction data for the current step
             const step = await getStepTransaction(_step)
@@ -230,6 +227,9 @@ function useVaults() {
           while (!userOperationReceipt && Date.now() - startTime < timeout) {
             await new Promise((resolve) => setTimeout(resolve, 2000))
             userOperationReceipt = await safe4337Pack.getUserOperationReceipt(userOpHash)
+          }
+          if (!userOperationReceipt) {
+            throw new Error('User operation receipt not found within timeout')
           }
           return userOperationReceipt?.receipt.transactionHash
         } catch (error) {
