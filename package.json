@@ -57,7 +57,7 @@
     "@emotion/styled": "^11.11.0",
     "@farcaster/auth-kit": "^0.8.1",
     "@gnosis.pm/zodiac": "^4.0.1",
-    "@lifi/sdk": "^3.13.6",
+    "@lifi/sdk": "^3.13.7",
     "@mui/icons-material": "^5.14.20",
     "@mui/material": "^5.14.20",
     "@mui/styles": "^5.15.16",
@@ -124,7 +124,7 @@
     "react-redux": "^8.0.5",
     "semver": "^7.5.2",
     "siwe": "^2.3.2",
-    "viem": "^2.9.26"
+    "viem": "2.20.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.3.1",
