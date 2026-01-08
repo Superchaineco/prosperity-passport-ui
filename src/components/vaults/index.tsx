@@ -1,4 +1,16 @@
-import { Box, Button, Card, CardContent, Divider, Grid, Skeleton, Stack, SvgIcon, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  Skeleton,
+  Stack,
+  SvgIcon,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import React, { useState } from 'react'
 import cUSD from '@/public/images/currencies/cUSD.svg'
 import cEUR from '@/public/images/currencies/cEUR.svg'
@@ -255,6 +267,49 @@ function VaultCard({
               >
                 Withdraw
               </Button>
+            ) : strategy === 'stcelo' ? (
+              <>
+                <Button
+                  fullWidth
+                  sx={{ borderRadius: '6px', backgroundColor: '#F1F2F5' }}
+                  onClick={handleOpenWithdrawModal}
+                >
+                  Withdraw
+                </Button>
+                <Tooltip
+                  title={
+                    <span>
+                      Following{' '}
+                      <a
+                        href="https://mondo.celo.org/governance/271"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#90caf9' }}
+                      >
+                        CGP218
+                      </a>{' '}
+                      the stCELO Validator strategy no longer yields returns. You can no longer deposit in this vault.
+                      You can still withdraw stCELO from the vault.
+                    </span>
+                  }
+                  arrow
+                >
+                  <span style={{ width: '100%' }}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      disabled
+                      sx={{
+                        borderRadius: '6px',
+                        backgroundColor: '#E0E0E0 !important',
+                        color: '#9E9E9E !important',
+                      }}
+                    >
+                      Deposit
+                    </Button>
+                  </span>
+                </Tooltip>
+              </>
             ) : (
               <>
                 <Button
@@ -270,7 +325,8 @@ function VaultCard({
               </>
             )
           ) : (
-            !depreciated && (
+            !depreciated &&
+            strategy !== 'stcelo' && (
               <Button
                 variant="contained"
                 color="complementary"
@@ -281,6 +337,43 @@ function VaultCard({
                 Activate
               </Button>
             )
+          )}
+          {!depreciated && strategy === 'stcelo' && value === 0 && (
+            <Tooltip
+              title={
+                <span>
+                  Following{' '}
+                  <a
+                    href="https://mondo.celo.org/governance/271"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#90caf9' }}
+                  >
+                    CGP218
+                  </a>{' '}
+                  the stCELO Validator strategy no longer yields returns. You can no longer deposit in this vault. You
+                  can still withdraw stCELO from the vault.
+                </span>
+              }
+              arrow
+            >
+              <span style={{ width: '100%' }}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled
+                  sx={{
+                    borderRadius: '6px',
+                    backgroundColor: '#E0E0E0 !important',
+                    color: '#9E9E9E !important',
+                    border: 'none',
+                    boxShadow: 'none',
+                  }}
+                >
+                  Activate
+                </Button>
+              </span>
+            </Tooltip>
           )}
         </Box>
       </Card>
