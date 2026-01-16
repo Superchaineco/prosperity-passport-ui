@@ -179,8 +179,8 @@ function Claim() {
               Oops! It looks like you&apos;re not eligible for this airdrop.
             </Typography>
             <Typography fontSize={16} fontWeight={400} variant="body2" color="textSecondary">
-              You don&apos;t currently meet the eligibility criteria for Celo Community Claim #2. Stay tuned for future
-              opportunities to earn rewards!
+              You don&apos;t currently meet the eligibility criteria for Celo Contributor Rewards S1. Stay tuned for
+              future opportunities to earn rewards!
             </Typography>
           </Grid>
         </>
@@ -206,7 +206,7 @@ function Claim() {
             </Typography>
             <Typography fontSize={16} fontWeight={400} variant="body2" color="textSecondary">
               You’ve successfully completed the required activities and are eligible to claim your reward for Celo
-              Community Claim #2.
+              Contributor Rewards S1.
             </Typography>
           </Grid>
           <Grid
