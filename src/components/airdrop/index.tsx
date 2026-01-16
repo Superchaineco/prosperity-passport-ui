@@ -158,7 +158,7 @@ function Claim() {
         </Portal>
       )}
       <Typography variant="h1" fontSize={24} fontWeight={600}>
-        Celo Community Claim #2
+        Celo Contributor Rewards S1
       </Typography>
       {!airdropData?.claimed && <RefreshTimer message="Ends in " deadLine={expireDate} />}
       {!airdropData?.eligible && (
@@ -254,7 +254,7 @@ function Claim() {
               )}
             </Button>
           </Grid>
-          {airdropData?.claimed && (
+          {/* {airdropData?.claimed && (
             <Grid item xs={12} sx={{ backgroundColor: 'white', p: 2, borderRadius: 2, mb: 2 }}>
               <Box
                 sx={{
@@ -303,7 +303,7 @@ function Claim() {
                 </Box>
               </Box>
             </Grid>
-          )}
+          )} */}
           {!airdropData?.claimed && (
             <>
               <Grid item xs={12} sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2, marginBottom: 2 }}>
