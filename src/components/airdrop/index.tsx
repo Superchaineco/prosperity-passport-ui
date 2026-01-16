@@ -158,7 +158,7 @@ function Claim() {
         </Portal>
       )}
       <Typography variant="h1" fontSize={24} fontWeight={600}>
-        Celo Community Claim #1
+        Celo Community Claim #2
       </Typography>
       {!airdropData?.claimed && <RefreshTimer message="Ends in " deadLine={expireDate} />}
       {!airdropData?.eligible && (
@@ -179,7 +179,7 @@ function Claim() {
               Oops! It looks like you&apos;re not eligible for this airdrop.
             </Typography>
             <Typography fontSize={16} fontWeight={400} variant="body2" color="textSecondary">
-              You don&apos;t currently meet the eligibility criteria for Celo Community Claim #1. Stay tuned for future
+              You don&apos;t currently meet the eligibility criteria for Celo Community Claim #2. Stay tuned for future
               opportunities to earn rewards!
             </Typography>
           </Grid>
@@ -206,7 +206,7 @@ function Claim() {
             </Typography>
             <Typography fontSize={16} fontWeight={400} variant="body2" color="textSecondary">
               You’ve successfully completed the required activities and are eligible to claim your reward for Celo
-              Community Claim #1.
+              Community Claim #2.
             </Typography>
           </Grid>
           <Grid
