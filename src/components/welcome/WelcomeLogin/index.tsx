@@ -1,5 +1,5 @@
 import { AppRoutes } from '@/config/routes'
-import { Paper, Typography, Divider, Box, Button, Stack, Tooltip } from '@mui/material'
+import { Paper, Typography, Box, Button, Stack } from '@mui/material'
 import css from './styles.module.css'
 import { useRouter } from 'next/router'
 import useWallet from '@/hooks/wallets/useWallet'
@@ -14,7 +14,6 @@ const WelcomeLogin = () => {
   const { hasSuperChainSmartAccount, superChainSmartAccount, isLoading, refetch, isRefetching } =
     useCurrentWalletHasSuperChainSmartAccount()
   const [shouldRedirect, setShouldRedirect] = useState(false)
-  const [redirectPath, setRedirectPath] = useState<null | string>(null)
   const onLogin = useCallback(async () => {
     setShouldRedirect(true)
   }, [])
@@ -28,28 +27,21 @@ const WelcomeLogin = () => {
     }
   }
 
-  const handleAcceptInvite = async () => {
-    setRedirectPath(AppRoutes.invites)
-    await handleConnect()
-  }
-
   useEffect(() => {
     if (!shouldRedirect || !isConnected || isRefetching || isLoading || !wallet) return
     ;(async () => {
       await refetch()
 
-      const destination = redirectPath
-        ? { pathname: redirectPath, query: router.query }
-        : !hasSuperChainSmartAccount
-        ? { pathname: AppRoutes.newSafe.create, query: router.query }
-        : { pathname: AppRoutes.home, query: { safe: superChainSmartAccount } }
+      const destination = hasSuperChainSmartAccount
+        ? { pathname: AppRoutes.home, query: { safe: superChainSmartAccount } }
+        : null
 
       if (destination) {
         router.push(destination)
-        setShouldRedirect(false)
       }
+      setShouldRedirect(false)
     })()
-  }, [hasSuperChainSmartAccount, isLoading, router, isConnected, shouldRedirect, redirectPath, isRefetching, wallet])
+  }, [hasSuperChainSmartAccount, isLoading, router, isConnected, shouldRedirect, isRefetching, wallet])
 
   return (
     <Paper className={css.loginCard} data-testid="welcome-login">
@@ -60,7 +52,7 @@ const WelcomeLogin = () => {
           </Typography>
 
           <Typography mb={2} textAlign="center">
-            Log In or Sign Up to create a new Prosperity Pass or open an existing one
+            Log In to open your Prosperity Pass
           </Typography>
           <Stack direction="row" gap={2}>
             <Button
@@ -73,28 +65,6 @@ const WelcomeLogin = () => {
               Get started
             </Button>
           </Stack>
-          <Divider sx={{ mt: 2, mb: 2, width: '100%' }}>
-            <Typography color="text.secondary" fontWeight={700} variant="overline">
-              OR
-            </Typography>
-          </Divider>
-          <Tooltip
-            placement="bottom"
-            title={
-              <Typography align="center">
-                Accept an invitation to add an extra Wallet to your Prosperity Pass.
-              </Typography>
-            }
-          >
-            <Button
-              onClick={handleAcceptInvite}
-              variant="outlined"
-              disableElevation
-              sx={{ height: '42px', fontSize: '16px', width: '204px', border: 'none', backgroundColor: '#E5E0DB' }}
-            >
-              Accept invite
-            </Button>
-          </Tooltip>
         </Box>
       </Box>
     </Paper>

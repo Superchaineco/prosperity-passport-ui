@@ -226,7 +226,7 @@ function BadgesActions({
             <Box display="flex" justifyContent="flex-end" width="100%">
               <Button
                 fullWidth
-                disabled={!claimable || isPending}
+                disabled={true}
                 variant="contained"
                 onClick={() => mutate()}
                 endIcon={<SvgIcon component={AutorenewIcon} width={16} height={16} inheritViewBox color="inherit" />}
@@ -247,7 +247,7 @@ function BadgesActions({
                   },
                 }}
               >
-                {isPending ? 'Loading' : 'Claim Badges'}
+                Claim Badges
               </Button>
             </Box>
           </Grid>
